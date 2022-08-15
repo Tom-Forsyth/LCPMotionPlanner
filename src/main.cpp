@@ -1,6 +1,7 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include "PxPhysicsAPI.h"
+#include <chrono>
 
 #include "Sphere.h"
 #include "Capsule.h"
@@ -13,7 +14,10 @@
 #include "SpatialManipulator.h"
 #include "FrankaPanda.h"
 #include "PhysXEnv.h"
+//#include "LCPSolve.h"
 
+void testLCPSolve();
+void testEigenSpeed();
 void testDualNumber();
 void testDualQuaternion();
 void testGeometry();
@@ -22,12 +26,64 @@ void testPandaSimulation();
 
 int main()
 {
+	//testLCPSolve();
+	//testEigenSpeed();
 	//testDualNumber();
 	//testDualQuaternion();
 	//testGeometry();
 	//testKinematics();
 	testPandaSimulation();
 	return 0;
+}
+
+void testLCPSolve()
+{
+	// Init.
+	size_t nContacts = 10;
+	Eigen::MatrixXd M = Eigen::MatrixXd::Random(nContacts, nContacts);
+	Eigen::VectorXd q = Eigen::VectorXd::Random(nContacts);
+
+	// Code.
+	auto start = std::chrono::steady_clock::now();
+	for (size_t i = 0; i < 1000; i++)
+	{
+		//LCP sol = LCPSolve(M, q);
+	}
+	auto stop = std::chrono::steady_clock::now();
+
+	// Elapsed time.
+	auto elapsedTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count();
+	std::cout << "Elapsed Time: " << elapsedTime << " us" << std::endl;
+}
+
+void testEigenSpeed()
+{
+	// Init.
+	Eigen::Matrix4d mat1{
+		{0.3425, 0.23561, 0.12461, 0.2152},
+		{0.26536, 0.3462, -0.323461, -0.243612},
+		{0.12365, -0.2357641, 0.001, 3.2351},
+		{0, 0, 0, 1}
+	};
+	Eigen::Matrix4d mat2{
+		{0.57425, 0.5561, 0.22461, 0.7552},
+		{0.83536, -0.3462, 0.4623461, -0.8612},
+		{0.78365, -0.97641, 0.174, 1.7351},
+		{0, 0, 0, 1}
+	};
+
+	// Code to be tested.
+	size_t numIter = 100;
+	auto start = std::chrono::steady_clock::now();
+	for (size_t i = 0; i < numIter; i++)
+	{
+		Eigen::Matrix4d matProd = mat1 * mat2;
+	}
+	auto stop = std::chrono::steady_clock::now();
+
+	// Elapsed time.
+	auto elapsedTime = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count();
+	std::cout << "Elapsed Time: " << elapsedTime << " ns" << std::endl;
 }
 
 void testDualNumber()
@@ -89,7 +145,6 @@ void testKinematics()
 	panda.setJointDisplacements(jointAngles); 
 }
 
-
 void testPandaSimulation()
 {
 	// Create robot.
@@ -112,11 +167,14 @@ void testPandaSimulation()
 	double increment = 0.005 * pi/2;
 	std::vector<double> jointAngles(7, 0);
 	panda.setJointDisplacements(jointAngles);
+
+	/*
 	std::vector<double> jointAnglesGoal(7, pi/2);
 	jointAnglesGoal[3] = -pi / 2;
-	for (size_t i = 0; i < 100; i++)
+	auto start = std::chrono::steady_clock::now();
+	for (size_t i = 0; i < 1000; i++)
 	{
-		double t = i / 100.0;
+		double t = i / 1000.0;
 		std::vector<double> jointAnglesInterp(7, 0);
 		for (size_t i = 0; i < jointAngles.size(); i++)
 		{
@@ -124,4 +182,28 @@ void testPandaSimulation()
 		}
 		panda.setJointDisplacements(jointAnglesInterp);
 	}
+	auto stop = std::chrono::steady_clock::now();
+
+	// Elapsed time.
+	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
+	std::cout << "Elapsed Time: " << elapsedTime << " ms" << std::endl;
+
+	// Currently seeing ~13 ms / 1000 iterations with linear interpolation & 2 sphere obstacles.
+	// ~14-15 ms with 2 box obstacles.
+
+	*/
 }
+
+// ----------
+// Next Steps:
+//  - Transformation matrix inverse.
+//  - Conversion jacobian.
+//  - Contact jacobian.
+//  - Motion Planner.
+// 
+// Refactoring: Once planner is working as expected.
+//  - Dynamic polymorphism for Shapes.
+//  - Review structure and program flow.
+//  - Optimize LCP solver.
+// 
+//----------

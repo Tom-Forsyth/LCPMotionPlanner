@@ -33,6 +33,7 @@ void SpatialManipulator::setupSimulationEnvironment()
 {
 	m_simulationEnvironment.setRigidBodyChain(&m_rigidBodyChain);
 	m_simulationEnvironment.initColliders();
+	generateContacts();
 }
 
 // Run simulation to generate contacts.

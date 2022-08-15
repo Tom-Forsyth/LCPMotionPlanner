@@ -41,4 +41,7 @@ public:
 	// Get type.
 	Joint::Type getType() const;
 
+	// Get twist coordinate.
+	Eigen::Vector<double, 6> getTwistCoord() const;
+
 };

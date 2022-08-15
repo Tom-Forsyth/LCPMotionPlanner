@@ -29,6 +29,7 @@
     <ClCompile Include="src\FrankaPanda.cpp" />
     <ClCompile Include="src\Joint.cpp" />
     <ClCompile Include="src\Kinematics.cpp" />
+    <ClCompile Include="src\LCPSolve.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\PhysXEnv.cpp" />
     <ClCompile Include="src\RigidBody.cpp" />
@@ -49,6 +50,7 @@
     <ClInclude Include="include\FrankaPanda.h" />
     <ClInclude Include="include\Joint.h" />
     <ClInclude Include="include\Kinematics.h" />
+    <ClInclude Include="include\LCPSolve.h" />
     <ClInclude Include="include\PhysXEnv.h" />
     <ClInclude Include="include\RigidBody.h" />
     <ClInclude Include="include\RigidBodyChain.h" />

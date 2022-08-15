@@ -27,7 +27,6 @@ FrankaPanda::FrankaPanda(const Eigen::Matrix4d& baseTransform)
 void FrankaPanda::initRigidBodyChain()
 {
 	// Setup.
-	m_rigidBodyChain.setMaxBodies(9);
 	double pi = 3.1415;
 	bool viewFrames = false;
 	bool viewCollision = true;
@@ -208,7 +207,7 @@ void FrankaPanda::initRigidBodyChain()
 	}
 
 
-	// Create chain and update transforms.
+	// Create chain.
 	m_rigidBodyChain.addBody(link0);
 	m_rigidBodyChain.addBody(link1);
 	m_rigidBodyChain.addBody(link2);
@@ -218,5 +217,7 @@ void FrankaPanda::initRigidBodyChain()
 	m_rigidBodyChain.addBody(link6);
 	m_rigidBodyChain.addBody(link7);
 	m_rigidBodyChain.addBody(linkTip);
-	m_rigidBodyChain.forwardKinematics();
+
+	// Finish initialization.
+	m_rigidBodyChain.postInit();
 }

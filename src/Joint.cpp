@@ -68,3 +68,9 @@ Joint::Type Joint::getType() const
 {
     return m_type;
 }
+
+// Get twist coordinate.
+Eigen::Vector<double, 6> Joint::getTwistCoord() const
+{
+    return m_twistCoord;
+}

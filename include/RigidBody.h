@@ -20,6 +20,7 @@ private:
 	Eigen::Matrix4d m_currentWorldTransform;
 	ContactPoint m_contactPoint;
 	Eigen::MatrixXd m_contactJacobian;
+	bool m_isMovableBody;
 
 public:
 	// Constructor.
@@ -59,9 +60,25 @@ public:
 	const ContactPoint& getContactPoint() const;
 
 	// Update spatial jacobian.
-	void updateSpatialJacobian();
+	void setSpatialJacobian(const Eigen::MatrixXd& spatialJacobian);
 
-	// Update
+	// Get joint twist coordinate.
+	Eigen::Vector<double, 6> getJointTwistCoord() const;
+
+	// Determine if the body is movable.
+	bool isMovable() const;
+
+	// Set the contact jacobian.
+	void setContactJacobian(const Eigen::MatrixXd& contactJacobian);
+
+	// Get the spatial jacobian.
+	Eigen::MatrixXd getSpatialJacobian() const;
+
+	// Get the contact jacobian.
+	Eigen::MatrixXd getContactJacobian() const;
+
+	// Update the contact jacobian.
+	void updateContactJacobian();
 
 };
 

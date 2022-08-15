@@ -39,7 +39,7 @@ void PhysXEnv::init()
 	PxInitExtensions(*m_physics, m_pvd);
 
 	// Multithreading.
-	physx::PxU32 numCores = 6;
+	physx::PxU32 numCores = 1;
 	m_dispatcher = physx::PxDefaultCpuDispatcherCreate(numCores == 0 ? 0 : numCores - 1);
 
 	// Create scene.

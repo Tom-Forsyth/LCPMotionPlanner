@@ -7,8 +7,9 @@ class RigidBodyChain
 {
 private:
 	std::vector<RigidBody> m_rigidBodies;
-	int m_nBodies;
 	Eigen::Matrix4d m_baseTransform;
+	size_t m_nBodies;
+	size_t m_nMovableBodies;
 
 public:
 	// Default constructor.
@@ -23,6 +24,9 @@ public:
 	// Add rigid body.
 	void addBody(const RigidBody& rigidBody);
 
+	// Called to finish initialization once chain is created.
+	void postInit();
+
 	// Forward kinematics.
 	void forwardKinematics();
 
@@ -32,14 +36,17 @@ public:
 	// Get reference to rigid bodies.
 	const std::vector<RigidBody>& getRigidBodies() const;
 
-	// Get number of bodies.
-	int getNBodies() const;
+	// Get number of total bodies.
+	size_t getNBodies() const;
 
-	// Set maximum number of bodies to reserve block of memory.
-	void setMaxBodies(size_t nBodies);
+	// Get number of movable bodies.
+	size_t getNMovableBodies() const;
 
 	// Take closest contact of all the collision aggregates to be this bodies contact.
 	void condenseContacts();
+
+	// Update spatial jacobian for each body.
+	void updateSpatialJacobians();
 
 	// Update contact jacobians for the active contacts.
 	void updateContactJacobians();

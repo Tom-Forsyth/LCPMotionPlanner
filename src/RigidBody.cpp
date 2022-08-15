@@ -10,7 +10,17 @@
 // Constructor.
 RigidBody::RigidBody(const Joint& joint, const Eigen::Matrix4d& referenceSpatialTransform)
 	: m_joint(joint), m_referenceSpatialTransform(referenceSpatialTransform), m_collisionAggregate(CollisionAggregate()),
-	  m_currentSpatialTransform(Eigen::Matrix4d::Identity()), m_currentWorldTransform(Eigen::Matrix4d::Identity()) { }
+	m_currentSpatialTransform(Eigen::Matrix4d::Identity()), m_currentWorldTransform(Eigen::Matrix4d::Identity()), m_contactPoint() 
+{
+	if (joint.getType() == Joint::FIXED)
+	{
+		m_isMovableBody = false;
+	}
+	else
+	{
+		m_isMovableBody = true;
+	}
+}
 
 // Add sphere collider.
 void RigidBody::addCollider(const Sphere& sphere)
@@ -179,4 +189,52 @@ void RigidBody::condenseContacts()
 const ContactPoint& RigidBody::getContactPoint() const
 {
 	return m_contactPoint;
+}
+
+// Update spatial jacobian.
+void RigidBody::setSpatialJacobian(const Eigen::MatrixXd& spatialJacobian)
+{
+	m_spatialJacobian = spatialJacobian;
+}
+
+// Get joint twist coordinate.
+Eigen::Vector<double, 6> RigidBody::getJointTwistCoord() const
+{
+	return m_joint.getTwistCoord();
+}
+
+// Determine if the body is movable.
+bool RigidBody::isMovable() const
+{
+	return m_isMovableBody;
+}
+
+// Set the contact jacobian.
+void RigidBody::setContactJacobian(const Eigen::MatrixXd& contactJacobian)
+{
+	m_contactJacobian = contactJacobian;
+}
+
+// Get the spatial jacobian.
+Eigen::MatrixXd RigidBody::getSpatialJacobian() const
+{
+	return m_spatialJacobian;
+}
+
+// Get the contact jacobian.
+Eigen::MatrixXd RigidBody::getContactJacobian() const
+{
+	return m_contactJacobian;
+}
+
+// Update the contact jacobian.
+void RigidBody::updateContactJacobian()
+{
+	// Extract contact point.
+
+	// Conversion jacobian.
+
+	// Compute contact jacobian.
+
+	// Update member.
 }
