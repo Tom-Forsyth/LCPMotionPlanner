@@ -68,10 +68,10 @@ void SpatialManipulator::addObstacle(const Box& box)
 void SpatialManipulator::motionPlan(const Eigen::Matrix4d& goalTransform)
 {
 	// Setup planner.
-	MotionPlanner planner(this);
+	MotionPlanner planner(this, goalTransform);
 
 	// Generate plan.
-	planner.computePlan(goalTransform);
+	planner.computePlan();
 }
 
 // Get transform of end frame.
@@ -84,4 +84,16 @@ Eigen::Matrix4d SpatialManipulator::getEndFrameSpatialTransform() const
 RigidBody SpatialManipulator::getEndFrame() const
 {
 	return m_rigidBodyChain.getEndFrame();
+}
+
+// Get DoF/nMovableBodies of manipulator.
+int SpatialManipulator::getDof() const
+{
+	return m_rigidBodyChain.getNMovableBodies();
+}
+
+// Get const reference to the rigid body chain.
+const RigidBodyChain& SpatialManipulator::getRigidBodyChain() const
+{
+	return m_rigidBodyChain;
 }

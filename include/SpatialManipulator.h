@@ -41,4 +41,10 @@ public:
 
 	// Return the last rigid body of the chain.
 	RigidBody getEndFrame() const;
+
+	// Get DoF/nMovableBodies of manipulator.
+	int getDof() const;
+
+	// Get const reference to the rigid body chain.
+	const RigidBodyChain& getRigidBodyChain() const;
 };

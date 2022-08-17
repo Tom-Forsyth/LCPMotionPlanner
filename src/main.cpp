@@ -256,8 +256,8 @@ void testMotionPlan()
 	auto stop = std::chrono::steady_clock::now();
 
 	// Elapsed time.
-	auto elapsedTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count();
-	std::cout << "Elapsed Time: " << elapsedTime << " us" << std::endl;
+	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
+	std::cout << "Elapsed Time: " << elapsedTime << " ms" << std::endl;
 }
 
 // ----------
@@ -266,8 +266,6 @@ void testMotionPlan()
 //  + Conversion jacobian.
 //  + Contact jacobian.
 //  - Motion Planner
-//		- init()
-//		- 
 // 
 // Refactoring: Once planner is working as expected.
 //	 - B Matrix.
@@ -278,3 +276,12 @@ void testMotionPlan()
 //  - Return EndFrame (and others) by reference, not copy.
 // 
 //----------
+
+
+
+//---------
+// Motion Planner:
+// - Created when manip.plan() is called.
+// - Has members of parameters.
+// - I
+//---------
