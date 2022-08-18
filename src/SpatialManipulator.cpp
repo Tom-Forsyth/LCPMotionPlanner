@@ -97,3 +97,9 @@ const RigidBodyChain& SpatialManipulator::getRigidBodyChain() const
 {
 	return m_rigidBodyChain;
 }
+
+// Get the current joint displacements.
+Eigen::VectorXd SpatialManipulator::getJointDisplacements() const
+{
+	return m_rigidBodyChain.getJointDisplacements();
+}

@@ -195,3 +195,20 @@ RigidBody RigidBodyChain::getEndFrame() const
 {
 	return m_rigidBodies[m_nBodies-1];
 }
+
+// Get the current joint displacements.
+Eigen::VectorXd RigidBodyChain::getJointDisplacements() const
+{
+	Eigen::VectorXd jointDisplacements = Eigen::VectorXd::Zero(m_nMovableBodies);
+	int index = 0;
+	for (const RigidBody& body : m_rigidBodies)
+	{
+		if (body.isMovable())
+		{
+			jointDisplacements[index] = body.getJointDisplacement();
+			index++;
+		}
+	}
+
+	return jointDisplacements;
+}

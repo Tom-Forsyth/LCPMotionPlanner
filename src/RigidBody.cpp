@@ -245,3 +245,9 @@ Eigen::Matrix4d RigidBody::getCurrentSpatialTransform() const
 {
 	return m_currentSpatialTransform;
 }
+
+// Get joint displacement.
+double RigidBody::getJointDisplacement() const
+{
+	return m_joint.getDisplacement();
+}

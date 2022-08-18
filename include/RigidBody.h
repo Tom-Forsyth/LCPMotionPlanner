@@ -83,5 +83,8 @@ public:
 	// Get the current spatial transform.
 	Eigen::Matrix4d getCurrentSpatialTransform() const;
 
+	// Get joint displacement.
+	double getJointDisplacement() const;
+
 };
 

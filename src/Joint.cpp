@@ -74,3 +74,9 @@ Eigen::Vector<double, 6> Joint::getTwistCoord() const
 {
     return m_twistCoord;
 }
+
+// Get displacement.
+double Joint::getDisplacement() const
+{
+    return m_displacement;
+}

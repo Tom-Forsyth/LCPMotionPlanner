@@ -57,4 +57,7 @@ public:
 	// Get end frame.
 	RigidBody getEndFrame() const;
 
+	// Get the current joint displacements.
+	Eigen::VectorXd getJointDisplacements() const;
+
 };

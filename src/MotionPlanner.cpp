@@ -7,6 +7,7 @@
 #include <Eigen/Dense>
 #include <vector>
 #include <map>
+#include <iostream>
 
 // Constructor.
 MotionPlanner::MotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
@@ -14,13 +15,14 @@ MotionPlanner::MotionPlanner(SpatialManipulator* pSpatialManipulator, const Eige
 	m_endFrame(pSpatialManipulator->getEndFrame()), m_dof(pSpatialManipulator->getDof()), m_currentTransform(m_endFrame.getCurrentSpatialTransform()),
 	m_currentDualQuat(DualQuaternion(m_currentTransform)), m_goalDualQuat(DualQuaternion(m_goalTransform)), m_currentConcat(m_currentDualQuat.toConcat())
 {
+    m_plan.reserve(m_maxIterations + 1);
 }
 
 // Get the change in joint displacements before correction using ScLERP.
 Eigen::VectorXd MotionPlanner::getJointDisplacementChange() const
 {
 	// Get the joint displacement change from ScLERP.
-	const Eigen::MatrixXd& spatialJacobian = m_endFrame.getSpatialJacobian();
+    Eigen::MatrixXd spatialJacobian = m_endFrame.getSpatialJacobian();
 	Eigen::MatrixXd B = Kinematics::BMatrix(spatialJacobian, m_currentTransform);
 	DualQuaternion nextDualQuat = m_currentDualQuat.ScLERP(m_goalTransform, m_tau);
 	Eigen::Vector<double, 7> nextConcat = nextDualQuat.toConcat();
@@ -40,67 +42,99 @@ double MotionPlanner::getNullSpaceTerm() const
 	return 1;
 }
 
-// Formulate and solve LCP to get the compensating velocities.
-Eigen::VectorXd MotionPlanner::getCompensatingVelocities() const
+// Compute the joint displacement change to avoid collision at the next time step.
+Eigen::VectorXd MotionPlanner::getCollisionDisplacementChange(const Eigen::VectorXd& displacementChange) const
 {
     // Get the active contacts.
     std::map<int, const ContactPoint&> contactPoints;
     const RigidBodyChain& rigidBodyChain = m_pSpatialManipulator->getRigidBodyChain();
+    const std::vector<RigidBody>& rigidBodies = rigidBodyChain.getRigidBodies();
     int bodyIndex = 0;
-    for (const RigidBody& body : rigidBodyChain.getRigidBodies())
+    for (const RigidBody& body : rigidBodies)
     {
         if (body.isMovable())
         {
             const ContactPoint& contactPoint = body.getContactPoint();
             if (contactPoint.m_isActive)
             {
-                contactPoints.insert({bodyIndex, contactPoint});
+                contactPoints.insert({ bodyIndex, contactPoint });
             }
         }
         bodyIndex++;
     }
 
-    // Compute the inputs to the LCP.
+    // Create empty q vector and M matrix.
     size_t dim = contactPoints.size();
     Eigen::VectorXd q = Eigen::VectorXd::Zero(dim);
     Eigen::MatrixXd M = Eigen::MatrixXd::Identity(dim, dim);
-    for (int row = 0; row < dim; row++)
+
+    // Loop over each active rigid body.
+    int row = 0;
+    for (const auto& pair : contactPoints)
     {
-        // Distance, normal, and contact jacobian.
-        double distance = contactPoint[].m_distance;
+        // Get distance, normal, and row contact jacobian.
+        double distance = pair.second.m_distance;
         Eigen::Vector<double, 6> paddedNormal = Eigen::Vector<double, 6>::Zero();
-        paddedNormal.head(3) = contactPoint.m_normal;    v 
+        paddedNormal.head(3) = pair.second.m_normal;
+        Eigen::MatrixXd contactJacobian = rigidBodies[pair.first].getContactJacobian();
 
-        // Form qi.
+        // Form element of q.
+        q[row] = (distance - m_safetyDistance) * (paddedNormal.transpose() * contactJacobian) * displacementChange;
 
-
+        // Loop over again to form entire row of M.
+        int col = 0;
+        for (const auto& pair : contactPoints)
+        {
+            Eigen::MatrixXd colContactJacobian = rigidBodies[pair.first].getContactJacobian();
+            Eigen::VectorXd colPaddedNormal = Eigen::Vector<double, 6>::Zero();
+            colPaddedNormal.head(3) = pair.second.m_normal;
+            M(row, col) = (((paddedNormal.transpose() * contactJacobian) * getNullSpaceTerm()) * colContactJacobian.completeOrthogonalDecomposition().pseudoInverse()) * colPaddedNormal;
+            col++;
+        }
+        row++;
     }
 
-
-    for (int j = 0; j < dim; j++)
+    // Solve LCP for compensating velocites and zero pad.
+    LCP solution = LCPSolve(M, q);
+    Eigen::VectorXd compensatingVelocities = Eigen::VectorXd::Zero(m_dof);
+    int index = 0;
+    for (const auto& pair : contactPoints)
     {
-        double dist = th
-        Eigen::Vector<double, 6> N = this->contactNormals.at(j);
-        Eigen::MatrixXd Jc = this->contactJacobians.at(j);
+        compensatingVelocities[pair.first] = solution.z[index];
+        index++;
+    }
 
-        // Form qi.
-        double product = (N.transpose() * Jc) * (k * B * (gammaNew - gamma));
-        double qi = (dist - safetyDistance) + 1 * product;
-        //std::cout << dist - safetyDistance << std::endl;
-        q(j) = qi;
-
-        // Form M[i, :].
-        for (int k = 0; k < this->dof; k++) {
-            Eigen::MatrixXd colJc = this->contactJacobians.at(j);
-            Eigen::MatrixXd colJcMod = this->contactJacobians.at(k);
-            //colJcMod.row(5) = Eigen::VectorXd::Zero(this->dof);
-            Eigen::MatrixXd colJcInv = colJcMod.completeOrthogonalDecomposition().pseudoInverse();
-            Eigen::Vector<double, 6> colN = this->contactNormals.at(k);
-            double m = (((N.transpose() * Jc) * nullSpaceTerm) * colJcInv) * (colN);
-            M(j, k) = m;
+    // Find the change in displacements based on compensating velocities.
+    Eigen::VectorXd collisionDisplacementChange = Eigen::VectorXd::Zero(m_dof);
+    int movableIndex = 0;
+    for (const RigidBody& body : rigidBodies)
+    {
+        // If the body is movable.
+        if (body.isMovable())
+        {
+            // If the body has an active contact.
+            if (contactPoints.count(movableIndex))
+            {
+                Eigen::MatrixXd contactJacobianInv = (body.getContactJacobian()).completeOrthogonalDecomposition().pseudoInverse();
+                Eigen::Vector<double, 6> paddedNormal = Eigen::Vector<double, 6>::Zero();
+                paddedNormal.head(3) = body.getContactPoint().m_normal;
+                collisionDisplacementChange += (contactJacobianInv * paddedNormal) * compensatingVelocities[movableIndex];
+            }
+            movableIndex++;
         }
     }
-    LCP sol = LCPSolve(M, q);
+  
+    return collisionDisplacementChange;
+}
+
+// Add joint displacements and ensure they respect the linearization assumption.
+Eigen::VectorXd MotionPlanner::getTotalDisplacementChange(const Eigen::VectorXd& displacementChange, const Eigen::VectorXd& collisionDisplacementChange)
+{
+    Eigen::VectorXd totalDisplacementChange = displacementChange + (getNullSpaceTerm() * collisionDisplacementChange);
+    double maxDisplacement = totalDisplacementChange.cwiseAbs().maxCoeff();
+    double scaleFactor = 1 / (std::max(maxDisplacement / m_maxDisplacementChangeAllowed, 1.0));
+    totalDisplacementChange *= scaleFactor;
+    return totalDisplacementChange;
 }
 
 // Generate motion plan.
@@ -111,81 +145,33 @@ void MotionPlanner::computePlan()
 	bool running = true;
 	while (running && iter<m_maxIterations)
 	{
+        // Update end frame.
+        m_endFrame = m_pSpatialManipulator->getEndFrame();
+
 		// Get the joint displacement change from ScLERP, scaled to respect linearization.
 		Eigen::VectorXd displacementChange = getJointDisplacementChange();
 
-		// Get the null space term.
-		double nullSpaceTerm = getNullSpaceTerm();
+		// Formulate and solve LCP to get the compensating velocities and compute joint displacement change.
+        Eigen::VectorXd collisionDisplacementChange = getCollisionDisplacementChange(displacementChange);
+        //Eigen::VectorXd collisionDisplacementChange = Eigen::VectorXd::Zero(m_dof);
 
-		// Formulate and solve LCP to get the compensating velocities.
-        Eigen::VectorXd compensatingVelocities = getCompensatingVelocities();
+        // Add joint displacements and ensure they respect the linearization assumption.
+        Eigen::VectorXd totalDisplacementChange = getTotalDisplacementChange(displacementChange, collisionDisplacementChange);
 
+        // Update the robot's joint displacements.
+        Eigen::VectorXd nextJointDisplacements = m_pSpatialManipulator->getJointDisplacements() + totalDisplacementChange;
+        m_plan.emplace_back(nextJointDisplacements);
+        m_pSpatialManipulator->setJointDisplacements(nextJointDisplacements);
 
-	
-
-        // Compute sum of additional joint velocities for each contact.
-        Eigen::VectorXd thetaAddSum = Eigen::VectorXd::Zero(this->dof);
-        for (int j = 0; j < this->dof; j++) {
-            Eigen::MatrixXd JcMod = this->contactJacobians.at(j);
-            //JcMod.row(5) = Eigen::VectorXd::Zero(this->dof);
-            Eigen::MatrixXd invJc = JcMod.completeOrthogonalDecomposition().pseudoInverse();
-            Eigen::Vector<double, 6> Nc = this->contactNormals.at(j);
-            Eigen::VectorXd thetaAdd = (invJc * Nc) * (sol.z(j)); // changed sol.z(j) to 0.
-            thetaAddSum += thetaAdd;
-        }
-
-        // Compute change in joint angles.
-        Eigen::VectorXd angleDelta = (k * B * (gammaNew - gamma)) + nullSpaceTerm * thetaAddSum;
-        double maxAngle = angleDelta.cwiseAbs().maxCoeff();
-        double maxAngleAllowed = 0.01;
-        double scaleFactor = std::max(maxAngle / maxAngleAllowed, 1.0);
-        double beta = (1 / scaleFactor);
-
-        // Update new angles.
-        Eigen::VectorXd anglesNew = this->jointAngles + beta * angleDelta;
-        jointAnglePlan.push_back(anglesNew);
-
-        // Forward kinematics.
-        //std::cout << "Angle Delta: " << (anglesNew - this->jointAngles).transpose() << std::endl;
-        this->jointAngles = anglesNew;
-        this->update();
-        Eigen::Matrix4d gNew = this->gBaseFrames.at(this->dof);
-
-        // Determine if tau should be adjusted by looking at end-effector displacement.
-        Eigen::Vector3d pOld = g.block(0, 3, 3, 1);
-        Eigen::Vector3d pNew = gNew.block(0, 3, 3, 1);
-        Eigen::Vector3d pRel = pNew - pOld;
-        /*
-        double dist = pRel.norm();
-        if (dist < 0.001) {
-            tau *= 1.1;
-        }
-        if (tau > 1) {
-            tau = 1;
-        }
-        */
-
-        // Determine if we have converged at the goal.
-        Eigen::Vector3d pTGoal = pGoal - pNew;
-        double goalDist = pTGoal.norm();
-        if (goalDist < .001 && tau == 1) {
-            run = false;
-            std::cout << "Complete" << std::endl;
-        }
-        if (goalDist < .05) {
-            tau = 1;
-        }
-
-        // Find actual achieved gamma.
-        DualQuaternion correctedPose{ gNew };
-        Eigen::Vector<double, 7> gammaCorrected = correctedPose.toConcat();
+        // Get achieved pose after forward kinematics and update variables.
+        Eigen::Matrix4d correctedTransform = m_pSpatialManipulator->getEndFrameSpatialTransform();
+        DualQuaternion correctedDualQuat(correctedTransform);
+        Eigen::Vector<double, 7> correctedConcat = correctedDualQuat.toConcat();
 
         // Store old variables and restart loop.
-        A = Anew;
-        gamma = gammaCorrected;
-        g = gNew;
-        i++;
-
+        m_currentDualQuat = correctedDualQuat;
+        m_currentConcat = correctedConcat;
+        m_currentTransform = correctedTransform;
 
 		iter++;
 	}

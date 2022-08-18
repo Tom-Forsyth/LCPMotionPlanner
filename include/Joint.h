@@ -44,4 +44,7 @@ public:
 	// Get twist coordinate.
 	Eigen::Vector<double, 6> getTwistCoord() const;
 
+	// Get displacement.
+	double getDisplacement() const;
+
 };

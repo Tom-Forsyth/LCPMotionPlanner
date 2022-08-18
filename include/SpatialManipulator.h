@@ -47,4 +47,7 @@ public:
 
 	// Get const reference to the rigid body chain.
 	const RigidBodyChain& getRigidBodyChain() const;
+
+	// Get the current joint displacements.
+	Eigen::VectorXd getJointDisplacements() const;
 };

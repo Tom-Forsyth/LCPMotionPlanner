@@ -16,14 +16,14 @@ private:
 
 	// Plan parameters.
 	bool m_isRunning = true;
-	size_t m_maxIterations = 1000;
+	size_t m_maxIterations = 3000;
 	double m_tau = 0.01;
 	double m_timeStep = 0.01;
-	double m_safetyDistance = 0.025;
-	double m_maxDisplacementChangeAllowed = 0.005;
+	double m_safetyDistance = 0.01;
+	double m_maxDisplacementChangeAllowed = 0.01;
 
 	// Manipulator information.
-	const RigidBody& m_endFrame;
+	RigidBody m_endFrame;
 	int m_dof;
 	Eigen::Matrix4d m_goalTransform;
 	Eigen::Matrix4d m_currentTransform;
@@ -41,8 +41,11 @@ public:
 	// Get the null space term.
 	double getNullSpaceTerm() const;
 
-	// Formulate and solve LCP to get the compensating velocities.
-	Eigen::VectorXd getCompensatingVelocities() const;
+	// Formulate and solve LCP to get the compensating velocities and get joint displacements.
+	Eigen::VectorXd getCollisionDisplacementChange(const Eigen::VectorXd& displacementChange) const;
+
+	// Add joint displacements and ensure they respect the linearization assumption.
+	Eigen::VectorXd getTotalDisplacementChange(const Eigen::VectorXd& displacementChange, const Eigen::VectorXd& collisionDisplacementChange);
 
 	// Generate motion plan.
 	void computePlan();

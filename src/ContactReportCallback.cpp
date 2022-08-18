@@ -56,9 +56,8 @@ void ContactReportCallback::onContact(const physx::PxContactPairHeader& pairHead
 				ContactPoint* contact1 = static_cast<ContactPoint*>(actor1->userData);
 				contact1->m_isActive = true;
 				contact1->m_distance = contactPoints[j].separation;
-				contact1->m_point = Eigen::Vector3d(0, 0, 1);
 				contact1->m_point = Eigen::Vector3d(contactPoints[j].position[0], contactPoints[j].position[1], contactPoints[j].position[2]);
-				contact1->m_normal = Eigen::Vector3d(contactPoints[j].normal[0], contactPoints[j].normal[1], contactPoints[j].normal[2]);
+				contact1->m_normal = Eigen::Vector3d(-contactPoints[j].normal[0], -contactPoints[j].normal[1], -contactPoints[j].normal[2]);
 			}
 		}
 	}

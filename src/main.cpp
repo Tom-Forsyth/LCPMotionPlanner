@@ -229,23 +229,27 @@ void testMotionPlan()
 {
 	// Create robot.
 	Eigen::Matrix4d pandaBaseTransform{
-		{1, 0, 0, 1},
-		{0, 1, 0, 1},
+		{1, 0, 0, 0},
+		{0, 1, 0, 0},
 		{0, 0, 1, 0},
 		{0, 0, 0, 1}
 	};
 	FrankaPanda panda(pandaBaseTransform);
 
+	/*
+	SpatialManipulator* pPanda = &panda;
+	const RigidBody& endFrame = pPanda->getEndFrame();
+	const Eigen::MatrixXd& spatialJacobian = endFrame.getSpatialJacobian();
+	*/
+
 	// Add obstacles.
-	Sphere sphereObstacle(Eigen::Vector3d(1.0, 1.25, 0.65), Eigen::Vector3d(0, 0, 0), 0.1, "sphereObstacle");
-	Sphere sphereObstacle2(Eigen::Vector3d(1.25, 1.0, 0.45), Eigen::Vector3d(0, 0, 0), 0.1, "sphereObstacle2");
+	Sphere sphereObstacle(Eigen::Vector3d(0.5, 0, 0.65), Eigen::Vector3d(0, 0, 0), 0.1, "sphereObstacle");
 	panda.addObstacle(sphereObstacle);
-	panda.addObstacle(sphereObstacle2);
  
 	// Setup start and goal.
 	double pi = 3.1415;
 	Eigen::Vector<double, 7> startAngles{0, 0, 0, 0, 0, 0, 0};
-	Eigen::Vector<double, 7> goalAngles{pi/2, pi/2, pi/2, pi/2, pi/2, pi/2, pi/2};
+	Eigen::Vector<double, 7> goalAngles{0, pi/2, 0, 0, 0, 0, 0};
 	panda.setJointDisplacements(goalAngles);
 	Eigen::Matrix4d goalTransform = panda.getEndFrameSpatialTransform();
 	panda.setJointDisplacements(startAngles);
@@ -255,9 +259,14 @@ void testMotionPlan()
 	panda.motionPlan(goalTransform);
 	auto stop = std::chrono::steady_clock::now();
 
+	std::cout << "Goal Transform: \n" << goalTransform << "\n" << std::endl;
+	std::cout << "Acheived Transform: \n" << panda.getEndFrameSpatialTransform() << "\n" << std::endl;
+
+
 	// Elapsed time.
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
 	std::cout << "Elapsed Time: " << elapsedTime << " ms" << std::endl;
+	
 }
 
 // ----------
