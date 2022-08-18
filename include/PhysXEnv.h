@@ -32,7 +32,7 @@ private:
 	ContactReportCallback m_contactReportCallback;
 
 	// Saftey distance to start generating collisions.
-	const double m_safetyDistance = 0.01;
+	const double m_safetyDistance = 0.04;
 
 	// Rigid body chain pointer.
 	RigidBodyChain* m_rigidBodyChain;

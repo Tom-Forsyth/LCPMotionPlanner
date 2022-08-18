@@ -119,6 +119,7 @@ void RigidBodyChain::condenseContacts()
 }
 
 // Update spatial jacobian for each body.
+/* DO WE ONLY NEED FOR LAST BODY? */
 void RigidBodyChain::updateSpatialJacobians()
 {
 	// First, we compute the end-frame spatial jacobian.

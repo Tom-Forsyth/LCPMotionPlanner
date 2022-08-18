@@ -19,8 +19,8 @@ private:
 	size_t m_maxIterations = 3000;
 	double m_tau = 0.01;
 	double m_timeStep = 0.01;
-	double m_safetyDistance = 0.01;
-	double m_maxDisplacementChangeAllowed = 0.01;
+	double m_safetyDistance = 0.03;
+	double m_maxDisplacementChangeAllowed = 0.001;
 
 	// Manipulator information.
 	RigidBody m_endFrame;

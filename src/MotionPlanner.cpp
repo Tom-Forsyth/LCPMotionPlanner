@@ -79,7 +79,7 @@ Eigen::VectorXd MotionPlanner::getCollisionDisplacementChange(const Eigen::Vecto
         Eigen::MatrixXd contactJacobian = rigidBodies[pair.first].getContactJacobian();
 
         // Form element of q.
-        q[row] = (distance - m_safetyDistance) * (paddedNormal.transpose() * contactJacobian) * displacementChange;
+        q(row) = (distance - m_safetyDistance) + (((paddedNormal.transpose() * contactJacobian) * displacementChange));
 
         // Loop over again to form entire row of M.
         int col = 0;
@@ -94,18 +94,13 @@ Eigen::VectorXd MotionPlanner::getCollisionDisplacementChange(const Eigen::Vecto
         row++;
     }
 
-    // Solve LCP for compensating velocites and zero pad.
+    // Solve LCP for compensating velocites.
     LCP solution = LCPSolve(M, q);
-    Eigen::VectorXd compensatingVelocities = Eigen::VectorXd::Zero(m_dof);
-    int index = 0;
-    for (const auto& pair : contactPoints)
-    {
-        compensatingVelocities[pair.first] = solution.z[index];
-        index++;
-    }
+    Eigen::VectorXd compensatingVelocities = solution.z;
 
     // Find the change in displacements based on compensating velocities.
     Eigen::VectorXd collisionDisplacementChange = Eigen::VectorXd::Zero(m_dof);
+    int compVelIndex = 0;
     int movableIndex = 0;
     for (const RigidBody& body : rigidBodies)
     {
@@ -118,7 +113,8 @@ Eigen::VectorXd MotionPlanner::getCollisionDisplacementChange(const Eigen::Vecto
                 Eigen::MatrixXd contactJacobianInv = (body.getContactJacobian()).completeOrthogonalDecomposition().pseudoInverse();
                 Eigen::Vector<double, 6> paddedNormal = Eigen::Vector<double, 6>::Zero();
                 paddedNormal.head(3) = body.getContactPoint().m_normal;
-                collisionDisplacementChange += (contactJacobianInv * paddedNormal) * compensatingVelocities[movableIndex];
+                collisionDisplacementChange += (contactJacobianInv * paddedNormal) * compensatingVelocities[compVelIndex];
+                compVelIndex++;
             }
             movableIndex++;
         }
@@ -149,10 +145,11 @@ void MotionPlanner::computePlan()
         m_endFrame = m_pSpatialManipulator->getEndFrame();
 
 		// Get the joint displacement change from ScLERP, scaled to respect linearization.
-		Eigen::VectorXd displacementChange = getJointDisplacementChange();
+        Eigen::VectorXd displacementChange = getJointDisplacementChange();
 
 		// Formulate and solve LCP to get the compensating velocities and compute joint displacement change.
         Eigen::VectorXd collisionDisplacementChange = getCollisionDisplacementChange(displacementChange);
+        //std::cout << "Iter " << iter << ": " << collisionDisplacementChange.transpose() << "\n";
         //Eigen::VectorXd collisionDisplacementChange = Eigen::VectorXd::Zero(m_dof);
 
         // Add joint displacements and ensure they respect the linearization assumption.
@@ -162,6 +159,9 @@ void MotionPlanner::computePlan()
         Eigen::VectorXd nextJointDisplacements = m_pSpatialManipulator->getJointDisplacements() + totalDisplacementChange;
         m_plan.emplace_back(nextJointDisplacements);
         m_pSpatialManipulator->setJointDisplacements(nextJointDisplacements);
+
+        // Update end frame.
+        m_endFrame = m_pSpatialManipulator->getEndFrame();
 
         // Get achieved pose after forward kinematics and update variables.
         Eigen::Matrix4d correctedTransform = m_pSpatialManipulator->getEndFrameSpatialTransform();
