@@ -126,12 +126,15 @@ void FrankaPanda::initRigidBodyChain()
 	RigidBody link7(joint7, transform7);
 
 	// Tip frame.
+	/*
 	Eigen::Matrix4d transformTip = Eigen::Matrix4d{
 		{1,  0,  0, 0.088},
 		{0, -1,  0,     0},
 		{0,  0, -1, 0.926},
 		{0,  0,  0,     1}
 	};
+	*/
+	Eigen::Matrix4d transformTip = transform7;
 	Eigen::Vector3d localAxisTip(0, 0, 0);
 	Eigen::Vector3d spatialAxisTip = transformTip.block(0, 0, 3, 3) * localAxisTip;
 	Joint jointTip(Joint::FIXED, spatialAxisTip, transformTip.block(0, 3, 3, 1));
@@ -175,7 +178,7 @@ void FrankaPanda::initRigidBodyChain()
 	if (viewCollision)
 	{
 		Sphere link0_sphere0(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), 0.15, "link0_sphere0");
-		link0.addCollider(link0_sphere0);
+		//link0.addCollider(link0_sphere0);
 
 		Capsule link1_capsule0(Eigen::Vector3d(0, 0, -0.333 / 2), Eigen::Vector3d(0, pi / 2, 0), (0.333 - 0.06 * 2) / 2, 0.06, "link1_capsule0");
 		link1.addCollider(link1_capsule0);

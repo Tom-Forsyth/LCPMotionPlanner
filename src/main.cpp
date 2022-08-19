@@ -29,6 +29,9 @@ void testMotionPlan();
 
 int main()
 {
+	// Round outputs to console.
+	std::cout.precision(4);
+
 	//testTransform();
 	//testTransInv();
 	//testLCPSolve();
@@ -243,7 +246,7 @@ void testMotionPlan()
 	*/
 
 	// Add obstacles.
-	Sphere sphereObstacle(Eigen::Vector3d(0.5, 0, 0.65), Eigen::Vector3d(0, 0, 0), 0.1, "sphereObstacle");
+	Sphere sphereObstacle(Eigen::Vector3d(0.06 + 0.05 + 0.02, 0, 0.649 - 0.313/2), Eigen::Vector3d(0, 0, 0), 0.05, "sphereObstacle");
 	panda.addObstacle(sphereObstacle);
  
 	// Setup start and goal.

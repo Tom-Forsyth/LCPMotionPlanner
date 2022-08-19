@@ -58,6 +58,9 @@ Eigen::VectorXd MotionPlanner::getCollisionDisplacementChange(const Eigen::Vecto
             if (contactPoint.m_isActive)
             {
                 contactPoints.insert({ bodyIndex, contactPoint });
+                std::cout << "Distance: " << contactPoint.m_distance << "\n";
+                std::cout << "Point: " << contactPoint.m_point.transpose() << "\n";
+                std::cout << "Normal: " << contactPoint.m_normal.transpose() << "\n";
             }
         }
         bodyIndex++;
@@ -169,7 +172,7 @@ void MotionPlanner::computePlan()
         Eigen::Vector<double, 7> correctedConcat = correctedDualQuat.toConcat();
 
         // Store old variables and restart loop.
-        m_currentDualQuat = correctedDualQuat;
+        m_currentDualQuat = m_currentDualQuat.ScLERP(m_goalTransform, m_tau);
         m_currentConcat = correctedConcat;
         m_currentTransform = correctedTransform;
 

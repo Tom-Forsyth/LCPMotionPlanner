@@ -48,17 +48,23 @@ void ContactReportCallback::onContact(const physx::PxContactPairHeader& pairHead
 
 			// Should add bool in ContactPoint called isCollider, and check this bool for both of the pairs to make sure it is indeed always the first of the pair that is a collider.
 			// Should also add support for multiple contact points, or at least take the min.
+			std::cout << contactCount << "\n";
 			for (physx::PxU32 j = 0; j < contactCount; j++)
 			{
+				// Offset contact point to the collider, not the obtacle.
+				Eigen::Vector3d obsPoint(contactPoints[j].position[0], contactPoints[j].position[1], contactPoints[j].position[2]);
+				Eigen::Vector3d obsNormal(contactPoints[j].normal[0], contactPoints[j].normal[1], contactPoints[j].normal[2]);
+				double separation = contactPoints[j].separation;
+				Eigen::Vector3d colliderPoint = obsPoint + (separation * obsNormal);
 
 				physx::PxRigidActor* actor1 = pairHeader.actors[0]; // collider
 				physx::PxRigidActor* actor2 = pairHeader.actors[1]; // obstacle
 
 				ContactPoint* contact1 = static_cast<ContactPoint*>(actor1->userData);
 				contact1->m_isActive = true;
-				contact1->m_distance = contactPoints[j].separation;
-				contact1->m_point = Eigen::Vector3d(contactPoints[j].position[0], contactPoints[j].position[1], contactPoints[j].position[2]);
-				contact1->m_normal = Eigen::Vector3d(-contactPoints[j].normal[0], -contactPoints[j].normal[1], -contactPoints[j].normal[2]);
+				contact1->m_distance = separation;
+				contact1->m_point = colliderPoint;
+				contact1->m_normal = -obsNormal;
 			}
 		}
 	}

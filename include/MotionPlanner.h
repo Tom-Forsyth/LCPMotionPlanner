@@ -16,11 +16,11 @@ private:
 
 	// Plan parameters.
 	bool m_isRunning = true;
-	size_t m_maxIterations = 3000;
+	size_t m_maxIterations = 1;
 	double m_tau = 0.01;
 	double m_timeStep = 0.01;
-	double m_safetyDistance = 0.03;
-	double m_maxDisplacementChangeAllowed = 0.001;
+	double m_safetyDistance = 0.01;
+	double m_maxDisplacementChangeAllowed = 0.005;
 
 	// Manipulator information.
 	RigidBody m_endFrame;
