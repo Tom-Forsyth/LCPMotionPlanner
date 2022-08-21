@@ -1,6 +1,7 @@
 #include "Kinematics.h"
 #include "DualQuaternion.h"
 #include <Eigen/Dense>
+#include <iostream>
 
 namespace Kinematics
 {

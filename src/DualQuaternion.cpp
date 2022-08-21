@@ -83,8 +83,19 @@ DualQuaternion DualQuaternion::pow(const double& exponent) const
     Eigen::Vector3d p = p4.head(3);
 
     // Alternate representation.
+    double tanVal = tan(angle / 2);
+    double cotVal;
+    if (abs(tanVal) < 1e-10)
+    {
+        cotVal = std::numeric_limits<double>::max();
+    }
+    else 
+    {
+        cotVal = 1 / tanVal;
+    }
+
     double d = p.dot(axis);
-    Eigen::Vector3d M = 0.5 * (p.cross(axis) + ((p - d * axis) * (1 / tan(angle / 2))));
+    Eigen::Vector3d M = 0.5 * (p.cross(axis) + ((p - d * axis) * cotVal));
 
     // Dual numbers.
     double const1 = exponent * angle / 2;
@@ -109,7 +120,8 @@ DualQuaternion DualQuaternion::pow(const double& exponent) const
 DualQuaternion DualQuaternion::ScLERP(const DualQuaternion& dualQuaternionEnd, const double& tau) const
 {
     DualQuaternion dualQuatInterp = this->conjugate() * dualQuaternionEnd;
-    return (*this * dualQuatInterp.pow(tau));
+    auto val = *this * dualQuatInterp.pow(tau);
+    return val;
 }
 
 // Convert to transformation matrix.

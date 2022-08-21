@@ -264,12 +264,15 @@ void testMotionPlan()
 	Eigen::Vector<double, 7> goalAngles(0, 0, 0, -pi/4, 0, 0, 0);
 	*/
 
-	Eigen::Vector<double, 7> startAngles(0, 0, 0, -pi / 4, 0, pi / 4, 0);
-	Eigen::Vector<double, 7> goalAngles(pi/2, 1, 1, -pi/2, 1, pi/2, 1);
-	panda.setJointDisplacements(goalAngles);
-	Eigen::Matrix4d goalTransform = panda.getEndFrameSpatialTransform();
+	Eigen::Vector<double, 7> startAngles(0, 0, 0, -pi / 2, 0, pi / 2, 0);
 	panda.setJointDisplacements(startAngles);
 	Eigen::Matrix4d startTransform = panda.getEndFrameSpatialTransform();
+	Eigen::Matrix4d goalTransform{
+		{1,  0,  0, 0.5545},
+		{0, -1,  0, 0.5},
+		{0,  0, -1, 0.7315},
+		{0,  0,  0, 1}
+	};
 
 	// Debug spatial jacobian.
 	/*
