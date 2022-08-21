@@ -119,14 +119,13 @@ void RigidBodyChain::condenseContacts()
 }
 
 // Update spatial jacobian for each body.
-/* DO WE ONLY NEED FOR LAST BODY? */
 void RigidBodyChain::updateSpatialJacobians()
 {
-	// First, we compute the end-frame spatial jacobian.
+	// Loop over each body, adding columns for movable joints and updating the member.
 	Eigen::MatrixXd spatialJacobian = Eigen::MatrixXd::Zero(6, m_nMovableBodies);
 	Eigen::Matrix4d displacementProduct = Eigen::Matrix4d::Identity();
 	int bodyIndex = 0;
-	for (const RigidBody& body : m_rigidBodies)
+	for (RigidBody& body : m_rigidBodies)
 	{
 		if (body.isMovable())
 		{
@@ -145,31 +144,10 @@ void RigidBodyChain::updateSpatialJacobians()
 			displacementProduct *= body.getRelativeTransformation();
 			bodyIndex++;
 		}
+
+		// Set the body's spatial jacobian with zero padding.
+		body.setSpatialJacobian(spatialJacobian);
 	}
-
-	// Set the jacobian of the last frame.
-	m_rigidBodies[m_nBodies - 1].setSpatialJacobian(spatialJacobian);
-
-	// Now, we can set the jacobian of the other bodies by zero padding backwards.
-	bodyIndex = static_cast<int>(m_nBodies - 2);
-	int columnIndex = static_cast<int>(m_nMovableBodies - 1);
-	while (bodyIndex >= 0)
-	{
-		if (m_rigidBodies[bodyIndex].isMovable())
-		{
-			spatialJacobian.col(columnIndex) = Eigen::Vector<double, 6>::Zero();
-			m_rigidBodies[bodyIndex].setSpatialJacobian(spatialJacobian);
-			columnIndex--;
-		}
-		else
-		{
-		}
-		bodyIndex--;
-	}
-
-	// Check my logic is correct. Will remove this after I write tests.
-	assert(bodyIndex == -1);
-	assert(columnIndex == -1);
 }
 
 // Update contact jacobians for the active contacts.

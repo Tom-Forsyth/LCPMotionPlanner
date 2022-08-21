@@ -48,7 +48,6 @@ void ContactReportCallback::onContact(const physx::PxContactPairHeader& pairHead
 
 			// Should add bool in ContactPoint called isCollider, and check this bool for both of the pairs to make sure it is indeed always the first of the pair that is a collider.
 			// Should also add support for multiple contact points, or at least take the min.
-			std::cout << contactCount << "\n";
 			for (physx::PxU32 j = 0; j < contactCount; j++)
 			{
 				// Offset contact point to the collider, not the obtacle.
@@ -64,7 +63,7 @@ void ContactReportCallback::onContact(const physx::PxContactPairHeader& pairHead
 				contact1->m_isActive = true;
 				contact1->m_distance = separation;
 				contact1->m_point = colliderPoint;
-				contact1->m_normal = -obsNormal;
+				contact1->m_normal = obsNormal;
 			}
 		}
 	}

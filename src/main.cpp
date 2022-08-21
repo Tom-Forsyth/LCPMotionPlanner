@@ -32,6 +32,9 @@ int main()
 	// Round outputs to console.
 	std::cout.precision(4);
 
+	// Reset seed.
+	srand(time(NULL));
+
 	//testTransform();
 	//testTransInv();
 	//testLCPSolve();
@@ -232,8 +235,8 @@ void testMotionPlan()
 {
 	// Create robot.
 	Eigen::Matrix4d pandaBaseTransform{
-		{1, 0, 0, 0},
-		{0, 1, 0, 0},
+		{1, 0, 0, 1},
+		{0, 1, 0, 1},
 		{0, 0, 1, 0},
 		{0, 0, 0, 1}
 	};
@@ -246,24 +249,48 @@ void testMotionPlan()
 	*/
 
 	// Add obstacles.
-	Sphere sphereObstacle(Eigen::Vector3d(0.06 + 0.05 + 0.02, 0, 0.649 - 0.313/2), Eigen::Vector3d(0, 0, 0), 0.05, "sphereObstacle");
-	panda.addObstacle(sphereObstacle);
+	//Sphere sphereObstacle(Eigen::Vector3d(0.06 + 0.05 + 0.02, 0, 0.649 - 0.313/2), Eigen::Vector3d(0, 0, 0), 0.05, "sphereObstacle");
+	Sphere sphereObstacle(Eigen::Vector3d(1.4, 1.05, 0.6), Eigen::Vector3d(0.1, 0.3, 0.4), 0.1, "sphereObstacle");
+	Sphere sphereObstacle2(Eigen::Vector3d(1.2, 1, 1.0), Eigen::Vector3d(0.1, 0.3, 0.4), 0.07, "sphereObstacle2");
+	//panda.addObstacle(sphereObstacle);
+	//panda.addObstacle(sphereObstacle2);
  
 	// Setup start and goal.
 	double pi = 3.1415;
-	Eigen::Vector<double, 7> startAngles{0, 0, 0, 0, 0, 0, 0};
-	Eigen::Vector<double, 7> goalAngles{0, pi/2, 0, 0, 0, 0, 0};
+
+	/*
+	// Why is R negative?
+	Eigen::Vector<double, 7> startAngles(0, 0, 0, -pi/4, 0, pi/4, 0);
+	Eigen::Vector<double, 7> goalAngles(0, 0, 0, -pi/4, 0, 0, 0);
+	*/
+
+	Eigen::Vector<double, 7> startAngles(0, 0, 0, -pi / 4, 0, pi / 4, 0);
+	Eigen::Vector<double, 7> goalAngles(pi/2, 1, 1, -pi/2, 1, pi/2, 1);
 	panda.setJointDisplacements(goalAngles);
 	Eigen::Matrix4d goalTransform = panda.getEndFrameSpatialTransform();
 	panda.setJointDisplacements(startAngles);
+	Eigen::Matrix4d startTransform = panda.getEndFrameSpatialTransform();
+
+	// Debug spatial jacobian.
+	/*
+	const std::vector<RigidBody>& rigidBodies = panda.getRigidBodyChain().getRigidBodies();
+	int iter = 0;
+	for (const RigidBody& body : rigidBodies)
+	{
+		std::cout << "Body: " << iter << "\n";
+		std::cout << "Spatial Jacobian: \n" << body.getSpatialJacobian() << "\n\n";
+		iter++;
+	}
+	*/
 
 	// Generate motion plan.
 	auto start = std::chrono::steady_clock::now();
 	panda.motionPlan(goalTransform);
 	auto stop = std::chrono::steady_clock::now();
 
-	std::cout << "Goal Transform: \n" << goalTransform << "\n" << std::endl;
-	std::cout << "Acheived Transform: \n" << panda.getEndFrameSpatialTransform() << "\n" << std::endl;
+	std::cout << "Start Transform: \n" << startTransform << "\n\n";
+	std::cout << "Goal Transform: \n" << goalTransform << "\n\n";
+	std::cout << "Acheived Transform: \n" << panda.getEndFrameSpatialTransform() << "\n\n";
 
 
 	// Elapsed time.
@@ -277,15 +304,17 @@ void testMotionPlan()
 //  + Transformation matrix inverse.
 //  + Conversion jacobian.
 //  + Contact jacobian.
-//  - Motion Planner
+//  + Motion Planner
 // 
 // Refactoring: Once planner is working as expected.
-//	 - B Matrix.
+//	- B Matrix.
 //  - Dynamic polymorphism for Shapes.
 //  - Review structure and program flow.
 //  - Optimize LCP solver.
 //  - Link safety distance.
 //  - Return EndFrame (and others) by reference, not copy.
+//  - Sparse multiplication with zero-padded jacobians.
+//  - Check if initial config is within range of goal to avoid divide by zero/nan issues.
 // 
 //----------
 
