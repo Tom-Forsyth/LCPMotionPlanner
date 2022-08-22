@@ -16,7 +16,7 @@ private:
 
 	// Plan parameters.
 	bool m_isRunning = true;
-	size_t m_maxIterations = 5000;
+	size_t m_maxIterations = 2000;
 	double m_tau = 0.01;
 	double m_timeStep = 0.01;
 	double m_safetyDistance = 0.02;

@@ -284,19 +284,21 @@ void testMotionPlan()
 	Eigen::Matrix4d goalTransform1(startTransform);
 	goalTransform1.block(0, 3, 3, 1) = Eigen::Vector3d(0.65, -0.35, 0.5);
 	Eigen::Matrix4d goalTransform2(startTransform);
-	Eigen::Matrix4d goalTransform3(startTransform);
-	goalTransform3.block(0, 3, 3, 1) = Eigen::Vector3d(0.65, 0.35, 0.5);
+	goalTransform2.block(0, 3, 3, 1) = Eigen::Vector3d(0.65, 0.35, 0.5);
 
 	// Generate motion plan.
 	auto start = std::chrono::steady_clock::now();
 	panda.motionPlan(goalTransform1);
-	//panda.motionPlan(goalTransform2);
-	panda.motionPlan(goalTransform3);
+	Eigen::Matrix4d achievedTransform1 = panda.getEndFrameSpatialTransform();
+	panda.motionPlan(goalTransform2);
+	Eigen::Matrix4d achievedTransform2 = panda.getEndFrameSpatialTransform();
 	auto stop = std::chrono::steady_clock::now();
 
 	std::cout << "Start Transform: \n" << startTransform << "\n\n";
-	std::cout << "Goal Transform: \n" << goalTransform1 << "\n\n";
-	std::cout << "Acheived Transform: \n" << panda.getEndFrameSpatialTransform() << "\n\n";
+	std::cout << "Goal Transform 1: \n" << goalTransform1 << "\n\n";
+	std::cout << "Acheived Transform 1: \n" << achievedTransform1 << "\n\n";
+	std::cout << "Goal Transform 2: \n" << goalTransform2 << "\n\n";
+	std::cout << "Acheived Transform 2: \n" << achievedTransform2 << "\n\n";
 
 	// Elapsed time.
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
@@ -305,6 +307,10 @@ void testMotionPlan()
 	// ~0.125 ms/iteration, or 8000 hz.
 	
 }
+
+
+
+
 
 // ----------
 // Next Steps:
