@@ -16,11 +16,11 @@ private:
 
 	// Plan parameters.
 	bool m_isRunning = true;
-	size_t m_maxIterations = 3000;
+	size_t m_maxIterations = 5000;
 	double m_tau = 0.01;
 	double m_timeStep = 0.01;
-	double m_safetyDistance = 0.03;
-	double m_maxDisplacementChangeAllowed = 0.003;
+	double m_safetyDistance = 0.02;
+	double m_maxDisplacementChangeAllowed = 0.001;
 
 	// Manipulator information.
 	RigidBody m_endFrame;
@@ -30,6 +30,7 @@ private:
 	DualQuaternion m_currentDualQuat;
 	DualQuaternion m_goalDualQuat;
 	Eigen::Vector<double, 7> m_currentConcat;
+	Eigen::Vector<double, 7> m_goalConcat;
 
 public:
 	// Constructor.

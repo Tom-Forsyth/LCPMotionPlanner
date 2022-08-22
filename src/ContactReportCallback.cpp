@@ -54,7 +54,7 @@ void ContactReportCallback::onContact(const physx::PxContactPairHeader& pairHead
 				Eigen::Vector3d obsPoint(contactPoints[j].position[0], contactPoints[j].position[1], contactPoints[j].position[2]);
 				Eigen::Vector3d obsNormal(contactPoints[j].normal[0], contactPoints[j].normal[1], contactPoints[j].normal[2]);
 				double separation = contactPoints[j].separation;
-				Eigen::Vector3d colliderPoint = obsPoint + (separation * obsNormal);
+				Eigen::Vector3d colliderPoint = obsPoint + (separation/2 * obsNormal);
 
 				physx::PxRigidActor* actor1 = pairHeader.actors[0]; // collider
 				physx::PxRigidActor* actor2 = pairHeader.actors[1]; // obstacle

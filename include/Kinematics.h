@@ -22,4 +22,7 @@ namespace Kinematics
 
     /*FILL THIS IN LATER*/
     Eigen::MatrixXd BMatrix(const Eigen::MatrixXd& J, const Eigen::Matrix4d& pose);
+
+    // Override Eigen's implementation of Quaternion -> AxisAngle.
+    // Need to do this to fix degenerate 0 angle case (representation singularity) with axis [0, 0, 1], not [1, 0, 0].
 }

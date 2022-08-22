@@ -233,6 +233,8 @@ void testPandaSimulation()
 
 void testMotionPlan()
 {
+	constexpr double pi = 3.14159265358979323846;
+
 	// Create robot.
 	Eigen::Matrix4d pandaBaseTransform{
 		{1, 0, 0, 1},
@@ -242,63 +244,65 @@ void testMotionPlan()
 	};
 	FrankaPanda panda(pandaBaseTransform);
 
-	/*
-	SpatialManipulator* pPanda = &panda;
-	const RigidBody& endFrame = pPanda->getEndFrame();
-	const Eigen::MatrixXd& spatialJacobian = endFrame.getSpatialJacobian();
-	*/
+	// Table obstacle parameters.
+	Eigen::Vector3d tableOrigin(1.5, 1, 0.25);
+	Eigen::Vector3d tableOffsets(0.3, 0.5, 0.02);
+	double legLength = tableOrigin(2) - tableOffsets(2);
+	Eigen::Vector3d legOffsets(0.03, 0.03, legLength/2);
+	double legZVal = legLength / 2;
 
-	// Add obstacles.
-	//Sphere sphereObstacle(Eigen::Vector3d(0.06 + 0.05 + 0.02, 0, 0.649 - 0.313/2), Eigen::Vector3d(0, 0, 0), 0.05, "sphereObstacle");
-	Sphere sphereObstacle(Eigen::Vector3d(1.4, 1.05, 0.6), Eigen::Vector3d(0.1, 0.3, 0.4), 0.1, "sphereObstacle");
-	Sphere sphereObstacle2(Eigen::Vector3d(1.2, 1, 1.0), Eigen::Vector3d(0.1, 0.3, 0.4), 0.07, "sphereObstacle2");
-	//panda.addObstacle(sphereObstacle);
-	//panda.addObstacle(sphereObstacle2);
- 
-	// Setup start and goal.
-	double pi = 3.1415;
+	// Table top.
+	Box tableTop(tableOrigin, Eigen::Vector3d(0, 0, 0), tableOffsets, "Table Top");
+	panda.addObstacle(tableTop);
 
-	/*
-	// Why is R negative?
-	Eigen::Vector<double, 7> startAngles(0, 0, 0, -pi/4, 0, pi/4, 0);
-	Eigen::Vector<double, 7> goalAngles(0, 0, 0, -pi/4, 0, 0, 0);
-	*/
+	// Table legs.
+	Box tableLeg1(Eigen::Vector3d(1.5 - 0.3 + legOffsets(0), 1 - 0.5 + legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 1");
+	panda.addObstacle(tableLeg1);
+	Box tableLeg2(Eigen::Vector3d(1.5 - 0.3 + legOffsets(0), 1 + 0.5 - legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 2");
+	panda.addObstacle(tableLeg2);
+	Box tableLeg3(Eigen::Vector3d(1.5 + 0.3 - legOffsets(0), 1 - 0.5 + legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 3");
+	panda.addObstacle(tableLeg3);
+	Box tableLeg4(Eigen::Vector3d(1.5 + 0.3 - legOffsets(0), 1 + 0.5 - legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 4");
+	panda.addObstacle(tableLeg4);
 
+	// Obstacle on table.
+	Box boxObstacle(Eigen::Vector3d(1.5, 1, 0.35), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0.1, 0.1, 0.1), "Box Obstacle");
+	panda.addObstacle(boxObstacle);
+
+	// Objects on table to pickup.
+	Sphere object1(Eigen::Vector3d(1.65, 0.65, 0.32), Eigen::Vector3d(0, 0, 0), 0.05, "Object 1");
+	panda.addObstacle(object1);
+	Sphere object2(Eigen::Vector3d(1.65, 1.35, 0.32), Eigen::Vector3d(0, 0, 0), 0.05, "Object 2");
+	panda.addObstacle(object2);
+
+	// Setup start joint angles and transform.
 	Eigen::Vector<double, 7> startAngles(0, 0, 0, -pi / 2, 0, pi / 2, 0);
 	panda.setJointDisplacements(startAngles);
 	Eigen::Matrix4d startTransform = panda.getEndFrameSpatialTransform();
-	Eigen::Matrix4d goalTransform{
-		{1,  0,  0, 0.5545},
-		{0, -1,  0, 0.5},
-		{0,  0, -1, 0.7315},
-		{0,  0,  0, 1}
-	};
 
-	// Debug spatial jacobian.
-	/*
-	const std::vector<RigidBody>& rigidBodies = panda.getRigidBodyChain().getRigidBodies();
-	int iter = 0;
-	for (const RigidBody& body : rigidBodies)
-	{
-		std::cout << "Body: " << iter << "\n";
-		std::cout << "Spatial Jacobian: \n" << body.getSpatialJacobian() << "\n\n";
-		iter++;
-	}
-	*/
+	// Setup goal poses.
+	Eigen::Matrix4d goalTransform1(startTransform);
+	goalTransform1.block(0, 3, 3, 1) = Eigen::Vector3d(0.65, -0.35, 0.5);
+	Eigen::Matrix4d goalTransform2(startTransform);
+	Eigen::Matrix4d goalTransform3(startTransform);
+	goalTransform3.block(0, 3, 3, 1) = Eigen::Vector3d(0.65, 0.35, 0.5);
 
 	// Generate motion plan.
 	auto start = std::chrono::steady_clock::now();
-	panda.motionPlan(goalTransform);
+	panda.motionPlan(goalTransform1);
+	//panda.motionPlan(goalTransform2);
+	panda.motionPlan(goalTransform3);
 	auto stop = std::chrono::steady_clock::now();
 
 	std::cout << "Start Transform: \n" << startTransform << "\n\n";
-	std::cout << "Goal Transform: \n" << goalTransform << "\n\n";
+	std::cout << "Goal Transform: \n" << goalTransform1 << "\n\n";
 	std::cout << "Acheived Transform: \n" << panda.getEndFrameSpatialTransform() << "\n\n";
-
 
 	// Elapsed time.
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
 	std::cout << "Elapsed Time: " << elapsedTime << " ms" << std::endl;
+
+	// ~0.125 ms/iteration, or 8000 hz.
 	
 }
 
@@ -318,14 +322,21 @@ void testMotionPlan()
 //  - Return EndFrame (and others) by reference, not copy.
 //  - Sparse multiplication with zero-padded jacobians.
 //  - Check if initial config is within range of goal to avoid divide by zero/nan issues.
+//	- Eigen AxisAngle(Quaternion) wrong? Representation singularity.
+//  - Pow of DualQuat needs fixing and optimization.
+//  - Investigate why orientation is correct until EE is close to goal position, then goes wild.
+//  - Review dual quaternion power and cleanup.
+//  - Last box doesn't have collision?
+//  - Contact points switch between links and obstacles... how to make consistant?
 // 
 //----------
 
 
 
 //---------
-// Motion Planner:
-// - Created when manip.plan() is called.
-// - Has members of parameters.
-// - I
+// ScLERP Issue: Not interpolating correctly.
+//	- Will either not generate configs between values, or will flip them.
+// 
+// Ideas:
+//	- Storage direction of scalar -> vec or vec -> scalar in Eigen::Quaternion is causing issues with our kinematics.
 //---------

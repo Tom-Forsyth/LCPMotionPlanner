@@ -13,7 +13,8 @@
 MotionPlanner::MotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
 	: m_pSpatialManipulator(pSpatialManipulator), m_goalTransform(goalTransform), m_plan(std::vector<Eigen::VectorXd>{}), 
 	m_endFrame(pSpatialManipulator->getEndFrame()), m_dof(pSpatialManipulator->getDof()), m_currentTransform(m_endFrame.getCurrentSpatialTransform()),
-	m_currentDualQuat(DualQuaternion(m_currentTransform)), m_goalDualQuat(DualQuaternion(m_goalTransform)), m_currentConcat(m_currentDualQuat.toConcat())
+	m_currentDualQuat(DualQuaternion(m_currentTransform)), m_goalDualQuat(DualQuaternion(m_goalTransform)), m_currentConcat(m_currentDualQuat.toConcat()),
+    m_goalConcat(m_goalDualQuat.toConcat())
 {
     m_plan.reserve(m_maxIterations + 1);
 }
@@ -181,6 +182,13 @@ void MotionPlanner::computePlan()
         //m_currentDualQuat = correctedDualQuat;
         m_currentConcat = correctedConcat;
         m_currentTransform = correctedTransform;
+
+        // Check for convergence.
+        double tol = 0.015;
+        if ((m_currentConcat - m_goalConcat).norm() < tol)
+        {
+             running = false;
+        }
 
 		iter++;
 	}
