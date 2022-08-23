@@ -32,6 +32,7 @@ public:
 
 	// Set joint displacements.
 	void setJointDisplacements(const Eigen::VectorXd& jointDisplacements);
+	void setJointDisplacements(const std::vector<double>& jointDisplacements);
 
 	// Get reference to rigid bodies.
 	const std::vector<RigidBody>& getRigidBodies() const;

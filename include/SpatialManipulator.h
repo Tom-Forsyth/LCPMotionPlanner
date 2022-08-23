@@ -21,6 +21,7 @@ public:
 
 	// Set joint displacements.
 	void setJointDisplacements(const Eigen::VectorXd& jointDisplacements);
+	void setJointDisplacements(const std::vector<double>& jointDisplacements);
 
 	// Setup simulation environment.
 	void setupSimulationEnvironment();
@@ -50,4 +51,5 @@ public:
 
 	// Get the current joint displacements.
 	Eigen::VectorXd getJointDisplacements() const;
+  
 };

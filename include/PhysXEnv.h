@@ -33,6 +33,7 @@ private:
 
 	// Saftey distance to start generating collisions.
 	const double m_safetyDistance = 0.05;
+	const double m_safetyDistance = 0.01;
 
 	// Rigid body chain pointer.
 	RigidBodyChain* m_rigidBodyChain;

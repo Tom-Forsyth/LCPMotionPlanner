@@ -2,4 +2,5 @@
 bin/
 build/
 docs/
+ManipulatorCollisionAvoidance.vcxproj.filters
 ManipulatorCollisionAvoidance.vcxproj.user

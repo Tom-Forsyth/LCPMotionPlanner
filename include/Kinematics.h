@@ -25,4 +25,7 @@ namespace Kinematics
 
     // Override Eigen's implementation of Quaternion -> AxisAngle.
     // Need to do this to fix degenerate 0 angle case (representation singularity) with axis [0, 0, 1], not [1, 0, 0].
+    Eigen::Matrix3d skew(const Eigen::Vector3d& w);
+    Eigen::Matrix3d AxisAngletoRot(const Eigen::Vector3d& axis, double angle);
+    Eigen::Matrix<double, 6, 6> adjoint(const Eigen::Matrix4d& G);
 }
