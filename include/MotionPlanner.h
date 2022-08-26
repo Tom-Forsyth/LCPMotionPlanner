@@ -20,7 +20,12 @@ private:
 	double m_tau = 0.01;
 	double m_timeStep = 0.01;
 	double m_safetyDistance = 0.02;
-	double m_maxDisplacementChangeAllowed = 0.001;
+	double m_maxScLERPDisplacementChange = 0.005;
+	double m_maxCollisionDisplacementChange = 0.001;
+	double m_maxTotalDisplacementChange = 0.01;
+	bool m_tauIsMax = false;
+	double m_positionTolerance = 0.02;
+	double m_quatTolerance = 0.02;
 
 	// Manipulator information.
 	RigidBody m_endFrame;
@@ -37,7 +42,7 @@ public:
 	MotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform);
 
 	// Get the change in joint displacements before correction using ScLERP.
-	Eigen::VectorXd getJointDisplacementChange() const;
+	Eigen::VectorXd getJointDisplacementChange();
 	
 	// Get the null space term.
 	double getNullSpaceTerm() const;

@@ -19,7 +19,7 @@ MotionPlanner::MotionPlanner(SpatialManipulator* pSpatialManipulator, const Eige
 }
 
 // Get the change in joint displacements before correction using ScLERP.
-Eigen::VectorXd MotionPlanner::getJointDisplacementChange() const
+Eigen::VectorXd MotionPlanner::getJointDisplacementChange()
 {
 	// Get the joint displacement change from ScLERP.
     Eigen::MatrixXd spatialJacobian = m_endFrame.getSpatialJacobian();
@@ -30,8 +30,19 @@ Eigen::VectorXd MotionPlanner::getJointDisplacementChange() const
 
 	// If displacement change is too large, scale to within the specified maximum.
 	double maxDisplacementChange = displacementChange.cwiseAbs().maxCoeff();
-	double scaleFactor = 1 / (std::max(maxDisplacementChange / m_maxDisplacementChangeAllowed, 1.0));
+	double scaleFactor = 1 / (std::max(maxDisplacementChange / m_maxScLERPDisplacementChange, 1.0));
 	displacementChange *= scaleFactor;
+
+    // Determine if we can increase tau.
+    if (scaleFactor == 1 && !m_tauIsMax)
+    {
+        m_tau *= 1.1;
+        if (m_tau > 1)
+        {
+            m_tau = 1;
+            m_tauIsMax = true;
+        }
+    }
 
 	return displacementChange;
 }
@@ -126,10 +137,17 @@ Eigen::VectorXd MotionPlanner::getCollisionDisplacementChange(const Eigen::Vecto
 // Add joint displacements and ensure they respect the linearization assumption.
 Eigen::VectorXd MotionPlanner::getTotalDisplacementChange(const Eigen::VectorXd& displacementChange, const Eigen::VectorXd& collisionDisplacementChange)
 {
+    // Adjust total step to respect the maximum collision displacement change.
+    double maxCollisionDisplacement = collisionDisplacementChange.cwiseAbs().maxCoeff();
+    double collisionScaleFactor = 1 / (std::max(maxCollisionDisplacement / m_maxCollisionDisplacementChange, 1.0));
     Eigen::VectorXd totalDisplacementChange = displacementChange + (getNullSpaceTerm() * collisionDisplacementChange);
-    double maxDisplacement = totalDisplacementChange.cwiseAbs().maxCoeff();
-    double scaleFactor = 1 / (std::max(maxDisplacement / m_maxDisplacementChangeAllowed, 1.0));
-    totalDisplacementChange *= scaleFactor;
+    totalDisplacementChange *= collisionScaleFactor;
+    
+    // Check that this is within the total displacement change limits.
+    double maxTotalDisplacement = totalDisplacementChange.cwiseAbs().maxCoeff();
+    double totalScaleFactor = 1 / (std::max(maxTotalDisplacement / m_maxTotalDisplacementChange, 1.0));
+    totalDisplacementChange *= totalScaleFactor;
+
     return totalDisplacementChange;
 }
 
@@ -169,12 +187,10 @@ void MotionPlanner::computePlan()
         m_currentTransform = correctedTransform;
 
         // Check for convergence.
-        double posTol = 0.015;
-        double quatTol = 0.015;
         Eigen::Vector<double, 7> concatError = m_goalConcat - m_currentConcat;
-        if (concatError.head(3).norm() < posTol)
+        if (concatError.head(3).norm() < m_positionTolerance)
         {
-            if (concatError.tail(4).norm() < quatTol)
+            if (concatError.tail(4).norm() < m_quatTolerance)
             {
                 running = false;
             }
