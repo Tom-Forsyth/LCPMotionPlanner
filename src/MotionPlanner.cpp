@@ -158,25 +158,26 @@ void MotionPlanner::computePlan()
         m_plan.emplace_back(nextJointDisplacements);
         m_pSpatialManipulator->setJointDisplacements(nextJointDisplacements);
 
-        // Update end frame.
-        m_endFrame = m_pSpatialManipulator->getEndFrame();
-
         // Get achieved pose after forward kinematics and update variables.
         Eigen::Matrix4d correctedTransform = m_pSpatialManipulator->getEndFrameSpatialTransform();
         DualQuaternion correctedDualQuat(correctedTransform);
         Eigen::Vector<double, 7> correctedConcat = correctedDualQuat.toConcat();
 
         // Store old variables and restart loop.
-        m_currentDualQuat = m_currentDualQuat.ScLERP(m_goalTransform, m_tau);
-        //m_currentDualQuat = correctedDualQuat;
+        m_currentDualQuat = correctedDualQuat;
         m_currentConcat = correctedConcat;
         m_currentTransform = correctedTransform;
 
         // Check for convergence.
-        double tol = 0.015;
-        if ((m_currentConcat - m_goalConcat).norm() < tol)
+        double posTol = 0.015;
+        double quatTol = 0.015;
+        Eigen::Vector<double, 7> concatError = m_goalConcat - m_currentConcat;
+        if (concatError.head(3).norm() < posTol)
         {
-             running = false;
+            if (concatError.tail(4).norm() < quatTol)
+            {
+                running = false;
+            }
         }
 
 		iter++;

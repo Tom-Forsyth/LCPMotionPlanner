@@ -76,9 +76,30 @@ void testMotionPlan()
 
 	// Setup goal poses.
 	Eigen::Matrix4d goalTransform1(startTransform);
-	goalTransform1.block(0, 3, 3, 1) = Eigen::Vector3d(0.65, -0.35, 0.5);
 	Eigen::Matrix4d goalTransform2(startTransform);
-	goalTransform2.block(0, 3, 3, 1) = Eigen::Vector3d(0.65, 0.35, 0.5);
+	const int plan = 0;
+
+	// Pure translation.
+	if (plan == 0)
+	{
+		goalTransform1.block(0, 3, 3, 1) = Eigen::Vector3d(0.65, -0.35, 0.5);
+		goalTransform2.block(0, 3, 3, 1) = Eigen::Vector3d(0.65, 0.35, 0.5);
+	}
+
+	// Pure rotation.
+	if (plan == 1)
+	{
+		goalTransform1.block(0, 0, 3, 3) = Eigen::Matrix3d{
+			{1, 0, 0},
+			{0, 1, 0},
+			{0, 0, 1}
+		};
+		goalTransform2.block(0, 0, 3, 3) = Eigen::Matrix3d{
+			{1, 0,  0},
+			{0, 0, -1},
+			{0, 1,  0}
+		};
+	}
 
 	// Generate motion plan.
 	auto start = std::chrono::steady_clock::now();
@@ -94,7 +115,7 @@ void testMotionPlan()
 	std::cout << "Goal Transform 2: \n" << goalTransform2 << "\n\n";
 	std::cout << "Acheived Transform 2: \n" << achievedTransform2 << "\n\n";
 
-	// Elapsed time. ~0.125 ms/iteration, or 8000 hz.
+	// Elapsed time.
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
 	std::cout << "Elapsed Time: " << elapsedTime << " ms" << std::endl;
 }
