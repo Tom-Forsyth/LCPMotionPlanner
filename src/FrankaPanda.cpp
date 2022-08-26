@@ -126,14 +126,6 @@ void FrankaPanda::initRigidBodyChain()
 	RigidBody link7(joint7, transform7);
 
 	// Tip frame.
-	/*
-	Eigen::Matrix4d transformTip = Eigen::Matrix4d{
-		{1,  0,  0, 0.088},
-		{0, -1,  0,     0},
-		{0,  0, -1, 0.926},
-		{0,  0,  0,     1}
-	};
-	*/
 	Eigen::Matrix4d transformTip = transform7;
 	Eigen::Vector3d localAxisTip(0, 0, 0);
 	Eigen::Vector3d spatialAxisTip = transformTip.block(0, 0, 3, 3) * localAxisTip;

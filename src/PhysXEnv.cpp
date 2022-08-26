@@ -11,8 +11,6 @@
 #include "SpatialManipulator.h"
 #include "RigidBodyChain.h"
 #include "CollisionAggregate.h"
-#include <iostream>
-
 
 // Default constructor.
 PhysXEnv::PhysXEnv()

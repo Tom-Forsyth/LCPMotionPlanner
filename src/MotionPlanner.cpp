@@ -7,7 +7,6 @@
 #include <Eigen/Dense>
 #include <vector>
 #include <map>
-#include <iostream>
 
 // Constructor.
 MotionPlanner::MotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
@@ -58,15 +57,7 @@ Eigen::VectorXd MotionPlanner::getCollisionDisplacementChange(const Eigen::Vecto
             const ContactPoint& contactPoint = body.getContactPoint();
             if (contactPoint.m_isActive)
             {
-                contactPoints.insert({ bodyIndex, contactPoint });
-                
-                //std::cout << "Body Index: " << bodyIndex << "\n";
-                //std::cout << "Distance: " << contactPoint.m_distance << "\n";
-                //std::cout << "Point: " << contactPoint.m_point.transpose() << "\n";
-                //std::cout << "Normal: " << contactPoint.m_normal.transpose() << "\n";
-                //std::cout << "Spatial Jacobian: \n" << body.getSpatialJacobian() << "\n";
-                //std::cout << "Contact Jacobian: \n" << body.getContactJacobian() << "\n";
-                
+                contactPoints.insert({ bodyIndex, contactPoint });            
             }
         }
         bodyIndex++;
@@ -158,8 +149,6 @@ void MotionPlanner::computePlan()
 
 		// Formulate and solve LCP to get the compensating velocities and compute joint displacement change.
         Eigen::VectorXd collisionDisplacementChange = getCollisionDisplacementChange(displacementChange);
-        //std::cout << "Iter " << iter << ": " << collisionDisplacementChange.transpose() << "\n";
-        //Eigen::VectorXd collisionDisplacementChange = Eigen::VectorXd::Zero(m_dof);
 
         // Add joint displacements and ensure they respect the linearization assumption.
         Eigen::VectorXd totalDisplacementChange = getTotalDisplacementChange(displacementChange, collisionDisplacementChange);
@@ -192,6 +181,4 @@ void MotionPlanner::computePlan()
 
 		iter++;
 	}
-
-
 }

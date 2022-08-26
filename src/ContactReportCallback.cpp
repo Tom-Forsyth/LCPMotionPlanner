@@ -2,9 +2,7 @@
 #include "PxPhysicsAPI.h"
 #include <vector>
 #include "ContactPoint.h"
-#include <iostream>
 #include <Eigen/Dense>
-#include <iostream>
 
 void ContactReportCallback::onConstraintBreak(physx::PxConstraintInfo* constraints, physx::PxU32 count)
 {

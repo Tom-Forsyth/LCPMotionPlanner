@@ -6,7 +6,6 @@
 #include "Box.h"
 #include <vector>
 #include "Kinematics.h"
-#include <iostream>
 
 // Constructor.
 RigidBody::RigidBody(const Joint& joint, const Eigen::Matrix4d& referenceSpatialTransform)

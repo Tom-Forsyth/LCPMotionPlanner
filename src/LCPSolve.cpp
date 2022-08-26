@@ -1,4 +1,3 @@
-#include <iostream>
 #include <cmath>
 #include <Eigen/Dense>
 #include "LCPSolve.h"
