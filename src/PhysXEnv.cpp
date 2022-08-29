@@ -26,9 +26,11 @@ void PhysXEnv::init()
 	m_foundation = PxCreateFoundation(PX_PHYSICS_VERSION, m_allocator, m_errorCallback);
 
 	// Initialize PVD.
+	#ifndef NDEBUG
 	m_pvd = physx::PxCreatePvd(*m_foundation);
 	physx::PxPvdTransport* transport = physx::PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
 	m_pvd->connect(*transport, physx::PxPvdInstrumentationFlag::eALL);
+	#endif
 
 	// Create physics factory class.
 	m_toleranceScale.length = 0.1f;
