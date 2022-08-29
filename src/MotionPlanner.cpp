@@ -7,7 +7,6 @@
 #include <Eigen/Dense>
 #include <vector>
 #include <map>
-#include <iostream>
 
 // Constructor.
 MotionPlanner::MotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
@@ -20,7 +19,7 @@ MotionPlanner::MotionPlanner(SpatialManipulator* pSpatialManipulator, const Eige
 }
 
 // Get the change in joint displacements before correction using ScLERP.
-Eigen::VectorXd MotionPlanner::getJointDisplacementChange() const
+Eigen::VectorXd MotionPlanner::getJointDisplacementChange()
 {
 	// Get the joint displacement change from ScLERP.
     Eigen::MatrixXd spatialJacobian = m_endFrame.getSpatialJacobian();
@@ -31,8 +30,19 @@ Eigen::VectorXd MotionPlanner::getJointDisplacementChange() const
 
 	// If displacement change is too large, scale to within the specified maximum.
 	double maxDisplacementChange = displacementChange.cwiseAbs().maxCoeff();
-	double scaleFactor = 1 / (std::max(maxDisplacementChange / m_maxDisplacementChangeAllowed, 1.0));
+	double scaleFactor = 1 / (std::max(maxDisplacementChange / m_maxScLERPDisplacementChange, 1.0));
 	displacementChange *= scaleFactor;
+
+    // Determine if we can increase tau.
+    if (scaleFactor == 1 && !m_tauIsMax)
+    {
+        m_tau *= 1.1;
+        if (m_tau > 1)
+        {
+            m_tau = 1;
+            m_tauIsMax = true;
+        }
+    }
 
 	return displacementChange;
 }
@@ -58,15 +68,7 @@ Eigen::VectorXd MotionPlanner::getCollisionDisplacementChange(const Eigen::Vecto
             const ContactPoint& contactPoint = body.getContactPoint();
             if (contactPoint.m_isActive)
             {
-                contactPoints.insert({ bodyIndex, contactPoint });
-                
-                //std::cout << "Body Index: " << bodyIndex << "\n";
-                //std::cout << "Distance: " << contactPoint.m_distance << "\n";
-                //std::cout << "Point: " << contactPoint.m_point.transpose() << "\n";
-                //std::cout << "Normal: " << contactPoint.m_normal.transpose() << "\n";
-                //std::cout << "Spatial Jacobian: \n" << body.getSpatialJacobian() << "\n";
-                //std::cout << "Contact Jacobian: \n" << body.getContactJacobian() << "\n";
-                
+                contactPoints.insert({ bodyIndex, contactPoint });            
             }
         }
         bodyIndex++;
@@ -135,10 +137,17 @@ Eigen::VectorXd MotionPlanner::getCollisionDisplacementChange(const Eigen::Vecto
 // Add joint displacements and ensure they respect the linearization assumption.
 Eigen::VectorXd MotionPlanner::getTotalDisplacementChange(const Eigen::VectorXd& displacementChange, const Eigen::VectorXd& collisionDisplacementChange)
 {
+    // Adjust total step to respect the maximum collision displacement change.
+    double maxCollisionDisplacement = collisionDisplacementChange.cwiseAbs().maxCoeff();
+    double collisionScaleFactor = 1 / (std::max(maxCollisionDisplacement / m_maxCollisionDisplacementChange, 1.0));
     Eigen::VectorXd totalDisplacementChange = displacementChange + (getNullSpaceTerm() * collisionDisplacementChange);
-    double maxDisplacement = totalDisplacementChange.cwiseAbs().maxCoeff();
-    double scaleFactor = 1 / (std::max(maxDisplacement / m_maxDisplacementChangeAllowed, 1.0));
-    totalDisplacementChange *= scaleFactor;
+    totalDisplacementChange *= collisionScaleFactor;
+    
+    // Check that this is within the total displacement change limits.
+    double maxTotalDisplacement = totalDisplacementChange.cwiseAbs().maxCoeff();
+    double totalScaleFactor = 1 / (std::max(maxTotalDisplacement / m_maxTotalDisplacementChange, 1.0));
+    totalDisplacementChange *= totalScaleFactor;
+
     return totalDisplacementChange;
 }
 
@@ -158,8 +167,6 @@ void MotionPlanner::computePlan()
 
 		// Formulate and solve LCP to get the compensating velocities and compute joint displacement change.
         Eigen::VectorXd collisionDisplacementChange = getCollisionDisplacementChange(displacementChange);
-        //std::cout << "Iter " << iter << ": " << collisionDisplacementChange.transpose() << "\n";
-        //Eigen::VectorXd collisionDisplacementChange = Eigen::VectorXd::Zero(m_dof);
 
         // Add joint displacements and ensure they respect the linearization assumption.
         Eigen::VectorXd totalDisplacementChange = getTotalDisplacementChange(displacementChange, collisionDisplacementChange);
@@ -169,29 +176,26 @@ void MotionPlanner::computePlan()
         m_plan.emplace_back(nextJointDisplacements);
         m_pSpatialManipulator->setJointDisplacements(nextJointDisplacements);
 
-        // Update end frame.
-        m_endFrame = m_pSpatialManipulator->getEndFrame();
-
         // Get achieved pose after forward kinematics and update variables.
         Eigen::Matrix4d correctedTransform = m_pSpatialManipulator->getEndFrameSpatialTransform();
         DualQuaternion correctedDualQuat(correctedTransform);
         Eigen::Vector<double, 7> correctedConcat = correctedDualQuat.toConcat();
 
         // Store old variables and restart loop.
-        m_currentDualQuat = m_currentDualQuat.ScLERP(m_goalTransform, m_tau);
-        //m_currentDualQuat = correctedDualQuat;
+        m_currentDualQuat = correctedDualQuat;
         m_currentConcat = correctedConcat;
         m_currentTransform = correctedTransform;
 
         // Check for convergence.
-        double tol = 0.015;
-        if ((m_currentConcat - m_goalConcat).norm() < tol)
+        Eigen::Vector<double, 7> concatError = m_goalConcat - m_currentConcat;
+        if (concatError.head(3).norm() < m_positionTolerance)
         {
-             running = false;
+            if (concatError.tail(4).norm() < m_quatTolerance)
+            {
+                running = false;
+            }
         }
 
 		iter++;
 	}
-
-
 }

@@ -126,15 +126,12 @@ void FrankaPanda::initRigidBodyChain()
 	RigidBody link7(joint7, transform7);
 
 	// Tip frame.
-	/*
 	Eigen::Matrix4d transformTip = Eigen::Matrix4d{
-		{1,  0,  0, 0.088},
-		{0, -1,  0,     0},
-		{0,  0, -1, 0.926},
-		{0,  0,  0,     1}
+		{1,  0,  0, 0.0880},
+		{0, -1,  0,      0},
+		{0,  0, -1,  0.926},
+		{0,  0,  0,      1}
 	};
-	*/
-	Eigen::Matrix4d transformTip = transform7;
 	Eigen::Vector3d localAxisTip(0, 0, 0);
 	Eigen::Vector3d spatialAxisTip = transformTip.block(0, 0, 3, 3) * localAxisTip;
 	Joint jointTip(Joint::FIXED, spatialAxisTip, transformTip.block(0, 3, 3, 1));
@@ -205,8 +202,12 @@ void FrankaPanda::initRigidBodyChain()
 		Sphere link6_sphere0(Eigen::Vector3d(0.088/2, 0.06/2, 0), Eigen::Vector3d(0, 0, 0), 0.06, "link6_sphere0");
 		link6.addCollider(link6_sphere0);
 
-		Box link7_box0(Eigen::Vector3d(0, 0, 0.1070 - (0.02/2)), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0.05, 0.05, 0.02), "link7_box0");
+		Box link7_box0(Eigen::Vector3d(0, 0, 0.1070 - (0.02)), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0.05, 0.05, 0.02), "link7_box0");
 		link7.addCollider(link7_box0);
+
+		Sphere linkTip_sphere0(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), 0.01, "linkTip_sphere0");
+		linkTip.addCollider(linkTip_sphere0);
+
 	}
 
 

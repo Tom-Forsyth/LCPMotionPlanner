@@ -4,7 +4,6 @@
 #include "Kinematics.h"
 #include <vector>
 #include <Eigen/Dense>
-#include <iostream>
 
 // Default constructor.
 RigidBodyChain::RigidBodyChain()
