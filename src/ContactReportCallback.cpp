@@ -28,9 +28,11 @@ void ContactReportCallback::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 
 	PX_UNUSED(count);
 }
 
-void ContactReportCallback::onAdvance(const physx::PxRigidBody* const*, const physx::PxTransform*, const physx::PxU32)
+void ContactReportCallback::onAdvance(const physx::PxRigidBody* const* rigidBody, const physx::PxTransform* transform, const physx::PxU32 count)
 {
-
+	PX_UNUSED(rigidBody);
+	PX_UNUSED(transform);
+	PX_UNUSED(count);
 }
 
 void ContactReportCallback::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
