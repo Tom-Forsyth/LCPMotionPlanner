@@ -1,16 +1,19 @@
 #pragma once
 
-class DualNumber {
-public:
-    // Attributes.
-    double m_real;
-    double m_dual;
+namespace CollisionAvoidance
+{
+    class DualNumber {
+    public:
+        // Attributes.
+        double m_real;
+        double m_dual;
 
-    // Constructors.
-    DualNumber();
-    DualNumber(const double& real, const double& dual);
+        // Constructors.
+        DualNumber();
+        DualNumber(const double& real, const double& dual);
 
-    // Methods.
-    DualNumber operator+(const DualNumber& dualNumber) const;
-    DualNumber operator*(const DualNumber& dualNumber) const;
-};
+        // Methods.
+        DualNumber operator+(const DualNumber& dualNumber) const;
+        DualNumber operator*(const DualNumber& dualNumber) const;
+    };
+}

@@ -2,12 +2,15 @@
 
 // Flags to determine object type for collision filtering.
 
-struct ObjectType
+namespace CollisionAvoidance
 {
-	enum Enum {
-		eUnassigned,
-		eRobotGeometry,
-		eObstacle,
-		eVisual
+	struct ObjectType
+	{
+		enum Enum {
+			eUnassigned,
+			eRobotGeometry,
+			eObstacle,
+			eVisual
+		};
 	};
-};
+}
