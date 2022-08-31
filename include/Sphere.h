@@ -10,6 +10,6 @@ public:
 	double m_radius;
 
 	// Origin + RPY constructor.
-	Sphere(const Eigen::Vector3d& origin, const Eigen::Vector3d& rollPitchYaw, double radius, const std::string& name);
+	Sphere(const Eigen::Vector3d& origin, const Eigen::Vector3d& rollPitchYaw, double radius, const std::string& name, int objectType);
 
 };

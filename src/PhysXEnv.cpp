@@ -11,6 +11,7 @@
 #include "SpatialManipulator.h"
 #include "RigidBodyChain.h"
 #include "CollisionAggregate.h"
+#include "ObjectType.h"
 
 // Default constructor.
 PhysXEnv::PhysXEnv()
@@ -46,6 +47,7 @@ void PhysXEnv::init()
 	physx::PxSceneDesc sceneDesc(m_physics->getTolerancesScale());
 	sceneDesc.cpuDispatcher = m_dispatcher;
 	sceneDesc.filterShader = contactReportFilterShader; // Must use this filter.
+	sceneDesc.kineKineFilteringMode = physx::PxPairFilteringMode::eKEEP;
 	sceneDesc.staticKineFilteringMode = physx::PxPairFilteringMode::eKEEP;
 	sceneDesc.simulationEventCallback = &m_contactReportCallback; // Contact callback.
 	m_scene = m_physics->createScene(sceneDesc);
@@ -156,9 +158,15 @@ physx::PxRigidDynamic* PhysXEnv::createCollisionActor(Sphere& sphere, const Eige
 	// Create RigidDynamic kinematic actor.
 	physx::PxRigidDynamic* actor = m_physics->createRigidDynamic(transform);
 	actor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
-	//actor->setName(sphere.getName());
+	actor->setName(sphere.getName().c_str());
 	physx::PxShape* shape = m_physics->createShape(getPxGeometry(sphere), *m_material, true);
 	shape->setContactOffset(static_cast<physx::PxReal>(m_safetyDistance / 2));
+
+	// Set the object type as robot geometry for collision filtering.
+	physx::PxFilterData filterData;
+	filterData.word0 = ObjectType::eRobotGeometry;
+	shape->setSimulationFilterData(filterData);
+
 	actor->attachShape(*shape);
 	shape->release();
 
@@ -180,9 +188,15 @@ physx::PxRigidDynamic* PhysXEnv::createCollisionActor(Capsule& capsule, const Ei
 	// Create RigidDynamic kinematic actor.
 	physx::PxRigidDynamic* actor = m_physics->createRigidDynamic(transform);
 	actor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
-	//actor->setName(sphere.getName());
+	actor->setName(capsule.getName().c_str());
 	physx::PxShape* shape = m_physics->createShape(getPxGeometry(capsule), *m_material, true);
 	shape->setContactOffset(static_cast<physx::PxReal>(m_safetyDistance / 2));
+
+	// Set the object type as robot geometry for collision filtering.
+	physx::PxFilterData filterData;
+	filterData.word0 = ObjectType::eRobotGeometry;
+	shape->setSimulationFilterData(filterData);
+
 	actor->attachShape(*shape);
 	shape->release();
 
@@ -204,9 +218,15 @@ physx::PxRigidDynamic* PhysXEnv::createCollisionActor(Box& box, const Eigen::Mat
 	// Create RigidDynamic kinematic actor.
 	physx::PxRigidDynamic* actor = m_physics->createRigidDynamic(transform);
 	actor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
-	//actor->setName(sphere.getName());
+	actor->setName(box.getName().c_str());
 	physx::PxShape* shape = m_physics->createShape(getPxGeometry(box), *m_material, true);
 	shape->setContactOffset(static_cast<physx::PxReal>(m_safetyDistance / 2));
+
+	// Set the object type as robot geometry for collision filtering.
+	physx::PxFilterData filterData;
+	filterData.word0 = ObjectType::eRobotGeometry;
+	shape->setSimulationFilterData(filterData);
+
 	actor->attachShape(*shape);
 	shape->release();
 
@@ -227,8 +247,15 @@ void PhysXEnv::createObstacleActor(const Sphere& sphere)
 
 	// Create RigidStatic actor.
 	physx::PxRigidStatic* actor = m_physics->createRigidStatic(transform);
+	actor->setName(sphere.getName().c_str());
 	physx::PxShape* shape = m_physics->createShape(getPxGeometry(sphere), *m_material, true);
 	shape->setContactOffset(static_cast<physx::PxReal>(m_safetyDistance / 2));
+
+	// Set the object type as an obstacle for collision filtering.
+	physx::PxFilterData filterData;
+	filterData.word0 = ObjectType::eObstacle;
+	shape->setSimulationFilterData(filterData);
+
 	actor->attachShape(*shape);
 	shape->release();
 
@@ -246,8 +273,15 @@ void PhysXEnv::createObstacleActor(const Capsule& capsule)
 
 	// Create RigidStatic actor.
 	physx::PxRigidStatic* actor = m_physics->createRigidStatic(transform);
+	actor->setName(capsule.getName().c_str());
 	physx::PxShape* shape = m_physics->createShape(getPxGeometry(capsule), *m_material, true);
 	shape->setContactOffset(static_cast<physx::PxReal>(m_safetyDistance / 2));
+
+	// Set the object type as an obstacle for collision filtering.
+	physx::PxFilterData filterData;
+	filterData.word0 = ObjectType::eObstacle;
+	shape->setSimulationFilterData(filterData);
+
 	actor->attachShape(*shape);
 	shape->release();
 
@@ -265,8 +299,15 @@ void PhysXEnv::createObstacleActor(const Box& box)
 
 	// Create RigidStatic actor.
 	physx::PxRigidStatic* actor = m_physics->createRigidStatic(transform);
+	actor->setName(box.getName().c_str());
 	physx::PxShape* shape = m_physics->createShape(getPxGeometry(box), *m_material, true);
 	shape->setContactOffset(static_cast<physx::PxReal>(m_safetyDistance / 2));
+
+	// Set the object type as an obstacle for collision filtering.
+	physx::PxFilterData filterData;
+	filterData.word0 = ObjectType::eObstacle;
+	shape->setSimulationFilterData(filterData);
+
 	actor->attachShape(*shape);
 	shape->release();
 

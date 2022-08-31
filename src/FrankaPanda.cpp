@@ -6,6 +6,7 @@
 #include "Sphere.h"
 #include "Capsule.h"
 #include "Box.h"
+#include "ObjectType.h"
 #include <Eigen/Dense>
 
 // Default constructor.
@@ -141,32 +142,34 @@ void FrankaPanda::initRigidBodyChain()
 	/* Create Visual Model of Frames */
 	if (viewFrames)
 	{
+		int objectType = ObjectType::eVisual;
 		double visRad = 0.025;
-		Sphere link0_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), visRad, "link0_origin");
+
+		Sphere link0_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), visRad, "link0_origin", objectType);
 		link0.addCollider(link0_origin);
 
-		Box link1_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link1_origin");
+		Box link1_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link1_origin", objectType);
 		link1.addCollider(link0_origin);
 
-		Box link2_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link2_origin");
+		Box link2_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link2_origin", objectType);
 		link2.addCollider(link2_origin);
 
-		Box link3_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link3_origin");
+		Box link3_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link3_origin", objectType);
 		link3.addCollider(link3_origin);
 
-		Box link4_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link4_origin");
+		Box link4_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link4_origin", objectType);
 		link4.addCollider(link4_origin);
 
-		Box link5_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link5_origin");
+		Box link5_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link5_origin", objectType);
 		link5.addCollider(link5_origin);
 
-		Box link6_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link6_origin");
+		Box link6_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link6_origin", objectType);
 		link6.addCollider(link6_origin);
 
-		Box link7_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link7_origin");
+		Box link7_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link7_origin", objectType);
 		link7.addCollider(link7_origin);
 
-		Sphere linkTip_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), visRad, "linkTip_origin");
+		Sphere linkTip_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), visRad, "linkTip_origin", objectType);
 		linkTip.addCollider(linkTip_origin);
 	}
 
@@ -174,38 +177,40 @@ void FrankaPanda::initRigidBodyChain()
 	/* Create Colliders */
 	if (viewCollision)
 	{
-		Sphere link0_sphere0(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), 0.15, "link0_sphere0");
+		int objectType = ObjectType::eRobotGeometry;
+
+		Sphere link0_sphere0(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), 0.15, "link0_sphere0", objectType);
 		link0.addCollider(link0_sphere0);
 
-		Capsule link1_capsule0(Eigen::Vector3d(0, 0, -0.333 / 2), Eigen::Vector3d(0, pi / 2, 0), (0.333 - 0.06 * 2) / 2, 0.06, "link1_capsule0");
+		Capsule link1_capsule0(Eigen::Vector3d(0, 0, -0.333 / 2), Eigen::Vector3d(0, pi / 2, 0), (0.333 - 0.06 * 2) / 2, 0.06, "link1_capsule0", objectType);
 		link1.addCollider(link1_capsule0);
 
-		Capsule link1_capsule1(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, pi/2), (0.283 - .06 * 2) / 2, 0.06, "link1_capsule1");
+		Capsule link1_capsule1(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, pi/2), (0.283 - .06 * 2) / 2, 0.06, "link1_capsule1", objectType);
 		link1.addCollider(link1_capsule1);
 
-		Capsule link2_capsule0(Eigen::Vector3d(0, -.316/2, 0), Eigen::Vector3d(0, 0, pi/2), (0.316 - .06 * 2) / 2, 0.06, "link2_capsule0");
+		Capsule link2_capsule0(Eigen::Vector3d(0, -.316/2, 0), Eigen::Vector3d(0, 0, pi/2), (0.316 - .06 * 2) / 2, 0.06, "link2_capsule0", objectType);
 		link2.addCollider(link2_capsule0);
 
 		// 0.0825?
-		Capsule link3_capsule0(Eigen::Vector3d(0.0825, 0, 0), Eigen::Vector3d(0, 0, pi/2), (0.220 - .06 * 2) / 2, 0.06, "link3_capsule0");
+		Capsule link3_capsule0(Eigen::Vector3d(0.0825, 0, 0), Eigen::Vector3d(0, 0, pi/2), (0.220 - .06 * 2) / 2, 0.06, "link3_capsule0", objectType);
 		link3.addCollider(link3_capsule0);
 
-		Capsule link4_capsule0(Eigen::Vector3d(-0.0825, 0.384/2, 0), Eigen::Vector3d(0, 0, pi/2), (0.384 - .06 * 2) / 2, 0.06, "link4_capsule0");
+		Capsule link4_capsule0(Eigen::Vector3d(-0.0825, 0.384/2, 0), Eigen::Vector3d(0, 0, pi/2), (0.384 - .06 * 2) / 2, 0.06, "link4_capsule0", objectType);
 		link4.addCollider(link4_capsule0);
 
-		Capsule link5_capsule0(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, pi/2), (0.2 - .06 * 2) / 2, 0.06, "link5_capsule0");
+		Capsule link5_capsule0(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, pi/2), (0.2 - .06 * 2) / 2, 0.06, "link5_capsule0", objectType);
 		link5.addCollider(link5_capsule0);
 
-		Capsule link6_capsule0(Eigen::Vector3d(0.088, 0, 0), Eigen::Vector3d(0, 0, pi/2), ((0.107*2) - .06 * 2) / 2, 0.06, "link6_capsule0");
+		Capsule link6_capsule0(Eigen::Vector3d(0.088, 0, 0), Eigen::Vector3d(0, 0, pi/2), ((0.107*2) - .06 * 2) / 2, 0.06, "link6_capsule0", objectType);
 		link6.addCollider(link6_capsule0);
 
-		Sphere link6_sphere0(Eigen::Vector3d(0.088/2, 0.06/2, 0), Eigen::Vector3d(0, 0, 0), 0.06, "link6_sphere0");
+		Sphere link6_sphere0(Eigen::Vector3d(0.088/2, 0.06/2, 0), Eigen::Vector3d(0, 0, 0), 0.06, "link6_sphere0", objectType);
 		link6.addCollider(link6_sphere0);
 
-		Box link7_box0(Eigen::Vector3d(0, 0, 0.1070 - (0.02)), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0.05, 0.05, 0.02), "link7_box0");
+		Box link7_box0(Eigen::Vector3d(0, 0, 0.1070 - (0.02)), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0.05, 0.05, 0.02), "link7_box0", objectType);
 		link7.addCollider(link7_box0);
 
-		Sphere linkTip_sphere0(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), 0.01, "linkTip_sphere0");
+		Sphere linkTip_sphere0(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), 0.01, "linkTip_sphere0", objectType);
 		linkTip.addCollider(linkTip_sphere0);
 
 	}

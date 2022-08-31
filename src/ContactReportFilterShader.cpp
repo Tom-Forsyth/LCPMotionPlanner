@@ -1,22 +1,36 @@
 #include "ContactReportFilterShader.h"
 #include "PxPhysicsAPI.h"
+#include "ObjectType.h"
 
 // Collision pair filter shader.
 physx::PxFilterFlags contactReportFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
 	physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
 	physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
 {
+	// Unused parameters.
 	PX_UNUSED(attributes0);
 	PX_UNUSED(attributes1);
-	PX_UNUSED(filterData0);
-	PX_UNUSED(filterData1);
 	PX_UNUSED(constantBlockSize);
 	PX_UNUSED(constantBlock);
 
-	// all initial and persisting reports for everything, with per-point data
-	pairFlags = physx::PxPairFlag::eSOLVE_CONTACT | physx::PxPairFlag::eDETECT_DISCRETE_CONTACT
-		| physx::PxPairFlag::eNOTIFY_TOUCH_FOUND
-		| physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS
-		| physx::PxPairFlag::eNOTIFY_CONTACT_POINTS;
+	// Determine the type of the objects.
+	const uint32_t objectType0 = filterData0.word0;
+	const uint32_t objectType1 = filterData1.word0;
+
+	// Ignore self collisions of the robot.
+	if ((objectType0 == ObjectType::eRobotGeometry) && (objectType1 == ObjectType::eRobotGeometry))
+	{
+		return physx::PxFilterFlag::eKILL;
+	}
+
+	// Ignore interactions that do not involve the robot.
+	if ((objectType0 != ObjectType::eRobotGeometry) && (objectType1 != ObjectType::eRobotGeometry))
+	{
+		return physx::PxFilterFlag::eKILL;
+	}
+
+	// For the remaining pairs, we want to generate contact information, but not resolve.
+	pairFlags = physx::PxPairFlag::eDETECT_DISCRETE_CONTACT | physx::PxPairFlag::eNOTIFY_CONTACT_POINTS |
+				physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS | physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
 	return physx::PxFilterFlag::eDEFAULT;
 }

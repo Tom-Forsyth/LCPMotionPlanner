@@ -7,6 +7,7 @@
 - Contact points switch between links and obstacles... how to make consistant?
 
 ## Review/Refactor/Optimize
+- ContactPoint is heap allocated, create better structure to avoid this.
 - B Matrix.
 - Dynamic polymorphism for shapes rather than function overloading.
 - Review structure and program flow.

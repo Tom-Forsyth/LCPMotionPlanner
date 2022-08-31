@@ -4,8 +4,9 @@
 #include "ContactPoint.h"
 
 // Origin + RPY constructor.
-Shape::Shape(const Eigen::Vector3d& origin, const Eigen::Vector3d& rollPitchYaw, const std::string& name)
-	: m_origin(origin), m_rollPitchYaw(rollPitchYaw), m_transform(Eigen::Matrix4d::Identity()), m_name(name)
+Shape::Shape(const Eigen::Vector3d& origin, const Eigen::Vector3d& rollPitchYaw, const std::string& name, int objectType)
+	: m_origin(origin), m_rollPitchYaw(rollPitchYaw), m_transform(Eigen::Matrix4d::Identity()), 
+	m_name(name), m_objectType(objectType)
 {
 	computeTransform();
 	m_contactPoint = new ContactPoint;
@@ -40,4 +41,10 @@ Eigen::Matrix4d Shape::getTransform() const
 std::string Shape::getName() const
 {
 	return m_name;
+}
+
+// Get the object's type.
+int Shape::getObjectType() const
+{
+	return m_objectType;
 }
