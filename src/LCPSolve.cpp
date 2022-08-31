@@ -1,6 +1,6 @@
+#include "LCPSolve.h"
 #include <cmath>
 #include <Eigen/Dense>
-#include "LCPSolve.h"
 
 using namespace Eigen;
 using namespace std;

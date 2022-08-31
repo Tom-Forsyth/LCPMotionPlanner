@@ -94,11 +94,11 @@ Eigen::VectorXd MotionPlanner::getCollisionDisplacementChange(const Eigen::Vecto
 
         // Loop over again to form entire row of M.
         int col = 0;
-        for (const auto& pair : contactPoints)
+        for (const auto& pair2 : contactPoints)
         {
-            Eigen::MatrixXd colContactJacobian = rigidBodies[pair.first].getContactJacobian();
+            Eigen::MatrixXd colContactJacobian = rigidBodies[pair2.first].getContactJacobian();
             Eigen::VectorXd colPaddedNormal = Eigen::Vector<double, 6>::Zero();
-            colPaddedNormal.head(3) = pair.second.m_normal;
+            colPaddedNormal.head(3) = pair2.second.m_normal;
             M(row, col) = (((paddedNormal.transpose() * contactJacobian) * getNullSpaceTerm()) * colContactJacobian.completeOrthogonalDecomposition().pseudoInverse()) * colPaddedNormal;
             col++;
         }

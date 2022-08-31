@@ -1,6 +1,8 @@
 #ifndef LCPSOLVE_H_
 #define LCPSOLVE_H_
 
+#include <Eigen/Dense>
+
 // Linear complementarity problem datatype.
 struct LCP { 
     int exitCond;
