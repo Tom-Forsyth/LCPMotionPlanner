@@ -1,16 +1,21 @@
 #ifndef LCPSOLVE_H_
 #define LCPSOLVE_H_
 
-// Linear complementarity problem datatype.
-struct LCP { 
-    int exitCond;
-    Eigen::VectorXd w {};
-    Eigen::VectorXd z {};
-    Eigen::MatrixXd M {};
-    Eigen::VectorXd q {};
-};
+#include <Eigen/Dense>
 
-// LCP Solver.
-LCP LCPSolve(Eigen::MatrixXd M, Eigen::VectorXd q);
+namespace CollisionAvoidance
+{
+    // Linear complementarity problem datatype.
+    struct LCP {
+        int exitCond;
+        Eigen::VectorXd w{};
+        Eigen::VectorXd z{};
+        Eigen::MatrixXd M{};
+        Eigen::VectorXd q{};
+    };
+
+    // LCP Solver.
+    LCP LCPSolve(Eigen::MatrixXd M, Eigen::VectorXd q);
+}
 
 #endif

@@ -3,61 +3,63 @@
 #include <vector>
 #include "RigidBody.h"
 
-class RigidBodyChain
+namespace CollisionAvoidance
 {
-private:
-	std::vector<RigidBody> m_rigidBodies;
-	Eigen::Matrix4d m_baseTransform;
-	size_t m_nBodies;
-	size_t m_nMovableBodies;
+	class RigidBodyChain
+	{
+	private:
+		std::vector<RigidBody> m_rigidBodies;
+		Eigen::Matrix4d m_baseTransform;
+		size_t m_nBodies;
+		size_t m_nMovableBodies;
 
-public:
-	// Default constructor.
-	RigidBodyChain();
+	public:
+		// Default constructor.
+		RigidBodyChain();
 
-	// Rigid body vector constructor.
-	RigidBodyChain(const std::vector<RigidBody>& rigidBodies);
+		// Rigid body vector constructor.
+		RigidBodyChain(const std::vector<RigidBody>& rigidBodies);
 
-	// Set base transform.
-	void setBaseTransform(const Eigen::Matrix4d& baseTransform);
+		// Set base transform.
+		void setBaseTransform(const Eigen::Matrix4d& baseTransform);
 
-	// Add rigid body.
-	void addBody(const RigidBody& rigidBody);
+		// Add rigid body.
+		void addBody(const RigidBody& rigidBody);
 
-	// Called to finish initialization once chain is created.
-	void postInit();
+		// Called to finish initialization once chain is created.
+		void postInit();
 
-	// Forward kinematics.
-	void forwardKinematics();
+		// Forward kinematics.
+		void forwardKinematics();
 
-	// Set joint displacements.
-	void setJointDisplacements(const Eigen::VectorXd& jointDisplacements);
+		// Set joint displacements.
+		void setJointDisplacements(const Eigen::VectorXd& jointDisplacements);
 
-	// Get reference to rigid bodies.
-	const std::vector<RigidBody>& getRigidBodies() const;
+		// Get reference to rigid bodies.
+		const std::vector<RigidBody>& getRigidBodies() const;
 
-	// Get number of total bodies.
-	size_t getNBodies() const;
+		// Get number of total bodies.
+		size_t getNBodies() const;
 
-	// Get number of movable bodies.
-	size_t getNMovableBodies() const;
+		// Get number of movable bodies.
+		size_t getNMovableBodies() const;
 
-	// Take closest contact of all the collision aggregates to be this bodies contact.
-	void condenseContacts();
+		// Take closest contact of all the collision aggregates to be this bodies contact.
+		void condenseContacts();
 
-	// Update spatial jacobian for each body.
-	void updateSpatialJacobians();
+		// Update spatial jacobian for each body.
+		void updateSpatialJacobians();
 
-	// Update contact jacobians for the active contacts.
-	void updateContactJacobians();
+		// Update contact jacobians for the active contacts.
+		void updateContactJacobians();
 
-	// Get end frame transform.
-	Eigen::Matrix4d getEndFrameSpatialTransform() const;
+		// Get end frame transform.
+		Eigen::Matrix4d getEndFrameSpatialTransform() const;
 
-	// Get end frame.
-	RigidBody getEndFrame() const;
+		// Get end frame.
+		RigidBody getEndFrame() const;
 
-	// Get the current joint displacements.
-	Eigen::VectorXd getJointDisplacements() const;
-
-};
+		// Get the current joint displacements.
+		Eigen::VectorXd getJointDisplacements() const;
+	};
+}
