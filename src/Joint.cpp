@@ -5,7 +5,7 @@
 namespace CollisionAvoidance
 {
     // Constructor.
-    Joint::Joint(const Joint::Type& type, const Eigen::Vector3d& axis, const Eigen::Vector3d& point)
+    Joint::Joint(const JointType& type, const Eigen::Vector3d& axis, const Eigen::Vector3d& point)
         : m_type(type), m_axis(axis), m_point(point), m_displacement(0),
         m_twistCoord(Eigen::Vector<double, 6>::Zero()), m_twist(Eigen::Matrix4d::Zero()),
         m_relativeTransformation(Eigen::Matrix4d::Identity())
@@ -17,12 +17,12 @@ namespace CollisionAvoidance
     // Compute twist coordinate.
     void Joint::computeTwistCoord()
     {
-        if (m_type == REVOLUTE)
+        if (m_type == JointType::Revolute)
         {
             m_twistCoord.segment(0, 3) = -m_axis.cross(m_point);
             m_twistCoord.segment(3, 3) = m_axis;
         }
-        else if (m_type == PRISMATIC)
+        else if (m_type == JointType::Prismatic)
         {
             m_twistCoord.segment(0, 3) = m_axis;
         }
@@ -41,12 +41,12 @@ namespace CollisionAvoidance
     void Joint::computeRelativeTransformation()
     {
         Eigen::Matrix3d R = Kinematics::AxisAngletoRot(m_axis, m_displacement);
-        if (m_type == REVOLUTE)
+        if (m_type == JointType::Revolute)
         {
             m_relativeTransformation.block(0, 0, 3, 3) = R;
             m_relativeTransformation.block(0, 3, 3, 1) = (Eigen::Matrix3d::Identity() - R) * m_point;
         }
-        else if (m_type == PRISMATIC)
+        else if (m_type == JointType::Prismatic)
         {
             m_relativeTransformation.block(0, 3, 3, 1) = m_twistCoord.segment(3, 3) * m_displacement;
         }
@@ -66,7 +66,7 @@ namespace CollisionAvoidance
     }
 
     // Get type.
-    Joint::Type Joint::getType() const
+    JointType Joint::getType() const
     {
         return m_type;
     }

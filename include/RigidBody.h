@@ -52,7 +52,7 @@ namespace CollisionAvoidance
 		Eigen::Matrix4d getCurrentWorldTransform() const;
 
 		// Get joint type.
-		Joint::Type getJointType() const;
+		JointType getJointType() const;
 
 		// Take closest contact in collision aggregate as the body's contact.
 		void condenseContacts();

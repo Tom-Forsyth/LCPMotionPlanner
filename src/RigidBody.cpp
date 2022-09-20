@@ -14,7 +14,7 @@ namespace CollisionAvoidance
 		: m_joint(joint), m_referenceSpatialTransform(referenceSpatialTransform), m_collisionAggregate(CollisionAggregate()),
 		m_currentSpatialTransform(Eigen::Matrix4d::Identity()), m_currentWorldTransform(Eigen::Matrix4d::Identity()), m_contactPoint()
 	{
-		if (joint.getType() == Joint::FIXED)
+		if (joint.getType() == JointType::Fixed)
 		{
 			m_isMovableBody = false;
 		}
@@ -86,7 +86,7 @@ namespace CollisionAvoidance
 	}
 
 	// Get joint type.
-	Joint::Type RigidBody::getJointType() const
+	JointType RigidBody::getJointType() const
 	{
 		return m_joint.getType();
 	}

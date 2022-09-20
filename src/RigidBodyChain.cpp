@@ -31,7 +31,7 @@ namespace CollisionAvoidance
 
 		// Increment body sizes.
 		m_nBodies++;
-		if (rigidBody.getJointType() != Joint::FIXED)
+		if (rigidBody.getJointType() != JointType::Fixed)
 		{
 			m_nMovableBodies++;
 		}
@@ -77,7 +77,7 @@ namespace CollisionAvoidance
 		int i = 0;
 		for (RigidBody& body : m_rigidBodies)
 		{
-			if (body.getJointType() != Joint::FIXED)
+			if (body.getJointType() != JointType::Fixed)
 			{
 				body.setJointDisplacement(jointDisplacements[i]);
 				i++;

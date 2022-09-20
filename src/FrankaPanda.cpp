@@ -40,7 +40,7 @@ namespace CollisionAvoidance
 		Eigen::Matrix4d transform0 = Eigen::Matrix4d::Identity();
 		Eigen::Vector3d localAxis0(0, 0, 0);
 		Eigen::Vector3d spatialAxis0 = transform0.block(0, 0, 3, 3) * localAxis0;
-		Joint joint0(Joint::FIXED, spatialAxis0, transform0.block(0, 3, 3, 1));
+		Joint joint0(JointType::Fixed, spatialAxis0, transform0.block(0, 3, 3, 1));
 		RigidBody link0(joint0, transform0);
 
 
@@ -53,7 +53,7 @@ namespace CollisionAvoidance
 		};
 		Eigen::Vector3d localAxis1(0, 0, 1);
 		Eigen::Vector3d spatialAxis1 = transform1.block(0, 0, 3, 3) * localAxis1;
-		Joint joint1(Joint::REVOLUTE, spatialAxis1, transform1.block(0, 3, 3, 1));
+		Joint joint1(JointType::Revolute, spatialAxis1, transform1.block(0, 3, 3, 1));
 		RigidBody link1(joint1, transform1);
 
 		// Link 2.
@@ -65,7 +65,7 @@ namespace CollisionAvoidance
 		};
 		Eigen::Vector3d localAxis2(0, 0, 1);
 		Eigen::Vector3d spatialAxis2 = transform2.block(0, 0, 3, 3) * localAxis2;
-		Joint joint2(Joint::REVOLUTE, spatialAxis2, transform2.block(0, 3, 3, 1));
+		Joint joint2(JointType::Revolute, spatialAxis2, transform2.block(0, 3, 3, 1));
 		RigidBody link2(joint2, transform2);
 
 		// Link 3.
@@ -77,7 +77,7 @@ namespace CollisionAvoidance
 		};
 		Eigen::Vector3d localAxis3(0, 0, 1);
 		Eigen::Vector3d spatialAxis3 = transform3.block(0, 0, 3, 3) * localAxis3;
-		Joint joint3(Joint::REVOLUTE, spatialAxis3, transform3.block(0, 3, 3, 1));
+		Joint joint3(JointType::Revolute, spatialAxis3, transform3.block(0, 3, 3, 1));
 		RigidBody link3(joint3, transform3);
 
 		// Link 4.
@@ -89,7 +89,7 @@ namespace CollisionAvoidance
 		};
 		Eigen::Vector3d localAxis4(0, 0, 1);
 		Eigen::Vector3d spatialAxis4 = transform4.block(0, 0, 3, 3) * localAxis4;
-		Joint joint4(Joint::REVOLUTE, spatialAxis4, transform4.block(0, 3, 3, 1));
+		Joint joint4(JointType::Revolute, spatialAxis4, transform4.block(0, 3, 3, 1));
 		RigidBody link4(joint4, transform4);
 
 		// Link 5.
@@ -101,7 +101,7 @@ namespace CollisionAvoidance
 		};
 		Eigen::Vector3d localAxis5(0, 0, 1);
 		Eigen::Vector3d spatialAxis5 = transform5.block(0, 0, 3, 3) * localAxis5;
-		Joint joint5(Joint::REVOLUTE, spatialAxis5, transform5.block(0, 3, 3, 1));
+		Joint joint5(JointType::Revolute, spatialAxis5, transform5.block(0, 3, 3, 1));
 		RigidBody link5(joint5, transform5);
 
 		// Link 6.
@@ -113,7 +113,7 @@ namespace CollisionAvoidance
 		};
 		Eigen::Vector3d localAxis6(0, 0, 1);
 		Eigen::Vector3d spatialAxis6 = transform6.block(0, 0, 3, 3) * localAxis6;
-		Joint joint6(Joint::REVOLUTE, spatialAxis6, transform6.block(0, 3, 3, 1));
+		Joint joint6(JointType::Revolute, spatialAxis6, transform6.block(0, 3, 3, 1));
 		RigidBody link6(joint6, transform6);
 
 		// Link 7.
@@ -125,7 +125,7 @@ namespace CollisionAvoidance
 		};
 		Eigen::Vector3d localAxis7(0, 0, 1);
 		Eigen::Vector3d spatialAxis7 = transform7.block(0, 0, 3, 3) * localAxis7;
-		Joint joint7(Joint::REVOLUTE, spatialAxis7, transform7.block(0, 3, 3, 1));
+		Joint joint7(JointType::Revolute, spatialAxis7, transform7.block(0, 3, 3, 1));
 		RigidBody link7(joint7, transform7);
 
 		// Tip frame.
@@ -137,7 +137,7 @@ namespace CollisionAvoidance
 		};
 		Eigen::Vector3d localAxisTip(0, 0, 0);
 		Eigen::Vector3d spatialAxisTip = transformTip.block(0, 0, 3, 3) * localAxisTip;
-		Joint jointTip(Joint::FIXED, spatialAxisTip, transformTip.block(0, 3, 3, 1));
+		Joint jointTip(JointType::Fixed, spatialAxisTip, transformTip.block(0, 3, 3, 1));
 		RigidBody linkTip(jointTip, transformTip);
 
 
