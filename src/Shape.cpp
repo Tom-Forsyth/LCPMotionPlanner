@@ -1,17 +1,24 @@
 #include "Shape.h"
+#include "ObjectType.h"
+#include "ContactPoint.h"
 #include <Eigen/Dense>
 #include <string>
-#include "ContactPoint.h"
 
 namespace CollisionAvoidance
 {
 	// Origin + RPY constructor.
-	Shape::Shape(const Eigen::Vector3d& origin, const Eigen::Vector3d& rollPitchYaw, const std::string& name, int objectType)
+	Shape::Shape(const Eigen::Vector3d& origin, const Eigen::Vector3d& rollPitchYaw, const std::string& name, ObjectType objectType, ShapeType shapeType)
 		: m_origin(origin), m_rollPitchYaw(rollPitchYaw), m_transform(Eigen::Matrix4d::Identity()),
-		m_name(name), m_objectType(objectType)
+		m_name(name), m_objectType(objectType), m_shapeType(shapeType)
 	{
 		computeTransform();
 		m_contactPoint = new ContactPoint;
+	}
+
+	// Destructor.
+	Shape::~Shape()
+	{
+		// delete m_contactPoint;
 	}
 
 	// Compute transform from origin + RPY.
@@ -45,9 +52,15 @@ namespace CollisionAvoidance
 		return m_name;
 	}
 
-	// Get the object's type.
-	int Shape::getObjectType() const
+	// Get the object's collision filtering type.
+	ObjectType Shape::getObjectType() const
 	{
 		return m_objectType;
+	}
+
+	// Get shape type.
+	ShapeType Shape::getShapeType() const
+	{
+		return m_shapeType;
 	}
 }

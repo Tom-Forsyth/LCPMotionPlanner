@@ -10,6 +10,8 @@
 #include "FrankaPanda.h"
 #include "ObjectType.h"
 
+using namespace CollisionAvoidance;
+
 void testMotionPlan();
 
 int main()
@@ -37,7 +39,7 @@ void testMotionPlan()
 		{0, 0, 1, 0},
 		{0, 0, 0, 1}
 	};
-	CollisionAvoidance::FrankaPanda panda(pandaBaseTransform);
+	FrankaPanda panda(pandaBaseTransform);
 
 	// Table obstacle parameters.
 	Eigen::Vector3d tableOrigin(1.5, 1, 0.25);
@@ -47,28 +49,29 @@ void testMotionPlan()
 	double legZVal = legLength / 2;
 
 	// Table top.
-	int tableObjectType = CollisionAvoidance::ObjectType::eObstacle;
-	CollisionAvoidance::Box tableTop(tableOrigin, Eigen::Vector3d(0, 0, 0), tableOffsets, "Table Top", tableObjectType);
+	ObjectType tableObjectType = ObjectType::Obstacle;
+
+	Box tableTop(tableOrigin, Eigen::Vector3d(0, 0, 0), tableOffsets, "Table Top", tableObjectType);
 	panda.addObstacle(tableTop);
 
 	// Table legs.
-	CollisionAvoidance::Box tableLeg1(Eigen::Vector3d(1.5 - 0.3 + legOffsets(0), 1 - 0.5 + legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 1", tableObjectType);
+	Box tableLeg1(Eigen::Vector3d(1.5 - 0.3 + legOffsets(0), 1 - 0.5 + legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 1", tableObjectType);
 	panda.addObstacle(tableLeg1);
-	CollisionAvoidance::Box tableLeg2(Eigen::Vector3d(1.5 - 0.3 + legOffsets(0), 1 + 0.5 - legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 2", tableObjectType);
+	Box tableLeg2(Eigen::Vector3d(1.5 - 0.3 + legOffsets(0), 1 + 0.5 - legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 2", tableObjectType);
 	panda.addObstacle(tableLeg2);
-	CollisionAvoidance::Box tableLeg3(Eigen::Vector3d(1.5 + 0.3 - legOffsets(0), 1 - 0.5 + legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 3", tableObjectType);
+	Box tableLeg3(Eigen::Vector3d(1.5 + 0.3 - legOffsets(0), 1 - 0.5 + legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 3", tableObjectType);
 	panda.addObstacle(tableLeg3);
-	CollisionAvoidance::Box tableLeg4(Eigen::Vector3d(1.5 + 0.3 - legOffsets(0), 1 + 0.5 - legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 4", tableObjectType);
+	Box tableLeg4(Eigen::Vector3d(1.5 + 0.3 - legOffsets(0), 1 + 0.5 - legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 4", tableObjectType);
 	panda.addObstacle(tableLeg4);
 
 	// Obstacle on table.
-	CollisionAvoidance::Box boxObstacle(Eigen::Vector3d(1.5, 1, 0.35), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0.1, 0.1, 0.1), "Box Obstacle", tableObjectType);
+	Box boxObstacle(Eigen::Vector3d(1.5, 1, 0.35), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0.1, 0.1, 0.1), "Box Obstacle", tableObjectType);
 	panda.addObstacle(boxObstacle);
 
 	// Objects on table to pickup.
-	CollisionAvoidance::Sphere object1(Eigen::Vector3d(1.65, 0.65, 0.32), Eigen::Vector3d(0, 0, 0), 0.05, "Object 1", tableObjectType);
+	Sphere object1(Eigen::Vector3d(1.65, 0.65, 0.32), Eigen::Vector3d(0, 0, 0), 0.05, "Object 1", tableObjectType);
 	panda.addObstacle(object1);
-	CollisionAvoidance::Sphere object2(Eigen::Vector3d(1.65, 1.35, 0.32), Eigen::Vector3d(0, 0, 0), 0.05, "Object 2", tableObjectType);
+	Sphere object2(Eigen::Vector3d(1.65, 1.35, 0.32), Eigen::Vector3d(0, 0, 0), 0.05, "Object 2", tableObjectType);
 	panda.addObstacle(object2);
 
 	// Setup start joint angles and transform.

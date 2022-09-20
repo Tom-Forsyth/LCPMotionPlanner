@@ -166,7 +166,7 @@ namespace CollisionAvoidance
 
 		// Set the object type as robot geometry for collision filtering.
 		physx::PxFilterData filterData;
-		filterData.word0 = ObjectType::eRobotGeometry;
+		filterData.word0 = static_cast<uint32_t>(ObjectType::RobotGeometry);
 		shape->setSimulationFilterData(filterData);
 
 		actor->attachShape(*shape);
@@ -196,7 +196,7 @@ namespace CollisionAvoidance
 
 		// Set the object type as robot geometry for collision filtering.
 		physx::PxFilterData filterData;
-		filterData.word0 = ObjectType::eRobotGeometry;
+		filterData.word0 = static_cast<uint32_t>(ObjectType::RobotGeometry);
 		shape->setSimulationFilterData(filterData);
 
 		actor->attachShape(*shape);
@@ -226,7 +226,7 @@ namespace CollisionAvoidance
 
 		// Set the object type as robot geometry for collision filtering.
 		physx::PxFilterData filterData;
-		filterData.word0 = ObjectType::eRobotGeometry;
+		filterData.word0 = static_cast<uint32_t>(ObjectType::RobotGeometry);
 		shape->setSimulationFilterData(filterData);
 
 		actor->attachShape(*shape);
@@ -255,7 +255,7 @@ namespace CollisionAvoidance
 
 		// Set the object type as an obstacle for collision filtering.
 		physx::PxFilterData filterData;
-		filterData.word0 = ObjectType::eObstacle;
+		filterData.word0 = static_cast<uint32_t>(ObjectType::Obstacle);
 		shape->setSimulationFilterData(filterData);
 
 		actor->attachShape(*shape);
@@ -281,7 +281,7 @@ namespace CollisionAvoidance
 
 		// Set the object type as an obstacle for collision filtering.
 		physx::PxFilterData filterData;
-		filterData.word0 = ObjectType::eObstacle;
+		filterData.word0 = static_cast<uint32_t>(ObjectType::Obstacle);
 		shape->setSimulationFilterData(filterData);
 
 		actor->attachShape(*shape);
@@ -307,7 +307,7 @@ namespace CollisionAvoidance
 
 		// Set the object type as an obstacle for collision filtering.
 		physx::PxFilterData filterData;
-		filterData.word0 = ObjectType::eObstacle;
+		filterData.word0 = static_cast<uint32_t>(ObjectType::Obstacle);
 		shape->setSimulationFilterData(filterData);
 
 		actor->attachShape(*shape);

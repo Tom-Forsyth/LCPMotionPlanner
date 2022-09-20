@@ -1,11 +1,22 @@
 #pragma once
 
+#include "ContactPoint.h"
+#include "ObjectType.h"
 #include <Eigen/Dense>
 #include <string>
-#include "ContactPoint.h"
 
 namespace CollisionAvoidance
 {
+	enum class ShapeType
+	{
+		Unassigned,
+		Sphere,
+		Capsule,
+		Box
+	};
+
+	struct ContactPoint;
+
 	class Shape
 	{
 	public:
@@ -16,11 +27,15 @@ namespace CollisionAvoidance
 		Eigen::Vector3d m_origin;
 		Eigen::Vector3d m_rollPitchYaw;
 		std::string m_name;
-		int m_objectType;
+		ObjectType m_objectType = ObjectType::Unassigned;
+		ShapeType m_shapeType = ShapeType::Unassigned;
 
 	public:
 		// Origin + RPY constructor.
-		Shape(const Eigen::Vector3d& origin, const Eigen::Vector3d& rollPitchYaw, const std::string& name, int objectType);
+		Shape(const Eigen::Vector3d& origin, const Eigen::Vector3d& rollPitchYaw, const std::string& name, ObjectType objectType, ShapeType shapeType);
+
+		// Destructor.
+		virtual ~Shape();
 
 		// Compute transform from origin + RPY.
 		void computeTransform();
@@ -31,7 +46,10 @@ namespace CollisionAvoidance
 		// Get name.
 		std::string getName() const;
 
-		// Get the object's type.
-		int getObjectType() const;
+		// Get the object's collision filtering type.
+		ObjectType getObjectType() const;
+
+		// Get shape type.
+		ShapeType getShapeType() const;
 	};
 }
