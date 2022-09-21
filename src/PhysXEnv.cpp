@@ -52,6 +52,7 @@ namespace CollisionAvoidance
 		sceneDesc.kineKineFilteringMode = physx::PxPairFilteringMode::eKEEP;
 		sceneDesc.staticKineFilteringMode = physx::PxPairFilteringMode::eKEEP;
 		sceneDesc.simulationEventCallback = &m_contactReportCallback; // Contact callback.
+		sceneDesc.flags |= physx::PxSceneFlag::eENABLE_PCM;
 		m_scene = m_physics->createScene(sceneDesc);
 
 		// Add scene to PVD.

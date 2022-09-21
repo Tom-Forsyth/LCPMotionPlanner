@@ -86,5 +86,8 @@ namespace CollisionAvoidance
 
 		// Get joint displacement.
 		double getJointDisplacement() const;
+
+		// Update the world transforms of the CollisionAggregate.
+		void updateCollisionAggregate();
 	};
 }

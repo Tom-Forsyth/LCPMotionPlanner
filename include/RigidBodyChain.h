@@ -61,5 +61,8 @@ namespace CollisionAvoidance
 
 		// Get the current joint displacements.
 		Eigen::VectorXd getJointDisplacements() const;
+
+		// Update the world transforms of the collision primatives.
+		void updateCollisionAggregates();
 	};
 }

@@ -30,12 +30,10 @@ namespace CollisionAvoidance
 	void FrankaPanda::initRigidBodyChain()
 	{
 		// Setup.
-		double pi = 3.1415;
-		bool viewFrames = false;
-		bool viewCollision = true;
+		constexpr double pi = 3.14159265358979323846;
+		bool bEnableCollsion = true;
 
-
-		/* Create Kinematic Chain */
+		// Create kinematic chain.
 		// Link 0.
 		Eigen::Matrix4d transform0 = Eigen::Matrix4d::Identity();
 		Eigen::Vector3d localAxis0(0, 0, 0);
@@ -140,80 +138,44 @@ namespace CollisionAvoidance
 		Joint jointTip(JointType::Fixed, spatialAxisTip, transformTip.block(0, 3, 3, 1));
 		RigidBody linkTip(jointTip, transformTip);
 
-
-		/* Create Visual Model of Frames */
-		if (viewFrames)
+		// Create Colliders.
+		if (bEnableCollsion)
 		{
-			double visRad = 0.025;
-
-			Sphere link0_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), visRad, "link0_origin", ObjectType::Visual);
-			link0.addCollider(link0_origin);
-
-			Box link1_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link1_origin", ObjectType::Visual);
-			link1.addCollider(link0_origin);
-
-			Box link2_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link2_origin", ObjectType::Visual);
-			link2.addCollider(link2_origin);
-
-			Box link3_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link3_origin", ObjectType::Visual);
-			link3.addCollider(link3_origin);
-
-			Box link4_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link4_origin", ObjectType::Visual);
-			link4.addCollider(link4_origin);
-
-			Box link5_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link5_origin", ObjectType::Visual);
-			link5.addCollider(link5_origin);
-
-			Box link6_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link6_origin", ObjectType::Visual);
-			link6.addCollider(link6_origin);
-
-			Box link7_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(visRad, visRad, visRad), "link7_origin", ObjectType::Visual);
-			link7.addCollider(link7_origin);
-
-			Sphere linkTip_origin(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), visRad, "linkTip_origin", ObjectType::Visual);
-			linkTip.addCollider(linkTip_origin);
-		}
-
-
-		/* Create Colliders */
-		if (viewCollision)
-		{
-			Sphere link0_sphere0(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), 0.15, "link0_sphere0", ObjectType::RobotGeometry);
+			Sphere link0_sphere0(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), 0.15, "panda_link0_sphere0", ObjectType::RobotGeometry);
 			link0.addCollider(link0_sphere0);
 
-			Capsule link1_capsule0(Eigen::Vector3d(0, 0, -0.333 / 2), Eigen::Vector3d(0, pi / 2, 0), (0.333 - 0.06 * 2) / 2, 0.06, "link1_capsule0", ObjectType::RobotGeometry);
+			Capsule link1_capsule0(Eigen::Vector3d(0, 0, -0.333 / 2), Eigen::Vector3d(0, pi / 2, 0), (0.333 - 0.06 * 2) / 2, 0.06, "panda_link1_capsule0", ObjectType::RobotGeometry);
 			link1.addCollider(link1_capsule0);
 
-			Capsule link1_capsule1(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, pi / 2), (0.283 - .06 * 2) / 2, 0.06, "link1_capsule1", ObjectType::RobotGeometry);
+			Capsule link1_capsule1(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, pi / 2), (0.283 - .06 * 2) / 2, 0.06, "panda_link1_capsule1", ObjectType::RobotGeometry);
 			link1.addCollider(link1_capsule1);
 
-			Capsule link2_capsule0(Eigen::Vector3d(0, -.316 / 2, 0), Eigen::Vector3d(0, 0, pi / 2), (0.316 - .06 * 2) / 2, 0.06, "link2_capsule0", ObjectType::RobotGeometry);
+			Capsule link2_capsule0(Eigen::Vector3d(0, -.316 / 2, 0), Eigen::Vector3d(0, 0, pi / 2), (0.316 - .06 * 2) / 2, 0.06, "panda_link2_capsule0", ObjectType::RobotGeometry);
 			link2.addCollider(link2_capsule0);
 
 			// 0.0825?
-			Capsule link3_capsule0(Eigen::Vector3d(0.0825, 0, 0), Eigen::Vector3d(0, 0, pi / 2), (0.220 - .06 * 2) / 2, 0.06, "link3_capsule0", ObjectType::RobotGeometry);
+			Capsule link3_capsule0(Eigen::Vector3d(0.0825, 0, 0), Eigen::Vector3d(0, 0, pi / 2), (0.220 - .06 * 2) / 2, 0.06, "panda_link3_capsule0", ObjectType::RobotGeometry);
 			link3.addCollider(link3_capsule0);
 
-			Capsule link4_capsule0(Eigen::Vector3d(-0.0825, 0.384 / 2, 0), Eigen::Vector3d(0, 0, pi / 2), (0.384 - .06 * 2) / 2, 0.06, "link4_capsule0", ObjectType::RobotGeometry);
+			Capsule link4_capsule0(Eigen::Vector3d(-0.0825, 0.384 / 2, 0), Eigen::Vector3d(0, 0, pi / 2), (0.384 - .06 * 2) / 2, 0.06, "panda_link4_capsule0", ObjectType::RobotGeometry);
 			link4.addCollider(link4_capsule0);
 
-			Capsule link5_capsule0(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, pi / 2), (0.2 - .06 * 2) / 2, 0.06, "link5_capsule0", ObjectType::RobotGeometry);
+			Capsule link5_capsule0(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, pi / 2), (0.2 - .06 * 2) / 2, 0.06, "panda_link5_capsule0", ObjectType::RobotGeometry);
 			link5.addCollider(link5_capsule0);
 
-			Capsule link6_capsule0(Eigen::Vector3d(0.088, 0, 0), Eigen::Vector3d(0, 0, pi / 2), ((0.107 * 2) - .06 * 2) / 2, 0.06, "link6_capsule0", ObjectType::RobotGeometry);
+			Capsule link6_capsule0(Eigen::Vector3d(0.088, 0, 0), Eigen::Vector3d(0, 0, pi / 2), ((0.107 * 2) - .06 * 2) / 2, 0.06, "panda_link6_capsule0", ObjectType::RobotGeometry);
 			link6.addCollider(link6_capsule0);
 
-			Sphere link6_sphere0(Eigen::Vector3d(0.088 / 2, 0.06 / 2, 0), Eigen::Vector3d(0, 0, 0), 0.06, "link6_sphere0", ObjectType::RobotGeometry);
+			Sphere link6_sphere0(Eigen::Vector3d(0.088 / 2, 0.06 / 2, 0), Eigen::Vector3d(0, 0, 0), 0.06, "panda_link6_sphere0", ObjectType::RobotGeometry);
 			link6.addCollider(link6_sphere0);
 
-			Box link7_box0(Eigen::Vector3d(0, 0, 0.1070 - (0.02)), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0.05, 0.05, 0.02), "link7_box0", ObjectType::RobotGeometry);
+			Box link7_box0(Eigen::Vector3d(0, 0, 0.1070 - (0.02)), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0.05, 0.05, 0.02), "panda_link7_box0", ObjectType::RobotGeometry);
 			link7.addCollider(link7_box0);
 
-			Sphere linkTip_sphere0(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), 0.01, "linkTip_sphere0", ObjectType::RobotGeometry);
+			Sphere linkTip_sphere0(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), 0.01, "panda_linkTip_sphere0", ObjectType::RobotGeometry);
 			linkTip.addCollider(linkTip_sphere0);
 
 		}
-
 
 		// Create chain.
 		m_rigidBodyChain.addBody(link0);

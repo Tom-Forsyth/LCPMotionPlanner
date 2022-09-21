@@ -26,7 +26,7 @@ namespace CollisionAvoidance
 		Eigen::Matrix4d m_transform;
 		Eigen::Vector3d m_origin;
 		Eigen::Vector3d m_rollPitchYaw;
-		std::string m_name;
+		const std::string m_name;
 		ObjectType m_objectType = ObjectType::Unassigned;
 		ShapeType m_shapeType = ShapeType::Unassigned;
 

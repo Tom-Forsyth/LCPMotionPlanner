@@ -3,6 +3,7 @@
 #include <vector>
 #include "ContactPoint.h"
 #include <Eigen/Dense>
+#include <iostream>
 
 namespace CollisionAvoidance
 {
@@ -39,6 +40,11 @@ namespace CollisionAvoidance
 
 	void ContactReportCallback::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
 	{
+		// Check that the assumption of one pair is correct.
+		// TODO: Confirm this and remove.
+		assert(nbPairs == 1);
+		assert(pairHeader.nbPairs == 1);
+
 		std::vector<physx::PxContactPairPoint> contactPoints;
 		for (physx::PxU32 i = 0; i < nbPairs; i++)
 		{
