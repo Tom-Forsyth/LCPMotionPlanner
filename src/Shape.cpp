@@ -63,4 +63,9 @@ namespace CollisionAvoidance
 	{
 		return m_shapeType;
 	}
+
+	void Shape::setTransform(const Eigen::Matrix4d& transform)
+	{
+		m_transform = transform;
+	}
 }

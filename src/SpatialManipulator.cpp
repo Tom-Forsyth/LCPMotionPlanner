@@ -1,8 +1,8 @@
 #include "SpatialManipulator.h"
 #include "RigidBodyChain.h"
-#include <Eigen/Dense>
-#include "PhysXEnv.h"
 #include "MotionPlanner.h"
+#include "PhysicsScene.h"
+#include <Eigen/Dense>
 
 namespace CollisionAvoidance
 {
@@ -31,6 +31,11 @@ namespace CollisionAvoidance
 		generateContacts();
 	}
 
+	void SpatialManipulator::setPhysicsScene(PhysicsScene* physicsScene)
+	{
+
+	}
+
 	// Give simulation environment a pointer to the chain.
 	void SpatialManipulator::setupSimulationEnvironment()
 	{
@@ -46,24 +51,6 @@ namespace CollisionAvoidance
 		m_simulationEnvironment.simulate();
 		m_rigidBodyChain.condenseContacts();
 		m_rigidBodyChain.updateContactJacobians();
-	}
-
-	// Add sphere obstacle.
-	void SpatialManipulator::addObstacle(const Sphere& sphere)
-	{
-		m_simulationEnvironment.createObstacleActor(sphere);
-	}
-
-	// Add capsule obstacle.
-	void SpatialManipulator::addObstacle(const Capsule& capsule)
-	{
-		m_simulationEnvironment.createObstacleActor(capsule);
-	}
-
-	// Add box obstacle.
-	void SpatialManipulator::addObstacle(const Box& box)
-	{
-		m_simulationEnvironment.createObstacleActor(box);
 	}
 
 	// Generate motion plan.

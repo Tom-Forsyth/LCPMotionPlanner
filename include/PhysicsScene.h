@@ -4,6 +4,8 @@
 #include "ContactReportCallback.h"
 #include "Shape.h"
 #include "RigidBody.h"
+#include "RigidBodyChain.h"
+#include "SpatialManipulator.h"
 #include "PxPhysicsAPI.h"
 #include <string>
 #include <vector>
@@ -38,6 +40,15 @@ namespace CollisionAvoidance
 		// Robot geometry actors.
 		std::map<std::string, physx::PxRigidDynamic*> m_robotGeometryActors;
 
+		// Add a robot geometry actor to the scene.
+		void addCollider(const Shape& shape);
+
+		// Add a robot rigid body to the scene.
+		void addCollisionAggregate(const CollisionAggregate& collisionAggregate);
+
+		// Add all of the bodies of a RigidBodyChain to the scene.
+		void addRigidBodyChain(const RigidBodyChain& rigidBodyChain);
+
 	public:
 		// Constructor.
 		PhysicsScene(const std::string& sceneName, physx::PxPhysics* const physics, physx::PxCpuDispatcher* const cpuDispatcher);
@@ -51,11 +62,12 @@ namespace CollisionAvoidance
 		// Add an obstacle to the scene.
 		void addObstacle(const Shape& shape);
 
-		// Add a robot geometry actor to the scene.
-		void addRobotGeometry(const Shape& shape, const Eigen::Matrix4d& worldTransform);
+		// Add a spatial manipulator to the scene.
+		void addSpatialManipulator(const SpatialManipulator& spatialManipulator);
 
-		// Add a robot rigid body to the scene.
-		void addRobotBody(const RigidBody& rigidBody);
+		// Sync the transforms of the PhysX actors with the collision actors.
+		// Also must store a pointer to the collision actors in pxActor creation process.
+		void syncTransforms();
 
 		// Set the contact generation offset to be slightly larger than safety distance.
 		void setContactOffsets(double manipulatorSafetyDistance, double fingerSafetyDistance);

@@ -50,6 +50,7 @@ namespace CollisionAvoidance
 		// Update transforms, jacobians, etc.
 		forwardKinematics();
 		updateSpatialJacobians();
+		updateColliderTransforms();
 
 	}
 
@@ -91,7 +92,7 @@ namespace CollisionAvoidance
 		updateSpatialJacobians();
 
 		// Update the world transforms of the collision primatives.
-		updateCollisionAggregates();
+		updateColliderTransforms();
 	}
 
 	// Get reference to rigid bodies.
@@ -196,11 +197,11 @@ namespace CollisionAvoidance
 		return jointDisplacements;
 	}
 
-	void RigidBodyChain::updateCollisionAggregates()
+	void RigidBodyChain::updateColliderTransforms()
 	{
 		for (RigidBody& rigidBody : m_rigidBodies)
 		{
-			rigidBody.updateCollisionAggregate();
+			rigidBody.updateColliderTransforms();
 		}
 	}
 }

@@ -253,8 +253,8 @@ namespace CollisionAvoidance
 		return m_joint.getDisplacement();
 	}
 
-	void RigidBody::updateCollisionAggregate()
+	void RigidBody::updateColliderTransforms()
 	{
-		m_collisionAggregate.updateWorldTransforms(m_currentWorldTransform);
+		m_collisionAggregate.updateColliderTransforms(m_currentWorldTransform);
 	}
 }

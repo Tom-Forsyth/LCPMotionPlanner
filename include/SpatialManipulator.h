@@ -2,8 +2,6 @@
 
 #include "RigidBodyChain.h"
 #include <Eigen/Dense>
-#include <vector>
-#include "PhysXEnv.h"
 
 namespace CollisionAvoidance
 {
@@ -11,7 +9,6 @@ namespace CollisionAvoidance
 	{
 	protected:
 		RigidBodyChain m_rigidBodyChain;
-		PhysXEnv m_simulationEnvironment;
 
 	public:
 		// Constructors.
@@ -29,11 +26,6 @@ namespace CollisionAvoidance
 
 		// Run simulation to generate contacts.
 		void generateContacts();
-
-		// Add obstacles.
-		void addObstacle(const Sphere& sphere);
-		void addObstacle(const Capsule& capsule);
-		void addObstacle(const Box& box);
 
 		// Generate motion plan.
 		void motionPlan(const Eigen::Matrix4d& goalTransform);

@@ -51,5 +51,8 @@ namespace CollisionAvoidance
 
 		// Get shape type.
 		ShapeType getShapeType() const;
+
+		// Set the transform.
+		void setTransform(const Eigen::Matrix4d& transform);
 	};
 }

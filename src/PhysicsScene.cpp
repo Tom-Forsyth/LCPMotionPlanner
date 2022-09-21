@@ -10,6 +10,7 @@
 #include <string>
 #include <memory>
 #include <exception>
+#include <vector>
 
 namespace CollisionAvoidance
 {
@@ -81,6 +82,14 @@ namespace CollisionAvoidance
 			actor->setName(shapeNameChar);
 			pxShape->setName(shapeNameChar);
 
+			// Store pointer to the original shape in the PxShape and PxActor.
+			// Note that we must use const_cast here since the PhysX API only accepts a non-const void*.
+			// My internal use of the shape is read only so there is no concern.
+			const void* shapePointerConst = &shape;
+			void* shapePointer = const_cast<void*>(shapePointerConst);
+			actor->userData = shapePointer;
+			pxShape->userData = shapePointer;
+
 			// Attach the shape to the actor and release.
 			actor->attachShape(*pxShape);
 			pxShape->release();
@@ -95,13 +104,13 @@ namespace CollisionAvoidance
 		}
 	}
 
-	void PhysicsScene::addRobotGeometry(const Shape& shape, const Eigen::Matrix4d& worldTransform)
+	void PhysicsScene::addCollider(const Shape& shape)
 	{
 		if (shape.getObjectType() == ObjectType::RobotGeometry)
 		{
 			// Get PxTransform.
 			const Eigen::Matrix4d eigenTransform = shape.getTransform();
-			const physx::PxTransform transform = eigenMatrixToPxTransform(worldTransform * eigenTransform);
+			const physx::PxTransform transform = eigenMatrixToPxTransform(eigenTransform);
 
 			// Create RigidDynamic kinematic actor.
 			physx::PxRigidDynamic* actor = m_physics->createRigidDynamic(transform);
@@ -126,6 +135,14 @@ namespace CollisionAvoidance
 			actor->setName(shapeNameChar);
 			pxShape->setName(shapeNameChar);
 
+			// Store pointer to the original shape in the PxShape and PxActor.
+			// Note that we must use const_cast here since the PhysX API only accepts a non-const void*.
+			// My internal use of the shape is read only so there is no concern.
+			const void* shapePointerConst = &shape;
+			void* shapePointer = const_cast<void*>(shapePointerConst);
+			actor->userData = shapePointer;
+			pxShape->userData = shapePointer;
+
 			// Attach the shape to the actor and release.
 			actor->attachShape(*pxShape);
 			pxShape->release();
@@ -136,54 +153,51 @@ namespace CollisionAvoidance
 		}
 		else
 		{
-			throw std::invalid_argument("Shape must be an robot geometry shape.");
+			throw std::invalid_argument("Shape must be a robot geometry shape.");
 		}
 	}
 
-	void addRobotBody(const RigidBody& rigidBody)
+	void PhysicsScene::addCollisionAggregate(const CollisionAggregate& collisionAggregate)
 	{
-		// TODO: Refactor CollisionAggregate for polymorphism.
-		
-		// Get spheres, capsules, and boxes.
-		const CollisionAggregate collisionAggregate = rigidBody.getCollisionAggregate();
-		const std::vector<Sphere> spheres = collisionAggregate.getSpheres();
-		const std::vector<Capsule> capsules = collisionAggregate.getCapsules();
-		const std::vector<Box> boxes = collisionAggregate.getBoxes();
-		/*
-		// Create RigidDynamic kinematic actor vector.
-		std::vector<physx::PxRigidDynamic*> rigidDynamicActors;
-		std::vector<Eigen::Matrix4d> actorLocalTransforms;
-		size_t nActors = spheres.size() + capsules.size() + boxes.size();
-		rigidDynamicActors.reserve(nActors);
-		actorLocalTransforms.reserve(nActors);
+		// Vector of colliders inside the collision aggregate.
+		const std::vector<Shape*> colliders = collisionAggregate.getColliders();
 
-		// Add actors to scene. Transform to world frame before creation.
-		Eigen::Matrix4d worldTransform = rigidBody.getCurrentWorldTransform();
-		for (Sphere& sphere : spheres)
+		// Add each collider to the scene.
+		for (const Shape* collider : colliders)
 		{
-			physx::PxRigidDynamic* actor = createCollisionActor(sphere, worldTransform);
-			rigidDynamicActors.emplace_back(actor);
-			actorLocalTransforms.emplace_back(sphere.getTransform());
+			addCollider(*collider);
 		}
+	}
 
-		for (Capsule& capsule : capsules)
+	void PhysicsScene::addRigidBodyChain(const RigidBodyChain& rigidBodyChain)
+	{
+		// For each rigid body in the chain, add the collision aggregate to the scene.
+		for (const RigidBody& rigidBody : rigidBodyChain.getRigidBodies())
 		{
-			physx::PxRigidDynamic* actor = createCollisionActor(capsule, worldTransform);
-			rigidDynamicActors.emplace_back(actor);
-			actorLocalTransforms.emplace_back(capsule.getTransform());
+			addCollisionAggregate(rigidBody.getCollisionAggregate());
 		}
+	}
 
-		for (Box& box : boxes)
+	void PhysicsScene::addSpatialManipulator(const SpatialManipulator& spatialManipulator)
+	{
+		addRigidBodyChain(spatialManipulator.getRigidBodyChain());
+	}
+
+	void PhysicsScene::syncTransforms()
+	{
+		// For each PxActor of a collider, update the pose and target to the collider's current pose.
+		for (std::pair<const std::string, physx::PxRigidDynamic*> colliderActor : m_robotGeometryActors)
 		{
-			physx::PxRigidDynamic* actor = createCollisionActor(box, worldTransform);
-			rigidDynamicActors.emplace_back(actor);
-			actorLocalTransforms.emplace_back(box.getTransform());
+			physx::PxRigidDynamic*& pxActor = colliderActor.second;
+			if (pxActor->userData)
+			{
+				const Shape* shapeActor = static_cast<const Shape*>(pxActor->userData);
+				const Eigen::Matrix4d newTransform = shapeActor->getTransform();
+				const physx::PxTransform newPxTransform = eigenMatrixToPxTransform(newTransform);
+				pxActor->setGlobalPose(newPxTransform);
+				pxActor->setKinematicTarget(newPxTransform);
+			}
 		}
-
-		// Add vector of actors to parent vector.
-		m_collisionActors.emplace_back(rigidDynamicActors);
-		m_collisionActorLocalTransforms.emplace_back(actorLocalTransforms);
-		*/
 	}
 
 	void PhysicsScene::setContactOffsets(double manipulatorSafetyDistance, double fingerSafetyDistance)

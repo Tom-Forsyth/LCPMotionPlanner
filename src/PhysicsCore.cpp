@@ -17,14 +17,14 @@ namespace CollisionAvoidance
 		if (bOwnPhysicsInstance)
 		{
 			// Free PhysX core objects.
-			//PxCloseExtensions(); 
-			//m_physics->release();
-			//m_foundation->release();
+			PxCloseExtensions(); 
+			m_physics->release();
+			m_foundation->release();
 
 			// Free allocated members.
-			//delete m_allocator;
-			//delete m_errorCallback;
-			//delete m_toleranceScale;
+			delete m_allocator;
+			delete m_errorCallback;
+			delete m_toleranceScale;
 		}
 	}
 
