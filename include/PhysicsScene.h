@@ -6,6 +6,8 @@
 #include "RigidBody.h"
 #include "RigidBodyChain.h"
 #include "SpatialManipulator.h"
+#include "ContactManager.h"
+#include "ContactPoint.h"
 #include "PxPhysicsAPI.h"
 #include <string>
 #include <vector>
@@ -40,6 +42,9 @@ namespace CollisionAvoidance
 		// Robot geometry actors.
 		std::map<std::string, physx::PxRigidDynamic*> m_robotGeometryActors;
 
+		// Scene contact manager.
+		ContactManager m_contactManager;
+
 		// Add a robot geometry actor to the scene.
 		void addCollider(const Shape& shape);
 
@@ -48,6 +53,9 @@ namespace CollisionAvoidance
 
 		// Add all of the bodies of a RigidBodyChain to the scene.
 		void addRigidBodyChain(const RigidBodyChain& rigidBodyChain);
+
+		// Sync the transforms of the PhysX actors with the collision actors.
+		void syncTransforms();
 
 	public:
 		// Constructor.
@@ -62,18 +70,17 @@ namespace CollisionAvoidance
 		// Add an obstacle to the scene.
 		void addObstacle(const Shape& shape);
 
-		// Add a spatial manipulator to the scene.
-		void addSpatialManipulator(const SpatialManipulator& spatialManipulator);
+		// Add a spatial manipulator to the scene and give it a pointer to the scene.
+		void addSpatialManipulator(SpatialManipulator& spatialManipulator);
 
-		// Sync the transforms of the PhysX actors with the collision actors.
-		// Also must store a pointer to the collision actors in pxActor creation process.
-		void syncTransforms();
+		// Add a contact to be processed by the contact manager.
+		void addContact(const std::string& colliderName, const ContactPoint& contactPoint);
 
 		// Set the contact generation offset to be slightly larger than safety distance.
 		void setContactOffsets(double manipulatorSafetyDistance, double fingerSafetyDistance);
 
 		// Simulate to generate contacts.
-		void simulate();
+		void generateContacts();
 
 
 		/*

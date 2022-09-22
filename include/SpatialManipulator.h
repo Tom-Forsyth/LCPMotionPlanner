@@ -5,10 +5,13 @@
 
 namespace CollisionAvoidance
 {
+	class PhysicsScene;
+
 	class SpatialManipulator
 	{
 	protected:
 		RigidBodyChain m_rigidBodyChain;
+		PhysicsScene* m_physicsScene = nullptr;
 
 	public:
 		// Constructors.
@@ -18,17 +21,11 @@ namespace CollisionAvoidance
 		// Set base transform.
 		void setBaseTransform(const Eigen::Matrix4d& baseTransform);
 
+		// Set the physics scene.
+		void setPhysicsScene(PhysicsScene* physicsScene);
+
 		// Set joint displacements.
 		void setJointDisplacements(const Eigen::VectorXd& jointDisplacements);
-
-		// Setup simulation environment.
-		void setupSimulationEnvironment();
-
-		// Run simulation to generate contacts.
-		void generateContacts();
-
-		// Generate motion plan.
-		void motionPlan(const Eigen::Matrix4d& goalTransform);
 
 		// Get transform of end frame.
 		Eigen::Matrix4d getEndFrameSpatialTransform() const;
@@ -44,5 +41,8 @@ namespace CollisionAvoidance
 
 		// Get the current joint displacements.
 		Eigen::VectorXd getJointDisplacements() const;
+
+		// Generate motion plan.
+		void motionPlan(const Eigen::Matrix4d& goalTransform);
 	};
 }

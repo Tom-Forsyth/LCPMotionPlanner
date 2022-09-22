@@ -24,43 +24,21 @@ namespace CollisionAvoidance
 		m_rigidBodyChain.setBaseTransform(baseTransform);
 	}
 
+	// Set the physics scene.
+	void SpatialManipulator::setPhysicsScene(PhysicsScene* physicsScene)
+	{
+		m_physicsScene = physicsScene;
+	}
+
 	// Set joint displacements.
 	void SpatialManipulator::setJointDisplacements(const Eigen::VectorXd& jointDisplacements)
 	{
 		m_rigidBodyChain.setJointDisplacements(jointDisplacements);
-		generateContacts();
-	}
-
-	void SpatialManipulator::setPhysicsScene(PhysicsScene* physicsScene)
-	{
-
-	}
-
-	// Give simulation environment a pointer to the chain.
-	void SpatialManipulator::setupSimulationEnvironment()
-	{
-		m_simulationEnvironment.setRigidBodyChain(&m_rigidBodyChain);
-		m_simulationEnvironment.initColliders();
-		generateContacts();
-	}
-
-	// Run simulation to generate contacts.
-	void SpatialManipulator::generateContacts()
-	{
-		m_simulationEnvironment.updateTransforms();
-		m_simulationEnvironment.simulate();
-		m_rigidBodyChain.condenseContacts();
+		if (m_physicsScene)
+		{
+			m_physicsScene->generateContacts();
+		}
 		m_rigidBodyChain.updateContactJacobians();
-	}
-
-	// Generate motion plan.
-	void SpatialManipulator::motionPlan(const Eigen::Matrix4d& goalTransform)
-	{
-		// Setup planner.
-		MotionPlanner planner(this, goalTransform);
-
-		// Generate plan.
-		planner.computePlan();
 	}
 
 	// Get transform of end frame.
@@ -91,5 +69,15 @@ namespace CollisionAvoidance
 	Eigen::VectorXd SpatialManipulator::getJointDisplacements() const
 	{
 		return m_rigidBodyChain.getJointDisplacements();
+	}
+
+	// Generate motion plan.
+	void SpatialManipulator::motionPlan(const Eigen::Matrix4d& goalTransform)
+	{
+		// Setup planner.
+		MotionPlanner planner(this, goalTransform);
+
+		// Generate plan.
+		planner.computePlan();
 	}
 }

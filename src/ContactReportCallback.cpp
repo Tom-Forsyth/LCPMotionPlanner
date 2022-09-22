@@ -1,9 +1,14 @@
 #include "ContactReportCallback.h"
+#include "ContactPoint.h"
+#include "PhysicsScene.h"
+#include "ContactManager.h"
+#include "PhysXHelperFunctions.h"
+#include "Shape.h"
+#include "ObjectType.h"
 #include "PxPhysicsAPI.h"
 #include <vector>
-#include "ContactPoint.h"
+#include <string>
 #include <Eigen/Dense>
-#include <iostream>
 
 namespace CollisionAvoidance
 {
@@ -40,40 +45,66 @@ namespace CollisionAvoidance
 
 	void ContactReportCallback::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
 	{
-		// Check that the assumption of one pair is correct.
-		// TODO: Confirm this and remove.
-		assert(nbPairs == 1);
-		assert(pairHeader.nbPairs == 1);
+		// Get the scene's contact manager.
+		const physx::PxScene* pxScene = (pairHeader.actors[0])->getScene();
+		PhysicsScene* physicsScene = static_cast<PhysicsScene*>(pxScene->userData);
 
-		std::vector<physx::PxContactPairPoint> contactPoints;
+		// For each pair in the contact stream, loop over all the patches, and the contacts of each patch.
 		for (physx::PxU32 i = 0; i < nbPairs; i++)
 		{
-			physx::PxU32 contactCount = pairs[i].contactCount;
-			if (contactCount)
+			// Current contact pair.
+			const physx::PxContactPair& pair = pairs[i];
+
+			// Iterator for the pair's compressed contact stream.
+			physx::PxContactStreamIterator iter(pair.contactPatches, pair.contactPoints, pair.getInternalFaceIndices(), pair.patchCount, pair.contactCount);
+
+			// Flag to determine if the provided contact is flipped with respect to the shape pair.
+			const physx::PxU32 flippedContacts = (pair.flags & physx::PxContactPairFlag::eINTERNAL_CONTACTS_ARE_FLIPPED);
+
+			// Get the collision actors for both shapes.
+			const Shape* collider0 = static_cast<const Shape*>(pair.shapes[0]->userData);
+			const Shape* collider1 = static_cast<const Shape*>(pair.shapes[1]->userData);
+
+			// Get the names and object types.
+			const std::string name0 = collider0->getName();
+			const std::string name1 = collider1->getName();
+			const ObjectType objectType0 = collider0->getObjectType();
+			const ObjectType objectType1 = collider1->getObjectType();
+
+			// Determine if the first shape of the pair is the robot or obstacle and assign the name.
+			const bool firstShapeIsRobot = (objectType0 == ObjectType::RobotGeometry) ? true : false;
+			const std::string colliderName = firstShapeIsRobot ? name0 : name1;
+
+			// Iterate over the patches of the pair and contact points of the patch.
+			while (iter.hasNextPatch())
 			{
-				contactPoints.resize(contactCount);
-				pairs[i].extractContacts(&contactPoints[0], contactCount);
-
-				// Should add bool in ContactPoint called isCollider, and check this bool for both of the pairs to make sure it is indeed always the first of the pair that is a collider.
-				// Should also add support for multiple contact points, or at least take the min.
-				for (physx::PxU32 j = 0; j < contactCount; j++)
+				iter.nextPatch();
+				while (iter.hasNextContact())
 				{
-					// Offset contact point to the collider, not the obtacle.
-					Eigen::Vector3d obsPoint(contactPoints[j].position[0], contactPoints[j].position[1], contactPoints[j].position[2]);
-					Eigen::Vector3d obsNormal(contactPoints[j].normal[0], contactPoints[j].normal[1], contactPoints[j].normal[2]);
-					double separation = contactPoints[j].separation;
-					Eigen::Vector3d colliderPoint = obsPoint + (separation / 2 * obsNormal);
+					iter.nextContact();
 
-					physx::PxRigidActor* actor1 = pairHeader.actors[0]; // collider
-					physx::PxRigidActor* actor2 = pairHeader.actors[1]; // obstacle
+					// Extract the contact point, normal, and separation.
+					const physx::PxVec3 pxPoint = iter.getContactPoint();
+					const physx::PxVec3 pxNormal = iter.getContactNormal();
+					const physx::PxReal pxSeparation = iter.getSeparation();
 
-					ContactPoint* contact1 = static_cast<ContactPoint*>(actor1->userData);
-					contact1->m_isActive = true;
-					contact1->m_distance = separation;
-					contact1->m_point = colliderPoint;
-					contact1->m_normal = obsNormal;
+					// Convert to Eigen/standard types.
+					const Eigen::Vector3d point = pxVecToEigenVec(pxPoint);
+					Eigen::Vector3d normal = pxVecToEigenVec(pxNormal);
+					const double separation = static_cast<double>(pxSeparation);
+
+					// If the first shape is not the robot, flip the normal.
+					if (!firstShapeIsRobot)
+					{
+						normal = -normal;
+					}
+
+					// Create contact point and add to the contact manager.
+					const ContactPoint contactPoint(point, normal, separation, true);
+					physicsScene->addContact(colliderName, contactPoint);
 				}
 			}
+
 		}
 	}
 }

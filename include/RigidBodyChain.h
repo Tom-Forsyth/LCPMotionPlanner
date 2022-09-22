@@ -44,9 +44,6 @@ namespace CollisionAvoidance
 		// Get number of movable bodies.
 		size_t getNMovableBodies() const;
 
-		// Take closest contact of all the collision aggregates to be this bodies contact.
-		void condenseContacts();
-
 		// Update spatial jacobian for each body.
 		void updateSpatialJacobians();
 

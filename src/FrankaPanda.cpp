@@ -15,7 +15,6 @@ namespace CollisionAvoidance
 	FrankaPanda::FrankaPanda()
 	{
 		initRigidBodyChain();
-		setupSimulationEnvironment();
 	}
 
 	// Base transform constructor.
@@ -23,7 +22,6 @@ namespace CollisionAvoidance
 		: SpatialManipulator(baseTransform)
 	{
 		initRigidBodyChain();
-		setupSimulationEnvironment();
 	}
 
 

@@ -37,6 +37,6 @@ namespace CollisionAvoidance
 		void updateColliderTransforms(const Eigen::Matrix4d& worldTransform);
 
 		// Get a vector of pointers to the shapes.
-		std::vector<Shape*> getColliders() const;
+		std::vector<const Shape*> getColliders() const;
 	};
 }

@@ -136,6 +136,7 @@ void testMotionPlan()
 
 void testPhysics()
 {
+	/*
 	// Create physics core.
 	PhysicsCore physics;
 	physics.createPhysicsCore();
@@ -165,12 +166,17 @@ void testPhysics()
 	// Elapsed time.
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count();
 	std::cout << "Elapsed Time: " << elapsedTime << " us" << std::endl;
+	*/
 }
 
 void testPhysics2()
 {
 	constexpr double pi = 3.14159265358979323846;
-	auto start = std::chrono::steady_clock::now();
+
+	// Create physics core and scene.
+	PhysicsCore physics;
+	physics.createPhysicsCore();
+	PhysicsScene* physicsScene = physics.createPhysicsScene("MyTestScene");
 
 	// Table obstacle parameters.
 	Eigen::Vector3d tableOrigin(1.5, 1, 0.25);
@@ -187,17 +193,20 @@ void testPhysics2()
 	Box tableLeg3(Eigen::Vector3d(1.5 + 0.3 - legOffsets(0), 1 - 0.5 + legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 3", tableObjectType);
 	Box tableLeg4(Eigen::Vector3d(1.5 + 0.3 - legOffsets(0), 1 + 0.5 - legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 4", tableObjectType);
 
-	// Create physics core and scene.
-	PhysicsCore physics;
-	physics.createPhysicsCore();
-	PhysicsScene* physicsScene = physics.createPhysicsScene("MyTestScene");
-
 	// Add table to the scene.
 	physicsScene->addObstacle(tableTop);
 	physicsScene->addObstacle(tableLeg1);
 	physicsScene->addObstacle(tableLeg2);
 	physicsScene->addObstacle(tableLeg3);
 	physicsScene->addObstacle(tableLeg4);
+
+	// Obstacles on table.
+	Box boxObstacle(Eigen::Vector3d(1.5, 1, 0.35), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0.1, 0.1, 0.1), "Box Obstacle", tableObjectType);
+	Sphere object1(Eigen::Vector3d(1.65, 0.65, 0.32), Eigen::Vector3d(0, 0, 0), 0.05, "Object 1", tableObjectType);
+	Sphere object2(Eigen::Vector3d(1.65, 1.35, 0.32), Eigen::Vector3d(0, 0, 0), 0.05, "Object 2", tableObjectType);
+	physicsScene->addObstacle(boxObstacle);
+	physicsScene->addObstacle(object1);
+	physicsScene->addObstacle(object2);
 
 	// Create robot.
 	Eigen::Matrix4d pandaBaseTransform{
@@ -210,8 +219,6 @@ void testPhysics2()
 
 	// Add robot to the scene.
 	physicsScene->addSpatialManipulator(panda);
-
-	/*
 
 	// Setup start joint angles and transform.
 	Eigen::Vector<double, 7> startAngles(0, 0, 0, -pi / 2, 0, pi / 2, 0);
@@ -259,8 +266,6 @@ void testPhysics2()
 	std::cout << "Goal Transform 2: \n" << goalTransform2 << "\n\n";
 	std::cout << "Acheived Transform 2: \n" << achievedTransform2 << "\n\n";
 
-	*/
-	auto stop = std::chrono::steady_clock::now();
 	// Elapsed time.
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
 	std::cout << "Elapsed Time: " << elapsedTime << " ms" << std::endl;

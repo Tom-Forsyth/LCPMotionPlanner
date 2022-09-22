@@ -12,7 +12,6 @@ namespace CollisionAvoidance
 		m_name(name), m_objectType(objectType), m_shapeType(shapeType)
 	{
 		computeTransform();
-		m_contactPoint = new ContactPoint;
 	}
 
 	// Destructor.

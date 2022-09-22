@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ContactPoint.h"
 #include "ObjectType.h"
 #include <Eigen/Dense>
 #include <string>
@@ -19,9 +18,6 @@ namespace CollisionAvoidance
 
 	class Shape
 	{
-	public:
-		ContactPoint* m_contactPoint = nullptr;
-
 	private:
 		Eigen::Matrix4d m_transform;
 		Eigen::Vector3d m_origin;

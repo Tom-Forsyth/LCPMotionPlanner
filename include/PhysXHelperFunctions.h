@@ -12,6 +12,9 @@ namespace CollisionAvoidance
 	// Convert an Eigen::Matrix4d to a PxTransform.
 	physx::PxTransform eigenMatrixToPxTransform(const Eigen::Matrix4d& eigenMatrix);
 
+	// Convert a PxVec3 to an Eigen::Vector3d.
+	Eigen::Vector3d pxVecToEigenVec(const physx::PxVec3& pxVec);
+
 	// Convert a Sphere to a PxSphereGeometry.
 	physx::PxSphereGeometry getPxSphereGeometry(const Sphere& sphere);
 

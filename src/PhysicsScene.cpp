@@ -6,6 +6,8 @@
 #include "ObjectType.h"
 #include "RigidBody.h"
 #include "CollisionAggregate.h"
+#include "ContactManager.h"
+#include "ContactPoint.h"
 #include "PxPhysicsAPI.h"
 #include <string>
 #include <memory>
@@ -39,6 +41,10 @@ namespace CollisionAvoidance
 
 		// Setup default material.
 		m_material = m_physics->createMaterial(0.0f, 0.0f, 0.0f);
+
+		// Link the PhysicsScene to the PhysXScene.
+		void* physicsScenePointer = static_cast<void*>(this);
+		m_scene->userData = physicsScenePointer;
 	}
 
 	PhysicsScene::~PhysicsScene()
@@ -160,7 +166,7 @@ namespace CollisionAvoidance
 	void PhysicsScene::addCollisionAggregate(const CollisionAggregate& collisionAggregate)
 	{
 		// Vector of colliders inside the collision aggregate.
-		const std::vector<Shape*> colliders = collisionAggregate.getColliders();
+		const std::vector<const Shape*> colliders = collisionAggregate.getColliders();
 
 		// Add each collider to the scene.
 		for (const Shape* collider : colliders)
@@ -178,9 +184,10 @@ namespace CollisionAvoidance
 		}
 	}
 
-	void PhysicsScene::addSpatialManipulator(const SpatialManipulator& spatialManipulator)
+	void PhysicsScene::addSpatialManipulator(SpatialManipulator& spatialManipulator)
 	{
 		addRigidBodyChain(spatialManipulator.getRigidBodyChain());
+		spatialManipulator.setPhysicsScene(this);
 	}
 
 	void PhysicsScene::syncTransforms()
@@ -200,14 +207,26 @@ namespace CollisionAvoidance
 		}
 	}
 
+	void PhysicsScene::addContact(const std::string& colliderName, const ContactPoint& contactPoint)
+	{
+		m_contactManager.addContact(colliderName, contactPoint);
+	}
+
 	void PhysicsScene::setContactOffsets(double manipulatorSafetyDistance, double fingerSafetyDistance)
 	{
 		/* Not yet implemented */
 	}
 
-	void PhysicsScene::simulate()
+	void PhysicsScene::generateContacts()
 	{
+		syncTransforms();
+		m_contactManager.clearContacts();
 		m_scene->simulate(0.01f);
 		m_scene->fetchResults(true);
+		m_contactManager.processContacts();
+
+		// must also set the contacts to the rigid bodies.
+		// must also make all the contacts of the rigid bodies inactive before starting process.
+		// idea for fingers: move safety distance to per shape basis rather than per scene/plan basis.
 	}
 }

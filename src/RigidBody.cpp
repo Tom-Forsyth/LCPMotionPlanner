@@ -91,6 +91,7 @@ namespace CollisionAvoidance
 		return m_joint.getType();
 	}
 
+	/*
 	// Take closest contact in collision aggregate as the body's contact.
 	void RigidBody::condenseContacts()
 	{
@@ -186,6 +187,7 @@ namespace CollisionAvoidance
 		}
 
 	}
+	*/
 
 	// Get contact point.
 	const ContactPoint& RigidBody::getContactPoint() const

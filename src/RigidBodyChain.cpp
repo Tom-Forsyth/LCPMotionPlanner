@@ -113,16 +113,6 @@ namespace CollisionAvoidance
 		return m_nMovableBodies;
 	}
 
-	// Take closest contact of all the collision aggregates to be this bodies contact.
-	void RigidBodyChain::condenseContacts()
-	{
-
-		for (RigidBody& body : m_rigidBodies)
-		{
-			body.condenseContacts();
-		}
-	}
-
 	// Update spatial jacobian for each body.
 	void RigidBodyChain::updateSpatialJacobians()
 	{

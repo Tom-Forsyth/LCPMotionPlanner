@@ -76,25 +76,28 @@ namespace CollisionAvoidance
 		}
 	}
 
-	std::vector<Shape*> CollisionAggregate::getColliders() const
+	std::vector<const Shape*> CollisionAggregate::getColliders() const
 	{
 		// Setup vector of shape pointers.
-		std::vector<Shape*> colliders;
+		std::vector<const Shape*> colliders;
 		size_t numColliders = m_spheres.size() + m_capsules.size() + m_boxes.size();
 		colliders.reserve(numColliders);
 
 		// Loop over all colliders and add pointer to the vector.
 		for (const Sphere& sphere : m_spheres)
 		{
-			colliders.emplace_back(&sphere);
+			const Shape* spherePointer = &sphere;
+			colliders.emplace_back(spherePointer);
 		}
 		for (const Capsule& capsule : m_capsules)
 		{
-			colliders.emplace_back(&capsule);
+			const Shape* capsulePointer = &capsule;
+			colliders.emplace_back(capsulePointer);
 		}
 		for (const Box& box : m_boxes)
 		{
-			colliders.emplace_back(&box);
+			const Shape* boxPointer = &box;
+			colliders.emplace_back(boxPointer);
 		}
 
 		// Return vector.

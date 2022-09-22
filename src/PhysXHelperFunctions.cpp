@@ -21,6 +21,11 @@ namespace CollisionAvoidance
 		return physx::PxTransform(physxMatrix);
 	}
 
+	Eigen::Vector3d pxVecToEigenVec(const physx::PxVec3& pxVec)
+	{
+		return Eigen::Vector3d(static_cast<double>(pxVec[0]), static_cast<double>(pxVec[1]), static_cast<double>(pxVec[2]));
+	}
+
 	physx::PxSphereGeometry getPxSphereGeometry(const Sphere& sphere)
 	{
 		const physx::PxReal radius = static_cast<physx::PxReal>(sphere.m_radius);

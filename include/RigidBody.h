@@ -54,9 +54,6 @@ namespace CollisionAvoidance
 		// Get joint type.
 		JointType getJointType() const;
 
-		// Take closest contact in collision aggregate as the body's contact.
-		void condenseContacts();
-
 		// Get contact point.
 		const ContactPoint& getContactPoint() const;
 
