@@ -22,6 +22,8 @@
     <ClCompile Include="src\Box.cpp" />
     <ClCompile Include="src\Capsule.cpp" />
     <ClCompile Include="src\CollisionAggregate.cpp" />
+    <ClCompile Include="src\ContactManager.cpp" />
+    <ClCompile Include="src\ContactPoint.cpp" />
     <ClCompile Include="src\ContactReportCallback.cpp" />
     <ClCompile Include="src\ContactReportFilterShader.cpp" />
     <ClCompile Include="src\DualNumber.cpp" />
@@ -32,7 +34,9 @@
     <ClCompile Include="src\LCPSolve.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MotionPlanner.cpp" />
-    <ClCompile Include="src\PhysXEnv.cpp" />
+    <ClCompile Include="src\PhysicsCore.cpp" />
+    <ClCompile Include="src\PhysicsScene.cpp" />
+    <ClCompile Include="src\PhysXHelperFunctions.cpp" />
     <ClCompile Include="src\RigidBody.cpp" />
     <ClCompile Include="src\RigidBodyChain.cpp" />
     <ClCompile Include="src\Shape.cpp" />
@@ -43,6 +47,7 @@
     <ClInclude Include="include\Box.h" />
     <ClInclude Include="include\Capsule.h" />
     <ClInclude Include="include\CollisionAggregate.h" />
+    <ClInclude Include="include\ContactManager.h" />
     <ClInclude Include="include\ContactPoint.h" />
     <ClInclude Include="include\ContactReportCallback.h" />
     <ClInclude Include="include\ContactReportFilterShader.h" />
@@ -54,7 +59,9 @@
     <ClInclude Include="include\LCPSolve.h" />
     <ClInclude Include="include\MotionPlanner.h" />
     <ClInclude Include="include\ObjectType.h" />
-    <ClInclude Include="include\PhysXEnv.h" />
+    <ClInclude Include="include\PhysicsCore.h" />
+    <ClInclude Include="include\PhysicsScene.h" />
+    <ClInclude Include="include\PhysXHelperFunctions.h" />
     <ClInclude Include="include\RigidBody.h" />
     <ClInclude Include="include\RigidBodyChain.h" />
     <ClInclude Include="include\Shape.h" />

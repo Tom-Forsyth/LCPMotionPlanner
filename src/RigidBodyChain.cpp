@@ -31,7 +31,7 @@ namespace CollisionAvoidance
 
 		// Increment body sizes.
 		m_nBodies++;
-		if (rigidBody.getJointType() != Joint::FIXED)
+		if (rigidBody.getJointType() != JointType::Fixed)
 		{
 			m_nMovableBodies++;
 		}
@@ -50,6 +50,7 @@ namespace CollisionAvoidance
 		// Update transforms, jacobians, etc.
 		forwardKinematics();
 		updateSpatialJacobians();
+		updateColliderTransforms();
 
 	}
 
@@ -77,7 +78,7 @@ namespace CollisionAvoidance
 		int i = 0;
 		for (RigidBody& body : m_rigidBodies)
 		{
-			if (body.getJointType() != Joint::FIXED)
+			if (body.getJointType() != JointType::Fixed)
 			{
 				body.setJointDisplacement(jointDisplacements[i]);
 				i++;
@@ -89,6 +90,9 @@ namespace CollisionAvoidance
 
 		// Update spatial jacobians.
 		updateSpatialJacobians();
+
+		// Update the world transforms of the collision primatives.
+		updateColliderTransforms();
 	}
 
 	// Get reference to rigid bodies.
@@ -107,16 +111,6 @@ namespace CollisionAvoidance
 	size_t RigidBodyChain::getNMovableBodies() const
 	{
 		return m_nMovableBodies;
-	}
-
-	// Take closest contact of all the collision aggregates to be this bodies contact.
-	void RigidBodyChain::condenseContacts()
-	{
-
-		for (RigidBody& body : m_rigidBodies)
-		{
-			body.condenseContacts();
-		}
 	}
 
 	// Update spatial jacobian for each body.
@@ -192,4 +186,42 @@ namespace CollisionAvoidance
 
 		return jointDisplacements;
 	}
+
+	void RigidBodyChain::updateColliderTransforms()
+	{
+		for (RigidBody& rigidBody : m_rigidBodies)
+		{
+			rigidBody.updateColliderTransforms();
+		}
+	}
+
+	void RigidBodyChain::deactivateContacts()
+	{
+		for (RigidBody& rigidBody : m_rigidBodies)
+		{
+			rigidBody.deactivateContactPoint();
+		}
+	}
+
+	void RigidBodyChain::updateContactPoints(const std::map<std::string, ContactPoint>& contactPoints)
+	{
+		int rigidBodyIndex = 0;
+		for (const std::pair<std::string, ContactPoint> contactPoint : contactPoints)
+		{
+			// Advance location in rigid body chain until we find the body of the contact point or hit a the max.
+			std::string rigidBodyName = m_rigidBodies[rigidBodyIndex].getName();
+			while ((contactPoint.first != rigidBodyName) && (rigidBodyIndex < m_nBodies - 1))
+			{
+				rigidBodyIndex++;
+				rigidBodyName = m_rigidBodies[rigidBodyIndex].getName();
+			}
+
+			// If we have not hit the max, we can assign the contact point.
+			if (rigidBodyIndex != m_nBodies - 1)
+			{
+				m_rigidBodies[rigidBodyIndex].setContactPoint(contactPoint.second);
+			}
+		}
+	}
+
 }

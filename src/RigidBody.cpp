@@ -10,11 +10,12 @@
 namespace CollisionAvoidance
 {
 	// Constructor.
-	RigidBody::RigidBody(const Joint& joint, const Eigen::Matrix4d& referenceSpatialTransform)
-		: m_joint(joint), m_referenceSpatialTransform(referenceSpatialTransform), m_collisionAggregate(CollisionAggregate()),
-		m_currentSpatialTransform(Eigen::Matrix4d::Identity()), m_currentWorldTransform(Eigen::Matrix4d::Identity()), m_contactPoint()
+	RigidBody::RigidBody(const Joint& joint, const Eigen::Matrix4d& referenceSpatialTransform, const std::string& name)
+		: m_joint(joint), m_referenceSpatialTransform(referenceSpatialTransform), m_name(name), 
+		m_collisionAggregate(CollisionAggregate()), m_currentSpatialTransform(Eigen::Matrix4d::Identity()), 
+		m_currentWorldTransform(Eigen::Matrix4d::Identity()), m_contactPoint()
 	{
-		if (joint.getType() == Joint::FIXED)
+		if (joint.getType() == JointType::Fixed)
 		{
 			m_isMovableBody = false;
 		}
@@ -22,24 +23,30 @@ namespace CollisionAvoidance
 		{
 			m_isMovableBody = true;
 		}
+
+		// Set the parent body names of the colliders as this body's name.
+		m_collisionAggregate.setParentBodyName(m_name);
 	}
 
 	// Add sphere collider.
-	void RigidBody::addCollider(const Sphere& sphere)
+	void RigidBody::addCollider(Sphere& sphere)
 	{
+		sphere.setParentBodyName(this->getName());
 		m_collisionAggregate.addShape(sphere);
 	}
 
 
 	// Add capsule collider.
-	void RigidBody::addCollider(const Capsule& capsule)
+	void RigidBody::addCollider(Capsule& capsule)
 	{
+		capsule.setParentBodyName(this->getName());
 		m_collisionAggregate.addShape(capsule);
 	}
 
 	// Add box collider.
-	void RigidBody::addCollider(const Box& box)
+	void RigidBody::addCollider(Box& box)
 	{
+		box.setParentBodyName(this->getName());
 		m_collisionAggregate.addShape(box);
 	}
 
@@ -86,105 +93,9 @@ namespace CollisionAvoidance
 	}
 
 	// Get joint type.
-	Joint::Type RigidBody::getJointType() const
+	JointType RigidBody::getJointType() const
 	{
 		return m_joint.getType();
-	}
-
-	// Take closest contact in collision aggregate as the body's contact.
-	void RigidBody::condenseContacts()
-	{
-		// Get colliders in aggregate.
-		std::vector<Sphere> spheres = m_collisionAggregate.getSpheres();
-		std::vector<Capsule> capsules = m_collisionAggregate.getCapsules();
-		std::vector<Box> boxes = m_collisionAggregate.getBoxes();
-
-		// Get all the distances of the colliders.
-		double defaultDist = 1000;
-		size_t collisionCount = 0;
-
-		double minSphereDist = defaultDist;
-		size_t minSphereIndex = -1;
-		size_t sphereIndex = 0;
-		for (const Sphere& sphere : spheres)
-		{
-			if (sphere.m_contactPoint->m_isActive)
-			{
-				collisionCount++;
-				double dist = sphere.m_contactPoint->m_distance;
-				if (dist < minSphereDist)
-				{
-					minSphereDist = dist;
-					minSphereIndex = sphereIndex;
-				}
-			}
-			sphereIndex++;
-		}
-
-		double minCapsuleDist = defaultDist;
-		size_t minCapsuleIndex = -1;
-		size_t capsuleIndex = 0;
-		for (const Capsule& capsule : capsules)
-		{
-			if (capsule.m_contactPoint->m_isActive)
-			{
-				collisionCount++;
-				double dist = capsule.m_contactPoint->m_distance;
-				if (dist < minCapsuleDist)
-				{
-					minCapsuleDist = dist;
-					minCapsuleIndex = capsuleIndex;
-				}
-			}
-			capsuleIndex++;
-		}
-
-		double minBoxDist = defaultDist;
-		size_t minBoxIndex = -1;
-		size_t boxIndex = 0;
-		for (const Box& box : boxes)
-		{
-			if (box.m_contactPoint->m_isActive)
-			{
-				collisionCount++;
-				double dist = box.m_contactPoint->m_distance;
-				if (dist < minBoxDist)
-				{
-					minBoxDist = dist;
-					minBoxIndex = boxIndex;
-				}
-			}
-			boxIndex++;
-		}
-
-		// Find min of everything.
-		if (collisionCount > 0)
-		{
-			m_contactPoint.m_isActive = true;
-			if ((minSphereDist < minCapsuleDist) && (minSphereDist < minBoxDist))
-			{
-				m_contactPoint.m_distance = spheres[minSphereIndex].m_contactPoint->m_distance;
-				m_contactPoint.m_normal = spheres[minSphereIndex].m_contactPoint->m_normal;
-				m_contactPoint.m_point = spheres[minSphereIndex].m_contactPoint->m_point;
-			}
-			else if ((minCapsuleDist < minSphereDist) && (minCapsuleDist < minBoxDist))
-			{
-				m_contactPoint.m_distance = capsules[minCapsuleIndex].m_contactPoint->m_distance;
-				m_contactPoint.m_normal = capsules[minCapsuleIndex].m_contactPoint->m_normal;
-				m_contactPoint.m_point = capsules[minCapsuleIndex].m_contactPoint->m_point;
-			}
-			else
-			{
-				m_contactPoint.m_distance = boxes[minBoxIndex].m_contactPoint->m_distance;
-				m_contactPoint.m_normal = boxes[minBoxIndex].m_contactPoint->m_normal;
-				m_contactPoint.m_point = boxes[minBoxIndex].m_contactPoint->m_point;
-			}
-		}
-		else
-		{
-			m_contactPoint.m_isActive = false;
-		}
-
 	}
 
 	// Get contact point.
@@ -252,4 +163,25 @@ namespace CollisionAvoidance
 	{
 		return m_joint.getDisplacement();
 	}
+
+	void RigidBody::updateColliderTransforms()
+	{
+		m_collisionAggregate.updateColliderTransforms(m_currentWorldTransform);
+	}
+
+	void RigidBody::deactivateContactPoint()
+	{
+		m_contactPoint.m_isActive = false;
+	}
+
+	std::string RigidBody::getName() const
+	{
+		return m_name;
+	}
+
+	void RigidBody::setContactPoint(const ContactPoint& contactPoint)
+	{
+		m_contactPoint = contactPoint;
+	}
+
 }

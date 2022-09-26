@@ -18,15 +18,16 @@ namespace CollisionAvoidance
 		// Determine the type of the objects.
 		const uint32_t objectType0 = filterData0.word0;
 		const uint32_t objectType1 = filterData1.word0;
+		const uint32_t robotGeometry = static_cast<uint32_t>(ObjectType::RobotGeometry);
 
 		// Ignore self collisions of the robot.
-		if ((objectType0 == ObjectType::eRobotGeometry) && (objectType1 == ObjectType::eRobotGeometry))
+		if ((objectType0 == robotGeometry) && (objectType1 == robotGeometry))
 		{
 			return physx::PxFilterFlag::eKILL;
 		}
 
 		// Ignore interactions that do not involve the robot.
-		if ((objectType0 != ObjectType::eRobotGeometry) && (objectType1 != ObjectType::eRobotGeometry))
+		if ((objectType0 != robotGeometry) && (objectType1 != robotGeometry))
 		{
 			return physx::PxFilterFlag::eKILL;
 		}

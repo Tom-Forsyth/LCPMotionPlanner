@@ -44,9 +44,6 @@ namespace CollisionAvoidance
 		// Get number of movable bodies.
 		size_t getNMovableBodies() const;
 
-		// Take closest contact of all the collision aggregates to be this bodies contact.
-		void condenseContacts();
-
 		// Update spatial jacobian for each body.
 		void updateSpatialJacobians();
 
@@ -61,5 +58,14 @@ namespace CollisionAvoidance
 
 		// Get the current joint displacements.
 		Eigen::VectorXd getJointDisplacements() const;
+
+		// Update the world transforms of the collision primatives.
+		void updateColliderTransforms();
+
+		// Deactivate contacts.
+		void deactivateContacts();
+
+		// Update the contact points of the bodies of the chain.
+		void updateContactPoints(const std::map<std::string, ContactPoint>& contactPoints);
 	};
 }

@@ -4,20 +4,18 @@
 
 namespace CollisionAvoidance
 {
+	enum class JointType
+	{
+		Revolute,
+		Prismatic,
+		Fixed
+	};
+
 	class Joint
 	{
-	public:
-
-		enum Type
-		{
-			REVOLUTE,
-			PRISMATIC,
-			FIXED
-		};
-
 	private:
 		// Members.
-		Joint::Type m_type;
+		JointType m_type;
 		Eigen::Vector3d m_axis;
 		Eigen::Vector3d m_point;
 		double m_displacement;
@@ -27,7 +25,7 @@ namespace CollisionAvoidance
 
 	public:
 		// Constructor.
-		Joint(const Joint::Type& type, const Eigen::Vector3d& axis, const Eigen::Vector3d& point);
+		Joint(const JointType& type, const Eigen::Vector3d& axis, const Eigen::Vector3d& point);
 
 		// Compute twist coordinate and twist.
 		void computeTwistCoord();
@@ -41,7 +39,7 @@ namespace CollisionAvoidance
 		void setDisplacement(const double& displacement);
 
 		// Get type.
-		Joint::Type getType() const;
+		JointType getType() const;
 
 		// Get twist coordinate.
 		Eigen::Vector<double, 6> getTwistCoord() const;
