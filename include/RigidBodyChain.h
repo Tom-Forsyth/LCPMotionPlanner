@@ -61,5 +61,11 @@ namespace CollisionAvoidance
 
 		// Update the world transforms of the collision primatives.
 		void updateColliderTransforms();
+
+		// Deactivate contacts.
+		void deactivateContacts();
+
+		// Update the contact points of the bodies of the chain.
+		void updateContactPoints(const std::map<std::string, ContactPoint>& contactPoints);
 	};
 }

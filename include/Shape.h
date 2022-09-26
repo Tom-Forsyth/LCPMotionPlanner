@@ -6,6 +6,8 @@
 
 namespace CollisionAvoidance
 {
+	struct ContactPoint;
+
 	enum class ShapeType
 	{
 		Unassigned,
@@ -14,17 +16,19 @@ namespace CollisionAvoidance
 		Box
 	};
 
-	struct ContactPoint;
-
 	class Shape
 	{
 	private:
 		Eigen::Matrix4d m_transform;
 		Eigen::Vector3d m_origin;
 		Eigen::Vector3d m_rollPitchYaw;
-		const std::string m_name;
+		std::string m_name;
 		ObjectType m_objectType = ObjectType::Unassigned;
 		ShapeType m_shapeType = ShapeType::Unassigned;
+
+		// Name of the parent body.
+		// TODO: Create derived class "Collider" to implement this.
+		std::string m_parentBodyName = "None";
 
 	public:
 		// Origin + RPY constructor.
@@ -50,5 +54,11 @@ namespace CollisionAvoidance
 
 		// Set the transform.
 		void setTransform(const Eigen::Matrix4d& transform);
+
+		// Set the parent body name.
+		void setParentBodyName(const std::string& parentBodyName);
+
+		// Get the parent body name.
+		std::string getParentBodyName() const;
 	};
 }

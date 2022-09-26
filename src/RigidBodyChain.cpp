@@ -194,4 +194,34 @@ namespace CollisionAvoidance
 			rigidBody.updateColliderTransforms();
 		}
 	}
+
+	void RigidBodyChain::deactivateContacts()
+	{
+		for (RigidBody& rigidBody : m_rigidBodies)
+		{
+			rigidBody.deactivateContactPoint();
+		}
+	}
+
+	void RigidBodyChain::updateContactPoints(const std::map<std::string, ContactPoint>& contactPoints)
+	{
+		int rigidBodyIndex = 0;
+		for (const std::pair<std::string, ContactPoint> contactPoint : contactPoints)
+		{
+			// Advance location in rigid body chain until we find the body of the contact point or hit a the max.
+			std::string rigidBodyName = m_rigidBodies[rigidBodyIndex].getName();
+			while ((contactPoint.first != rigidBodyName) && (rigidBodyIndex < m_nBodies - 1))
+			{
+				rigidBodyIndex++;
+				rigidBodyName = m_rigidBodies[rigidBodyIndex].getName();
+			}
+
+			// If we have not hit the max, we can assign the contact point.
+			if (rigidBodyIndex != m_nBodies - 1)
+			{
+				m_rigidBodies[rigidBodyIndex].setContactPoint(contactPoint.second);
+			}
+		}
+	}
+
 }

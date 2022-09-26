@@ -65,15 +65,15 @@ namespace CollisionAvoidance
 			const Shape* collider0 = static_cast<const Shape*>(pair.shapes[0]->userData);
 			const Shape* collider1 = static_cast<const Shape*>(pair.shapes[1]->userData);
 
-			// Get the names and object types.
-			const std::string name0 = collider0->getName();
-			const std::string name1 = collider1->getName();
+			// Get the parent body names and object types.
+			const std::string linkName0 = collider0->getParentBodyName();
+			const std::string linkName1 = collider1->getParentBodyName();
 			const ObjectType objectType0 = collider0->getObjectType();
 			const ObjectType objectType1 = collider1->getObjectType();
 
 			// Determine if the first shape of the pair is the robot or obstacle and assign the name.
 			const bool firstShapeIsRobot = (objectType0 == ObjectType::RobotGeometry) ? true : false;
-			const std::string colliderName = firstShapeIsRobot ? name0 : name1;
+			const std::string linkName = firstShapeIsRobot ? linkName0 : linkName1;
 
 			// Iterate over the patches of the pair and contact points of the patch.
 			while (iter.hasNextPatch())
@@ -101,7 +101,7 @@ namespace CollisionAvoidance
 
 					// Create contact point and add to the contact manager.
 					const ContactPoint contactPoint(point, normal, separation, true);
-					physicsScene->addContact(colliderName, contactPoint);
+					physicsScene->addContact(linkName, contactPoint);
 				}
 			}
 

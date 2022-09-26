@@ -11,6 +11,7 @@
 #include "PxPhysicsAPI.h"
 #include <string>
 #include <vector>
+#include <map>
 
 namespace CollisionAvoidance
 {
@@ -35,6 +36,9 @@ namespace CollisionAvoidance
 
 		// Offset in meters at which to start generating contacts.
 		double m_contactGenOffset = 0.1;
+
+		// Simulation time step.
+		double m_timeStep = 0.01;
 
 		// Obstacle actors.
 		std::map<std::string, physx::PxRigidStatic*> m_obstacleActors;
@@ -74,42 +78,12 @@ namespace CollisionAvoidance
 		void addSpatialManipulator(SpatialManipulator& spatialManipulator);
 
 		// Add a contact to be processed by the contact manager.
-		void addContact(const std::string& colliderName, const ContactPoint& contactPoint);
+		void addContact(const std::string& linkName, const ContactPoint& contactPoint);
 
 		// Set the contact generation offset to be slightly larger than safety distance.
 		void setContactOffsets(double manipulatorSafetyDistance, double fingerSafetyDistance);
 
 		// Simulate to generate contacts.
-		void generateContacts();
-
-
-		/*
-			Use case:
-			- User adds object to scene.
-				- PxActor created at exact pose.
-				- Store pointer to PxActor in scene in one vector.
-			- User adds object to robot.
-				- PxActor created at exact pose.
-				- Store pointer to PxActor in scene in vector of vectors.
-				- Call updateScene() method of MotionPlanner to loop through rigidBodies and update the PxActor locations.
-				- updateScene() will be called every iteration.
-			* How do we want to structure the PxActors to represent the robot?
-				- Currently using vector of vectors (link, shapes of link).
-				- Could use a map of vectors (link, shapes of link).
-			* How do we want to access the PxActors?
-				- updateScene() will be called by MotionPlanner or RigidBodyChain? or PhysicsScene?
-				- Do we want to modify Shape to have an absolute transform or keep the local?
-				- Probably want to keep local so displacements are easier to calculate.
-				- Also consider in the case of a gripper where the one PhysicsScene has many RigidBodyChains.
-
-			** Solution: PhysicsScene will take in a pointer/reference of the RigidBodyChain
-			* PhysicsScene must hold actors in a structure that can handle multiple robots/chains, but one set of obstacles.
-				- PhysicsScene will hold a vector of pointers to RigidBodyChains.
-				- PhysicsScene will hold a map of <std::string, PxActor*> shape name, PxActor pairs.
-				- PhysicsScene::updateTransforms() will loop through this vector.
-					- For each RigidBodyChain, loop through each rigid body, and each shape.
-					- Find the shape's PxActor with the name of the shape. (Throw error if shape is created with existing name)
-					- Update PxActor's transform.
-		*/
+		const std::map<std::string, ContactPoint>& generateContacts();
 	};
 }

@@ -9,6 +9,7 @@ namespace CollisionAvoidance
 	class ContactManager
 	{
 	private:
+		// Link name & contact point pairs.
 		std::map<std::string, ContactPoint> m_contacts;
 
 	public:
@@ -19,13 +20,16 @@ namespace CollisionAvoidance
 		~ContactManager();
 
 		// Add a contact to the manager.
-		void addContact(const std::string& colliderName, const ContactPoint& contactPoint);
+		void addContact(const std::string& linkName, const ContactPoint& contactPoint);
 
 		// Clear the contact point map.
 		void clearContacts();
 
-		// Process contacts.
-		void processContacts();
+		// Reduce contacts to only one contact per link.
+		void reduceContacts();
+
+		// Get the map of contacts.
+		const std::map<std::string, ContactPoint>& getContacts() const;
 
 	};
 }

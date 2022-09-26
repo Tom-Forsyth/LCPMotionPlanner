@@ -103,4 +103,20 @@ namespace CollisionAvoidance
 		// Return vector.
 		return colliders;
 	}
+
+	void CollisionAggregate::setParentBodyName(const std::string& parentBodyName)
+	{
+		for (Sphere& sphere : m_spheres)
+		{
+			sphere.setParentBodyName(parentBodyName);
+		}
+		for (Capsule& capsule : m_capsules)
+		{
+			capsule.setParentBodyName(parentBodyName);
+		}
+		for (Box& box : m_boxes)
+		{
+			box.setParentBodyName(parentBodyName);
+		}
+	}
 }

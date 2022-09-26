@@ -7,6 +7,7 @@
 #include "Capsule.h"
 #include "Box.h"
 #include "ContactPoint.h"
+#include <string>
 
 namespace CollisionAvoidance
 {
@@ -22,15 +23,18 @@ namespace CollisionAvoidance
 		ContactPoint m_contactPoint;
 		Eigen::MatrixXd m_contactJacobian;
 		bool m_isMovableBody;
+		
+		// Name of the rigid body.
+		std::string m_name;
 
 	public:
 		// Constructor.
-		RigidBody(const Joint& joint, const Eigen::Matrix4d& referenceSpatialTransform);
+		RigidBody(const Joint& joint, const Eigen::Matrix4d& referenceSpatialTransform, const std::string& name);
 
 		// Add colliders to collision aggregate member.
-		void addCollider(const Sphere& sphere);
-		void addCollider(const Capsule& capsule);
-		void addCollider(const Box& box);
+		void addCollider(Sphere& sphere);
+		void addCollider(Capsule& capsule);
+		void addCollider(Box& box);
 
 		// Get relative transformation from the joint.
 		Eigen::Matrix4d getRelativeTransformation() const;
@@ -86,5 +90,14 @@ namespace CollisionAvoidance
 
 		// Update the transforms of the collision actors.
 		void updateColliderTransforms();
+
+		// Deactivate the contact point.
+		void deactivateContactPoint();
+
+		// Get name.
+		std::string getName() const;
+
+		// Set contact point.
+		void setContactPoint(const ContactPoint& contactPoint);
 	};
 }

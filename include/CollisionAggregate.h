@@ -38,5 +38,8 @@ namespace CollisionAvoidance
 
 		// Get a vector of pointers to the shapes.
 		std::vector<const Shape*> getColliders() const;
+
+		// Set the parent body name of all the shapes.
+		void setParentBodyName(const std::string& parentBodyName);
 	};
 }

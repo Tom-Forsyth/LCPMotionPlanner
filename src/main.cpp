@@ -268,8 +268,17 @@ void testPhysics2()
 
 	// Elapsed time.
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
-	std::cout << "Elapsed Time: " << elapsedTime << " ms" << std::endl;
+	std::cout << "Elapsed Time: " << elapsedTime << " ms\n";
 }
+
+
+// TODO: 
+	// Contacts need to be sorted by movable rigid bodies, not just rigid bodies.
+
+// TODO: Add logic to demote contact points of rigid bodies to the previous body in the chain.
+			// A comparison of distances similar to the contact manager must be made.
+			// Must handle edge cases. IE: First body is always fixed, and has no previous body.
+
 
 
 /*

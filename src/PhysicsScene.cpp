@@ -13,6 +13,7 @@
 #include <memory>
 #include <exception>
 #include <vector>
+#include <map>
 
 namespace CollisionAvoidance
 {
@@ -207,9 +208,9 @@ namespace CollisionAvoidance
 		}
 	}
 
-	void PhysicsScene::addContact(const std::string& colliderName, const ContactPoint& contactPoint)
+	void PhysicsScene::addContact(const std::string& linkName, const ContactPoint& contactPoint)
 	{
-		m_contactManager.addContact(colliderName, contactPoint);
+		m_contactManager.addContact(linkName, contactPoint);
 	}
 
 	void PhysicsScene::setContactOffsets(double manipulatorSafetyDistance, double fingerSafetyDistance)
@@ -217,16 +218,13 @@ namespace CollisionAvoidance
 		/* Not yet implemented */
 	}
 
-	void PhysicsScene::generateContacts()
+	const std::map<std::string, ContactPoint>& PhysicsScene::generateContacts()
 	{
 		syncTransforms();
 		m_contactManager.clearContacts();
-		m_scene->simulate(0.01f);
+		m_scene->simulate(m_timeStep);
 		m_scene->fetchResults(true);
-		m_contactManager.processContacts();
-
-		// must also set the contacts to the rigid bodies.
-		// must also make all the contacts of the rigid bodies inactive before starting process.
-		// idea for fingers: move safety distance to per shape basis rather than per scene/plan basis.
+		m_contactManager.reduceContacts();
+		return m_contactManager.getContacts();
 	}
 }

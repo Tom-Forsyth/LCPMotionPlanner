@@ -2,7 +2,10 @@
 #include "RigidBodyChain.h"
 #include "MotionPlanner.h"
 #include "PhysicsScene.h"
+#include "ContactPoint.h"
 #include <Eigen/Dense>
+#include <map>
+#include <string>
 
 namespace CollisionAvoidance
 {
@@ -36,7 +39,9 @@ namespace CollisionAvoidance
 		m_rigidBodyChain.setJointDisplacements(jointDisplacements);
 		if (m_physicsScene)
 		{
-			m_physicsScene->generateContacts();
+			m_rigidBodyChain.deactivateContacts();
+			const std::map<std::string, ContactPoint>& contactPoints = m_physicsScene->generateContacts();
+			m_rigidBodyChain.updateContactPoints(contactPoints);
 		}
 		m_rigidBodyChain.updateContactJacobians();
 	}

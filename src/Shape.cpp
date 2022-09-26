@@ -1,6 +1,7 @@
 #include "Shape.h"
 #include "ObjectType.h"
 #include "ContactPoint.h"
+#include "RigidBody.h"
 #include <Eigen/Dense>
 #include <string>
 
@@ -66,5 +67,15 @@ namespace CollisionAvoidance
 	void Shape::setTransform(const Eigen::Matrix4d& transform)
 	{
 		m_transform = transform;
+	}
+
+	void Shape::setParentBodyName(const std::string& parentBodyName)
+	{
+		m_parentBodyName = parentBodyName;
+	}
+
+	std::string Shape::getParentBodyName() const
+	{
+		return m_parentBodyName;
 	}
 }
