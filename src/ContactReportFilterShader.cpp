@@ -34,7 +34,7 @@ namespace CollisionAvoidance
 
 		// For the remaining pairs, we want to generate contact information, but not resolve.
 		pairFlags = physx::PxPairFlag::eDETECT_DISCRETE_CONTACT | physx::PxPairFlag::eNOTIFY_CONTACT_POINTS |
-			physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS | physx::PxPairFlag::eNOTIFY_TOUCH_FOUND;
+			physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS | physx::PxPairFlag::eNOTIFY_TOUCH_FOUND | physx::PxPairFlag::eNOTIFY_TOUCH_LOST;
 		return physx::PxFilterFlag::eDEFAULT;
 	}
 }

@@ -93,7 +93,9 @@ namespace CollisionAvoidance
 					Eigen::Vector3d normal = pxVecToEigenVec(pxNormal);
 					const double separation = static_cast<double>(pxSeparation);
 
-					// If the first shape is not the robot, flip the normal.
+					// Normal points from second shape to first shape.
+					// We need the normal to point to the robot (direction of compensating velocity).
+					// Therefore, if the first shape is not the robot, flip the normal.
 					if (!firstShapeIsRobot)
 					{
 						normal = -normal;
