@@ -27,9 +27,17 @@ namespace CollisionAvoidance
 		physx::PxSceneDesc sceneDesc(m_physics->getTolerancesScale());
 		sceneDesc.cpuDispatcher = cpuDispatcher;
 		sceneDesc.filterShader = contactReportFilterShader;
+		sceneDesc.simulationEventCallback = m_simulationEventCallback;
+
+		// Choose collision filtering mode.
+#if PX_PHYSICS_VERSION_MAJOR >= 4
 		sceneDesc.kineKineFilteringMode = physx::PxPairFilteringMode::eKEEP;
 		sceneDesc.staticKineFilteringMode = physx::PxPairFilteringMode::eKEEP;
-		sceneDesc.simulationEventCallback = m_simulationEventCallback;
+#else
+		sceneDesc.flags = physx::PxSceneFlag::eENABLE_KINEMATIC_PAIRS | physx::PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS;
+#endif
+
+		// Enable PCM collision and create scene.
 		sceneDesc.flags |= physx::PxSceneFlag::eENABLE_PCM;
 		m_scene = m_physics->createScene(sceneDesc);
 
