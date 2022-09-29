@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	class PhysicsScene;
 

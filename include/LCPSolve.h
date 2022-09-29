@@ -3,7 +3,7 @@
 
 #include <Eigen/Dense>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
     // Linear complementarity problem datatype.
     struct LCP {

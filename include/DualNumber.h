@@ -1,6 +1,6 @@
 #pragma once
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
     class DualNumber {
     public:

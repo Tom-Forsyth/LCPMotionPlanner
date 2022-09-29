@@ -1,7 +1,7 @@
 #include "ContactPoint.h"
 #include <Eigen/Dense>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	ContactPoint::ContactPoint()
 	{

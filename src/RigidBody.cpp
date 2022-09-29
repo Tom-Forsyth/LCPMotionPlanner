@@ -7,7 +7,7 @@
 #include <vector>
 #include "Kinematics.h"
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	// Constructor.
 	RigidBody::RigidBody(const Joint& joint, const Eigen::Matrix4d& referenceSpatialTransform, const std::string& name)

@@ -1,4 +1,4 @@
-#include "MotionPlanner.h"
+#include "ManipulatorMotionPlanner.h"
 #include "SpatialManipulator.h"
 #include "DualQuaternion.h"
 #include "RigidBody.h"
@@ -8,10 +8,10 @@
 #include <vector>
 #include <map>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
     // Constructor.
-    MotionPlanner::MotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
+    ManipulatorMotionPlanner::ManipulatorMotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
         : m_pSpatialManipulator(pSpatialManipulator), m_goalTransform(goalTransform), m_plan(std::vector<Eigen::VectorXd>{}),
         m_endFrame(pSpatialManipulator->getEndFrame()), m_dof(pSpatialManipulator->getDof()), m_currentTransform(m_endFrame.getCurrentSpatialTransform()),
         m_currentDualQuat(DualQuaternion(m_currentTransform)), m_goalDualQuat(DualQuaternion(m_goalTransform)), m_currentConcat(m_currentDualQuat.toConcat()),
@@ -21,7 +21,7 @@ namespace CollisionAvoidance
     }
 
     // Get the change in joint displacements before correction using ScLERP.
-    Eigen::VectorXd MotionPlanner::getJointDisplacementChange()
+    Eigen::VectorXd ManipulatorMotionPlanner::getJointDisplacementChange()
     {
         // Get the joint displacement change from ScLERP.
         Eigen::MatrixXd spatialJacobian = m_endFrame.getSpatialJacobian();
@@ -50,13 +50,13 @@ namespace CollisionAvoidance
     }
 
     // Get the null space term.
-    double MotionPlanner::getNullSpaceTerm() const
+    double ManipulatorMotionPlanner::getNullSpaceTerm() const
     {
         return 1;
     }
 
     // Compute the joint displacement change to avoid collision at the next time step.
-    Eigen::VectorXd MotionPlanner::getCollisionDisplacementChange(const Eigen::VectorXd& displacementChange) const
+    Eigen::VectorXd ManipulatorMotionPlanner::getCollisionDisplacementChange(const Eigen::VectorXd& displacementChange) const
     {
         // Get the active contacts.
         std::map<int, const ContactPoint&> contactPoints;
@@ -137,7 +137,7 @@ namespace CollisionAvoidance
     }
 
     // Add joint displacements and ensure they respect the linearization assumption.
-    Eigen::VectorXd MotionPlanner::getTotalDisplacementChange(const Eigen::VectorXd& displacementChange, const Eigen::VectorXd& collisionDisplacementChange)
+    Eigen::VectorXd ManipulatorMotionPlanner::getTotalDisplacementChange(const Eigen::VectorXd& displacementChange, const Eigen::VectorXd& collisionDisplacementChange)
     {
         // Adjust total step to respect the maximum collision displacement change.
         double maxCollisionDisplacement = collisionDisplacementChange.cwiseAbs().maxCoeff();
@@ -154,7 +154,7 @@ namespace CollisionAvoidance
     }
 
     // Generate motion plan.
-    void MotionPlanner::computePlan()
+    void ManipulatorMotionPlanner::computePlan()
     {
         // Run stepping until convergence or divergence.
         size_t iter = 0;
@@ -200,5 +200,10 @@ namespace CollisionAvoidance
 
             iter++;
         }
+    }
+
+    const std::vector<Eigen::VectorXd>& ManipulatorMotionPlanner::getPlan() const
+    {
+        return m_plan;
     }
 }

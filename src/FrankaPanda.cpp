@@ -9,7 +9,7 @@
 #include "ObjectType.h"
 #include <Eigen/Dense>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	// Default constructor.
 	FrankaPanda::FrankaPanda()

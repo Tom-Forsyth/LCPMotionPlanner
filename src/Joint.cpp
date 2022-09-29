@@ -2,7 +2,7 @@
 #include "Kinematics.h"
 #include <Eigen/Dense>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
     // Constructor.
     Joint::Joint(const JointType& type, const Eigen::Vector3d& axis, const Eigen::Vector3d& point)

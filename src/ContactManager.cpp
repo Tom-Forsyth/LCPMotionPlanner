@@ -4,7 +4,7 @@
 #include <map>
 #include <vector>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	ContactManager::ContactManager()
 	{

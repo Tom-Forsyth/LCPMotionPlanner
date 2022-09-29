@@ -2,7 +2,7 @@
 #include "DualQuaternion.h"
 #include <Eigen/Dense>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
     namespace Kinematics
     {

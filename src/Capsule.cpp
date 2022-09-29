@@ -4,7 +4,7 @@
 #include <Eigen/Dense>
 #include <string>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	// Origin + RPY constructor.
 	Capsule::Capsule(const Eigen::Vector3d& origin, const Eigen::Vector3d& rollPitchYaw, double halfHeight, double radius, const std::string& name, ObjectType objectType)

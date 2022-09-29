@@ -2,7 +2,7 @@
 
 #include "PxPhysicsAPI.h"
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	class ContactReportCallback : public physx::PxSimulationEventCallback
 	{

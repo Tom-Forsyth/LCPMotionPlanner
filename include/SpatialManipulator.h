@@ -2,8 +2,9 @@
 
 #include "RigidBodyChain.h"
 #include <Eigen/Dense>
+#include <vector>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	class PhysicsScene;
 
@@ -43,6 +44,6 @@ namespace CollisionAvoidance
 		Eigen::VectorXd getJointDisplacements() const;
 
 		// Generate motion plan.
-		void motionPlan(const Eigen::Matrix4d& goalTransform);
+		std::vector<Eigen::VectorXd> motionPlan(const Eigen::Matrix4d& goalTransform);
 	};
 }

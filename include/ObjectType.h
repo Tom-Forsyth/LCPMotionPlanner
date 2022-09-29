@@ -1,6 +1,6 @@
 #pragma once
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	// Flag to determine object type for collision filtering.
 	enum class ObjectType

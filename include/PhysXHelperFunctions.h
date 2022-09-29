@@ -7,7 +7,7 @@
 #include <Eigen/Dense>
 #include <memory>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	// Convert an Eigen::Matrix4d to a PxTransform.
 	physx::PxTransform eigenMatrixToPxTransform(const Eigen::Matrix4d& eigenMatrix);

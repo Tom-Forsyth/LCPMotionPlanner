@@ -1,13 +1,14 @@
 #include "SpatialManipulator.h"
 #include "RigidBodyChain.h"
-#include "MotionPlanner.h"
+#include "ManipulatorMotionPlanner.h"
 #include "PhysicsScene.h"
 #include "ContactPoint.h"
 #include <Eigen/Dense>
+#include <vector>
 #include <map>
 #include <string>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	// Default constructor.
 	SpatialManipulator::SpatialManipulator()
@@ -77,12 +78,13 @@ namespace CollisionAvoidance
 	}
 
 	// Generate motion plan.
-	void SpatialManipulator::motionPlan(const Eigen::Matrix4d& goalTransform)
+	std::vector<Eigen::VectorXd> SpatialManipulator::motionPlan(const Eigen::Matrix4d& goalTransform)
 	{
 		// Setup planner.
-		MotionPlanner planner(this, goalTransform);
+		ManipulatorMotionPlanner planner(this, goalTransform);
 
 		// Generate plan.
 		planner.computePlan();
+		return planner.getPlan();
 	}
 }

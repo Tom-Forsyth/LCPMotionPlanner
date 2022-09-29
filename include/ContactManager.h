@@ -4,7 +4,7 @@
 #include <string>
 #include <map>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	class ContactManager
 	{

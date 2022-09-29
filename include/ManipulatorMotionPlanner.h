@@ -6,11 +6,11 @@
 #include "RigidBody.h"
 #include "LCPSolve.h"
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	class SpatialManipulator;
 
-	class MotionPlanner
+	class ManipulatorMotionPlanner
 	{
 	private:
 		SpatialManipulator* m_pSpatialManipulator = nullptr;
@@ -18,13 +18,13 @@ namespace CollisionAvoidance
 
 		// Plan parameters.
 		bool m_isRunning = true;
-		size_t m_maxIterations = 2000;
+		size_t m_maxIterations = 3000;
 		double m_tau = 0.01;
 		double m_timeStep = 0.01;
-		double m_safetyDistance = 0.02;
-		double m_maxScLERPDisplacementChange = 0.005;
+		double m_safetyDistance = 0.01;
+		double m_maxScLERPDisplacementChange = 0.001;
 		double m_maxCollisionDisplacementChange = 0.001;
-		double m_maxTotalDisplacementChange = 0.01;
+		double m_maxTotalDisplacementChange = 0.005;
 		bool m_tauIsMax = false;
 		double m_positionTolerance = 0.02;
 		double m_quatTolerance = 0.02;
@@ -41,7 +41,7 @@ namespace CollisionAvoidance
 
 	public:
 		// Constructor.
-		MotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform);
+		ManipulatorMotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform);
 
 		// Get the change in joint displacements before correction using ScLERP.
 		Eigen::VectorXd getJointDisplacementChange();
@@ -57,5 +57,8 @@ namespace CollisionAvoidance
 
 		// Generate motion plan.
 		void computePlan();
+
+		// Get the motion plan.
+		const std::vector<Eigen::VectorXd>& getPlan() const;
 	};
 }

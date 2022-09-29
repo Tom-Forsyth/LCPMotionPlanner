@@ -2,7 +2,7 @@
 #include "PxPhysicsAPI.h"
 #include "ObjectType.h"
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	// Collision pair filter shader.
 	physx::PxFilterFlags contactReportFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,

@@ -3,7 +3,7 @@
 #include <Eigen/Dense>
 #include <vector>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
     // Default constructor.
     DualQuaternion::DualQuaternion()

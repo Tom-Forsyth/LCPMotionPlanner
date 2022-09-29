@@ -6,7 +6,7 @@
 #include <map>
 #include <Eigen/Dense>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	// Default constructor.
 	CollisionAggregate::CollisionAggregate()

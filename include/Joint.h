@@ -2,7 +2,7 @@
 
 #include <Eigen/Dense>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	enum class JointType
 	{

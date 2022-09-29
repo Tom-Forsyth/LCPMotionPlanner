@@ -2,7 +2,7 @@
 
 #include <Eigen/Dense>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
     // Robotics kinematics functions.
     namespace Kinematics

@@ -5,7 +5,7 @@
 #include <Eigen/Dense>
 #include <string>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	// Origin + RPY constructor.
 	Shape::Shape(const Eigen::Vector3d& origin, const Eigen::Vector3d& rollPitchYaw, const std::string& name, ObjectType objectType, ShapeType shapeType)

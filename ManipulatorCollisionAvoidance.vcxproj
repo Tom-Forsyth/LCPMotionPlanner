@@ -33,7 +33,7 @@
     <ClCompile Include="src\Kinematics.cpp" />
     <ClCompile Include="src\LCPSolve.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\MotionPlanner.cpp" />
+    <ClCompile Include="src\ManipulatorMotionPlanner.cpp" />
     <ClCompile Include="src\PhysicsCore.cpp" />
     <ClCompile Include="src\PhysicsScene.cpp" />
     <ClCompile Include="src\PhysXHelperFunctions.cpp" />
@@ -57,7 +57,7 @@
     <ClInclude Include="include\Joint.h" />
     <ClInclude Include="include\Kinematics.h" />
     <ClInclude Include="include\LCPSolve.h" />
-    <ClInclude Include="include\MotionPlanner.h" />
+    <ClInclude Include="include\ManipulatorMotionPlanner.h" />
     <ClInclude Include="include\ObjectType.h" />
     <ClInclude Include="include\PhysicsCore.h" />
     <ClInclude Include="include\PhysicsScene.h" />

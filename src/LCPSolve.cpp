@@ -2,7 +2,7 @@
 #include <cmath>
 #include <Eigen/Dense>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
     using namespace Eigen;
     using namespace std;

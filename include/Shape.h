@@ -4,7 +4,7 @@
 #include <Eigen/Dense>
 #include <string>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	struct ContactPoint;
 

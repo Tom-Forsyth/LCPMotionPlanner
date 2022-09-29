@@ -7,7 +7,7 @@
 #include <map>
 #include <Eigen/Dense>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	class CollisionAggregate
 	{

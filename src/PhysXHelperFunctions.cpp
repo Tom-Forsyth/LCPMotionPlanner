@@ -8,7 +8,7 @@
 #include <exception>
 #include <memory>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	physx::PxTransform eigenMatrixToPxTransform(const Eigen::Matrix4d& eigenMatrix)
 	{

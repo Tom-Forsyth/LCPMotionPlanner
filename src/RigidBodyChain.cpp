@@ -5,7 +5,7 @@
 #include <vector>
 #include <Eigen/Dense>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	// Default constructor.
 	RigidBodyChain::RigidBodyChain()

@@ -1,6 +1,6 @@
 #include "DualNumber.h"
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
     // Constructors.
     DualNumber::DualNumber()

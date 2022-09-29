@@ -13,7 +13,7 @@
 #include <vector>
 #include <map>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	// Physics scene to manage simulation scene.
 	class PhysicsScene

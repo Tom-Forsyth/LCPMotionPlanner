@@ -9,7 +9,7 @@
 #include "ContactPoint.h"
 #include <string>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	class RigidBody
 	{

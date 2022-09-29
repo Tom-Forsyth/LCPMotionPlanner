@@ -5,7 +5,7 @@
 #include <Eigen/Dense>
 #include <string>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	class Box : public Shape
 	{

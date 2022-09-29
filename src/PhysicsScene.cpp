@@ -15,7 +15,7 @@
 #include <vector>
 #include <map>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	PhysicsScene::PhysicsScene(const std::string& sceneName, physx::PxPhysics* physics, physx::PxCpuDispatcher* cpuDispatcher)
 		: m_name(sceneName), m_physics(physics)

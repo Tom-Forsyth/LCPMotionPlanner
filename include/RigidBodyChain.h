@@ -3,7 +3,7 @@
 #include <vector>
 #include "RigidBody.h"
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	class RigidBodyChain
 	{

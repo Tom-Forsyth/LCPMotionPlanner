@@ -2,13 +2,14 @@
 #include "PxPhysicsAPI.h"
 #include "PhysicsScene.h"
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	PhysicsCore::PhysicsCore()
 	{
 #ifndef NDEBUG
 		bEnablePVD = true;
 #endif
+		bEnablePVD = true;
 	}
 
 	PhysicsCore::~PhysicsCore()
@@ -18,13 +19,28 @@ namespace CollisionAvoidance
 		{
 			// Free PhysX core objects.
 			PxCloseExtensions(); 
-			m_physics->release();
-			m_foundation->release();
+			if (m_physics)
+			{
+				m_physics->release();
+			}
+			if (m_foundation)
+			{
+				m_foundation->release();
+			}
 
 			// Free allocated members.
-			delete m_allocator;
-			delete m_errorCallback;
-			delete m_toleranceScale;
+			if (m_allocator)
+			{
+				delete m_allocator;
+			}
+			if (m_errorCallback)
+			{
+				delete m_errorCallback;
+			}
+			if (m_toleranceScale)
+			{
+				delete m_toleranceScale;
+			}
 		}
 	}
 
@@ -45,10 +61,13 @@ namespace CollisionAvoidance
 			bool bTrackAllocations = false;
 			if (bEnablePVD)
 			{
-				m_pvd = physx::PxCreatePvd(*m_foundation);
-				physx::PxPvdTransport* transport = physx::PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
-				m_pvd->connect(*transport, physx::PxPvdInstrumentationFlag::eALL);
-				bTrackAllocations = true;
+				if (m_foundation)
+				{
+					m_pvd = physx::PxCreatePvd(*m_foundation);
+					physx::PxPvdTransport* transport = physx::PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 100);
+					m_pvd->connect(*transport, physx::PxPvdInstrumentationFlag::eALL);
+					bTrackAllocations = true;
+				}
 			}
 
 			// Create tolerances scale.

@@ -4,7 +4,7 @@
 #include <Eigen/Dense>
 #include <string>
 
-namespace CollisionAvoidance
+namespace MotionPlanner
 {
 	// Origin + RPY constructor.
 	Box::Box(const Eigen::Vector3d& origin, const Eigen::Vector3d& rollPitchYaw, const Eigen::Vector3d& radii, const std::string& name, ObjectType objectType)
