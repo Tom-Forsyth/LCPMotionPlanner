@@ -1,4 +1,4 @@
 .vs/
+.vscode/
 bin/
 build/
-ManipulatorCollisionAvoidance.vcxproj.user

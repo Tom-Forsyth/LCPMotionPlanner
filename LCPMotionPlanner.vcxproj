@@ -72,9 +72,9 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{e4757905-7d78-4b6e-8341-6e01a86712e0}</ProjectGuid>
-    <RootNamespace>ManipulatorCollisionAvoidance</RootNamespace>
+    <RootNamespace>LCPMotionPlanner</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>ManipulatorCollisionAvoidance</ProjectName>
+    <ProjectName>LCPMotionPlanner</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
