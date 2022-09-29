@@ -1,0 +1,148 @@
+\hypertarget{class_motion_planner_1_1_collision_aggregate}{}\doxysection{Motion\+Planner\+::Collision\+Aggregate Class Reference}
+\label{class_motion_planner_1_1_collision_aggregate}\index{MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}}
+
+
+{\ttfamily \#include $<$Collision\+Aggregate.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a11b563f79418ede17924ee5957005a30}{Collision\+Aggregate}} ()
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a9b25860605f8f9ba7b3af811974e0a42}{add\+Shape}} (const \mbox{\hyperlink{class_motion_planner_1_1_sphere}{Sphere}} \&sphere)
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_abf0b4fd84aca5cc4aee63f765f40fd70}{add\+Shape}} (const \mbox{\hyperlink{class_motion_planner_1_1_capsule}{Capsule}} \&capsule)
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_aa957a9cef894e3384c9babe0252df4bf}{add\+Shape}} (const \mbox{\hyperlink{class_motion_planner_1_1_box}{Box}} \&box)
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_motion_planner_1_1_sphere}{Sphere}} $>$ \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a39d50722e8a46d4a0da63e9301c3eb3f}{get\+Spheres}} () const
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_motion_planner_1_1_capsule}{Capsule}} $>$ \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a74e7142c550e2467103222a855419cef}{get\+Capsules}} () const
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_motion_planner_1_1_box}{Box}} $>$ \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a0af14c6fc470264fcb6c20e21687b02b}{get\+Boxes}} () const
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a5419de6191dda281178dc747b2083270}{update\+Collider\+Transforms}} (const Eigen\+::\+Matrix4d \&world\+Transform)
+\item 
+std\+::vector$<$ const \mbox{\hyperlink{class_motion_planner_1_1_shape}{Shape}} $\ast$ $>$ \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_ad9f842e6dd24effa782ddbff9a40061f}{get\+Colliders}} () const
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a521f9be855acbcd4d3e63afd27efefc6}{set\+Parent\+Body\+Name}} (const std\+::string \&parent\+Body\+Name)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_collision_aggregate_8h_source_l00012}{12}} of file \mbox{\hyperlink{_collision_aggregate_8h_source}{Collision\+Aggregate.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_motion_planner_1_1_collision_aggregate_a11b563f79418ede17924ee5957005a30}\label{class_motion_planner_1_1_collision_aggregate_a11b563f79418ede17924ee5957005a30}} 
+\index{MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}!CollisionAggregate@{CollisionAggregate}}
+\index{CollisionAggregate@{CollisionAggregate}!MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}}
+\doxysubsubsection{\texorpdfstring{CollisionAggregate()}{CollisionAggregate()}}
+{\footnotesize\ttfamily Motion\+Planner\+::\+Collision\+Aggregate\+::\+Collision\+Aggregate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_collision_aggregate_8cpp_source_l00012}{12}} of file \mbox{\hyperlink{_collision_aggregate_8cpp_source}{Collision\+Aggregate.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_motion_planner_1_1_collision_aggregate_aa957a9cef894e3384c9babe0252df4bf}\label{class_motion_planner_1_1_collision_aggregate_aa957a9cef894e3384c9babe0252df4bf}} 
+\index{MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}!addShape@{addShape}}
+\index{addShape@{addShape}!MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}}
+\doxysubsubsection{\texorpdfstring{addShape()}{addShape()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Collision\+Aggregate\+::add\+Shape (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_motion_planner_1_1_box}{Box}} \&}]{box }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_collision_aggregate_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{_collision_aggregate_8cpp_source}{Collision\+Aggregate.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_collision_aggregate_abf0b4fd84aca5cc4aee63f765f40fd70}\label{class_motion_planner_1_1_collision_aggregate_abf0b4fd84aca5cc4aee63f765f40fd70}} 
+\index{MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}!addShape@{addShape}}
+\index{addShape@{addShape}!MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}}
+\doxysubsubsection{\texorpdfstring{addShape()}{addShape()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Collision\+Aggregate\+::add\+Shape (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_motion_planner_1_1_capsule}{Capsule}} \&}]{capsule }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_collision_aggregate_8cpp_source_l00024}{24}} of file \mbox{\hyperlink{_collision_aggregate_8cpp_source}{Collision\+Aggregate.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_collision_aggregate_a9b25860605f8f9ba7b3af811974e0a42}\label{class_motion_planner_1_1_collision_aggregate_a9b25860605f8f9ba7b3af811974e0a42}} 
+\index{MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}!addShape@{addShape}}
+\index{addShape@{addShape}!MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}}
+\doxysubsubsection{\texorpdfstring{addShape()}{addShape()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Collision\+Aggregate\+::add\+Shape (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_motion_planner_1_1_sphere}{Sphere}} \&}]{sphere }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_collision_aggregate_8cpp_source_l00017}{17}} of file \mbox{\hyperlink{_collision_aggregate_8cpp_source}{Collision\+Aggregate.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_collision_aggregate_a0af14c6fc470264fcb6c20e21687b02b}\label{class_motion_planner_1_1_collision_aggregate_a0af14c6fc470264fcb6c20e21687b02b}} 
+\index{MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}!getBoxes@{getBoxes}}
+\index{getBoxes@{getBoxes}!MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}}
+\doxysubsubsection{\texorpdfstring{getBoxes()}{getBoxes()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_motion_planner_1_1_box}{Box}} $>$ Motion\+Planner\+::\+Collision\+Aggregate\+::get\+Boxes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_collision_aggregate_8cpp_source_l00050}{50}} of file \mbox{\hyperlink{_collision_aggregate_8cpp_source}{Collision\+Aggregate.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_collision_aggregate_a74e7142c550e2467103222a855419cef}\label{class_motion_planner_1_1_collision_aggregate_a74e7142c550e2467103222a855419cef}} 
+\index{MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}!getCapsules@{getCapsules}}
+\index{getCapsules@{getCapsules}!MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}}
+\doxysubsubsection{\texorpdfstring{getCapsules()}{getCapsules()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_motion_planner_1_1_capsule}{Capsule}} $>$ Motion\+Planner\+::\+Collision\+Aggregate\+::get\+Capsules (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_collision_aggregate_8cpp_source_l00044}{44}} of file \mbox{\hyperlink{_collision_aggregate_8cpp_source}{Collision\+Aggregate.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_collision_aggregate_ad9f842e6dd24effa782ddbff9a40061f}\label{class_motion_planner_1_1_collision_aggregate_ad9f842e6dd24effa782ddbff9a40061f}} 
+\index{MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}!getColliders@{getColliders}}
+\index{getColliders@{getColliders}!MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}}
+\doxysubsubsection{\texorpdfstring{getColliders()}{getColliders()}}
+{\footnotesize\ttfamily std\+::vector$<$ const \mbox{\hyperlink{class_motion_planner_1_1_shape}{Shape}} $\ast$ $>$ Motion\+Planner\+::\+Collision\+Aggregate\+::get\+Colliders (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_collision_aggregate_8cpp_source_l00079}{79}} of file \mbox{\hyperlink{_collision_aggregate_8cpp_source}{Collision\+Aggregate.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_collision_aggregate_a39d50722e8a46d4a0da63e9301c3eb3f}\label{class_motion_planner_1_1_collision_aggregate_a39d50722e8a46d4a0da63e9301c3eb3f}} 
+\index{MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}!getSpheres@{getSpheres}}
+\index{getSpheres@{getSpheres}!MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}}
+\doxysubsubsection{\texorpdfstring{getSpheres()}{getSpheres()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_motion_planner_1_1_sphere}{Sphere}} $>$ Motion\+Planner\+::\+Collision\+Aggregate\+::get\+Spheres (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_collision_aggregate_8cpp_source_l00038}{38}} of file \mbox{\hyperlink{_collision_aggregate_8cpp_source}{Collision\+Aggregate.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_collision_aggregate_a521f9be855acbcd4d3e63afd27efefc6}\label{class_motion_planner_1_1_collision_aggregate_a521f9be855acbcd4d3e63afd27efefc6}} 
+\index{MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}!setParentBodyName@{setParentBodyName}}
+\index{setParentBodyName@{setParentBodyName}!MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}}
+\doxysubsubsection{\texorpdfstring{setParentBodyName()}{setParentBodyName()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Collision\+Aggregate\+::set\+Parent\+Body\+Name (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{parent\+Body\+Name }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_collision_aggregate_8cpp_source_l00107}{107}} of file \mbox{\hyperlink{_collision_aggregate_8cpp_source}{Collision\+Aggregate.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_collision_aggregate_a5419de6191dda281178dc747b2083270}\label{class_motion_planner_1_1_collision_aggregate_a5419de6191dda281178dc747b2083270}} 
+\index{MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}!updateColliderTransforms@{updateColliderTransforms}}
+\index{updateColliderTransforms@{updateColliderTransforms}!MotionPlanner::CollisionAggregate@{MotionPlanner::CollisionAggregate}}
+\doxysubsubsection{\texorpdfstring{updateColliderTransforms()}{updateColliderTransforms()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Collision\+Aggregate\+::update\+Collider\+Transforms (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix4d \&}]{world\+Transform }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_collision_aggregate_8cpp_source_l00055}{55}} of file \mbox{\hyperlink{_collision_aggregate_8cpp_source}{Collision\+Aggregate.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{_collision_aggregate_8h}{Collision\+Aggregate.\+h}}\item 
+src/\mbox{\hyperlink{_collision_aggregate_8cpp}{Collision\+Aggregate.\+cpp}}\end{DoxyCompactItemize}

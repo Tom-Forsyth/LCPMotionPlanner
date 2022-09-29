@@ -1,0 +1,136 @@
+\hypertarget{class_motion_planner_1_1_joint}{}\doxysection{Motion\+Planner\+::Joint Class Reference}
+\label{class_motion_planner_1_1_joint}\index{MotionPlanner::Joint@{MotionPlanner::Joint}}
+
+
+{\ttfamily \#include $<$Joint.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_motion_planner_1_1_joint_aa37168517b249899cb239f171aaa80a4}{Joint}} (const \mbox{\hyperlink{namespace_motion_planner_ac5f205f0b14daa687444a9fc4d272c28}{Joint\+Type}} \&type, const Eigen\+::\+Vector3d \&axis, const Eigen\+::\+Vector3d \&point)
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_joint_aacdaa25efb13e1003e5751ebd2e121e5}{compute\+Twist\+Coord}} ()
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_joint_aa88ad0eb13673b10c84930b84758a8b8}{compute\+Twist}} ()
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_joint_a371d485ec22759e4fffe39805a1023b2}{compute\+Relative\+Transformation}} ()
+\item 
+Eigen\+::\+Matrix4d \mbox{\hyperlink{class_motion_planner_1_1_joint_aaf8d8a1e53054aa2d904d71da5fa9881}{get\+Relative\+Transformation}} () const
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_joint_af01a32b099045bb0a9ee9b8549bdb802}{set\+Displacement}} (const double \&displacement)
+\item 
+\mbox{\hyperlink{namespace_motion_planner_ac5f205f0b14daa687444a9fc4d272c28}{Joint\+Type}} \mbox{\hyperlink{class_motion_planner_1_1_joint_a670c87b83417f2449f9418e0a888a3b3}{get\+Type}} () const
+\item 
+Eigen\+::\+Vector$<$ double, 6 $>$ \mbox{\hyperlink{class_motion_planner_1_1_joint_af409cd797c4fab0859169422fa64ce99}{get\+Twist\+Coord}} () const
+\item 
+double \mbox{\hyperlink{class_motion_planner_1_1_joint_adc539bc539cf67b48c8d88536816977d}{get\+Displacement}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_joint_8h_source_l00014}{14}} of file \mbox{\hyperlink{_joint_8h_source}{Joint.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_motion_planner_1_1_joint_aa37168517b249899cb239f171aaa80a4}\label{class_motion_planner_1_1_joint_aa37168517b249899cb239f171aaa80a4}} 
+\index{MotionPlanner::Joint@{MotionPlanner::Joint}!Joint@{Joint}}
+\index{Joint@{Joint}!MotionPlanner::Joint@{MotionPlanner::Joint}}
+\doxysubsubsection{\texorpdfstring{Joint()}{Joint()}}
+{\footnotesize\ttfamily Motion\+Planner\+::\+Joint\+::\+Joint (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_motion_planner_ac5f205f0b14daa687444a9fc4d272c28}{Joint\+Type}} \&}]{type,  }\item[{const Eigen\+::\+Vector3d \&}]{axis,  }\item[{const Eigen\+::\+Vector3d \&}]{point }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_joint_8cpp_source_l00008}{8}} of file \mbox{\hyperlink{_joint_8cpp_source}{Joint.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_motion_planner_1_1_joint_a371d485ec22759e4fffe39805a1023b2}\label{class_motion_planner_1_1_joint_a371d485ec22759e4fffe39805a1023b2}} 
+\index{MotionPlanner::Joint@{MotionPlanner::Joint}!computeRelativeTransformation@{computeRelativeTransformation}}
+\index{computeRelativeTransformation@{computeRelativeTransformation}!MotionPlanner::Joint@{MotionPlanner::Joint}}
+\doxysubsubsection{\texorpdfstring{computeRelativeTransformation()}{computeRelativeTransformation()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Joint\+::compute\+Relative\+Transformation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_joint_8cpp_source_l00041}{41}} of file \mbox{\hyperlink{_joint_8cpp_source}{Joint.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_joint_aa88ad0eb13673b10c84930b84758a8b8}\label{class_motion_planner_1_1_joint_aa88ad0eb13673b10c84930b84758a8b8}} 
+\index{MotionPlanner::Joint@{MotionPlanner::Joint}!computeTwist@{computeTwist}}
+\index{computeTwist@{computeTwist}!MotionPlanner::Joint@{MotionPlanner::Joint}}
+\doxysubsubsection{\texorpdfstring{computeTwist()}{computeTwist()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Joint\+::compute\+Twist (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_joint_8cpp_source_l00032}{32}} of file \mbox{\hyperlink{_joint_8cpp_source}{Joint.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_joint_aacdaa25efb13e1003e5751ebd2e121e5}\label{class_motion_planner_1_1_joint_aacdaa25efb13e1003e5751ebd2e121e5}} 
+\index{MotionPlanner::Joint@{MotionPlanner::Joint}!computeTwistCoord@{computeTwistCoord}}
+\index{computeTwistCoord@{computeTwistCoord}!MotionPlanner::Joint@{MotionPlanner::Joint}}
+\doxysubsubsection{\texorpdfstring{computeTwistCoord()}{computeTwistCoord()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Joint\+::compute\+Twist\+Coord (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_joint_8cpp_source_l00018}{18}} of file \mbox{\hyperlink{_joint_8cpp_source}{Joint.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_joint_adc539bc539cf67b48c8d88536816977d}\label{class_motion_planner_1_1_joint_adc539bc539cf67b48c8d88536816977d}} 
+\index{MotionPlanner::Joint@{MotionPlanner::Joint}!getDisplacement@{getDisplacement}}
+\index{getDisplacement@{getDisplacement}!MotionPlanner::Joint@{MotionPlanner::Joint}}
+\doxysubsubsection{\texorpdfstring{getDisplacement()}{getDisplacement()}}
+{\footnotesize\ttfamily double Motion\+Planner\+::\+Joint\+::get\+Displacement (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_joint_8cpp_source_l00081}{81}} of file \mbox{\hyperlink{_joint_8cpp_source}{Joint.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_joint_aaf8d8a1e53054aa2d904d71da5fa9881}\label{class_motion_planner_1_1_joint_aaf8d8a1e53054aa2d904d71da5fa9881}} 
+\index{MotionPlanner::Joint@{MotionPlanner::Joint}!getRelativeTransformation@{getRelativeTransformation}}
+\index{getRelativeTransformation@{getRelativeTransformation}!MotionPlanner::Joint@{MotionPlanner::Joint}}
+\doxysubsubsection{\texorpdfstring{getRelativeTransformation()}{getRelativeTransformation()}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix4d Motion\+Planner\+::\+Joint\+::get\+Relative\+Transformation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_joint_8cpp_source_l00056}{56}} of file \mbox{\hyperlink{_joint_8cpp_source}{Joint.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_joint_af409cd797c4fab0859169422fa64ce99}\label{class_motion_planner_1_1_joint_af409cd797c4fab0859169422fa64ce99}} 
+\index{MotionPlanner::Joint@{MotionPlanner::Joint}!getTwistCoord@{getTwistCoord}}
+\index{getTwistCoord@{getTwistCoord}!MotionPlanner::Joint@{MotionPlanner::Joint}}
+\doxysubsubsection{\texorpdfstring{getTwistCoord()}{getTwistCoord()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector$<$ double, 6 $>$ Motion\+Planner\+::\+Joint\+::get\+Twist\+Coord (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_joint_8cpp_source_l00075}{75}} of file \mbox{\hyperlink{_joint_8cpp_source}{Joint.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_joint_a670c87b83417f2449f9418e0a888a3b3}\label{class_motion_planner_1_1_joint_a670c87b83417f2449f9418e0a888a3b3}} 
+\index{MotionPlanner::Joint@{MotionPlanner::Joint}!getType@{getType}}
+\index{getType@{getType}!MotionPlanner::Joint@{MotionPlanner::Joint}}
+\doxysubsubsection{\texorpdfstring{getType()}{getType()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_motion_planner_ac5f205f0b14daa687444a9fc4d272c28}{Joint\+Type}} Motion\+Planner\+::\+Joint\+::get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_joint_8cpp_source_l00069}{69}} of file \mbox{\hyperlink{_joint_8cpp_source}{Joint.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_joint_af01a32b099045bb0a9ee9b8549bdb802}\label{class_motion_planner_1_1_joint_af01a32b099045bb0a9ee9b8549bdb802}} 
+\index{MotionPlanner::Joint@{MotionPlanner::Joint}!setDisplacement@{setDisplacement}}
+\index{setDisplacement@{setDisplacement}!MotionPlanner::Joint@{MotionPlanner::Joint}}
+\doxysubsubsection{\texorpdfstring{setDisplacement()}{setDisplacement()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Joint\+::set\+Displacement (\begin{DoxyParamCaption}\item[{const double \&}]{displacement }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_joint_8cpp_source_l00062}{62}} of file \mbox{\hyperlink{_joint_8cpp_source}{Joint.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{_joint_8h}{Joint.\+h}}\item 
+src/\mbox{\hyperlink{_joint_8cpp}{Joint.\+cpp}}\end{DoxyCompactItemize}

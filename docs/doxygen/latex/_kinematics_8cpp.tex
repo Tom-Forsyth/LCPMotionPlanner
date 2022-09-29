@@ -1,0 +1,27 @@
+\hypertarget{_kinematics_8cpp}{}\doxysection{src/\+Kinematics.cpp File Reference}
+\label{_kinematics_8cpp}\index{src/Kinematics.cpp@{src/Kinematics.cpp}}
+{\ttfamily \#include \char`\"{}Kinematics.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Dual\+Quaternion.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$Eigen/\+Dense$>$}\newline
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_motion_planner}{Motion\+Planner}}
+\item 
+namespace \mbox{\hyperlink{namespace_motion_planner_1_1_kinematics}{Motion\+Planner\+::\+Kinematics}}
+\begin{DoxyCompactList}\small\item\em Robotics kinematics functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Eigen\+::\+Matrix3d \mbox{\hyperlink{namespace_motion_planner_1_1_kinematics_a35be98501567026badfaa3995595171f}{Motion\+Planner\+::\+Kinematics\+::skew}} (const Eigen\+::\+Vector3d \&w)
+\begin{DoxyCompactList}\small\item\em Compute skew symmetric form of an axis. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix3d \mbox{\hyperlink{namespace_motion_planner_1_1_kinematics_a958c657b6d57210377ffd98127caab1c}{Motion\+Planner\+::\+Kinematics\+::\+Axis\+Angleto\+Rot}} (const Eigen\+::\+Vector3d \&axis, double angle)
+\begin{DoxyCompactList}\small\item\em Compute the rotation matrix from axis-\/angle representation. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix$<$ double, 6, 6 $>$ \mbox{\hyperlink{namespace_motion_planner_1_1_kinematics_a64952c9c34bb9e9cc9ba118e1b92894f}{Motion\+Planner\+::\+Kinematics\+::adjoint}} (const Eigen\+::\+Matrix4d \&G)
+\begin{DoxyCompactList}\small\item\em Compute the adjoint matrix of a transformation matrix. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix4d \mbox{\hyperlink{namespace_motion_planner_1_1_kinematics_aba112ed0d13dc4796b3efbda147ff22b}{Motion\+Planner\+::\+Kinematics\+::transform\+Inverse}} (const Eigen\+::\+Matrix4d \&transform)
+\begin{DoxyCompactList}\small\item\em Compute an efficient inverse of a transformation matrix. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{namespace_motion_planner_1_1_kinematics_a15017555684d4fc24821ed0e944275c8}{Motion\+Planner\+::\+Kinematics\+::spatial\+To\+Analytic\+Jacobian}} (const Eigen\+::\+Matrix\+Xd \&spatial\+Jacobian, const Eigen\+::\+Vector3d \&point)
+\begin{DoxyCompactList}\small\item\em Convert the spatial jacobian to an analytic jacobian at a given point represented in the spatial frame. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{namespace_motion_planner_1_1_kinematics_afc8cc192134d01ef289f8588825907ca}{Motion\+Planner\+::\+Kinematics\+::\+BMatrix}} (const Eigen\+::\+Matrix\+Xd \&J, const Eigen\+::\+Matrix4d \&pose)
+\begin{DoxyCompactList}\small\item\em Calculate jacobian to convert gamma\+Dot to theta\+Dot. \end{DoxyCompactList}\end{DoxyCompactItemize}

@@ -27,7 +27,7 @@
   <td id="projectalign">
    <div id="projectname">LCPMotionPlanner
    </div>
-   <div id="projectbrief">A robot motion planner with LCP based collision avoidance.</div>
+   <div id="projectbrief">A ScLERP motion planner with LCP collision avoidance.</div>
   </td>
  </tr>
  </tbody>
@@ -97,28 +97,43 @@ $(document).ready(function(){initNavTree('class_motion_planner_1_1_physics_scene
 </div><!--header-->
 <div class="contents">
 
+<p>Physics scene to manage simulation scene.  
+ <a href="class_motion_planner_1_1_physics_scene.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_physics_scene_8h_source.html">PhysicsScene.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2bd2b6668ea0b9e2ddb625693e1c3e83"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_motion_planner_1_1_physics_scene.html#a2bd2b6668ea0b9e2ddb625693e1c3e83">PhysicsScene</a> (const std::string &amp;sceneName, physx::PxPhysics *const physics, physx::PxCpuDispatcher *const cpuDispatcher)</td></tr>
+<tr class="memdesc:a2bd2b6668ea0b9e2ddb625693e1c3e83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="class_motion_planner_1_1_physics_scene.html#a2bd2b6668ea0b9e2ddb625693e1c3e83">More...</a><br /></td></tr>
 <tr class="separator:a2bd2b6668ea0b9e2ddb625693e1c3e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae40a78c4ad18c815dd2752c548adee90"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_motion_planner_1_1_physics_scene.html#ae40a78c4ad18c815dd2752c548adee90">~PhysicsScene</a> ()</td></tr>
+<tr class="memdesc:ae40a78c4ad18c815dd2752c548adee90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="class_motion_planner_1_1_physics_scene.html#ae40a78c4ad18c815dd2752c548adee90">More...</a><br /></td></tr>
 <tr class="separator:ae40a78c4ad18c815dd2752c548adee90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d84756c621d3ed5dc039685a4b45e60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_motion_planner_1_1_physics_scene.html#a4d84756c621d3ed5dc039685a4b45e60">connectToPVD</a> () const</td></tr>
+<tr class="memdesc:a4d84756c621d3ed5dc039685a4b45e60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect the scene to the PVD client.  <a href="class_motion_planner_1_1_physics_scene.html#a4d84756c621d3ed5dc039685a4b45e60">More...</a><br /></td></tr>
 <tr class="separator:a4d84756c621d3ed5dc039685a4b45e60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a505e5f84b92c7dd8c0c955f476842b6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_motion_planner_1_1_physics_scene.html#a505e5f84b92c7dd8c0c955f476842b6e">addObstacle</a> (const <a class="el" href="class_motion_planner_1_1_shape.html">Shape</a> &amp;shape)</td></tr>
+<tr class="memdesc:a505e5f84b92c7dd8c0c955f476842b6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an obstacle to the scene.  <a href="class_motion_planner_1_1_physics_scene.html#a505e5f84b92c7dd8c0c955f476842b6e">More...</a><br /></td></tr>
 <tr class="separator:a505e5f84b92c7dd8c0c955f476842b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab29441854f3e66856df5836e5c52fdd4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_motion_planner_1_1_physics_scene.html#ab29441854f3e66856df5836e5c52fdd4">addSpatialManipulator</a> (<a class="el" href="class_motion_planner_1_1_spatial_manipulator.html">SpatialManipulator</a> &amp;spatialManipulator)</td></tr>
+<tr class="memdesc:ab29441854f3e66856df5836e5c52fdd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the robot geometry actors of a manipulator to the scene and provide the manipulator with a pointer to the scene.  <a href="class_motion_planner_1_1_physics_scene.html#ab29441854f3e66856df5836e5c52fdd4">More...</a><br /></td></tr>
 <tr class="separator:ab29441854f3e66856df5836e5c52fdd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a1b0c8617ebb84b2a97ec04ad570bf1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_motion_planner_1_1_physics_scene.html#a3a1b0c8617ebb84b2a97ec04ad570bf1">addContact</a> (const std::string &amp;linkName, const <a class="el" href="struct_motion_planner_1_1_contact_point.html">ContactPoint</a> &amp;contactPoint)</td></tr>
+<tr class="memdesc:a3a1b0c8617ebb84b2a97ec04ad570bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a contact to be processed by the contact manager.  <a href="class_motion_planner_1_1_physics_scene.html#a3a1b0c8617ebb84b2a97ec04ad570bf1">More...</a><br /></td></tr>
 <tr class="separator:a3a1b0c8617ebb84b2a97ec04ad570bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad86bc364257acd8a2a247c62273829ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_motion_planner_1_1_physics_scene.html#ad86bc364257acd8a2a247c62273829ba">setContactOffsets</a> (double manipulatorSafetyDistance, double fingerSafetyDistance)</td></tr>
+<tr class="memdesc:ad86bc364257acd8a2a247c62273829ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the contact generation offset to be slightly larger than safety distance.  <a href="class_motion_planner_1_1_physics_scene.html#ad86bc364257acd8a2a247c62273829ba">More...</a><br /></td></tr>
 <tr class="separator:ad86bc364257acd8a2a247c62273829ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae489972e3ba384b383a0b87c8022b3d7"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="struct_motion_planner_1_1_contact_point.html">ContactPoint</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_motion_planner_1_1_physics_scene.html#ae489972e3ba384b383a0b87c8022b3d7">generateContacts</a> ()</td></tr>
+<tr class="memdesc:ae489972e3ba384b383a0b87c8022b3d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run PhysX simulation to generate contacts and run contact manager to reduce contacts.  <a href="class_motion_planner_1_1_physics_scene.html#ae489972e3ba384b383a0b87c8022b3d7">More...</a><br /></td></tr>
 <tr class="separator:ae489972e3ba384b383a0b87c8022b3d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Physics scene to manage simulation scene. </p>
+
+<p class="definition">Definition at line <a class="el" href="_physics_scene_8h_source.html#l00019">19</a> of file <a class="el" href="_physics_scene_8h_source.html">PhysicsScene.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2bd2b6668ea0b9e2ddb625693e1c3e83" name="a2bd2b6668ea0b9e2ddb625693e1c3e83"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2bd2b6668ea0b9e2ddb625693e1c3e83">&#9670;&#160;</a></span>PhysicsScene()</h2>
 
@@ -150,11 +165,18 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_motion_planner_1_1_physics_scene_a2bd2b6668ea0b9e2ddb625693e1c3e83_cgraph.png" border="0" usemap="#aclass_motion_planner_1_1_physics_scene_a2bd2b6668ea0b9e2ddb625693e1c3e83_cgraph" alt=""/></div>
-</div>
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sceneName</td><td>Name of scene. </td></tr>
+    <tr><td class="paramname">physics</td><td>Pointer to the PhysX factory class. </td></tr>
+    <tr><td class="paramname">cpuDispatcher</td><td>Pointer to the PhysX CPU dispatcher. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_physics_scene_8cpp_source.html#l00020">20</a> of file <a class="el" href="_physics_scene_8cpp_source.html">PhysicsScene.cpp</a>.</p>
 
 </div>
 </div>
@@ -172,6 +194,10 @@ Here is the call graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Destructor. </p>
+
+<p class="definition">Definition at line <a class="el" href="_physics_scene_8cpp_source.html#l00059">59</a> of file <a class="el" href="_physics_scene_8cpp_source.html">PhysicsScene.cpp</a>.</p>
 
 </div>
 </div>
@@ -201,11 +227,17 @@ Here is the call graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_motion_planner_1_1_physics_scene_a3a1b0c8617ebb84b2a97ec04ad570bf1_cgraph.png" border="0" usemap="#aclass_motion_planner_1_1_physics_scene_a3a1b0c8617ebb84b2a97ec04ad570bf1_cgraph" alt=""/></div>
-</div>
+
+<p>Add a contact to be processed by the contact manager. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">linkName</td><td>Name of rigid body that the the contact occured on. </td></tr>
+    <tr><td class="paramname">contactPoint</td><td>Position, normal, separation, and status of contact. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_physics_scene_8cpp_source.html#l00219">219</a> of file <a class="el" href="_physics_scene_8cpp_source.html">PhysicsScene.cpp</a>.</p>
 
 </div>
 </div>
@@ -224,16 +256,16 @@ Here is the call graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_motion_planner_1_1_physics_scene_a505e5f84b92c7dd8c0c955f476842b6e_cgraph.png" border="0" usemap="#aclass_motion_planner_1_1_physics_scene_a505e5f84b92c7dd8c0c955f476842b6e_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_motion_planner_1_1_physics_scene_a505e5f84b92c7dd8c0c955f476842b6e_icgraph.png" border="0" usemap="#aclass_motion_planner_1_1_physics_scene_a505e5f84b92c7dd8c0c955f476842b6e_icgraph" alt=""/></div>
-</div>
+
+<p>Add an obstacle to the scene. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">shape</td><td>Obstacle actor. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_physics_scene_8cpp_source.html#l00073">73</a> of file <a class="el" href="_physics_scene_8cpp_source.html">PhysicsScene.cpp</a>.</p>
 
 </div>
 </div>
@@ -252,16 +284,16 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_motion_planner_1_1_physics_scene_ab29441854f3e66856df5836e5c52fdd4_cgraph.png" border="0" usemap="#aclass_motion_planner_1_1_physics_scene_ab29441854f3e66856df5836e5c52fdd4_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_motion_planner_1_1_physics_scene_ab29441854f3e66856df5836e5c52fdd4_icgraph.png" border="0" usemap="#aclass_motion_planner_1_1_physics_scene_ab29441854f3e66856df5836e5c52fdd4_icgraph" alt=""/></div>
-</div>
+
+<p>Add the robot geometry actors of a manipulator to the scene and provide the manipulator with a pointer to the scene. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">spatialManipulator</td><td>Manipulator to add to scene. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_physics_scene_8cpp_source.html#l00196">196</a> of file <a class="el" href="_physics_scene_8cpp_source.html">PhysicsScene.cpp</a>.</p>
 
 </div>
 </div>
@@ -279,11 +311,10 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_motion_planner_1_1_physics_scene_a4d84756c621d3ed5dc039685a4b45e60_icgraph.png" border="0" usemap="#aclass_motion_planner_1_1_physics_scene_a4d84756c621d3ed5dc039685a4b45e60_icgraph" alt=""/></div>
-</div>
+
+<p>Connect the scene to the PVD client. </p>
+
+<p class="definition">Definition at line <a class="el" href="_physics_scene_8cpp_source.html#l00064">64</a> of file <a class="el" href="_physics_scene_8cpp_source.html">PhysicsScene.cpp</a>.</p>
 
 </div>
 </div>
@@ -301,16 +332,11 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_motion_planner_1_1_physics_scene_ae489972e3ba384b383a0b87c8022b3d7_cgraph.png" border="0" usemap="#aclass_motion_planner_1_1_physics_scene_ae489972e3ba384b383a0b87c8022b3d7_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_motion_planner_1_1_physics_scene_ae489972e3ba384b383a0b87c8022b3d7_icgraph.png" border="0" usemap="#aclass_motion_planner_1_1_physics_scene_ae489972e3ba384b383a0b87c8022b3d7_icgraph" alt=""/></div>
-</div>
+
+<p>Run PhysX simulation to generate contacts and run contact manager to reduce contacts. </p>
+<dl class="section return"><dt>Returns</dt><dd>Sorted and reduced contacts to be given to the manipulator. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_physics_scene_8cpp_source.html#l00229">229</a> of file <a class="el" href="_physics_scene_8cpp_source.html">PhysicsScene.cpp</a>.</p>
 
 </div>
 </div>
@@ -340,11 +366,22 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
+<p>Set the contact generation offset to be slightly larger than safety distance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">manipulatorSafetyDistance</td><td>Desired safety distance of manipulator. </td></tr>
+    <tr><td class="paramname">fingerSafetyDistance</td><td>Desired safety distance of the gripper fingers. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_physics_scene_8cpp_source.html#l00224">224</a> of file <a class="el" href="_physics_scene_8cpp_source.html">PhysicsScene.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Projects/LCPMotionPlanner/include/<a class="el" href="_physics_scene_8h_source.html">PhysicsScene.h</a></li>
-<li>C:/Projects/LCPMotionPlanner/src/<a class="el" href="_physics_scene_8cpp.html">PhysicsScene.cpp</a></li>
+<li>include/<a class="el" href="_physics_scene_8h_source.html">PhysicsScene.h</a></li>
+<li>src/<a class="el" href="_physics_scene_8cpp_source.html">PhysicsScene.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

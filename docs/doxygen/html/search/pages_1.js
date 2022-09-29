@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lcpmotionplanner_0',['LCPMotionPlanner',['../md__c___projects__l_c_p_motion_planner__r_e_a_d_m_e.html',1,'']]]
+  ['issues_20and_20feature_20ideas_0',['Issues and Feature Ideas',['../md_docs_issues.html',1,'']]]
 ];

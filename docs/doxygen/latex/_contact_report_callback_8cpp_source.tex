@@ -1,0 +1,118 @@
+\hypertarget{_contact_report_callback_8cpp_source}{}\doxysection{Contact\+Report\+Callback.\+cpp}
+\label{_contact_report_callback_8cpp_source}\index{src/ContactReportCallback.cpp@{src/ContactReportCallback.cpp}}
+\mbox{\hyperlink{_contact_report_callback_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_contact_report_callback_8h}{ContactReportCallback.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00002}00002 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_contact_point_8h}{ContactPoint.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_physics_scene_8h}{PhysicsScene.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_contact_manager_8h}{ContactManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_phys_x_helper_functions_8h}{PhysXHelperFunctions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_shape_8h}{Shape.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_object_type_8h}{ObjectType.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00008}00008 \textcolor{preprocessor}{\#include "{}PxPhysicsAPI.h"{}}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00009}00009 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00010}00010 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00011}00011 \textcolor{preprocessor}{\#include <Eigen/Dense>}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00013}00013 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_motion_planner}{MotionPlanner}}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00014}00014 \{}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00015}00015     \textcolor{keywordtype}{void} ContactReportCallback::onConstraintBreak(physx::PxConstraintInfo* constraints, physx::PxU32 count)}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00016}00016     \{}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00017}00017         PX\_UNUSED(constraints);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00018}00018         PX\_UNUSED(count);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00019}00019     \}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00021}00021     \textcolor{keywordtype}{void} ContactReportCallback::onWake(physx::PxActor** actors, physx::PxU32 count)}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00022}00022     \{}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00023}00023         PX\_UNUSED(actors);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00024}00024         PX\_UNUSED(count);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00025}00025     \}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00027}00027     \textcolor{keywordtype}{void} ContactReportCallback::onSleep(physx::PxActor** actors, physx::PxU32 count)}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00028}00028     \{}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00029}00029         PX\_UNUSED(actors);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00030}00030         PX\_UNUSED(count);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00031}00031     \}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00033}00033     \textcolor{keywordtype}{void} ContactReportCallback::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00034}00034     \{}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00035}00035         PX\_UNUSED(pairs);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00036}00036         PX\_UNUSED(count);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00037}00037     \}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00039}00039     \textcolor{keywordtype}{void} ContactReportCallback::onAdvance(\textcolor{keyword}{const} physx::PxRigidBody* \textcolor{keyword}{const}* rigidBody, \textcolor{keyword}{const} physx::PxTransform* transform, \textcolor{keyword}{const} physx::PxU32 count)}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00040}00040     \{}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00041}00041         PX\_UNUSED(rigidBody);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00042}00042         PX\_UNUSED(transform);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00043}00043         PX\_UNUSED(count);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00044}00044     \}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00046}00046     \textcolor{keywordtype}{void} ContactReportCallback::onContact(\textcolor{keyword}{const} physx::PxContactPairHeader\& pairHeader, \textcolor{keyword}{const} physx::PxContactPair* pairs, physx::PxU32 nbPairs)}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00047}00047     \{}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00048}00048         \textcolor{comment}{// Get the scene's contact manager.}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00049}00049         \textcolor{keyword}{const} physx::PxScene* pxScene = (pairHeader.actors[0])-\/>getScene();}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00050}00050         PhysicsScene* physicsScene = \textcolor{keyword}{static\_cast<}PhysicsScene*\textcolor{keyword}{>}(pxScene-\/>userData);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00052}00052         \textcolor{comment}{// For each pair in the contact stream, loop over all the patches, and the contacts of each patch.}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00053}00053         \textcolor{keywordflow}{for} (physx::PxU32 i = 0; i < nbPairs; i++)}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00054}00054         \{}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00055}00055             \textcolor{comment}{// Current contact pair.}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00056}00056             \textcolor{keyword}{const} physx::PxContactPair\& pair = pairs[i];}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00058}00058             \textcolor{comment}{// Iterator for the pair's compressed contact stream.}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00059}00059             physx::PxContactStreamIterator iter(pair.contactPatches, pair.contactPoints, pair.getInternalFaceIndices(), pair.patchCount, pair.contactCount);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00061}00061             \textcolor{comment}{// Flag to determine if the provided contact is flipped with respect to the shape pair.}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00062}00062             \textcolor{keyword}{const} physx::PxU32 flippedContacts = (pair.flags \& physx::PxContactPairFlag::eINTERNAL\_CONTACTS\_ARE\_FLIPPED);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00064}00064             \textcolor{comment}{// Get the collision actors for both shapes.}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00065}00065             \textcolor{keyword}{const} Shape* collider0 = \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const }Shape*\textcolor{keyword}{>}(pair.shapes[0]-\/>userData);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00066}00066             \textcolor{keyword}{const} Shape* collider1 = \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const }Shape*\textcolor{keyword}{>}(pair.shapes[1]-\/>userData);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00068}00068             \textcolor{comment}{// Get the parent body names and object types.}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00069}00069             \textcolor{keyword}{const} std::string linkName0 = collider0-\/>getParentBodyName();}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00070}00070             \textcolor{keyword}{const} std::string linkName1 = collider1-\/>getParentBodyName();}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00071}00071             \textcolor{keyword}{const} \mbox{\hyperlink{namespace_motion_planner_a389521f6122ca955f3e5f2f48487ace3}{ObjectType}} objectType0 = collider0-\/>getObjectType();}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00072}00072             \textcolor{keyword}{const} \mbox{\hyperlink{namespace_motion_planner_a389521f6122ca955f3e5f2f48487ace3}{ObjectType}} objectType1 = collider1-\/>getObjectType();}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00074}00074             \textcolor{comment}{// Determine if the first shape of the pair is the robot or obstacle and assign the name.}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00075}00075             \textcolor{keyword}{const} \textcolor{keywordtype}{bool} firstShapeIsRobot = (objectType0 == \mbox{\hyperlink{namespace_motion_planner_a389521f6122ca955f3e5f2f48487ace3a4a8d617c440e9ede7d3092416327a525}{ObjectType::RobotGeometry}}) ? \textcolor{keyword}{true} : \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00076}00076             \textcolor{keyword}{const} std::string linkName = firstShapeIsRobot ? linkName0 : linkName1;}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00078}00078             \textcolor{comment}{// Iterate over the patches of the pair and contact points of the patch.}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00079}00079             \textcolor{keywordflow}{while} (iter.hasNextPatch())}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00080}00080             \{}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00081}00081                 iter.nextPatch();}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00082}00082                 \textcolor{keywordflow}{while} (iter.hasNextContact())}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00083}00083                 \{}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00084}00084                     iter.nextContact();}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00085}00085 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00086}00086                     \textcolor{comment}{// Extract the contact point, normal, and separation.}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00087}00087                     \textcolor{keyword}{const} physx::PxVec3 pxPoint = iter.getContactPoint();}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00088}00088                     \textcolor{keyword}{const} physx::PxVec3 pxNormal = iter.getContactNormal();}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00089}00089                     \textcolor{keyword}{const} physx::PxReal pxSeparation = iter.getSeparation();}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00090}00090 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00091}00091                     \textcolor{comment}{// Convert to Eigen/standard types.}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00092}00092                     \textcolor{keyword}{const} Eigen::Vector3d point = \mbox{\hyperlink{namespace_motion_planner_a1a09d20421f943f271a310380abbfa41}{pxVecToEigenVec}}(pxPoint);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00093}00093                     Eigen::Vector3d normal = \mbox{\hyperlink{namespace_motion_planner_a1a09d20421f943f271a310380abbfa41}{pxVecToEigenVec}}(pxNormal);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00094}00094                     \textcolor{keyword}{const} \textcolor{keywordtype}{double} separation = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(pxSeparation);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00096}00096                     \textcolor{comment}{// Normal points from second shape to first shape.}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00097}00097                     \textcolor{comment}{// We need the normal to point to the robot (direction of compensating velocity).}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00098}00098                     \textcolor{comment}{// Therefore, if the first shape is not the robot, flip the normal.}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00099}00099                     \textcolor{keywordflow}{if} (!firstShapeIsRobot)}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00100}00100                     \{}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00101}00101                         normal = -\/normal;}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00102}00102                     \}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00104}00104                     \textcolor{comment}{// Create contact point and add to the contact manager.}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00105}00105                     \textcolor{keyword}{const} ContactPoint contactPoint(point, normal, separation, \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00106}00106                     physicsScene-\/>addContact(linkName, contactPoint);}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00107}00107                 \}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00108}00108             \}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00110}00110         \}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00111}00111     \}}
+\DoxyCodeLine{\Hypertarget{_contact_report_callback_8cpp_source_l00112}00112 \}}
+
+\end{DoxyCode}

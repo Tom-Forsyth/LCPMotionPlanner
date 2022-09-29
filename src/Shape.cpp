@@ -7,7 +7,6 @@
 
 namespace MotionPlanner
 {
-	// Origin + RPY constructor.
 	Shape::Shape(const Eigen::Vector3d& origin, const Eigen::Vector3d& rollPitchYaw, const std::string& name, ObjectType objectType, ShapeType shapeType)
 		: m_origin(origin), m_rollPitchYaw(rollPitchYaw), m_transform(Eigen::Matrix4d::Identity()),
 		m_name(name), m_objectType(objectType), m_shapeType(shapeType)
@@ -15,13 +14,10 @@ namespace MotionPlanner
 		computeTransform();
 	}
 
-	// Destructor.
 	Shape::~Shape()
 	{
-		// delete m_contactPoint;
 	}
 
-	// Compute transform from origin + RPY.
 	void Shape::computeTransform()
 	{
 		// Create angle-axis representations of roll, pitch, and yaw.
@@ -40,25 +36,21 @@ namespace MotionPlanner
 		m_transform = T;
 	}
 
-	// Get current transform.
-	Eigen::Matrix4d Shape::getTransform() const
+	const Eigen::Matrix4d& Shape::getTransform() const
 	{
 		return m_transform;
 	}
 
-	// Get name.
-	std::string Shape::getName() const
+	const std::string& Shape::getName() const
 	{
 		return m_name;
 	}
 
-	// Get the object's collision filtering type.
 	ObjectType Shape::getObjectType() const
 	{
 		return m_objectType;
 	}
 
-	// Get shape type.
 	ShapeType Shape::getShapeType() const
 	{
 		return m_shapeType;
@@ -74,7 +66,7 @@ namespace MotionPlanner
 		m_parentBodyName = parentBodyName;
 	}
 
-	std::string Shape::getParentBodyName() const
+	const std::string& Shape::getParentBodyName() const
 	{
 		return m_parentBodyName;
 	}

@@ -1,0 +1,296 @@
+\hypertarget{_l_c_p_solve_8cpp_source}{}\doxysection{LCPSolve.\+cpp}
+\label{_l_c_p_solve_8cpp_source}\index{src/LCPSolve.cpp@{src/LCPSolve.cpp}}
+\mbox{\hyperlink{_l_c_p_solve_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_l_c_p_solve_8h}{LCPSolve.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00002}00002 \textcolor{preprocessor}{\#include <Eigen/Dense>}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00004}00004 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_l_c_p_solve}{LCPSolve}}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00005}00005 \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00006}00006     \textcolor{comment}{// Forward declarations.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00007}00007     \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_l_c_p_solve_a37003b67fa1b121b5c2c9055508b95b9}{checkCompatability}}(\textcolor{keyword}{const} Eigen::MatrixXd\& M, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& dim);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00008}00008     \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_l_c_p_solve_a2428989bb1468022ae893d8ef19970b4}{checkTrivialSol}}(\textcolor{keyword}{const} Eigen::VectorXd\& q);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00009}00009     Eigen::MatrixXd \mbox{\hyperlink{namespace_l_c_p_solve_aaf8b87fed6263d1186efdd549ce554d2}{constructTableau}}(\textcolor{keyword}{const} Eigen::MatrixXd\& M, \textcolor{keyword}{const} Eigen::VectorXd\& q);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00010}00010     \textcolor{keywordtype}{void} \mbox{\hyperlink{namespace_l_c_p_solve_aa552542e280745356303a69c76d46ffb}{pivot}}(Eigen::MatrixXd\& tableau, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& row, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& col);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00011}00011     \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_l_c_p_solve_a97bf0148533845893efcdf365d589ba2}{initializeTableau}}(Eigen::MatrixXd\& tableau);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00012}00012     Eigen::VectorXd \mbox{\hyperlink{namespace_l_c_p_solve_afce7da8f1a5a8f630d38775c7db2153b}{basicVars}}(\textcolor{keyword}{const} Eigen::MatrixXd\& tableau);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00013}00013     \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_l_c_p_solve_aac2557f47f04203dababdcf1b98a3f4a}{checkSol}}(\textcolor{keyword}{const} Eigen::MatrixXd\& tableau);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00014}00014     \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_l_c_p_solve_a679dc1b9bd775406f11635fcec2d6c78}{checkRayTermination}}(\textcolor{keyword}{const} Eigen::MatrixXd\& tableu, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& pivotCol);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00015}00015     \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_l_c_p_solve_a8e4f7ef0d77ed87f445f2829e125f34e}{minRatioTest}}(\textcolor{keyword}{const} Eigen::MatrixXd\& tableau, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& pivotCol);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00016}00016     Eigen::MatrixXd \mbox{\hyperlink{namespace_l_c_p_solve_ab6932f1af570a918120b238ec80abaf9}{extractSolution}}(\textcolor{keyword}{const} Eigen::MatrixXd\& tableau);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00017}00017 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00018}00018     \textcolor{comment}{// Solve LCP by Lemke's Method.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00019}\mbox{\hyperlink{namespace_l_c_p_solve_a5d48bcc628ea239bb5edf87b475faa6a}{00019}}     \mbox{\hyperlink{struct_l_c_p_solve_1_1_l_c_p}{LCP}} \mbox{\hyperlink{namespace_l_c_p_solve}{LCPSolve}}(Eigen::MatrixXd M, Eigen::VectorXd q) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00020}00020         \textcolor{keyword}{const} \textcolor{keywordtype}{int} dim = q.size();}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00022}00022         \textcolor{comment}{// Initialize LCP data structure.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00023}00023         \mbox{\hyperlink{struct_l_c_p_solve_1_1_l_c_p}{LCP}} solution\{\};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00024}00024         solution.\mbox{\hyperlink{struct_l_c_p_solve_1_1_l_c_p_a713fbb5f9908ef1c1fcdf282de454bff}{M}} = M;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00025}00025         solution.q = q;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00027}00027         \textcolor{comment}{// Check that inputs are compatable.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00028}00028         \textcolor{keywordtype}{bool} compatable = \mbox{\hyperlink{namespace_l_c_p_solve_a37003b67fa1b121b5c2c9055508b95b9}{checkCompatability}}(M, dim);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00029}00029         \textcolor{keywordflow}{if} (!compatable) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00030}00030             solution.exitCond = 2;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00031}00031             \textcolor{keywordflow}{return} solution;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00032}00032         \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00034}00034         \textcolor{comment}{// Check for trivial solution.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00035}00035         \textcolor{keywordtype}{bool} trivial = \mbox{\hyperlink{namespace_l_c_p_solve_a2428989bb1468022ae893d8ef19970b4}{checkTrivialSol}}(q);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00036}00036         \textcolor{keywordflow}{if} (trivial) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00037}00037             solution.z = Eigen::VectorXd::Zero(dim);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00038}00038             solution.w = q;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00039}00039             solution.exitCond = 0;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00040}00040             \textcolor{keywordflow}{return} solution;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00041}00041         \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00043}00043         \textcolor{comment}{// Construct \& initialize tableau.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00044}00044         Eigen::MatrixXd tableau = \mbox{\hyperlink{namespace_l_c_p_solve_aaf8b87fed6263d1186efdd549ce554d2}{constructTableau}}(M, q);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00045}00045         Eigen::VectorXd index = Eigen::VectorXd::LinSpaced(dim, 0, dim -\/ 1);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00047}00047         \textcolor{keywordtype}{int} pivotCol = \mbox{\hyperlink{namespace_l_c_p_solve_a97bf0148533845893efcdf365d589ba2}{initializeTableau}}(tableau);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00048}00048         \textcolor{keywordtype}{int} pivotRow = pivotCol -\/ dim;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00049}00049         index(pivotRow) = 2 * dim;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00051}00051         \textcolor{comment}{// Now, the tableau is initialized with a feasible basis. Pivot until there is a feasible basis w/o z0.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00052}00052         \textcolor{keyword}{const} \textcolor{keywordtype}{int} maxIter = pow(2, dim);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00053}00053         \textcolor{keywordtype}{int} iter\{ 0 \};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00054}00054         \textcolor{keywordtype}{bool} solFound = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00055}00055         \textcolor{keywordflow}{while} ((!solFound) \&\& (iter < maxIter)) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00056}00056             \textcolor{comment}{// Check for ray termination.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00057}00057             \textcolor{keywordtype}{bool} rayTermination = \mbox{\hyperlink{namespace_l_c_p_solve_a679dc1b9bd775406f11635fcec2d6c78}{checkRayTermination}}(tableau, pivotCol);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00058}00058             \textcolor{keywordflow}{if} (rayTermination) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00059}00059                 solFound = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00060}00060             \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00061}00061             \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00062}00062                 \textcolor{comment}{// Minimum ratio test to determine the pivot row (blocked/dropped variable).}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00063}00063                 pivotRow = \mbox{\hyperlink{namespace_l_c_p_solve_a8e4f7ef0d77ed87f445f2829e125f34e}{minRatioTest}}(tableau, pivotCol);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00064}00064                 \mbox{\hyperlink{namespace_l_c_p_solve_aa552542e280745356303a69c76d46ffb}{pivot}}(tableau, pivotRow, pivotCol);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00065}00065                 \textcolor{keywordtype}{int} drop = index(pivotRow);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00066}00066                 index(pivotRow) = pivotCol;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00068}00068                 \textcolor{comment}{// Find next entering variable (pivotCol). Dropped variable is pivotRow.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00069}00069                 \textcolor{keywordflow}{if} (drop > dim -\/ 1) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00070}00070                     pivotCol = drop -\/ dim;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00071}00071                 \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00072}00072                 \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00073}00073                     pivotCol = drop + dim;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00074}00074                 \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00076}00076                 \textcolor{comment}{// Check for solution.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00077}00077                 solFound = \mbox{\hyperlink{namespace_l_c_p_solve_aac2557f47f04203dababdcf1b98a3f4a}{checkSol}}(tableau);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00078}00078                 iter++;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00079}00079             \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00080}00080         \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00082}00082         \textcolor{comment}{// Return solution.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00083}00083         \textcolor{keywordflow}{if} (solFound) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00084}00084             Eigen::MatrixXd sols = \mbox{\hyperlink{namespace_l_c_p_solve_ab6932f1af570a918120b238ec80abaf9}{extractSolution}}(tableau);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00085}00085             solution.z = sols.col(0);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00086}00086             solution.w = sols.col(1);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00087}00087             solution.exitCond = 0;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00088}00088         \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00089}00089         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00090}00090             Eigen::MatrixXd sols = \mbox{\hyperlink{namespace_l_c_p_solve_ab6932f1af570a918120b238ec80abaf9}{extractSolution}}(tableau);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00091}00091             solution.z = sols.col(0);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00092}00092             solution.w = sols.col(1);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00093}00093             solution.exitCond = 3;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00094}00094         \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00096}00096         \textcolor{keywordflow}{return} solution;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00097}00097     \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00098}00098 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00099}00099 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00100}00100     \textcolor{comment}{// Check that the inputs M and q are compatable.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00101}\mbox{\hyperlink{namespace_l_c_p_solve_a37003b67fa1b121b5c2c9055508b95b9}{00101}}     \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_l_c_p_solve_a37003b67fa1b121b5c2c9055508b95b9}{checkCompatability}}(\textcolor{keyword}{const} Eigen::MatrixXd\& M, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& dim) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00102}00102         \textcolor{keyword}{const} \textcolor{keywordtype}{int} rows = M.rows();}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00103}00103         \textcolor{keyword}{const} \textcolor{keywordtype}{int} cols = M.cols();}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00104}00104 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00105}00105         \textcolor{keywordflow}{if} (rows != cols)}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00106}00106             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00107}00107         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (rows != dim)}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00108}00108             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00109}00109         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00110}00110             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00111}00111     \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00112}00112 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00113}00113     \textcolor{comment}{// Check for trivial solution where q is positive.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00114}\mbox{\hyperlink{namespace_l_c_p_solve_a2428989bb1468022ae893d8ef19970b4}{00114}}     \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_l_c_p_solve_a2428989bb1468022ae893d8ef19970b4}{checkTrivialSol}}(\textcolor{keyword}{const} Eigen::VectorXd\& q) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00115}00115         \textcolor{keyword}{const} \textcolor{keywordtype}{int} dim = q.size();}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00116}00116         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < dim; i++)}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00117}00117             \textcolor{keywordflow}{if} (q[i] <= 0)}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00118}00118                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00119}00119         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00120}00120     \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00122}00122     \textcolor{comment}{// Construct Lemke tableau with auxilillary variable.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00123}\mbox{\hyperlink{namespace_l_c_p_solve_aaf8b87fed6263d1186efdd549ce554d2}{00123}}     Eigen::MatrixXd \mbox{\hyperlink{namespace_l_c_p_solve_aaf8b87fed6263d1186efdd549ce554d2}{constructTableau}}(\textcolor{keyword}{const} Eigen::MatrixXd\& M, \textcolor{keyword}{const} Eigen::VectorXd\& q) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00124}00124         \textcolor{keyword}{const} \textcolor{keywordtype}{int} dim = q.size();}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00125}00125         Eigen::MatrixXd tableau = Eigen::MatrixXd::Zero(dim, 2 * dim + 2); \textcolor{comment}{// Initialize with zeros.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00126}00126         Eigen::VectorXd auxVar = -\/Eigen::VectorXd::Ones(dim); \textcolor{comment}{// Auxillary variable z\_0 = \{-\/1, -\/1, ... -\/1\}.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00127}00127         tableau.topLeftCorner(dim, dim) = Eigen::MatrixXd::Identity(dim, dim); \textcolor{comment}{// Enter identity matrix on left side (w\_1, w\_2, etc).}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00128}00128         tableau.middleCols(dim, dim) = -\/M; \textcolor{comment}{// Enter I-\/M (z\_1, z\_2, etc).}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00129}00129         tableau.col(2 * dim) = auxVar; \textcolor{comment}{// Enter auxiliary variable.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00130}00130         tableau.col(2 * dim + 1) = q; \textcolor{comment}{// Enter q.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00131}00131         \textcolor{keywordflow}{return} tableau;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00132}00132     \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00133}00133 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00134}00134     \textcolor{comment}{// Pivot function.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00135}\mbox{\hyperlink{namespace_l_c_p_solve_aa552542e280745356303a69c76d46ffb}{00135}}     \textcolor{keywordtype}{void} \mbox{\hyperlink{namespace_l_c_p_solve_aa552542e280745356303a69c76d46ffb}{pivot}}(Eigen::MatrixXd\& tableau, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& row, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& col) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00136}00136         \textcolor{keyword}{const} \textcolor{keywordtype}{int} dim = tableau.rows();}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00137}00137         \textcolor{keywordtype}{double} pivotElement = tableau(row, col);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00138}00138         Eigen::VectorXd newPivotRow = (1 / pivotElement) * tableau.row(row);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00139}00139         tableau.row(row) = newPivotRow;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00140}00140 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00141}00141         Eigen::VectorXd newNonPivotRow\{\};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00142}00142         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < dim; i++) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00143}00143             \textcolor{keywordflow}{if} (i != row) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00144}00144                 newNonPivotRow = tableau.row(i) -\/ tableau(i, col) * tableau.row(row);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00145}00145                 tableau.row(i) = newNonPivotRow;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00146}00146             \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00147}00147         \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00148}00148     \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00149}00149 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00150}00150     \textcolor{comment}{// Initialize tableau.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00151}\mbox{\hyperlink{namespace_l_c_p_solve_a97bf0148533845893efcdf365d589ba2}{00151}}     \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_l_c_p_solve_a97bf0148533845893efcdf365d589ba2}{initializeTableau}}(Eigen::MatrixXd\& tableau) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00152}00152         \textcolor{keyword}{const} \textcolor{keywordtype}{int} dim = tableau.rows();}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00153}00153         \textcolor{keyword}{const} \textcolor{keywordtype}{int} cols = 2 * dim + 2;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00154}00154 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00155}00155         \textcolor{comment}{// Pivot row of min element of q w.r.t. aux column.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00156}00156         \textcolor{keywordtype}{int} minRow\{ 0 \};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00157}00157         \textcolor{keywordtype}{double} minVal = tableau.coeff(minRow, cols -\/ 1);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00158}00158         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i < dim; i++) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00159}00159             \textcolor{keywordflow}{if} (tableau.coeff(i, cols -\/ 1) < minVal) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00160}00160                 minRow = i;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00161}00161                 minVal = tableau(minRow, cols -\/ 1);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00162}00162             \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00163}00163         \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00164}00164 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00165}00165         \mbox{\hyperlink{namespace_l_c_p_solve_aa552542e280745356303a69c76d46ffb}{pivot}}(tableau, minRow, cols -\/ 2);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00166}00166 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00167}00167         \textcolor{comment}{// Return the next entering variable, which is the complement to the non-\/basic variable.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00168}00168         \textcolor{keywordtype}{int} newPivotCol = minRow + dim;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00169}00169         \textcolor{keywordflow}{return} newPivotCol;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00170}00170     \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00171}00171 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00172}00172     \textcolor{comment}{// Return which variables are basic.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00173}\mbox{\hyperlink{namespace_l_c_p_solve_afce7da8f1a5a8f630d38775c7db2153b}{00173}}     Eigen::VectorXd \mbox{\hyperlink{namespace_l_c_p_solve_afce7da8f1a5a8f630d38775c7db2153b}{basicVars}}(\textcolor{keyword}{const} Eigen::MatrixXd\& tableau) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00174}00174         \textcolor{keywordtype}{int} cols = tableau.cols();}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00175}00175         \textcolor{keywordtype}{double} varNorm\{\};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00176}00176         Eigen::VectorXd isBasic = Eigen::VectorXd::Zero(cols -\/ 1);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00177}00177 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00178}00178         \textcolor{keywordtype}{double} err\{ 1e-\/8 \};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00179}00179         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < cols -\/ 1; i++) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00180}00180             varNorm = tableau.col(i).norm();}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00181}00181             \textcolor{keywordflow}{if} (abs(1 -\/ varNorm) < err) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00182}00182                 isBasic[i] = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00183}00183             \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00184}00184             \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00185}00185                 isBasic[i] = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00186}00186             \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00187}00187         \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00188}00188 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00189}00189         \textcolor{keywordflow}{return} isBasic;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00190}00190     \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00191}00191 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00192}00192     \textcolor{comment}{// Check for solution.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00193}\mbox{\hyperlink{namespace_l_c_p_solve_aac2557f47f04203dababdcf1b98a3f4a}{00193}}     \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_l_c_p_solve_aac2557f47f04203dababdcf1b98a3f4a}{checkSol}}(\textcolor{keyword}{const} Eigen::MatrixXd\& tableau) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00194}00194 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00195}00195         \textcolor{comment}{// Determine basic variables.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00196}00196         Eigen::VectorXd isBasic = \mbox{\hyperlink{namespace_l_c_p_solve_afce7da8f1a5a8f630d38775c7db2153b}{basicVars}}(tableau);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00197}00197 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00198}00198         \textcolor{comment}{// Size information and initialize q \& z0.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00199}00199         \textcolor{keywordtype}{bool} solFound\{ \textcolor{keyword}{false} \};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00200}00200         \textcolor{keywordtype}{int} dim = tableau.rows();}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00201}00201         \textcolor{keywordtype}{int} cols = 2 * dim + 2;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00202}00202         Eigen::VectorXd q = tableau.col(cols -\/ 1);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00203}00203         Eigen::VectorXd z0 = tableau.col(cols -\/ 2);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00204}00204 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00205}00205         \textcolor{comment}{// No solution if any element of q is negative.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00206}00206         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i <= dim -\/ 1; i++) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00207}00207             \textcolor{keywordflow}{if} (q[i] < 0) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00208}00208                 \textcolor{keywordflow}{return} solFound;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00209}00209             \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00210}00210         \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00211}00211 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00212}00212         \textcolor{comment}{// No solution if auxillary variable z0 is basic.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00213}00213         \textcolor{keywordflow}{if} (isBasic[cols -\/ 2] == 1) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00214}00214             \textcolor{keywordflow}{return} solFound;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00215}00215         \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00216}00216 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00217}00217         \textcolor{comment}{// If q is positive and z0 is non-\/basic, solution has been found.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00218}00218         solFound = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00219}00219         \textcolor{keywordflow}{return} solFound;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00220}00220     \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00221}00221 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00222}00222     \textcolor{comment}{// Check for secondary ray termination.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00223}\mbox{\hyperlink{namespace_l_c_p_solve_a679dc1b9bd775406f11635fcec2d6c78}{00223}}     \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_l_c_p_solve_a679dc1b9bd775406f11635fcec2d6c78}{checkRayTermination}}(\textcolor{keyword}{const} Eigen::MatrixXd\& tableu, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& pivotCol) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00224}00224         Eigen::VectorXd column = tableu.col(pivotCol);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00225}00225         \textcolor{keywordtype}{int} negTestSum\{ 0 \};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00226}00226         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i\{ 0 \}; i < column.size(); i++) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00227}00227             \textcolor{keywordflow}{if} (column(i) <= 0) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00228}00228                 negTestSum++;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00229}00229             \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00230}00230         \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00231}00231 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00232}00232         \textcolor{keywordflow}{if} (negTestSum == column.size()) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00233}00233             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00234}00234         \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00235}00235         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00236}00236             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00237}00237         \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00238}00238     \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00239}00239 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00240}00240     \textcolor{comment}{// Minimum ratio test to determine pivot row.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00241}\mbox{\hyperlink{namespace_l_c_p_solve_a8e4f7ef0d77ed87f445f2829e125f34e}{00241}}     \textcolor{keywordtype}{int} \mbox{\hyperlink{namespace_l_c_p_solve_a8e4f7ef0d77ed87f445f2829e125f34e}{minRatioTest}}(\textcolor{keyword}{const} Eigen::MatrixXd\& tableau, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& pivotCol) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00242}00242         \textcolor{keyword}{const} \textcolor{keywordtype}{int} dim = tableau.rows();}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00243}00243 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00244}00244         Eigen::VectorXd ratioTest = Eigen::VectorXd::Zero(dim);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00245}00245         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < dim; i++) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00246}00246             ratioTest[i] = tableau.coeff(i, 2 * dim + 1) / tableau.coeff(i, pivotCol);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00247}00247             \textcolor{keywordflow}{if} (ratioTest[i] < 0) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00248}00248                 ratioTest[i] = 1e10;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00249}00249             \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00250}00250         \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00251}00251 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00252}00252         \textcolor{keywordtype}{int} pivotRow\{ 0 \};}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00253}00253         \textcolor{keywordtype}{double} minRatio = ratioTest[0];}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00254}00254         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i < dim; i++) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00255}00255             \textcolor{keywordflow}{if} (ratioTest[i] < minRatio) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00256}00256                 minRatio = ratioTest[i];}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00257}00257                 pivotRow = i;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00258}00258             \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00259}00259         \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00260}00260 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00261}00261         \textcolor{keywordflow}{return} pivotRow;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00262}00262     \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00263}00263 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00264}00264     \textcolor{comment}{// Extract solution from tableau.}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00265}\mbox{\hyperlink{namespace_l_c_p_solve_ab6932f1af570a918120b238ec80abaf9}{00265}}     Eigen::MatrixXd \mbox{\hyperlink{namespace_l_c_p_solve_ab6932f1af570a918120b238ec80abaf9}{extractSolution}}(\textcolor{keyword}{const} Eigen::MatrixXd\& tableau) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00266}00266         \textcolor{keyword}{const} \textcolor{keywordtype}{int} dim = tableau.rows();}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00267}00267         Eigen::MatrixXd A = Eigen::MatrixXd::Zero(dim, 2 * dim);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00268}00268         Eigen::VectorXd z = Eigen::VectorXd::Zero(dim);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00269}00269         Eigen::VectorXd w = Eigen::VectorXd::Zero(dim);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00270}00270         Eigen::VectorXd isBasic = \mbox{\hyperlink{namespace_l_c_p_solve_afce7da8f1a5a8f630d38775c7db2153b}{basicVars}}(tableau);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00271}00271 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00272}00272         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 2 * dim; i++)}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00273}00273             \textcolor{keywordflow}{if} (isBasic[i] == 1)}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00274}00274                 A.col(i) = tableau.col(i);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00275}00275 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00276}00276         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 2 * dim; i++) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00277}00277             \textcolor{keywordflow}{if} (i < dim) \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00278}00278                 w[i] = A.col(i).dot(tableau.col(2 * dim + 1));}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00279}00279             \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00280}00280             \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00281}00281                 z[i -\/ dim] = A.col(i).dot(tableau.col(2 * dim + 1));}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00282}00282             \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00283}00283         \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00284}00284 }
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00285}00285         Eigen::MatrixXd sols = Eigen::MatrixXd::Zero(dim, 2);}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00286}00286         sols.col(0) = z;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00287}00287         sols.col(1) = w;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00288}00288         \textcolor{keywordflow}{return} sols;}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00289}00289     \}}
+\DoxyCodeLine{\Hypertarget{_l_c_p_solve_8cpp_source_l00290}00290 \}}
+
+\end{DoxyCode}

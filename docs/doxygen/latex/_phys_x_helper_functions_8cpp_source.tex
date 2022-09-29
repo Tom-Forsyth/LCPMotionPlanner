@@ -1,0 +1,80 @@
+\hypertarget{_phys_x_helper_functions_8cpp_source}{}\doxysection{Phys\+XHelper\+Functions.\+cpp}
+\label{_phys_x_helper_functions_8cpp_source}\index{src/PhysXHelperFunctions.cpp@{src/PhysXHelperFunctions.cpp}}
+\mbox{\hyperlink{_phys_x_helper_functions_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_phys_x_helper_functions_8h}{PhysXHelperFunctions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00002}00002 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_shape_8h}{Shape.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_sphere_8h}{Sphere.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_capsule_8h}{Capsule.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_box_8h}{Box.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00006}00006 \textcolor{preprocessor}{\#include "{}PxPhysicsAPI.h"{}}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00007}00007 \textcolor{preprocessor}{\#include <Eigen/Dense>}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00008}00008 \textcolor{preprocessor}{\#include <exception>}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00009}00009 \textcolor{preprocessor}{\#include <memory>}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00011}00011 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_motion_planner}{MotionPlanner}}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00012}00012 \{}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00013}\mbox{\hyperlink{namespace_motion_planner_a838cea8f45278eb0326d5c7e528ac2f2}{00013}}     physx::PxTransform \mbox{\hyperlink{namespace_motion_planner_a838cea8f45278eb0326d5c7e528ac2f2}{eigenMatrixToPxTransform}}(\textcolor{keyword}{const} Eigen::Matrix4d\& eigenMatrix)}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00014}00014     \{}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00015}00015         \textcolor{keywordtype}{float} values[16];}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00016}00016         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < 16; i++)}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00017}00017         \{}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00018}00018             values[i] = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(eigenMatrix(i));}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00019}00019         \}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00020}00020         physx::PxMat44 physxMatrix(values);}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00021}00021         \textcolor{keywordflow}{return} physx::PxTransform(physxMatrix);}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00022}00022     \}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00024}\mbox{\hyperlink{namespace_motion_planner_a1a09d20421f943f271a310380abbfa41}{00024}}     Eigen::Vector3d \mbox{\hyperlink{namespace_motion_planner_a1a09d20421f943f271a310380abbfa41}{pxVecToEigenVec}}(\textcolor{keyword}{const} physx::PxVec3\& pxVec)}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00025}00025     \{}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00026}00026         \textcolor{keywordflow}{return} Eigen::Vector3d(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(pxVec[0]), \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(pxVec[1]), \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(pxVec[2]));}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00027}00027     \}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00029}\mbox{\hyperlink{namespace_motion_planner_aa2022e3f0fd2991f4f1a55433b19ab20}{00029}}     physx::PxSphereGeometry \mbox{\hyperlink{namespace_motion_planner_aa2022e3f0fd2991f4f1a55433b19ab20}{getPxSphereGeometry}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_sphere}{Sphere}}\& sphere)}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00030}00030     \{}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00031}00031         \textcolor{keyword}{const} physx::PxReal radius = \textcolor{keyword}{static\_cast<}physx::PxReal\textcolor{keyword}{>}(sphere.\mbox{\hyperlink{class_motion_planner_1_1_sphere_a1306c6597f1adaf3446a9d62d899c040}{m\_radius}});}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00032}00032         \textcolor{keywordflow}{return} physx::PxSphereGeometry(radius);}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00033}00033     \}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00035}\mbox{\hyperlink{namespace_motion_planner_afdea9a17396da6b4a31fedaf7d09cbfc}{00035}}     physx::PxCapsuleGeometry \mbox{\hyperlink{namespace_motion_planner_afdea9a17396da6b4a31fedaf7d09cbfc}{getPxCapsuleGeometry}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_capsule}{Capsule}}\& capsule)}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00036}00036     \{}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00037}00037         \textcolor{keyword}{const} physx::PxReal radius = \textcolor{keyword}{static\_cast<}physx::PxReal\textcolor{keyword}{>}(capsule.\mbox{\hyperlink{class_motion_planner_1_1_capsule_a092b0045cece9be69e3add767cc58eee}{m\_radius}});}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00038}00038         \textcolor{keyword}{const} physx::PxReal m\_halfHeight = \textcolor{keyword}{static\_cast<}physx::PxReal\textcolor{keyword}{>}(capsule.\mbox{\hyperlink{class_motion_planner_1_1_capsule_a8d343ca74076245f0dca0371fb0be3d2}{m\_halfHeight}});}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00039}00039         \textcolor{keywordflow}{return} physx::PxCapsuleGeometry(radius, m\_halfHeight);}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00040}00040     \}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00042}\mbox{\hyperlink{namespace_motion_planner_a47f69fbf2dccb145dfbe6e481174e7cf}{00042}}     physx::PxBoxGeometry \mbox{\hyperlink{namespace_motion_planner_a47f69fbf2dccb145dfbe6e481174e7cf}{getPxBoxGeometry}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_box}{Box}}\& box)}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00043}00043     \{}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00044}00044         \textcolor{keyword}{const} physx::PxReal xRadius = \textcolor{keyword}{static\_cast<}physx::PxReal\textcolor{keyword}{>}(box.\mbox{\hyperlink{class_motion_planner_1_1_box_a7be545cfea0d1c0c6d9a41aaec04c0c6}{m\_halfExtents}}(0));}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00045}00045         \textcolor{keyword}{const} physx::PxReal yRadius = \textcolor{keyword}{static\_cast<}physx::PxReal\textcolor{keyword}{>}(box.\mbox{\hyperlink{class_motion_planner_1_1_box_a7be545cfea0d1c0c6d9a41aaec04c0c6}{m\_halfExtents}}(1));}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00046}00046         \textcolor{keyword}{const} physx::PxReal zRadius = \textcolor{keyword}{static\_cast<}physx::PxReal\textcolor{keyword}{>}(box.\mbox{\hyperlink{class_motion_planner_1_1_box_a7be545cfea0d1c0c6d9a41aaec04c0c6}{m\_halfExtents}}(2));}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00047}00047         \textcolor{keywordflow}{return} physx::PxBoxGeometry(xRadius, yRadius, zRadius);}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00048}00048     \}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00050}\mbox{\hyperlink{namespace_motion_planner_a9f065fef79f13d23e7c084691a30a62e}{00050}}     std::unique\_ptr<physx::PxGeometry> \mbox{\hyperlink{namespace_motion_planner_a9f065fef79f13d23e7c084691a30a62e}{getPxGeometry}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_shape}{Shape}}\& shape)}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00051}00051     \{}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00052}00052         \mbox{\hyperlink{namespace_motion_planner_ac2512cc9e24ec5f2119d5b6cb9c19e64}{ShapeType}} shapeType = shape.\mbox{\hyperlink{class_motion_planner_1_1_shape_aeb66fd269642463310afdb36d965491c}{getShapeType}}();}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00053}00053         \textcolor{keywordflow}{if} (shapeType == \mbox{\hyperlink{namespace_motion_planner_ac2512cc9e24ec5f2119d5b6cb9c19e64ab7095f057db3fefa7325ad93a04e14fd}{ShapeType::Sphere}})}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00054}00054         \{}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00055}00055             \textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_sphere}{Sphere}}\& sphere = \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const }\mbox{\hyperlink{class_motion_planner_1_1_sphere}{Sphere}}\&\textcolor{keyword}{>}(shape);}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00056}00056             \textcolor{keywordflow}{return} std::move(std::make\_unique<physx::PxSphereGeometry>(\mbox{\hyperlink{namespace_motion_planner_aa2022e3f0fd2991f4f1a55433b19ab20}{getPxSphereGeometry}}(sphere)));}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00057}00057         \}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00058}00058         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (shapeType == \mbox{\hyperlink{namespace_motion_planner_ac2512cc9e24ec5f2119d5b6cb9c19e64a4880c0f12c06dd6d142e7a40b041bf1a}{ShapeType::Capsule}})}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00059}00059         \{}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00060}00060             \textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_capsule}{Capsule}}\& capsule = \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const }\mbox{\hyperlink{class_motion_planner_1_1_capsule}{Capsule}}\&\textcolor{keyword}{>}(shape);}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00061}00061             \textcolor{keywordflow}{return} std::move(std::make\_unique<physx::PxCapsuleGeometry>(\mbox{\hyperlink{namespace_motion_planner_afdea9a17396da6b4a31fedaf7d09cbfc}{getPxCapsuleGeometry}}(capsule)));}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00062}00062 }
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00063}00063         \}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00064}00064         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (shapeType == \mbox{\hyperlink{namespace_motion_planner_ac2512cc9e24ec5f2119d5b6cb9c19e64a3cfce651e667ab85486dd42a8185f98a}{ShapeType::Box}})}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00065}00065         \{}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00066}00066             \textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_box}{Box}}\& box = \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const }\mbox{\hyperlink{class_motion_planner_1_1_box}{Box}}\&\textcolor{keyword}{>}(shape);}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00067}00067             \textcolor{keywordflow}{return} std::move(std::make\_unique<physx::PxBoxGeometry>(\mbox{\hyperlink{namespace_motion_planner_a47f69fbf2dccb145dfbe6e481174e7cf}{getPxBoxGeometry}}(box)));}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00068}00068         \}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00069}00069         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00070}00070         \{}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00071}00071             \textcolor{keywordflow}{throw} std::invalid\_argument(\textcolor{stringliteral}{"{}Shape type must be a sphere, capsule, or box."{}});}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00072}00072         \}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00073}00073     \}}
+\DoxyCodeLine{\Hypertarget{_phys_x_helper_functions_8cpp_source_l00074}00074 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,109 @@
+\hypertarget{_rigid_body_8h_source}{}\doxysection{Rigid\+Body.\+h}
+\label{_rigid_body_8h_source}\index{include/RigidBody.h@{include/RigidBody.h}}
+\mbox{\hyperlink{_rigid_body_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00001}00001 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00003}00003 \textcolor{preprocessor}{\#include <Eigen/Dense>}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_joint_8h}{Joint.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_collision_aggregate_8h}{CollisionAggregate.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_sphere_8h}{Sphere.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_capsule_8h}{Capsule.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00008}00008 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_box_8h}{Box.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00009}00009 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_contact_point_8h}{ContactPoint.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00010}00010 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00012}00012 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_motion_planner}{MotionPlanner}}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00013}00013 \{}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00014}\mbox{\hyperlink{class_motion_planner_1_1_rigid_body}{00014}}     \textcolor{keyword}{class }\mbox{\hyperlink{class_motion_planner_1_1_rigid_body}{RigidBody}}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00015}00015     \{}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00016}00016     \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00017}00017         \mbox{\hyperlink{class_motion_planner_1_1_joint}{Joint}} m\_joint;}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00018}00018         Eigen::Matrix4d m\_referenceSpatialTransform;}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00019}00019         \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate}{CollisionAggregate}} m\_collisionAggregate;}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00020}00020         Eigen::MatrixXd m\_spatialJacobian;}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00021}00021         Eigen::Matrix4d m\_currentSpatialTransform;}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00022}00022         Eigen::Matrix4d m\_currentWorldTransform;}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00023}00023         \mbox{\hyperlink{struct_motion_planner_1_1_contact_point}{ContactPoint}} m\_contactPoint;}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00024}00024         Eigen::MatrixXd m\_contactJacobian;}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00025}00025         \textcolor{keywordtype}{bool} m\_isMovableBody;}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00026}00026         }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00027}00027         \textcolor{comment}{// Name of the rigid body.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00028}00028         std::string m\_name;}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00030}00030     \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00031}00031         \textcolor{comment}{// Constructor.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00032}00032         \mbox{\hyperlink{class_motion_planner_1_1_rigid_body}{RigidBody}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_joint}{Joint}}\& joint, \textcolor{keyword}{const} Eigen::Matrix4d\& referenceSpatialTransform, \textcolor{keyword}{const} std::string\& name);}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00034}00034         \textcolor{comment}{// Add colliders to collision aggregate member.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00035}00035         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a7e302dc02c8b9984c651300ab08da726}{addCollider}}(\mbox{\hyperlink{class_motion_planner_1_1_sphere}{Sphere}}\& sphere);}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00036}00036         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a7e302dc02c8b9984c651300ab08da726}{addCollider}}(\mbox{\hyperlink{class_motion_planner_1_1_capsule}{Capsule}}\& capsule);}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00037}00037         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a7e302dc02c8b9984c651300ab08da726}{addCollider}}(\mbox{\hyperlink{class_motion_planner_1_1_box}{Box}}\& box);}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00039}00039         \textcolor{comment}{// Get relative transformation from the joint.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00040}00040         Eigen::Matrix4d \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_aaa4450da065b380807e279d266e79828}{getRelativeTransformation}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00042}00042         \textcolor{comment}{// Get reference spatial transform.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00043}00043         Eigen::Matrix4d \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a4ffcfda370a46f66c62d53a1941ab607}{getReferenceSpatialTransform}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00045}00045         \textcolor{comment}{// Set spatial and world transformation.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00046}00046         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a29548490bf64aec6ae7c1ccf108825aa}{setCurrentSpatialTransform}}(\textcolor{keyword}{const} Eigen::Matrix4d\& spatialTransform);}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00047}00047         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a1d9fe93f2d0dd98b05b39d76e34a4772}{setCurrentWorldTransform}}(\textcolor{keyword}{const} Eigen::Matrix4d\& worldTransform);}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00049}00049         \textcolor{comment}{// Set joint displacement.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00050}00050         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a3b892374e6e4c378e2dacf05f2004551}{setJointDisplacement}}(\textcolor{keyword}{const} \textcolor{keywordtype}{double}\& displacement);}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00052}00052         \textcolor{comment}{// Get reference to collision aggregate.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00053}00053         \textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate}{CollisionAggregate}}\& \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_aa6e82f7a86bc38e6ef73fbee16585d3f}{getCollisionAggregate}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00055}00055         \textcolor{comment}{// Get current world transform.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00056}00056         Eigen::Matrix4d \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a51c1e3bd052ac8f364805ac8f408a36f}{getCurrentWorldTransform}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00058}00058         \textcolor{comment}{// Get joint type.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00059}00059         \mbox{\hyperlink{namespace_motion_planner_ac5f205f0b14daa687444a9fc4d272c28}{JointType}} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_aff99f1e37cf0814f875ace5bd3930a83}{getJointType}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00061}00061         \textcolor{comment}{// Get contact point.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00062}00062         \textcolor{keyword}{const} \mbox{\hyperlink{struct_motion_planner_1_1_contact_point}{ContactPoint}}\& \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a1eedc346164a186cba3abf338b01a24f}{getContactPoint}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00064}00064         \textcolor{comment}{// Update spatial jacobian.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00065}00065         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a2eacc035d04f69d33df80f14c071700a}{setSpatialJacobian}}(\textcolor{keyword}{const} Eigen::MatrixXd\& spatialJacobian);}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00067}00067         \textcolor{comment}{// Get joint twist coordinate.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00068}00068         Eigen::Vector<double, 6> \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a73235fecc2b8f58d14dfebae21f359e8}{getJointTwistCoord}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00069}00069 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00070}00070         \textcolor{comment}{// Determine if the body is movable.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00071}00071         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_aba944c477b936d582d10479baa46ef5f}{isMovable}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00073}00073         \textcolor{comment}{// Set the contact jacobian.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00074}00074         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a2a5d51655ccc5ea54f386f844e42b721}{setContactJacobian}}(\textcolor{keyword}{const} Eigen::MatrixXd\& contactJacobian);}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00076}00076         \textcolor{comment}{// Get the spatial jacobian.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00077}00077         Eigen::MatrixXd \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a74df546a835c7f449cc3e5c8defed9ac}{getSpatialJacobian}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00079}00079         \textcolor{comment}{// Get the contact jacobian.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00080}00080         Eigen::MatrixXd \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a9e8a2cba1295ce97fd405ac64ed788bb}{getContactJacobian}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00082}00082         \textcolor{comment}{// Update the contact jacobian.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00083}00083         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a3f6704183e860d61c8b1bd7eaaa011bb}{updateContactJacobian}}();}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00084}00084 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00085}00085         \textcolor{comment}{// Get the current spatial transform.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00086}00086         Eigen::Matrix4d \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_abbd9d031b39f752914bda8b7785f957a}{getCurrentSpatialTransform}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00088}00088         \textcolor{comment}{// Get joint displacement.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00089}00089         \textcolor{keywordtype}{double} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a5771892ce7510d641b0894409e0ec7a3}{getJointDisplacement}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00090}00090 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00091}00091         \textcolor{comment}{// Update the transforms of the collision actors.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00092}00092         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a98150d5f3d0e7753038761e234ca71e6}{updateColliderTransforms}}();}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00093}00093 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00094}00094         \textcolor{comment}{// Deactivate the contact point.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00095}00095         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_ac2c11936121c24ea53fc082af0f1831e}{deactivateContactPoint}}();}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00096}00096 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00097}00097         \textcolor{comment}{// Get name.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00098}00098         std::string \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_a149f7db70062e78a68408e0fff165e19}{getName}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00099}00099 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00100}00100         \textcolor{comment}{// Set contact point.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00101}00101         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_ad2f2104f7b6cf7e8376af33ed723ce60}{setContactPoint}}(\textcolor{keyword}{const} \mbox{\hyperlink{struct_motion_planner_1_1_contact_point}{ContactPoint}}\& contactPoint);}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00102}00102     \};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_8h_source_l00103}00103 \}}
+
+\end{DoxyCode}

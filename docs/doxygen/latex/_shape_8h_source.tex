@@ -1,0 +1,63 @@
+\hypertarget{_shape_8h_source}{}\doxysection{Shape.\+h}
+\label{_shape_8h_source}\index{include/Shape.h@{include/Shape.h}}
+\mbox{\hyperlink{_shape_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00001}00001 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_object_type_8h}{ObjectType.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00004}00004 \textcolor{preprocessor}{\#include <Eigen/Dense>}}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00005}00005 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00007}00007 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_motion_planner}{MotionPlanner}}}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00009}00009     \textcolor{keyword}{struct }ContactPoint;}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00012}\mbox{\hyperlink{namespace_motion_planner_ac2512cc9e24ec5f2119d5b6cb9c19e64}{00012}}     \textcolor{keyword}{enum class} \mbox{\hyperlink{namespace_motion_planner_ac2512cc9e24ec5f2119d5b6cb9c19e64}{ShapeType}}}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00013}00013     \{}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00014}00014         \mbox{\hyperlink{namespace_motion_planner_a389521f6122ca955f3e5f2f48487ace3a3476bf9c3af766198bfbd4f065a51e69}{Unassigned}},}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00015}00015         \mbox{\hyperlink{class_motion_planner_1_1_sphere}{Sphere}},}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00016}00016         \mbox{\hyperlink{class_motion_planner_1_1_capsule}{Capsule}},}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00017}00017         \mbox{\hyperlink{class_motion_planner_1_1_box}{Box}}}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00018}00018     \};}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00021}\mbox{\hyperlink{class_motion_planner_1_1_shape}{00021}}     \textcolor{keyword}{class }\mbox{\hyperlink{class_motion_planner_1_1_shape}{Shape}}}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00022}00022     \{}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00023}00023     \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00025}00025         Eigen::Matrix4d m\_transform;}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00028}00028         Eigen::Vector3d m\_origin;}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00032}00032         Eigen::Vector3d m\_rollPitchYaw;}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00035}00035         std::string m\_name;}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00038}00038         \mbox{\hyperlink{namespace_motion_planner_a389521f6122ca955f3e5f2f48487ace3}{ObjectType}} m\_objectType = \mbox{\hyperlink{namespace_motion_planner_a389521f6122ca955f3e5f2f48487ace3a3476bf9c3af766198bfbd4f065a51e69}{ObjectType::Unassigned}};}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00041}00041         \mbox{\hyperlink{namespace_motion_planner_ac2512cc9e24ec5f2119d5b6cb9c19e64}{ShapeType}} m\_shapeType = \mbox{\hyperlink{namespace_motion_planner_ac2512cc9e24ec5f2119d5b6cb9c19e64a3476bf9c3af766198bfbd4f065a51e69}{ShapeType::Unassigned}};}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00044}00044         std::string m\_parentBodyName = \textcolor{stringliteral}{"{}None"{}};}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00046}00046     \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00053}00053         \mbox{\hyperlink{class_motion_planner_1_1_shape}{Shape}}(\textcolor{keyword}{const} Eigen::Vector3d\& origin, \textcolor{keyword}{const} Eigen::Vector3d\& rollPitchYaw, \textcolor{keyword}{const} std::string\& name, \mbox{\hyperlink{namespace_motion_planner_a389521f6122ca955f3e5f2f48487ace3}{ObjectType}} objectType, \mbox{\hyperlink{namespace_motion_planner_ac2512cc9e24ec5f2119d5b6cb9c19e64}{ShapeType}} shapeType);}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00057}00057         \textcolor{keyword}{virtual} \mbox{\hyperlink{class_motion_planner_1_1_shape_a65ec3883b5ec8d4e6ea53678e080996c}{\string~Shape}}();}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00060}00060         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_shape_ad986d110af706f41e7f62d19ac35fd68}{computeTransform}}();}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00064}00064         \textcolor{keyword}{const} Eigen::Matrix4d\& \mbox{\hyperlink{class_motion_planner_1_1_shape_a3b70c302b3b3171e9162a495c6722842}{getTransform}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00068}00068         \textcolor{keyword}{const} std::string\& \mbox{\hyperlink{class_motion_planner_1_1_shape_aa3c8b0855477f802a4dd0f3c70fae83f}{getName}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00069}00069 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00072}00072         \mbox{\hyperlink{namespace_motion_planner_a389521f6122ca955f3e5f2f48487ace3}{ObjectType}} \mbox{\hyperlink{class_motion_planner_1_1_shape_a1d7f6dd9ae3bc640b2e36384bfb33a13}{getObjectType}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00076}00076         \mbox{\hyperlink{namespace_motion_planner_ac2512cc9e24ec5f2119d5b6cb9c19e64}{ShapeType}} \mbox{\hyperlink{class_motion_planner_1_1_shape_aeb66fd269642463310afdb36d965491c}{getShapeType}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00081}00081         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_shape_a762ff686d9bc9dc3f295a62f1632e898}{setTransform}}(\textcolor{keyword}{const} Eigen::Matrix4d\& transform);}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00086}00086         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_shape_a729e731aa0ebf6fac99727497d48526b}{setParentBodyName}}(\textcolor{keyword}{const} std::string\& parentBodyName);}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00090}00090         \textcolor{keyword}{const} std::string\& \mbox{\hyperlink{class_motion_planner_1_1_shape_a9c75825d23048f3b1ab6f593c0626326}{getParentBodyName}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00091}00091     \};}
+\DoxyCodeLine{\Hypertarget{_shape_8h_source_l00092}00092 \}}
+
+\end{DoxyCode}

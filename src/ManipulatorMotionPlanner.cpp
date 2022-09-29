@@ -108,7 +108,7 @@ namespace MotionPlanner
         }
 
         // Solve LCP for compensating velocites.
-        LCP solution = LCPSolve(M, q);
+        LCPSolve::LCP solution = LCPSolve::LCPSolve(M, q);
         Eigen::VectorXd compensatingVelocities = solution.z;
 
         // Find the change in displacements based on compensating velocities.

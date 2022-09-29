@@ -20,12 +20,12 @@ var searchData=
   ['getjointdisplacements_17',['getJointDisplacements',['../class_motion_planner_1_1_rigid_body_chain.html#acf4ee9dc4e0f1f774ee924b837dd1017',1,'MotionPlanner::RigidBodyChain::getJointDisplacements()'],['../class_motion_planner_1_1_spatial_manipulator.html#ad842e413bfd4923f5a76eb63d734f44c',1,'MotionPlanner::SpatialManipulator::getJointDisplacements()']]],
   ['getjointtwistcoord_18',['getJointTwistCoord',['../class_motion_planner_1_1_rigid_body.html#a73235fecc2b8f58d14dfebae21f359e8',1,'MotionPlanner::RigidBody']]],
   ['getjointtype_19',['getJointType',['../class_motion_planner_1_1_rigid_body.html#aff99f1e37cf0814f875ace5bd3930a83',1,'MotionPlanner::RigidBody']]],
-  ['getname_20',['getName',['../class_motion_planner_1_1_rigid_body.html#a149f7db70062e78a68408e0fff165e19',1,'MotionPlanner::RigidBody::getName()'],['../class_motion_planner_1_1_shape.html#acea6c03b9cf5e36c90b60dc79f07cdfd',1,'MotionPlanner::Shape::getName()']]],
+  ['getname_20',['getName',['../class_motion_planner_1_1_rigid_body.html#a149f7db70062e78a68408e0fff165e19',1,'MotionPlanner::RigidBody::getName()'],['../class_motion_planner_1_1_shape.html#aa3c8b0855477f802a4dd0f3c70fae83f',1,'MotionPlanner::Shape::getName()']]],
   ['getnbodies_21',['getNBodies',['../class_motion_planner_1_1_rigid_body_chain.html#a894d2643a22d514175d2652c0b50ff23',1,'MotionPlanner::RigidBodyChain']]],
   ['getnmovablebodies_22',['getNMovableBodies',['../class_motion_planner_1_1_rigid_body_chain.html#ae3fd4b367528dd982b0a4a8e670d3fae',1,'MotionPlanner::RigidBodyChain']]],
   ['getnullspaceterm_23',['getNullSpaceTerm',['../class_motion_planner_1_1_manipulator_motion_planner.html#a506d942e13860dd5c93c164da06c73d3',1,'MotionPlanner::ManipulatorMotionPlanner']]],
   ['getobjecttype_24',['getObjectType',['../class_motion_planner_1_1_shape.html#a1d7f6dd9ae3bc640b2e36384bfb33a13',1,'MotionPlanner::Shape']]],
-  ['getparentbodyname_25',['getParentBodyName',['../class_motion_planner_1_1_shape.html#a2736c39696806b2db76114a2f73dcdf7',1,'MotionPlanner::Shape']]],
+  ['getparentbodyname_25',['getParentBodyName',['../class_motion_planner_1_1_shape.html#a9c75825d23048f3b1ab6f593c0626326',1,'MotionPlanner::Shape']]],
   ['getplan_26',['getPlan',['../class_motion_planner_1_1_manipulator_motion_planner.html#ab105992372fdb773c60020cac3fde93e',1,'MotionPlanner::ManipulatorMotionPlanner']]],
   ['getpxboxgeometry_27',['getPxBoxGeometry',['../namespace_motion_planner.html#a47f69fbf2dccb145dfbe6e481174e7cf',1,'MotionPlanner']]],
   ['getpxcapsulegeometry_28',['getPxCapsuleGeometry',['../namespace_motion_planner.html#afdea9a17396da6b4a31fedaf7d09cbfc',1,'MotionPlanner']]],
@@ -39,7 +39,7 @@ var searchData=
   ['getspatialjacobian_36',['getSpatialJacobian',['../class_motion_planner_1_1_rigid_body.html#a74df546a835c7f449cc3e5c8defed9ac',1,'MotionPlanner::RigidBody']]],
   ['getspheres_37',['getSpheres',['../class_motion_planner_1_1_collision_aggregate.html#a39d50722e8a46d4a0da63e9301c3eb3f',1,'MotionPlanner::CollisionAggregate']]],
   ['gettotaldisplacementchange_38',['getTotalDisplacementChange',['../class_motion_planner_1_1_manipulator_motion_planner.html#a5956f7c82b533377d72d6223fe0366da',1,'MotionPlanner::ManipulatorMotionPlanner']]],
-  ['gettransform_39',['getTransform',['../class_motion_planner_1_1_shape.html#a6ac7f2e8a46cde44a20e81e39d138ad9',1,'MotionPlanner::Shape']]],
+  ['gettransform_39',['getTransform',['../class_motion_planner_1_1_shape.html#a3b70c302b3b3171e9162a495c6722842',1,'MotionPlanner::Shape']]],
   ['gettwistcoord_40',['getTwistCoord',['../class_motion_planner_1_1_joint.html#af409cd797c4fab0859169422fa64ce99',1,'MotionPlanner::Joint']]],
   ['gettype_41',['getType',['../class_motion_planner_1_1_joint.html#a670c87b83417f2449f9418e0a888a3b3',1,'MotionPlanner::Joint']]]
 ];

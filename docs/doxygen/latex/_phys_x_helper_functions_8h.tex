@@ -1,0 +1,28 @@
+\hypertarget{_phys_x_helper_functions_8h}{}\doxysection{include/\+Phys\+XHelper\+Functions.h File Reference}
+\label{_phys_x_helper_functions_8h}\index{include/PhysXHelperFunctions.h@{include/PhysXHelperFunctions.h}}
+{\ttfamily \#include \char`\"{}Sphere.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Capsule.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Box.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Px\+Physics\+API.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$Eigen/\+Dense$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_motion_planner}{Motion\+Planner}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+physx\+::\+Px\+Transform \mbox{\hyperlink{namespace_motion_planner_a838cea8f45278eb0326d5c7e528ac2f2}{Motion\+Planner\+::eigen\+Matrix\+To\+Px\+Transform}} (const Eigen\+::\+Matrix4d \&eigen\+Matrix)
+\begin{DoxyCompactList}\small\item\em Convert an Eigen\+::\+Matrix4d to a Px\+Transform. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector3d \mbox{\hyperlink{namespace_motion_planner_a1a09d20421f943f271a310380abbfa41}{Motion\+Planner\+::px\+Vec\+To\+Eigen\+Vec}} (const physx\+::\+Px\+Vec3 \&px\+Vec)
+\begin{DoxyCompactList}\small\item\em Convert a Px\+Vec3 to an Eigen\+::\+Vector3d. \end{DoxyCompactList}\item 
+physx\+::\+Px\+Sphere\+Geometry \mbox{\hyperlink{namespace_motion_planner_aa2022e3f0fd2991f4f1a55433b19ab20}{Motion\+Planner\+::get\+Px\+Sphere\+Geometry}} (const Sphere \&sphere)
+\begin{DoxyCompactList}\small\item\em Convert a \mbox{\hyperlink{class_motion_planner_1_1_sphere}{Sphere}} to a Px\+Sphere\+Geometry. \end{DoxyCompactList}\item 
+physx\+::\+Px\+Capsule\+Geometry \mbox{\hyperlink{namespace_motion_planner_afdea9a17396da6b4a31fedaf7d09cbfc}{Motion\+Planner\+::get\+Px\+Capsule\+Geometry}} (const Capsule \&capsule)
+\begin{DoxyCompactList}\small\item\em Convert a \mbox{\hyperlink{class_motion_planner_1_1_capsule}{Capsule}} to a Px\+Capsule\+Geometry. \end{DoxyCompactList}\item 
+physx\+::\+Px\+Box\+Geometry \mbox{\hyperlink{namespace_motion_planner_a47f69fbf2dccb145dfbe6e481174e7cf}{Motion\+Planner\+::get\+Px\+Box\+Geometry}} (const Box \&box)
+\begin{DoxyCompactList}\small\item\em Convert a \mbox{\hyperlink{class_motion_planner_1_1_box}{Box}} to a Px\+Box\+Geometry. \end{DoxyCompactList}\item 
+std\+::unique\+\_\+ptr$<$ physx\+::\+Px\+Geometry $>$ \mbox{\hyperlink{namespace_motion_planner_a9f065fef79f13d23e7c084691a30a62e}{Motion\+Planner\+::get\+Px\+Geometry}} (const Shape \&shape)
+\begin{DoxyCompactList}\small\item\em Convert a \mbox{\hyperlink{class_motion_planner_1_1_shape}{Shape}} to the corresponding Px\+Geometry. \end{DoxyCompactList}\end{DoxyCompactItemize}

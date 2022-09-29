@@ -25,13 +25,14 @@
 var NAVTREE =
 [
   [ "LCPMotionPlanner", "index.html", [
-    [ "Issues and Feature Ideas", "md__c___projects__l_c_p_motion_planner_docs_issues.html", [
-      [ "Issues", "md__c___projects__l_c_p_motion_planner_docs_issues.html#autotoc_md1", null ],
-      [ "Review/Refactor/Optimize", "md__c___projects__l_c_p_motion_planner_docs_issues.html#autotoc_md2", null ],
-      [ "New Features", "md__c___projects__l_c_p_motion_planner_docs_issues.html#autotoc_md3", null ],
-      [ "LCP Solver", "md__c___projects__l_c_p_motion_planner_docs_issues.html#autotoc_md4", null ]
+    [ "Issues and Feature Ideas", "md_docs_issues.html", [
+      [ "Issues", "md_docs_issues.html#autotoc_md1", null ],
+      [ "Review/Refactor/Optimize", "md_docs_issues.html#autotoc_md2", null ],
+      [ "New Features", "md_docs_issues.html#autotoc_md3", null ],
+      [ "LCP Solver", "md_docs_issues.html#autotoc_md4", null ]
     ] ],
-    [ "LCPMotionPlanner", "md__c___projects__l_c_p_motion_planner__r_e_a_d_m_e.html", null ],
+    [ "LCPMotionPlanner", "md__r_e_a_d_m_e.html", null ],
+    [ "Bug List", "bug.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -63,8 +64,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_box_8cpp.html",
-"class_motion_planner_1_1_manipulator_motion_planner.html#a3f8aac288befc3ebfb244690cc177506",
-"namespace_motion_planner_1_1_kinematics.html#aba112ed0d13dc4796b3efbda147ff22b"
+"class_motion_planner_1_1_joint.html",
+"namespace_motion_planner.html#a389521f6122ca955f3e5f2f48487ace3"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

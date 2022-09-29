@@ -27,7 +27,7 @@
   <td id="projectalign">
    <div id="projectname">LCPMotionPlanner
    </div>
-   <div id="projectbrief">A robot motion planner with LCP based collision avoidance.</div>
+   <div id="projectbrief">A ScLERP motion planner with LCP collision avoidance.</div>
   </td>
  </tr>
  </tbody>
@@ -97,22 +97,34 @@ $(document).ready(function(){initNavTree('class_motion_planner_1_1_physics_core.
 </div><!--header-->
 <div class="contents">
 
+<p>Class to create core PhysX instance.  
+ <a href="class_motion_planner_1_1_physics_core.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_physics_core_8h_source.html">PhysicsCore.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a90eada93577b7d163abc1265c690da67"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_motion_planner_1_1_physics_core.html#a90eada93577b7d163abc1265c690da67">PhysicsCore</a> ()</td></tr>
+<tr class="memdesc:a90eada93577b7d163abc1265c690da67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="class_motion_planner_1_1_physics_core.html#a90eada93577b7d163abc1265c690da67">More...</a><br /></td></tr>
 <tr class="separator:a90eada93577b7d163abc1265c690da67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb1574e34a2250004bc70b68bd8207bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_motion_planner_1_1_physics_core.html#afb1574e34a2250004bc70b68bd8207bd">~PhysicsCore</a> ()</td></tr>
+<tr class="memdesc:afb1574e34a2250004bc70b68bd8207bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="class_motion_planner_1_1_physics_core.html#afb1574e34a2250004bc70b68bd8207bd">More...</a><br /></td></tr>
 <tr class="separator:afb1574e34a2250004bc70b68bd8207bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9820626a89f7778e1e46e501b302ef5e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_motion_planner_1_1_physics_core.html#a9820626a89f7778e1e46e501b302ef5e">createPhysicsCore</a> ()</td></tr>
+<tr class="memdesc:a9820626a89f7778e1e46e501b302ef5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create PhysX instance.  <a href="class_motion_planner_1_1_physics_core.html#a9820626a89f7778e1e46e501b302ef5e">More...</a><br /></td></tr>
 <tr class="separator:a9820626a89f7778e1e46e501b302ef5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3bf144a1a0f67b7fca976dd92c445cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_motion_planner_1_1_physics_core.html#ac3bf144a1a0f67b7fca976dd92c445cc">connectPhysicsCore</a> ()</td></tr>
+<tr class="memdesc:ac3bf144a1a0f67b7fca976dd92c445cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect to Unreal Engine's PhysX instance.  <a href="class_motion_planner_1_1_physics_core.html#ac3bf144a1a0f67b7fca976dd92c445cc">More...</a><br /></td></tr>
 <tr class="separator:ac3bf144a1a0f67b7fca976dd92c445cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab83f143f8ad0c9ed4a48413b5259c3cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_motion_planner_1_1_physics_scene.html">PhysicsScene</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_motion_planner_1_1_physics_core.html#ab83f143f8ad0c9ed4a48413b5259c3cd">createPhysicsScene</a> (const std::string &amp;sceneName)</td></tr>
+<tr class="memdesc:ab83f143f8ad0c9ed4a48413b5259c3cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a physics scene.  <a href="class_motion_planner_1_1_physics_core.html#ab83f143f8ad0c9ed4a48413b5259c3cd">More...</a><br /></td></tr>
 <tr class="separator:ab83f143f8ad0c9ed4a48413b5259c3cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Class to create core PhysX instance. </p>
+
+<p class="definition">Definition at line <a class="el" href="_physics_core_8h_source.html#l00012">12</a> of file <a class="el" href="_physics_core_8h_source.html">PhysicsCore.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a90eada93577b7d163abc1265c690da67" name="a90eada93577b7d163abc1265c690da67"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a90eada93577b7d163abc1265c690da67">&#9670;&#160;</a></span>PhysicsCore()</h2>
 
@@ -127,6 +139,10 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Constructor. </p>
+
+<p class="definition">Definition at line <a class="el" href="_physics_core_8cpp_source.html#l00007">7</a> of file <a class="el" href="_physics_core_8cpp_source.html">PhysicsCore.cpp</a>.</p>
 
 </div>
 </div>
@@ -144,6 +160,10 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Destructor. </p>
+
+<p class="definition">Definition at line <a class="el" href="_physics_core_8cpp_source.html#l00014">14</a> of file <a class="el" href="_physics_core_8cpp_source.html">PhysicsCore.cpp</a>.</p>
 
 </div>
 </div>
@@ -163,6 +183,11 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Connect to Unreal Engine's PhysX instance. </p>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Bug:</a></b></dt><dd>Not yet implemented. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_physics_core_8cpp_source.html#l00090">90</a> of file <a class="el" href="_physics_core_8cpp_source.html">PhysicsCore.cpp</a>.</p>
+
 </div>
 </div>
 <a id="a9820626a89f7778e1e46e501b302ef5e" name="a9820626a89f7778e1e46e501b302ef5e"></a>
@@ -179,11 +204,10 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_motion_planner_1_1_physics_core_a9820626a89f7778e1e46e501b302ef5e_icgraph.png" border="0" usemap="#aclass_motion_planner_1_1_physics_core_a9820626a89f7778e1e46e501b302ef5e_icgraph" alt=""/></div>
-</div>
+
+<p>Create PhysX instance. </p>
+
+<p class="definition">Definition at line <a class="el" href="_physics_core_8cpp_source.html#l00046">46</a> of file <a class="el" href="_physics_core_8cpp_source.html">PhysicsCore.cpp</a>.</p>
 
 </div>
 </div>
@@ -202,22 +226,23 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_motion_planner_1_1_physics_core_ab83f143f8ad0c9ed4a48413b5259c3cd_cgraph.png" border="0" usemap="#aclass_motion_planner_1_1_physics_core_ab83f143f8ad0c9ed4a48413b5259c3cd_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_motion_planner_1_1_physics_core_ab83f143f8ad0c9ed4a48413b5259c3cd_icgraph.png" border="0" usemap="#aclass_motion_planner_1_1_physics_core_ab83f143f8ad0c9ed4a48413b5259c3cd_icgraph" alt=""/></div>
-</div>
+
+<p>Create a physics scene. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sceneName</td><td>Name of physics scene. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to physics scene. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_physics_core_8cpp_source.html#l00095">95</a> of file <a class="el" href="_physics_core_8cpp_source.html">PhysicsCore.cpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Projects/LCPMotionPlanner/include/<a class="el" href="_physics_core_8h_source.html">PhysicsCore.h</a></li>
-<li>C:/Projects/LCPMotionPlanner/src/<a class="el" href="_physics_core_8cpp.html">PhysicsCore.cpp</a></li>
+<li>include/<a class="el" href="_physics_core_8h_source.html">PhysicsCore.h</a></li>
+<li>src/<a class="el" href="_physics_core_8cpp_source.html">PhysicsCore.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -6,7 +6,6 @@ namespace MotionPlanner
 {
     namespace Kinematics
     {
-        // Compute skew-symmetrix form of an axis.
         Eigen::Matrix3d skew(const Eigen::Vector3d& w) {
             Eigen::Matrix3d wHat{
                 {0, -w(2), w(1)},
@@ -16,7 +15,6 @@ namespace MotionPlanner
             return wHat;
         }
 
-        // Compute the rotation matrix from axis-angle representation.
         Eigen::Matrix3d AxisAngletoRot(const Eigen::Vector3d& axis, double angle) {
             Eigen::Matrix3d wHat = skew(axis);
             Eigen::Matrix3d I = Eigen::Matrix3d::Identity();
@@ -24,7 +22,6 @@ namespace MotionPlanner
             return R;
         }
 
-        // Compute the adjoint matrix of a transformation matrix.
         Eigen::Matrix<double, 6, 6> adjoint(const Eigen::Matrix4d& G) {
             Eigen::Matrix3d R = G.block(0, 0, 3, 3);
             Eigen::Vector3d p = G.block(0, 3, 3, 1);
@@ -37,7 +34,6 @@ namespace MotionPlanner
             return ad;
         }
 
-        // Compute an efficient inverse of a transformation inverse.
         Eigen::Matrix4d transformInverse(const Eigen::Matrix4d& transform)
         {
             Eigen::Matrix4d invTransform = Eigen::Matrix4d::Identity();
@@ -48,7 +44,6 @@ namespace MotionPlanner
             return invTransform;
         }
 
-        // Convert spatial jacobian to analytic jacobian at a point in the space frame.
         Eigen::MatrixXd spatialToAnalyticJacobian(const Eigen::MatrixXd& spatialJacobian, const Eigen::Vector3d& point)
         {
             Eigen::Matrix<double, 6, 6> conversionMatrix = Eigen::Matrix<double, 6, 6>::Identity();
@@ -56,9 +51,8 @@ namespace MotionPlanner
             return conversionMatrix * spatialJacobian;
         }
 
-        /*FILL THIS IN LATER*/
         Eigen::MatrixXd BMatrix(const Eigen::MatrixXd& J, const Eigen::Matrix4d& pose) {
-            // Representations.
+            // Alternate representations of end-effector pose.
             Eigen::Vector3d p = pose.block(0, 3, 3, 1);
             DualQuaternion A(pose);
             Eigen::Quaternion<double> Q = A.m_real;

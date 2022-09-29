@@ -1,0 +1,243 @@
+\hypertarget{class_motion_planner_1_1_shape}{}\doxysection{Motion\+Planner\+::Shape Class Reference}
+\label{class_motion_planner_1_1_shape}\index{MotionPlanner::Shape@{MotionPlanner::Shape}}
+
+
+Base class for primitive geometry actors.  
+
+
+
+
+{\ttfamily \#include $<$Shape.\+h$>$}
+
+Inheritance diagram for Motion\+Planner\+::Shape\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_motion_planner_1_1_shape}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_motion_planner_1_1_shape_a9b8b06d1e95ca084f26bbfd2992c6550}{Shape}} (const Eigen\+::\+Vector3d \&origin, const Eigen\+::\+Vector3d \&roll\+Pitch\+Yaw, const std\+::string \&name, \mbox{\hyperlink{namespace_motion_planner_a389521f6122ca955f3e5f2f48487ace3}{Object\+Type}} object\+Type, \mbox{\hyperlink{namespace_motion_planner_ac2512cc9e24ec5f2119d5b6cb9c19e64}{Shape\+Type}} shape\+Type)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_motion_planner_1_1_shape_a65ec3883b5ec8d4e6ea53678e080996c}{$\sim$\+Shape}} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_shape_ad986d110af706f41e7f62d19ac35fd68}{compute\+Transform}} ()
+\begin{DoxyCompactList}\small\item\em Update transform based on origin and roll pitch yaw. \end{DoxyCompactList}\item 
+const Eigen\+::\+Matrix4d \& \mbox{\hyperlink{class_motion_planner_1_1_shape_a3b70c302b3b3171e9162a495c6722842}{get\+Transform}} () const
+\begin{DoxyCompactList}\small\item\em Get the current transform. \end{DoxyCompactList}\item 
+const std\+::string \& \mbox{\hyperlink{class_motion_planner_1_1_shape_aa3c8b0855477f802a4dd0f3c70fae83f}{get\+Name}} () const
+\begin{DoxyCompactList}\small\item\em Get the actor\textquotesingle{}s name. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_motion_planner_a389521f6122ca955f3e5f2f48487ace3}{Object\+Type}} \mbox{\hyperlink{class_motion_planner_1_1_shape_a1d7f6dd9ae3bc640b2e36384bfb33a13}{get\+Object\+Type}} () const
+\begin{DoxyCompactList}\small\item\em Get the object type classification. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_motion_planner_ac2512cc9e24ec5f2119d5b6cb9c19e64}{Shape\+Type}} \mbox{\hyperlink{class_motion_planner_1_1_shape_aeb66fd269642463310afdb36d965491c}{get\+Shape\+Type}} () const
+\begin{DoxyCompactList}\small\item\em Get the primitive shape type. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_shape_a762ff686d9bc9dc3f295a62f1632e898}{set\+Transform}} (const Eigen\+::\+Matrix4d \&transform)
+\begin{DoxyCompactList}\small\item\em Set the transform of the actor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_shape_a729e731aa0ebf6fac99727497d48526b}{set\+Parent\+Body\+Name}} (const std\+::string \&parent\+Body\+Name)
+\begin{DoxyCompactList}\small\item\em Set the name of the parent rigid body. \end{DoxyCompactList}\item 
+const std\+::string \& \mbox{\hyperlink{class_motion_planner_1_1_shape_a9c75825d23048f3b1ab6f593c0626326}{get\+Parent\+Body\+Name}} () const
+\begin{DoxyCompactList}\small\item\em Get the name of the parent rigid body. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for primitive geometry actors. 
+
+Definition at line \mbox{\hyperlink{_shape_8h_source_l00021}{21}} of file \mbox{\hyperlink{_shape_8h_source}{Shape.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_motion_planner_1_1_shape_a9b8b06d1e95ca084f26bbfd2992c6550}\label{class_motion_planner_1_1_shape_a9b8b06d1e95ca084f26bbfd2992c6550}} 
+\index{MotionPlanner::Shape@{MotionPlanner::Shape}!Shape@{Shape}}
+\index{Shape@{Shape}!MotionPlanner::Shape@{MotionPlanner::Shape}}
+\doxysubsubsection{\texorpdfstring{Shape()}{Shape()}}
+{\footnotesize\ttfamily Motion\+Planner\+::\+Shape\+::\+Shape (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector3d \&}]{origin,  }\item[{const Eigen\+::\+Vector3d \&}]{roll\+Pitch\+Yaw,  }\item[{const std\+::string \&}]{name,  }\item[{\mbox{\hyperlink{namespace_motion_planner_a389521f6122ca955f3e5f2f48487ace3}{Object\+Type}}}]{object\+Type,  }\item[{\mbox{\hyperlink{namespace_motion_planner_ac2512cc9e24ec5f2119d5b6cb9c19e64}{Shape\+Type}}}]{shape\+Type }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em origin} & Position of actor. \\
+\hline
+{\em roll\+Pitch\+Yaw} & Orientation of actor. \\
+\hline
+{\em name} & Name of actor. \\
+\hline
+{\em object\+Type} & Object classification of actor. \\
+\hline
+{\em shape\+Type} & \mbox{\hyperlink{class_motion_planner_1_1_shape}{Shape}} geometry classification of actor. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_shape_8cpp_source_l00010}{10}} of file \mbox{\hyperlink{_shape_8cpp_source}{Shape.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_shape_a65ec3883b5ec8d4e6ea53678e080996c}\label{class_motion_planner_1_1_shape_a65ec3883b5ec8d4e6ea53678e080996c}} 
+\index{MotionPlanner::Shape@{MotionPlanner::Shape}!````~Shape@{$\sim$Shape}}
+\index{````~Shape@{$\sim$Shape}!MotionPlanner::Shape@{MotionPlanner::Shape}}
+\doxysubsubsection{\texorpdfstring{$\sim$Shape()}{~Shape()}}
+{\footnotesize\ttfamily Motion\+Planner\+::\+Shape\+::$\sim$\+Shape (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Destructor. 
+
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000005}{Bug}}]Does this need to be virtual? \end{DoxyRefDesc}
+
+
+Definition at line \mbox{\hyperlink{_shape_8cpp_source_l00017}{17}} of file \mbox{\hyperlink{_shape_8cpp_source}{Shape.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_motion_planner_1_1_shape_ad986d110af706f41e7f62d19ac35fd68}\label{class_motion_planner_1_1_shape_ad986d110af706f41e7f62d19ac35fd68}} 
+\index{MotionPlanner::Shape@{MotionPlanner::Shape}!computeTransform@{computeTransform}}
+\index{computeTransform@{computeTransform}!MotionPlanner::Shape@{MotionPlanner::Shape}}
+\doxysubsubsection{\texorpdfstring{computeTransform()}{computeTransform()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Shape\+::compute\+Transform (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Update transform based on origin and roll pitch yaw. 
+
+
+
+Definition at line \mbox{\hyperlink{_shape_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{_shape_8cpp_source}{Shape.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_shape_aa3c8b0855477f802a4dd0f3c70fae83f}\label{class_motion_planner_1_1_shape_aa3c8b0855477f802a4dd0f3c70fae83f}} 
+\index{MotionPlanner::Shape@{MotionPlanner::Shape}!getName@{getName}}
+\index{getName@{getName}!MotionPlanner::Shape@{MotionPlanner::Shape}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily const std\+::string \& Motion\+Planner\+::\+Shape\+::get\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the actor\textquotesingle{}s name. 
+
+\begin{DoxyReturn}{Returns}
+Name. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_shape_8cpp_source_l00044}{44}} of file \mbox{\hyperlink{_shape_8cpp_source}{Shape.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_shape_a1d7f6dd9ae3bc640b2e36384bfb33a13}\label{class_motion_planner_1_1_shape_a1d7f6dd9ae3bc640b2e36384bfb33a13}} 
+\index{MotionPlanner::Shape@{MotionPlanner::Shape}!getObjectType@{getObjectType}}
+\index{getObjectType@{getObjectType}!MotionPlanner::Shape@{MotionPlanner::Shape}}
+\doxysubsubsection{\texorpdfstring{getObjectType()}{getObjectType()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_motion_planner_a389521f6122ca955f3e5f2f48487ace3}{Object\+Type}} Motion\+Planner\+::\+Shape\+::get\+Object\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the object type classification. 
+
+\begin{DoxyReturn}{Returns}
+Object type. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_shape_8cpp_source_l00049}{49}} of file \mbox{\hyperlink{_shape_8cpp_source}{Shape.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_shape_a9c75825d23048f3b1ab6f593c0626326}\label{class_motion_planner_1_1_shape_a9c75825d23048f3b1ab6f593c0626326}} 
+\index{MotionPlanner::Shape@{MotionPlanner::Shape}!getParentBodyName@{getParentBodyName}}
+\index{getParentBodyName@{getParentBodyName}!MotionPlanner::Shape@{MotionPlanner::Shape}}
+\doxysubsubsection{\texorpdfstring{getParentBodyName()}{getParentBodyName()}}
+{\footnotesize\ttfamily const std\+::string \& Motion\+Planner\+::\+Shape\+::get\+Parent\+Body\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the name of the parent rigid body. 
+
+\begin{DoxyReturn}{Returns}
+Name. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_shape_8cpp_source_l00069}{69}} of file \mbox{\hyperlink{_shape_8cpp_source}{Shape.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_shape_aeb66fd269642463310afdb36d965491c}\label{class_motion_planner_1_1_shape_aeb66fd269642463310afdb36d965491c}} 
+\index{MotionPlanner::Shape@{MotionPlanner::Shape}!getShapeType@{getShapeType}}
+\index{getShapeType@{getShapeType}!MotionPlanner::Shape@{MotionPlanner::Shape}}
+\doxysubsubsection{\texorpdfstring{getShapeType()}{getShapeType()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_motion_planner_ac2512cc9e24ec5f2119d5b6cb9c19e64}{Shape\+Type}} Motion\+Planner\+::\+Shape\+::get\+Shape\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the primitive shape type. 
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_motion_planner_1_1_shape}{Shape}} type. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_shape_8cpp_source_l00054}{54}} of file \mbox{\hyperlink{_shape_8cpp_source}{Shape.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_shape_a3b70c302b3b3171e9162a495c6722842}\label{class_motion_planner_1_1_shape_a3b70c302b3b3171e9162a495c6722842}} 
+\index{MotionPlanner::Shape@{MotionPlanner::Shape}!getTransform@{getTransform}}
+\index{getTransform@{getTransform}!MotionPlanner::Shape@{MotionPlanner::Shape}}
+\doxysubsubsection{\texorpdfstring{getTransform()}{getTransform()}}
+{\footnotesize\ttfamily const Eigen\+::\+Matrix4d \& Motion\+Planner\+::\+Shape\+::get\+Transform (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the current transform. 
+
+\begin{DoxyReturn}{Returns}
+Transform. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_shape_8cpp_source_l00039}{39}} of file \mbox{\hyperlink{_shape_8cpp_source}{Shape.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_shape_a729e731aa0ebf6fac99727497d48526b}\label{class_motion_planner_1_1_shape_a729e731aa0ebf6fac99727497d48526b}} 
+\index{MotionPlanner::Shape@{MotionPlanner::Shape}!setParentBodyName@{setParentBodyName}}
+\index{setParentBodyName@{setParentBodyName}!MotionPlanner::Shape@{MotionPlanner::Shape}}
+\doxysubsubsection{\texorpdfstring{setParentBodyName()}{setParentBodyName()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Shape\+::set\+Parent\+Body\+Name (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{parent\+Body\+Name }\end{DoxyParamCaption})}
+
+
+
+Set the name of the parent rigid body. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent\+Body\+Name} & Name of parent body. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000007}{Bug}}]Should only allow this for robot geometry actors. \end{DoxyRefDesc}
+
+
+Definition at line \mbox{\hyperlink{_shape_8cpp_source_l00064}{64}} of file \mbox{\hyperlink{_shape_8cpp_source}{Shape.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_shape_a762ff686d9bc9dc3f295a62f1632e898}\label{class_motion_planner_1_1_shape_a762ff686d9bc9dc3f295a62f1632e898}} 
+\index{MotionPlanner::Shape@{MotionPlanner::Shape}!setTransform@{setTransform}}
+\index{setTransform@{setTransform}!MotionPlanner::Shape@{MotionPlanner::Shape}}
+\doxysubsubsection{\texorpdfstring{setTransform()}{setTransform()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Shape\+::set\+Transform (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix4d \&}]{transform }\end{DoxyParamCaption})}
+
+
+
+Set the transform of the actor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em transform} & Transform to be set. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000006}{Bug}}]Does not update roll\+Pitch\+Yaw member. \end{DoxyRefDesc}
+
+
+Definition at line \mbox{\hyperlink{_shape_8cpp_source_l00059}{59}} of file \mbox{\hyperlink{_shape_8cpp_source}{Shape.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{_shape_8h}{Shape.\+h}}\item 
+src/\mbox{\hyperlink{_shape_8cpp}{Shape.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,77 @@
+\hypertarget{_contact_manager_8cpp_source}{}\doxysection{Contact\+Manager.\+cpp}
+\label{_contact_manager_8cpp_source}\index{src/ContactManager.cpp@{src/ContactManager.cpp}}
+\mbox{\hyperlink{_contact_manager_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_contact_manager_8h}{ContactManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00002}00002 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_contact_point_8h}{ContactPoint.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00003}00003 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00004}00004 \textcolor{preprocessor}{\#include <map>}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00005}00005 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00007}00007 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_motion_planner}{MotionPlanner}}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00009}\mbox{\hyperlink{class_motion_planner_1_1_contact_manager_a0c5fab502e479adbe0946067bb17ed04}{00009}}     \mbox{\hyperlink{class_motion_planner_1_1_contact_manager_a0c5fab502e479adbe0946067bb17ed04}{ContactManager::ContactManager}}()}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00010}00010     \{}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00011}00011     }
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00012}00012     \}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00014}\mbox{\hyperlink{class_motion_planner_1_1_contact_manager_ad53783e139739c26fc169bcc9d6e06b8}{00014}}     \mbox{\hyperlink{class_motion_planner_1_1_contact_manager_ad53783e139739c26fc169bcc9d6e06b8}{ContactManager::\string~ContactManager}}()}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00015}00015     \{}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00017}00017     \}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00019}\mbox{\hyperlink{class_motion_planner_1_1_contact_manager_afd8198fa2c961462ac1403929313ec19}{00019}}     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_contact_manager_afd8198fa2c961462ac1403929313ec19}{ContactManager::addContact}}(\textcolor{keyword}{const} std::string\& linkName, \textcolor{keyword}{const} \mbox{\hyperlink{struct_motion_planner_1_1_contact_point}{ContactPoint}}\& contactPoint)}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00020}00020     \{}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00021}00021         m\_contacts.emplace(linkName, contactPoint);}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00022}00022     \}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00024}\mbox{\hyperlink{class_motion_planner_1_1_contact_manager_a7f9f83cee66a0d7d53453111015840cd}{00024}}     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_contact_manager_a7f9f83cee66a0d7d53453111015840cd}{ContactManager::clearContacts}}()}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00025}00025     \{}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00026}00026         m\_contacts.clear();}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00027}00027     \}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00029}\mbox{\hyperlink{class_motion_planner_1_1_contact_manager_a95f2aae2315a9eba379c68a2a529de4f}{00029}}     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_contact_manager_a95f2aae2315a9eba379c68a2a529de4f}{ContactManager::reduceContacts}}()}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00030}00030     \{}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00031}00031         std::string previousLink = \textcolor{stringliteral}{"{}None"{}};}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00032}00032         \textcolor{keywordtype}{double} previousDistance = 1e10;}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00033}00033         std::vector<std::string> contactsToErase;}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00034}00034         \textcolor{keywordflow}{for} (\textcolor{keyword}{const} std::pair<std::string, ContactPoint>\& contact : m\_contacts)}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00035}00035         \{}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00036}00036             \textcolor{comment}{// If there are multiple contacts for a link, keep only the closest contact.}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00037}00037             \textcolor{keywordtype}{bool} updatePrevious = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00038}00038             \textcolor{keywordflow}{if} (contact.first == previousLink)}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00039}00039             \{}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00040}00040                 \textcolor{comment}{// Remove contact with larger distance.}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00041}00041                 \textcolor{keywordflow}{if} (contact.second.m\_distance > previousDistance)}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00042}00042                 \{}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00043}00043                     contactsToErase.emplace\_back(contact.first);}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00044}00044                     updatePrevious = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00045}00045                 \}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00046}00046                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00047}00047                 \{}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00048}00048                     contactsToErase.emplace\_back(previousLink);}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00049}00049                 \}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00050}00050             \}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00052}00052             \textcolor{comment}{// If we did not remove the current contact point, mark as previous.}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00053}00053             \textcolor{keywordflow}{if} (updatePrevious)}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00054}00054             \{}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00055}00055                 previousLink = contact.first;}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00056}00056                 previousDistance = contact.second.m\_distance;}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00057}00057             \}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00058}00058         \}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00060}00060         \textcolor{comment}{// Erase contacts that were marked for removal.}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00061}00061         \textcolor{keywordflow}{for} (\textcolor{keyword}{const} std::string\& contactName : contactsToErase)}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00062}00062         \{}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00063}00063             m\_contacts.erase(contactName);}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00064}00064         \}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00065}00065     \}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00067}\mbox{\hyperlink{class_motion_planner_1_1_contact_manager_a5596d0cc57907ccbb5119481d693ae0b}{00067}}     \textcolor{keyword}{const} std::map<std::string, ContactPoint>\& \mbox{\hyperlink{class_motion_planner_1_1_contact_manager_a5596d0cc57907ccbb5119481d693ae0b}{ContactManager::getContacts}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00068}00068 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00069}00069         \textcolor{keywordflow}{return} m\_contacts;}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00070}00070     \}}
+\DoxyCodeLine{\Hypertarget{_contact_manager_8cpp_source_l00071}00071 \}}
+
+\end{DoxyCode}

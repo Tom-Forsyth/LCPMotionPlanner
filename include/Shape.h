@@ -8,6 +8,7 @@ namespace MotionPlanner
 {
 	struct ContactPoint;
 
+	/// @brief Primitive geometry type enum.
 	enum class ShapeType
 	{
 		Unassigned,
@@ -16,49 +17,76 @@ namespace MotionPlanner
 		Box
 	};
 
+	/// @brief Base class for primitive geometry actors.
 	class Shape
 	{
 	private:
+		/// @brief Actor transform.
 		Eigen::Matrix4d m_transform;
+
+		/// @brief Actor origin.
 		Eigen::Vector3d m_origin;
+
+		/// @brief Actor roll, pitch, and yaw used to initialize PhysX shapes.
+		/// @bug Does not update when setTransform is called.
 		Eigen::Vector3d m_rollPitchYaw;
+
+		/// @brief Name of shape actor.
 		std::string m_name;
+
+		/// @brief Classification of the object for collision filtering (Robot, Obstacle, ...).
 		ObjectType m_objectType = ObjectType::Unassigned;
+
+		/// @brief Primitive geometry type classification (Sphere, Capsule, Box...).
 		ShapeType m_shapeType = ShapeType::Unassigned;
 
-		// Name of the parent body.
-		// TODO: Create derived class "Collider" to implement this.
+		/// @brief Name of parent RigidBody if the geometry is a robot geometry.
 		std::string m_parentBodyName = "None";
 
 	public:
-		// Origin + RPY constructor.
+		/// @brief Constructor.
+		/// @param origin Position of actor.
+		/// @param rollPitchYaw Orientation of actor.
+		/// @param name Name of actor.
+		/// @param objectType Object classification of actor.
+		/// @param shapeType Shape geometry classification of actor.
 		Shape(const Eigen::Vector3d& origin, const Eigen::Vector3d& rollPitchYaw, const std::string& name, ObjectType objectType, ShapeType shapeType);
 
-		// Destructor.
+		/// @brief Destructor.
+		/// @bug Does this need to be virtual?
 		virtual ~Shape();
 
-		// Compute transform from origin + RPY.
+		/// @brief Update transform based on origin and roll pitch yaw.
 		void computeTransform();
 
-		// Get current transform.
-		Eigen::Matrix4d getTransform() const;
+		/// @brief Get the current transform.
+		/// @return Transform.
+		const Eigen::Matrix4d& getTransform() const;
 
-		// Get name.
-		std::string getName() const;
+		/// @brief Get the actor's name.
+		/// @return Name.
+		const std::string& getName() const;
 
-		// Get the object's collision filtering type.
+		/// @brief Get the object type classification.
+		/// @return Object type.
 		ObjectType getObjectType() const;
 
-		// Get shape type.
+		/// @brief Get the primitive shape type.
+		/// @return Shape type.
 		ShapeType getShapeType() const;
 
-		// Set the transform.
+		/// @brief Set the transform of the actor.
+		/// @param transform Transform to be set.
+		/// @bug Does not update rollPitchYaw member.
 		void setTransform(const Eigen::Matrix4d& transform);
 
-		// Set the parent body name.
+		/// @brief Set the name of the parent rigid body.
+		/// @param parentBodyName Name of parent body.
+		/// @bug Should only allow this for robot geometry actors.
 		void setParentBodyName(const std::string& parentBodyName);
 
-		// Get the parent body name.
-		std::string getParentBodyName() const;
+		/// @brief Get the name of the parent rigid body.
+		/// @return Name.
+		const std::string& getParentBodyName() const;
 	};
 }

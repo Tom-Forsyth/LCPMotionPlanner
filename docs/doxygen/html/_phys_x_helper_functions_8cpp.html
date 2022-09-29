@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>LCPMotionPlanner: C:/Projects/LCPMotionPlanner/src/PhysXHelperFunctions.cpp File Reference</title>
+<title>LCPMotionPlanner: src/PhysXHelperFunctions.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectalign">
    <div id="projectname">LCPMotionPlanner
    </div>
-   <div id="projectbrief">A robot motion planner with LCP based collision avoidance.</div>
+   <div id="projectbrief">A ScLERP motion planner with LCP collision avoidance.</div>
   </td>
  </tr>
  </tbody>
@@ -105,12 +105,9 @@ $(document).ready(function(){initNavTree('_phys_x_helper_functions_8cpp.html',''
 <code>#include &lt;Eigen/Dense&gt;</code><br />
 <code>#include &lt;exception&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for PhysXHelperFunctions.cpp:</div>
-<div class="dyncontent">
-<div class="center"><img src="_phys_x_helper_functions_8cpp__incl.png" border="0" usemap="#a_c_1_2_projects_2_l_c_p_motion_planner_2src_2_phys_x_helper_functions_8cpp" alt=""/></div>
 </div>
-</div><table class="memberdecls">
+<p><a href="_phys_x_helper_functions_8cpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespace_motion_planner"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html">MotionPlanner</a></td></tr>
@@ -119,16 +116,22 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a838cea8f45278eb0326d5c7e528ac2f2"><td class="memItemLeft" align="right" valign="top">physx::PxTransform&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#a838cea8f45278eb0326d5c7e528ac2f2">MotionPlanner::eigenMatrixToPxTransform</a> (const Eigen::Matrix4d &amp;eigenMatrix)</td></tr>
+<tr class="memdesc:a838cea8f45278eb0326d5c7e528ac2f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert an Eigen::Matrix4d to a PxTransform.  <a href="namespace_motion_planner.html#a838cea8f45278eb0326d5c7e528ac2f2">More...</a><br /></td></tr>
 <tr class="separator:a838cea8f45278eb0326d5c7e528ac2f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a09d20421f943f271a310380abbfa41"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#a1a09d20421f943f271a310380abbfa41">MotionPlanner::pxVecToEigenVec</a> (const physx::PxVec3 &amp;pxVec)</td></tr>
+<tr class="memdesc:a1a09d20421f943f271a310380abbfa41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a PxVec3 to an Eigen::Vector3d.  <a href="namespace_motion_planner.html#a1a09d20421f943f271a310380abbfa41">More...</a><br /></td></tr>
 <tr class="separator:a1a09d20421f943f271a310380abbfa41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2022e3f0fd2991f4f1a55433b19ab20"><td class="memItemLeft" align="right" valign="top">physx::PxSphereGeometry&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#aa2022e3f0fd2991f4f1a55433b19ab20">MotionPlanner::getPxSphereGeometry</a> (const Sphere &amp;sphere)</td></tr>
+<tr class="memdesc:aa2022e3f0fd2991f4f1a55433b19ab20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a <a class="el" href="class_motion_planner_1_1_sphere.html" title="Sphere actor.">Sphere</a> to a PxSphereGeometry.  <a href="namespace_motion_planner.html#aa2022e3f0fd2991f4f1a55433b19ab20">More...</a><br /></td></tr>
 <tr class="separator:aa2022e3f0fd2991f4f1a55433b19ab20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afdea9a17396da6b4a31fedaf7d09cbfc"><td class="memItemLeft" align="right" valign="top">physx::PxCapsuleGeometry&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#afdea9a17396da6b4a31fedaf7d09cbfc">MotionPlanner::getPxCapsuleGeometry</a> (const Capsule &amp;capsule)</td></tr>
+<tr class="memdesc:afdea9a17396da6b4a31fedaf7d09cbfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a <a class="el" href="class_motion_planner_1_1_capsule.html" title="Capsule geometry actor.">Capsule</a> to a PxCapsuleGeometry.  <a href="namespace_motion_planner.html#afdea9a17396da6b4a31fedaf7d09cbfc">More...</a><br /></td></tr>
 <tr class="separator:afdea9a17396da6b4a31fedaf7d09cbfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47f69fbf2dccb145dfbe6e481174e7cf"><td class="memItemLeft" align="right" valign="top">physx::PxBoxGeometry&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#a47f69fbf2dccb145dfbe6e481174e7cf">MotionPlanner::getPxBoxGeometry</a> (const Box &amp;box)</td></tr>
+<tr class="memdesc:a47f69fbf2dccb145dfbe6e481174e7cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a <a class="el" href="class_motion_planner_1_1_box.html" title="Box geometry actor.">Box</a> to a PxBoxGeometry.  <a href="namespace_motion_planner.html#a47f69fbf2dccb145dfbe6e481174e7cf">More...</a><br /></td></tr>
 <tr class="separator:a47f69fbf2dccb145dfbe6e481174e7cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f065fef79f13d23e7c084691a30a62e"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; physx::PxGeometry &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#a9f065fef79f13d23e7c084691a30a62e">MotionPlanner::getPxGeometry</a> (const Shape &amp;shape)</td></tr>
+<tr class="memdesc:a9f065fef79f13d23e7c084691a30a62e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a <a class="el" href="class_motion_planner_1_1_shape.html" title="Base class for primitive geometry actors.">Shape</a> to the corresponding PxGeometry.  <a href="namespace_motion_planner.html#a9f065fef79f13d23e7c084691a30a62e">More...</a><br /></td></tr>
 <tr class="separator:a9f065fef79f13d23e7c084691a30a62e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

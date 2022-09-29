@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>LCPMotionPlanner: C:/Projects/LCPMotionPlanner/include/LCPSolve.h Source File</title>
+<title>LCPMotionPlanner: include/LCPSolve.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectalign">
    <div id="projectname">LCPMotionPlanner
    </div>
-   <div id="projectbrief">A robot motion planner with LCP based collision avoidance.</div>
+   <div id="projectbrief">A ScLERP motion planner with LCP collision avoidance.</div>
   </td>
  </tr>
  </tbody>
@@ -93,35 +93,29 @@ $(document).ready(function(){initNavTree('_l_c_p_solve_8h_source.html',''); init
   <div class="headertitle"><div class="title">LCPSolve.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="_l_c_p_solve_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef LCPSOLVE_H_</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define LCPSOLVE_H_</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;Eigen/Dense&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_motion_planner.html">MotionPlanner</a></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>{</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="comment">// Linear complementarity problem datatype.</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="struct_motion_planner_1_1_l_c_p.html">    9</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_motion_planner_1_1_l_c_p.html">LCP</a> {</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="struct_motion_planner_1_1_l_c_p.html#a773cc29ef486ea12425e772957ee7f27">   10</a></span>        <span class="keywordtype">int</span> <a class="code hl_variable" href="struct_motion_planner_1_1_l_c_p.html#a773cc29ef486ea12425e772957ee7f27">exitCond</a>;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="struct_motion_planner_1_1_l_c_p.html#a7e1e76d42f24e52f09d842b1726caca4">   11</a></span>        Eigen::VectorXd <a class="code hl_variable" href="struct_motion_planner_1_1_l_c_p.html#a7e1e76d42f24e52f09d842b1726caca4">w</a>{};</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="struct_motion_planner_1_1_l_c_p.html#a5be5d5e3b46ab25d0bb9b53761f656c3">   12</a></span>        Eigen::VectorXd <a class="code hl_variable" href="struct_motion_planner_1_1_l_c_p.html#a5be5d5e3b46ab25d0bb9b53761f656c3">z</a>{};</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="struct_motion_planner_1_1_l_c_p.html#aaf02a0130d751c485304c87cb9a59bf5">   13</a></span>        Eigen::MatrixXd <a class="code hl_variable" href="struct_motion_planner_1_1_l_c_p.html#aaf02a0130d751c485304c87cb9a59bf5">M</a>{};</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="struct_motion_planner_1_1_l_c_p.html#ab83aef6f36fc1ea4e4f5aa90d88432b1">   14</a></span>        Eigen::VectorXd <a class="code hl_variable" href="struct_motion_planner_1_1_l_c_p.html#ab83aef6f36fc1ea4e4f5aa90d88432b1">q</a>{};</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    };</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="comment">// LCP Solver.</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="namespace_motion_planner.html#a6b6af252470b50725ce3b618cf25bdab">   18</a></span>    <a class="code hl_struct" href="struct_motion_planner_1_1_l_c_p.html">LCP</a> <a class="code hl_function" href="namespace_motion_planner.html#a6b6af252470b50725ce3b618cf25bdab">LCPSolve</a>(Eigen::MatrixXd M, Eigen::VectorXd q);</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>}</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="anamespace_motion_planner_html"><div class="ttname"><a href="namespace_motion_planner.html">MotionPlanner</a></div><div class="ttdef"><b>Definition:</b> Box.h:9</div></div>
-<div class="ttc" id="anamespace_motion_planner_html_a6b6af252470b50725ce3b618cf25bdab"><div class="ttname"><a href="namespace_motion_planner.html#a6b6af252470b50725ce3b618cf25bdab">MotionPlanner::LCPSolve</a></div><div class="ttdeci">LCP LCPSolve(Eigen::MatrixXd M, Eigen::VectorXd q)</div></div>
-<div class="ttc" id="astruct_motion_planner_1_1_l_c_p_html"><div class="ttname"><a href="struct_motion_planner_1_1_l_c_p.html">MotionPlanner::LCP</a></div><div class="ttdef"><b>Definition:</b> LCPSolve.h:9</div></div>
-<div class="ttc" id="astruct_motion_planner_1_1_l_c_p_html_a5be5d5e3b46ab25d0bb9b53761f656c3"><div class="ttname"><a href="struct_motion_planner_1_1_l_c_p.html#a5be5d5e3b46ab25d0bb9b53761f656c3">MotionPlanner::LCP::z</a></div><div class="ttdeci">Eigen::VectorXd z</div><div class="ttdef"><b>Definition:</b> LCPSolve.h:12</div></div>
-<div class="ttc" id="astruct_motion_planner_1_1_l_c_p_html_a773cc29ef486ea12425e772957ee7f27"><div class="ttname"><a href="struct_motion_planner_1_1_l_c_p.html#a773cc29ef486ea12425e772957ee7f27">MotionPlanner::LCP::exitCond</a></div><div class="ttdeci">int exitCond</div><div class="ttdef"><b>Definition:</b> LCPSolve.h:10</div></div>
-<div class="ttc" id="astruct_motion_planner_1_1_l_c_p_html_a7e1e76d42f24e52f09d842b1726caca4"><div class="ttname"><a href="struct_motion_planner_1_1_l_c_p.html#a7e1e76d42f24e52f09d842b1726caca4">MotionPlanner::LCP::w</a></div><div class="ttdeci">Eigen::VectorXd w</div><div class="ttdef"><b>Definition:</b> LCPSolve.h:11</div></div>
-<div class="ttc" id="astruct_motion_planner_1_1_l_c_p_html_aaf02a0130d751c485304c87cb9a59bf5"><div class="ttname"><a href="struct_motion_planner_1_1_l_c_p.html#aaf02a0130d751c485304c87cb9a59bf5">MotionPlanner::LCP::M</a></div><div class="ttdeci">Eigen::MatrixXd M</div><div class="ttdef"><b>Definition:</b> LCPSolve.h:13</div></div>
-<div class="ttc" id="astruct_motion_planner_1_1_l_c_p_html_ab83aef6f36fc1ea4e4f5aa90d88432b1"><div class="ttname"><a href="struct_motion_planner_1_1_l_c_p.html#ab83aef6f36fc1ea4e4f5aa90d88432b1">MotionPlanner::LCP::q</a></div><div class="ttdeci">Eigen::VectorXd q</div><div class="ttdef"><b>Definition:</b> LCPSolve.h:14</div></div>
+<a href="_l_c_p_solve_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;Eigen/Dense&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="namespace_l_c_p_solve.html">    5</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_l_c_p_solve.html">LCPSolve</a></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>{</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="struct_l_c_p_solve_1_1_l_c_p.html">    8</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_c_p_solve_1_1_l_c_p.html">LCP</a> {</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="struct_l_c_p_solve_1_1_l_c_p.html#ae7f37f63758441173368d9afd4a47f6b">    9</a></span>        <span class="keywordtype">int</span> <a class="code hl_variable" href="struct_l_c_p_solve_1_1_l_c_p.html#ae7f37f63758441173368d9afd4a47f6b">exitCond</a>;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="struct_l_c_p_solve_1_1_l_c_p.html#aa4c63d8c23022a276090a72eae5a15e9">   10</a></span>        Eigen::VectorXd <a class="code hl_variable" href="struct_l_c_p_solve_1_1_l_c_p.html#aa4c63d8c23022a276090a72eae5a15e9">w</a>{};</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="struct_l_c_p_solve_1_1_l_c_p.html#aeeda536d295dcfc55f3149b0d4f53f3c">   11</a></span>        Eigen::VectorXd <a class="code hl_variable" href="struct_l_c_p_solve_1_1_l_c_p.html#aeeda536d295dcfc55f3149b0d4f53f3c">z</a>{};</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="struct_l_c_p_solve_1_1_l_c_p.html#a713fbb5f9908ef1c1fcdf282de454bff">   12</a></span>        Eigen::MatrixXd <a class="code hl_variable" href="struct_l_c_p_solve_1_1_l_c_p.html#a713fbb5f9908ef1c1fcdf282de454bff">M</a>{};</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="struct_l_c_p_solve_1_1_l_c_p.html#a5db25f75b16500a9ed095b8c09a9bcd7">   13</a></span>        Eigen::VectorXd <a class="code hl_variable" href="struct_l_c_p_solve_1_1_l_c_p.html#a5db25f75b16500a9ed095b8c09a9bcd7">q</a>{};</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    };</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    LCP <a class="code hl_namespace" href="namespace_l_c_p_solve.html">LCPSolve</a>(Eigen::MatrixXd M, Eigen::VectorXd q);</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>}</div>
+<div class="ttc" id="anamespace_l_c_p_solve_html"><div class="ttname"><a href="namespace_l_c_p_solve.html">LCPSolve</a></div><div class="ttdef"><b>Definition:</b> <a href="_l_c_p_solve_8h_source.html#l00005">LCPSolve.h:6</a></div></div>
+<div class="ttc" id="astruct_l_c_p_solve_1_1_l_c_p_html"><div class="ttname"><a href="struct_l_c_p_solve_1_1_l_c_p.html">LCPSolve::LCP</a></div><div class="ttdoc">Linear complementarity problem datatype.</div><div class="ttdef"><b>Definition:</b> <a href="_l_c_p_solve_8h_source.html#l00008">LCPSolve.h:8</a></div></div>
+<div class="ttc" id="astruct_l_c_p_solve_1_1_l_c_p_html_a5db25f75b16500a9ed095b8c09a9bcd7"><div class="ttname"><a href="struct_l_c_p_solve_1_1_l_c_p.html#a5db25f75b16500a9ed095b8c09a9bcd7">LCPSolve::LCP::q</a></div><div class="ttdeci">Eigen::VectorXd q</div><div class="ttdef"><b>Definition:</b> <a href="_l_c_p_solve_8h_source.html#l00013">LCPSolve.h:13</a></div></div>
+<div class="ttc" id="astruct_l_c_p_solve_1_1_l_c_p_html_a713fbb5f9908ef1c1fcdf282de454bff"><div class="ttname"><a href="struct_l_c_p_solve_1_1_l_c_p.html#a713fbb5f9908ef1c1fcdf282de454bff">LCPSolve::LCP::M</a></div><div class="ttdeci">Eigen::MatrixXd M</div><div class="ttdef"><b>Definition:</b> <a href="_l_c_p_solve_8h_source.html#l00012">LCPSolve.h:12</a></div></div>
+<div class="ttc" id="astruct_l_c_p_solve_1_1_l_c_p_html_aa4c63d8c23022a276090a72eae5a15e9"><div class="ttname"><a href="struct_l_c_p_solve_1_1_l_c_p.html#aa4c63d8c23022a276090a72eae5a15e9">LCPSolve::LCP::w</a></div><div class="ttdeci">Eigen::VectorXd w</div><div class="ttdef"><b>Definition:</b> <a href="_l_c_p_solve_8h_source.html#l00010">LCPSolve.h:10</a></div></div>
+<div class="ttc" id="astruct_l_c_p_solve_1_1_l_c_p_html_ae7f37f63758441173368d9afd4a47f6b"><div class="ttname"><a href="struct_l_c_p_solve_1_1_l_c_p.html#ae7f37f63758441173368d9afd4a47f6b">LCPSolve::LCP::exitCond</a></div><div class="ttdeci">int exitCond</div><div class="ttdef"><b>Definition:</b> <a href="_l_c_p_solve_8h_source.html#l00009">LCPSolve.h:9</a></div></div>
+<div class="ttc" id="astruct_l_c_p_solve_1_1_l_c_p_html_aeeda536d295dcfc55f3149b0d4f53f3c"><div class="ttname"><a href="struct_l_c_p_solve_1_1_l_c_p.html#aeeda536d295dcfc55f3149b0d4f53f3c">LCPSolve::LCP::z</a></div><div class="ttdeci">Eigen::VectorXd z</div><div class="ttdef"><b>Definition:</b> <a href="_l_c_p_solve_8h_source.html#l00011">LCPSolve.h:11</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -1,0 +1,197 @@
+\hypertarget{class_motion_planner_1_1_physics_scene}{}\doxysection{Motion\+Planner\+::Physics\+Scene Class Reference}
+\label{class_motion_planner_1_1_physics_scene}\index{MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}}
+
+
+Physics scene to manage simulation scene.  
+
+
+
+
+{\ttfamily \#include $<$Physics\+Scene.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_motion_planner_1_1_physics_scene_a2bd2b6668ea0b9e2ddb625693e1c3e83}{Physics\+Scene}} (const std\+::string \&scene\+Name, physx\+::\+Px\+Physics $\ast$const physics, physx\+::\+Px\+Cpu\+Dispatcher $\ast$const cpu\+Dispatcher)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_motion_planner_1_1_physics_scene_ae40a78c4ad18c815dd2752c548adee90}{$\sim$\+Physics\+Scene}} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_physics_scene_a4d84756c621d3ed5dc039685a4b45e60}{connect\+To\+PVD}} () const
+\begin{DoxyCompactList}\small\item\em Connect the scene to the PVD client. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_physics_scene_a505e5f84b92c7dd8c0c955f476842b6e}{add\+Obstacle}} (const \mbox{\hyperlink{class_motion_planner_1_1_shape}{Shape}} \&shape)
+\begin{DoxyCompactList}\small\item\em Add an obstacle to the scene. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_physics_scene_ab29441854f3e66856df5836e5c52fdd4}{add\+Spatial\+Manipulator}} (\mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator}{Spatial\+Manipulator}} \&spatial\+Manipulator)
+\begin{DoxyCompactList}\small\item\em Add the robot geometry actors of a manipulator to the scene and provide the manipulator with a pointer to the scene. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_physics_scene_a3a1b0c8617ebb84b2a97ec04ad570bf1}{add\+Contact}} (const std\+::string \&link\+Name, const \mbox{\hyperlink{struct_motion_planner_1_1_contact_point}{Contact\+Point}} \&contact\+Point)
+\begin{DoxyCompactList}\small\item\em Add a contact to be processed by the contact manager. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_physics_scene_ad86bc364257acd8a2a247c62273829ba}{set\+Contact\+Offsets}} (double manipulator\+Safety\+Distance, double finger\+Safety\+Distance)
+\begin{DoxyCompactList}\small\item\em Set the contact generation offset to be slightly larger than safety distance. \end{DoxyCompactList}\item 
+const std\+::map$<$ std\+::string, \mbox{\hyperlink{struct_motion_planner_1_1_contact_point}{Contact\+Point}} $>$ \& \mbox{\hyperlink{class_motion_planner_1_1_physics_scene_ae489972e3ba384b383a0b87c8022b3d7}{generate\+Contacts}} ()
+\begin{DoxyCompactList}\small\item\em Run PhysX simulation to generate contacts and run contact manager to reduce contacts. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Physics scene to manage simulation scene. 
+
+Definition at line \mbox{\hyperlink{_physics_scene_8h_source_l00019}{19}} of file \mbox{\hyperlink{_physics_scene_8h_source}{Physics\+Scene.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_motion_planner_1_1_physics_scene_a2bd2b6668ea0b9e2ddb625693e1c3e83}\label{class_motion_planner_1_1_physics_scene_a2bd2b6668ea0b9e2ddb625693e1c3e83}} 
+\index{MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}!PhysicsScene@{PhysicsScene}}
+\index{PhysicsScene@{PhysicsScene}!MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}}
+\doxysubsubsection{\texorpdfstring{PhysicsScene()}{PhysicsScene()}}
+{\footnotesize\ttfamily Motion\+Planner\+::\+Physics\+Scene\+::\+Physics\+Scene (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{scene\+Name,  }\item[{physx\+::\+Px\+Physics $\ast$const}]{physics,  }\item[{physx\+::\+Px\+Cpu\+Dispatcher $\ast$const}]{cpu\+Dispatcher }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scene\+Name} & Name of scene. \\
+\hline
+{\em physics} & Pointer to the PhysX factory class. \\
+\hline
+{\em cpu\+Dispatcher} & Pointer to the PhysX CPU dispatcher. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_physics_scene_8cpp_source_l00020}{20}} of file \mbox{\hyperlink{_physics_scene_8cpp_source}{Physics\+Scene.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_physics_scene_ae40a78c4ad18c815dd2752c548adee90}\label{class_motion_planner_1_1_physics_scene_ae40a78c4ad18c815dd2752c548adee90}} 
+\index{MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}!````~PhysicsScene@{$\sim$PhysicsScene}}
+\index{````~PhysicsScene@{$\sim$PhysicsScene}!MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}}
+\doxysubsubsection{\texorpdfstring{$\sim$PhysicsScene()}{~PhysicsScene()}}
+{\footnotesize\ttfamily Motion\+Planner\+::\+Physics\+Scene\+::$\sim$\+Physics\+Scene (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destructor. 
+
+
+
+Definition at line \mbox{\hyperlink{_physics_scene_8cpp_source_l00059}{59}} of file \mbox{\hyperlink{_physics_scene_8cpp_source}{Physics\+Scene.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_motion_planner_1_1_physics_scene_a3a1b0c8617ebb84b2a97ec04ad570bf1}\label{class_motion_planner_1_1_physics_scene_a3a1b0c8617ebb84b2a97ec04ad570bf1}} 
+\index{MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}!addContact@{addContact}}
+\index{addContact@{addContact}!MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}}
+\doxysubsubsection{\texorpdfstring{addContact()}{addContact()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Physics\+Scene\+::add\+Contact (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{link\+Name,  }\item[{const \mbox{\hyperlink{struct_motion_planner_1_1_contact_point}{Contact\+Point}} \&}]{contact\+Point }\end{DoxyParamCaption})}
+
+
+
+Add a contact to be processed by the contact manager. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em link\+Name} & Name of rigid body that the the contact occured on. \\
+\hline
+{\em contact\+Point} & Position, normal, separation, and status of contact. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_physics_scene_8cpp_source_l00219}{219}} of file \mbox{\hyperlink{_physics_scene_8cpp_source}{Physics\+Scene.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_physics_scene_a505e5f84b92c7dd8c0c955f476842b6e}\label{class_motion_planner_1_1_physics_scene_a505e5f84b92c7dd8c0c955f476842b6e}} 
+\index{MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}!addObstacle@{addObstacle}}
+\index{addObstacle@{addObstacle}!MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}}
+\doxysubsubsection{\texorpdfstring{addObstacle()}{addObstacle()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Physics\+Scene\+::add\+Obstacle (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_motion_planner_1_1_shape}{Shape}} \&}]{shape }\end{DoxyParamCaption})}
+
+
+
+Add an obstacle to the scene. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em shape} & Obstacle actor. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_physics_scene_8cpp_source_l00073}{73}} of file \mbox{\hyperlink{_physics_scene_8cpp_source}{Physics\+Scene.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_physics_scene_ab29441854f3e66856df5836e5c52fdd4}\label{class_motion_planner_1_1_physics_scene_ab29441854f3e66856df5836e5c52fdd4}} 
+\index{MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}!addSpatialManipulator@{addSpatialManipulator}}
+\index{addSpatialManipulator@{addSpatialManipulator}!MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}}
+\doxysubsubsection{\texorpdfstring{addSpatialManipulator()}{addSpatialManipulator()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Physics\+Scene\+::add\+Spatial\+Manipulator (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator}{Spatial\+Manipulator}} \&}]{spatial\+Manipulator }\end{DoxyParamCaption})}
+
+
+
+Add the robot geometry actors of a manipulator to the scene and provide the manipulator with a pointer to the scene. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em spatial\+Manipulator} & Manipulator to add to scene. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_physics_scene_8cpp_source_l00196}{196}} of file \mbox{\hyperlink{_physics_scene_8cpp_source}{Physics\+Scene.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_physics_scene_a4d84756c621d3ed5dc039685a4b45e60}\label{class_motion_planner_1_1_physics_scene_a4d84756c621d3ed5dc039685a4b45e60}} 
+\index{MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}!connectToPVD@{connectToPVD}}
+\index{connectToPVD@{connectToPVD}!MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}}
+\doxysubsubsection{\texorpdfstring{connectToPVD()}{connectToPVD()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Physics\+Scene\+::connect\+To\+PVD (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Connect the scene to the PVD client. 
+
+
+
+Definition at line \mbox{\hyperlink{_physics_scene_8cpp_source_l00064}{64}} of file \mbox{\hyperlink{_physics_scene_8cpp_source}{Physics\+Scene.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_physics_scene_ae489972e3ba384b383a0b87c8022b3d7}\label{class_motion_planner_1_1_physics_scene_ae489972e3ba384b383a0b87c8022b3d7}} 
+\index{MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}!generateContacts@{generateContacts}}
+\index{generateContacts@{generateContacts}!MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}}
+\doxysubsubsection{\texorpdfstring{generateContacts()}{generateContacts()}}
+{\footnotesize\ttfamily const std\+::map$<$ std\+::string, \mbox{\hyperlink{struct_motion_planner_1_1_contact_point}{Contact\+Point}} $>$ \& Motion\+Planner\+::\+Physics\+Scene\+::generate\+Contacts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Run PhysX simulation to generate contacts and run contact manager to reduce contacts. 
+
+\begin{DoxyReturn}{Returns}
+Sorted and reduced contacts to be given to the manipulator. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_physics_scene_8cpp_source_l00229}{229}} of file \mbox{\hyperlink{_physics_scene_8cpp_source}{Physics\+Scene.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_physics_scene_ad86bc364257acd8a2a247c62273829ba}\label{class_motion_planner_1_1_physics_scene_ad86bc364257acd8a2a247c62273829ba}} 
+\index{MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}!setContactOffsets@{setContactOffsets}}
+\index{setContactOffsets@{setContactOffsets}!MotionPlanner::PhysicsScene@{MotionPlanner::PhysicsScene}}
+\doxysubsubsection{\texorpdfstring{setContactOffsets()}{setContactOffsets()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Physics\+Scene\+::set\+Contact\+Offsets (\begin{DoxyParamCaption}\item[{double}]{manipulator\+Safety\+Distance,  }\item[{double}]{finger\+Safety\+Distance }\end{DoxyParamCaption})}
+
+
+
+Set the contact generation offset to be slightly larger than safety distance. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em manipulator\+Safety\+Distance} & Desired safety distance of manipulator. \\
+\hline
+{\em finger\+Safety\+Distance} & Desired safety distance of the gripper fingers. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_physics_scene_8cpp_source_l00224}{224}} of file \mbox{\hyperlink{_physics_scene_8cpp_source}{Physics\+Scene.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{_physics_scene_8h}{Physics\+Scene.\+h}}\item 
+src/\mbox{\hyperlink{_physics_scene_8cpp}{Physics\+Scene.\+cpp}}\end{DoxyCompactItemize}

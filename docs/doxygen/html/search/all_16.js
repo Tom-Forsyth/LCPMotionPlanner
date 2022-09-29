@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['z_0',['z',['../struct_motion_planner_1_1_l_c_p.html#a5be5d5e3b46ab25d0bb9b53761f656c3',1,'MotionPlanner::LCP']]]
+  ['z_0',['z',['../struct_l_c_p_solve_1_1_l_c_p.html#aeeda536d295dcfc55f3149b0d4f53f3c',1,'LCPSolve::LCP']]]
 ];

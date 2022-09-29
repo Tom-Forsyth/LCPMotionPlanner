@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>LCPMotionPlanner: C:/Projects/LCPMotionPlanner/src/LCPSolve.cpp File Reference</title>
+<title>LCPMotionPlanner: src/LCPSolve.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectalign">
    <div id="projectname">LCPMotionPlanner
    </div>
-   <div id="projectbrief">A robot motion planner with LCP based collision avoidance.</div>
+   <div id="projectbrief">A ScLERP motion planner with LCP collision avoidance.</div>
   </td>
  </tr>
  </tbody>
@@ -97,43 +97,40 @@ $(document).ready(function(){initNavTree('_l_c_p_solve_8cpp.html',''); initResiz
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="_l_c_p_solve_8h_source.html">LCPSolve.h</a>&quot;</code><br />
-<code>#include &lt;cmath&gt;</code><br />
 <code>#include &lt;Eigen/Dense&gt;</code><br />
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for LCPSolve.cpp:</div>
-<div class="dyncontent">
-<div class="center"><img src="_l_c_p_solve_8cpp__incl.png" border="0" usemap="#a_c_1_2_projects_2_l_c_p_motion_planner_2src_2_l_c_p_solve_8cpp" alt=""/></div>
 </div>
-</div><table class="memberdecls">
+<p><a href="_l_c_p_solve_8cpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:namespace_motion_planner"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html">MotionPlanner</a></td></tr>
+<tr class="memitem:namespace_l_c_p_solve"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_l_c_p_solve.html">LCPSolve</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae1b115f72d4d3bd5de69e341073d2aa4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#ae1b115f72d4d3bd5de69e341073d2aa4">MotionPlanner::checkCompatability</a> (const MatrixXd &amp;M, const int &amp;dim)</td></tr>
-<tr class="separator:ae1b115f72d4d3bd5de69e341073d2aa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a783cb9f315cb4775fb7eee5b01177e40"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#a783cb9f315cb4775fb7eee5b01177e40">MotionPlanner::checkTrivialSol</a> (const VectorXd &amp;q)</td></tr>
-<tr class="separator:a783cb9f315cb4775fb7eee5b01177e40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86cfb0f8c26ffb7619e5c7183a31b3d7"><td class="memItemLeft" align="right" valign="top">MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#a86cfb0f8c26ffb7619e5c7183a31b3d7">MotionPlanner::constructTableau</a> (const MatrixXd &amp;M, const VectorXd &amp;q)</td></tr>
-<tr class="separator:a86cfb0f8c26ffb7619e5c7183a31b3d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03ab474b70b7d0aac53901821cc6cc4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#a03ab474b70b7d0aac53901821cc6cc4c">MotionPlanner::pivot</a> (MatrixXd &amp;tableau, const int &amp;row, const int &amp;col)</td></tr>
-<tr class="separator:a03ab474b70b7d0aac53901821cc6cc4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fece43faeb908abee8cb0b6f2d5f58d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#a0fece43faeb908abee8cb0b6f2d5f58d">MotionPlanner::initializeTableau</a> (MatrixXd &amp;tableau)</td></tr>
-<tr class="separator:a0fece43faeb908abee8cb0b6f2d5f58d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afca784c48c1f2c8cc281da274b927ac7"><td class="memItemLeft" align="right" valign="top">VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#afca784c48c1f2c8cc281da274b927ac7">MotionPlanner::basicVars</a> (const MatrixXd &amp;tableau)</td></tr>
-<tr class="separator:afca784c48c1f2c8cc281da274b927ac7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a010825968ea03c7a2ba96393529407c0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#a010825968ea03c7a2ba96393529407c0">MotionPlanner::checkSol</a> (const MatrixXd &amp;tableau)</td></tr>
-<tr class="separator:a010825968ea03c7a2ba96393529407c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbb7fb99b90e05dbea627c91527e7fc8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#acbb7fb99b90e05dbea627c91527e7fc8">MotionPlanner::checkRayTermination</a> (const MatrixXd &amp;tableu, const int &amp;pivotCol)</td></tr>
-<tr class="separator:acbb7fb99b90e05dbea627c91527e7fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08b88244b39d11c6cc431b702530c52f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#a08b88244b39d11c6cc431b702530c52f">MotionPlanner::minRatioTest</a> (const MatrixXd &amp;tableau, const int &amp;pivotCol)</td></tr>
-<tr class="separator:a08b88244b39d11c6cc431b702530c52f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2486968c6dc8966bd9da0f07203eec13"><td class="memItemLeft" align="right" valign="top">MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#a2486968c6dc8966bd9da0f07203eec13">MotionPlanner::extractSolution</a> (const MatrixXd &amp;tableau)</td></tr>
-<tr class="separator:a2486968c6dc8966bd9da0f07203eec13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1536c6de4e64e8e8a49a6a87b477fe8"><td class="memItemLeft" align="right" valign="top">LCP&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html#ab1536c6de4e64e8e8a49a6a87b477fe8">MotionPlanner::LCPSolve</a> (MatrixXd M, VectorXd q)</td></tr>
-<tr class="separator:ab1536c6de4e64e8e8a49a6a87b477fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37003b67fa1b121b5c2c9055508b95b9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_l_c_p_solve.html#a37003b67fa1b121b5c2c9055508b95b9">LCPSolve::checkCompatability</a> (const Eigen::MatrixXd &amp;M, const int &amp;dim)</td></tr>
+<tr class="separator:a37003b67fa1b121b5c2c9055508b95b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2428989bb1468022ae893d8ef19970b4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_l_c_p_solve.html#a2428989bb1468022ae893d8ef19970b4">LCPSolve::checkTrivialSol</a> (const Eigen::VectorXd &amp;q)</td></tr>
+<tr class="separator:a2428989bb1468022ae893d8ef19970b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf8b87fed6263d1186efdd549ce554d2"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_l_c_p_solve.html#aaf8b87fed6263d1186efdd549ce554d2">LCPSolve::constructTableau</a> (const Eigen::MatrixXd &amp;M, const Eigen::VectorXd &amp;q)</td></tr>
+<tr class="separator:aaf8b87fed6263d1186efdd549ce554d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa552542e280745356303a69c76d46ffb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_l_c_p_solve.html#aa552542e280745356303a69c76d46ffb">LCPSolve::pivot</a> (Eigen::MatrixXd &amp;tableau, const int &amp;row, const int &amp;col)</td></tr>
+<tr class="separator:aa552542e280745356303a69c76d46ffb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97bf0148533845893efcdf365d589ba2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_l_c_p_solve.html#a97bf0148533845893efcdf365d589ba2">LCPSolve::initializeTableau</a> (Eigen::MatrixXd &amp;tableau)</td></tr>
+<tr class="separator:a97bf0148533845893efcdf365d589ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afce7da8f1a5a8f630d38775c7db2153b"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_l_c_p_solve.html#afce7da8f1a5a8f630d38775c7db2153b">LCPSolve::basicVars</a> (const Eigen::MatrixXd &amp;tableau)</td></tr>
+<tr class="separator:afce7da8f1a5a8f630d38775c7db2153b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac2557f47f04203dababdcf1b98a3f4a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_l_c_p_solve.html#aac2557f47f04203dababdcf1b98a3f4a">LCPSolve::checkSol</a> (const Eigen::MatrixXd &amp;tableau)</td></tr>
+<tr class="separator:aac2557f47f04203dababdcf1b98a3f4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a679dc1b9bd775406f11635fcec2d6c78"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_l_c_p_solve.html#a679dc1b9bd775406f11635fcec2d6c78">LCPSolve::checkRayTermination</a> (const Eigen::MatrixXd &amp;tableu, const int &amp;pivotCol)</td></tr>
+<tr class="separator:a679dc1b9bd775406f11635fcec2d6c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e4f7ef0d77ed87f445f2829e125f34e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_l_c_p_solve.html#a8e4f7ef0d77ed87f445f2829e125f34e">LCPSolve::minRatioTest</a> (const Eigen::MatrixXd &amp;tableau, const int &amp;pivotCol)</td></tr>
+<tr class="separator:a8e4f7ef0d77ed87f445f2829e125f34e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6932f1af570a918120b238ec80abaf9"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_l_c_p_solve.html#ab6932f1af570a918120b238ec80abaf9">LCPSolve::extractSolution</a> (const Eigen::MatrixXd &amp;tableau)</td></tr>
+<tr class="separator:ab6932f1af570a918120b238ec80abaf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d48bcc628ea239bb5edf87b475faa6a"><td class="memItemLeft" align="right" valign="top">LCP&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_l_c_p_solve.html#a5d48bcc628ea239bb5edf87b475faa6a">LCPSolve::LCPSolve</a> (Eigen::MatrixXd M, Eigen::VectorXd q)</td></tr>
+<tr class="memdesc:a5d48bcc628ea239bb5edf87b475faa6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linear complementarity problem solver.  <a href="namespace_l_c_p_solve.html#a5d48bcc628ea239bb5edf87b475faa6a">More...</a><br /></td></tr>
+<tr class="separator:a5d48bcc628ea239bb5edf87b475faa6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

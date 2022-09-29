@@ -1,0 +1,244 @@
+\hypertarget{class_motion_planner_1_1_rigid_body_chain}{}\doxysection{Motion\+Planner\+::Rigid\+Body\+Chain Class Reference}
+\label{class_motion_planner_1_1_rigid_body_chain}\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+
+
+{\ttfamily \#include $<$Rigid\+Body\+Chain.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a38f6e022b0e496be958538d8383d6cae}{Rigid\+Body\+Chain}} ()
+\item 
+\mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a3fe4d0e1874f58fbb303eb24c7f6f88e}{Rigid\+Body\+Chain}} (const std\+::vector$<$ \mbox{\hyperlink{class_motion_planner_1_1_rigid_body}{Rigid\+Body}} $>$ \&rigid\+Bodies)
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a8170447ee3cd9c4d3aad4dffd9fa7b5d}{set\+Base\+Transform}} (const Eigen\+::\+Matrix4d \&base\+Transform)
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a66da511f9af98e17d55abc8d07ba0f4f}{add\+Body}} (const \mbox{\hyperlink{class_motion_planner_1_1_rigid_body}{Rigid\+Body}} \&rigid\+Body)
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a8b28ad053be712328c6b9499dc7c5e89}{post\+Init}} ()
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a5e410c6414b3e2e3cdb8fd1488fa950c}{forward\+Kinematics}} ()
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_ae2ff7178e007e96bec2a0ece13562178}{set\+Joint\+Displacements}} (const Eigen\+::\+Vector\+Xd \&joint\+Displacements)
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{class_motion_planner_1_1_rigid_body}{Rigid\+Body}} $>$ \& \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a4b354a7d2a3100b91ff78192d87e2453}{get\+Rigid\+Bodies}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a894d2643a22d514175d2652c0b50ff23}{get\+NBodies}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_ae3fd4b367528dd982b0a4a8e670d3fae}{get\+NMovable\+Bodies}} () const
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_aed9df3426edd5ea9eedbe26883954074}{update\+Spatial\+Jacobians}} ()
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_abcef75531665c07e0e79141cbb92d45b}{update\+Contact\+Jacobians}} ()
+\item 
+Eigen\+::\+Matrix4d \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a3d9de6ab9b4a9553124ac4d1d9d42b6b}{get\+End\+Frame\+Spatial\+Transform}} () const
+\item 
+\mbox{\hyperlink{class_motion_planner_1_1_rigid_body}{Rigid\+Body}} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_af67da81fcb61c6eaa5a971c1c4f5682f}{get\+End\+Frame}} () const
+\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_acf4ee9dc4e0f1f774ee924b837dd1017}{get\+Joint\+Displacements}} () const
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a2ca3e77fa260169165072774de628206}{update\+Collider\+Transforms}} ()
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_afab4df7237fa2c381e66e18999cf808c}{deactivate\+Contacts}} ()
+\item 
+void \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a43f86be45c12a0c60d6edeeeafd1f0c1}{update\+Contact\+Points}} (const std\+::map$<$ std\+::string, \mbox{\hyperlink{struct_motion_planner_1_1_contact_point}{Contact\+Point}} $>$ \&contact\+Points)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8h_source_l00008}{8}} of file \mbox{\hyperlink{_rigid_body_chain_8h_source}{Rigid\+Body\+Chain.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_a38f6e022b0e496be958538d8383d6cae}\label{class_motion_planner_1_1_rigid_body_chain_a38f6e022b0e496be958538d8383d6cae}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!RigidBodyChain@{RigidBodyChain}}
+\index{RigidBodyChain@{RigidBodyChain}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{RigidBodyChain()}{RigidBodyChain()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Motion\+Planner\+::\+Rigid\+Body\+Chain\+::\+Rigid\+Body\+Chain (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_a3fe4d0e1874f58fbb303eb24c7f6f88e}\label{class_motion_planner_1_1_rigid_body_chain_a3fe4d0e1874f58fbb303eb24c7f6f88e}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!RigidBodyChain@{RigidBodyChain}}
+\index{RigidBodyChain@{RigidBodyChain}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{RigidBodyChain()}{RigidBodyChain()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Motion\+Planner\+::\+Rigid\+Body\+Chain\+::\+Rigid\+Body\+Chain (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{class_motion_planner_1_1_rigid_body}{Rigid\+Body}} $>$ \&}]{rigid\+Bodies }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00016}{16}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_a66da511f9af98e17d55abc8d07ba0f4f}\label{class_motion_planner_1_1_rigid_body_chain_a66da511f9af98e17d55abc8d07ba0f4f}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!addBody@{addBody}}
+\index{addBody@{addBody}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{addBody()}{addBody()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Rigid\+Body\+Chain\+::add\+Body (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_motion_planner_1_1_rigid_body}{Rigid\+Body}} \&}]{rigid\+Body }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00028}{28}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_afab4df7237fa2c381e66e18999cf808c}\label{class_motion_planner_1_1_rigid_body_chain_afab4df7237fa2c381e66e18999cf808c}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!deactivateContacts@{deactivateContacts}}
+\index{deactivateContacts@{deactivateContacts}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{deactivateContacts()}{deactivateContacts()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Rigid\+Body\+Chain\+::deactivate\+Contacts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00198}{198}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_a5e410c6414b3e2e3cdb8fd1488fa950c}\label{class_motion_planner_1_1_rigid_body_chain_a5e410c6414b3e2e3cdb8fd1488fa950c}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!forwardKinematics@{forwardKinematics}}
+\index{forwardKinematics@{forwardKinematics}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{forwardKinematics()}{forwardKinematics()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Rigid\+Body\+Chain\+::forward\+Kinematics (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00058}{58}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_af67da81fcb61c6eaa5a971c1c4f5682f}\label{class_motion_planner_1_1_rigid_body_chain_af67da81fcb61c6eaa5a971c1c4f5682f}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!getEndFrame@{getEndFrame}}
+\index{getEndFrame@{getEndFrame}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{getEndFrame()}{getEndFrame()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_motion_planner_1_1_rigid_body}{Rigid\+Body}} Motion\+Planner\+::\+Rigid\+Body\+Chain\+::get\+End\+Frame (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00168}{168}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_a3d9de6ab9b4a9553124ac4d1d9d42b6b}\label{class_motion_planner_1_1_rigid_body_chain_a3d9de6ab9b4a9553124ac4d1d9d42b6b}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!getEndFrameSpatialTransform@{getEndFrameSpatialTransform}}
+\index{getEndFrameSpatialTransform@{getEndFrameSpatialTransform}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{getEndFrameSpatialTransform()}{getEndFrameSpatialTransform()}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix4d Motion\+Planner\+::\+Rigid\+Body\+Chain\+::get\+End\+Frame\+Spatial\+Transform (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00162}{162}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_acf4ee9dc4e0f1f774ee924b837dd1017}\label{class_motion_planner_1_1_rigid_body_chain_acf4ee9dc4e0f1f774ee924b837dd1017}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!getJointDisplacements@{getJointDisplacements}}
+\index{getJointDisplacements@{getJointDisplacements}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{getJointDisplacements()}{getJointDisplacements()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector\+Xd Motion\+Planner\+::\+Rigid\+Body\+Chain\+::get\+Joint\+Displacements (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00174}{174}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_a894d2643a22d514175d2652c0b50ff23}\label{class_motion_planner_1_1_rigid_body_chain_a894d2643a22d514175d2652c0b50ff23}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!getNBodies@{getNBodies}}
+\index{getNBodies@{getNBodies}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{getNBodies()}{getNBodies()}}
+{\footnotesize\ttfamily size\+\_\+t Motion\+Planner\+::\+Rigid\+Body\+Chain\+::get\+NBodies (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00105}{105}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_ae3fd4b367528dd982b0a4a8e670d3fae}\label{class_motion_planner_1_1_rigid_body_chain_ae3fd4b367528dd982b0a4a8e670d3fae}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!getNMovableBodies@{getNMovableBodies}}
+\index{getNMovableBodies@{getNMovableBodies}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{getNMovableBodies()}{getNMovableBodies()}}
+{\footnotesize\ttfamily size\+\_\+t Motion\+Planner\+::\+Rigid\+Body\+Chain\+::get\+NMovable\+Bodies (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00111}{111}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_a4b354a7d2a3100b91ff78192d87e2453}\label{class_motion_planner_1_1_rigid_body_chain_a4b354a7d2a3100b91ff78192d87e2453}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!getRigidBodies@{getRigidBodies}}
+\index{getRigidBodies@{getRigidBodies}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{getRigidBodies()}{getRigidBodies()}}
+{\footnotesize\ttfamily const std\+::vector$<$ \mbox{\hyperlink{class_motion_planner_1_1_rigid_body}{Rigid\+Body}} $>$ \& Motion\+Planner\+::\+Rigid\+Body\+Chain\+::get\+Rigid\+Bodies (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00099}{99}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_a8b28ad053be712328c6b9499dc7c5e89}\label{class_motion_planner_1_1_rigid_body_chain_a8b28ad053be712328c6b9499dc7c5e89}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!postInit@{postInit}}
+\index{postInit@{postInit}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{postInit()}{postInit()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Rigid\+Body\+Chain\+::post\+Init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00041}{41}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_a8170447ee3cd9c4d3aad4dffd9fa7b5d}\label{class_motion_planner_1_1_rigid_body_chain_a8170447ee3cd9c4d3aad4dffd9fa7b5d}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!setBaseTransform@{setBaseTransform}}
+\index{setBaseTransform@{setBaseTransform}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{setBaseTransform()}{setBaseTransform()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Rigid\+Body\+Chain\+::set\+Base\+Transform (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix4d \&}]{base\+Transform }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_ae2ff7178e007e96bec2a0ece13562178}\label{class_motion_planner_1_1_rigid_body_chain_ae2ff7178e007e96bec2a0ece13562178}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!setJointDisplacements@{setJointDisplacements}}
+\index{setJointDisplacements@{setJointDisplacements}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{setJointDisplacements()}{setJointDisplacements()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Rigid\+Body\+Chain\+::set\+Joint\+Displacements (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector\+Xd \&}]{joint\+Displacements }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00075}{75}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_a2ca3e77fa260169165072774de628206}\label{class_motion_planner_1_1_rigid_body_chain_a2ca3e77fa260169165072774de628206}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!updateColliderTransforms@{updateColliderTransforms}}
+\index{updateColliderTransforms@{updateColliderTransforms}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{updateColliderTransforms()}{updateColliderTransforms()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Rigid\+Body\+Chain\+::update\+Collider\+Transforms (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00190}{190}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_abcef75531665c07e0e79141cbb92d45b}\label{class_motion_planner_1_1_rigid_body_chain_abcef75531665c07e0e79141cbb92d45b}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!updateContactJacobians@{updateContactJacobians}}
+\index{updateContactJacobians@{updateContactJacobians}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{updateContactJacobians()}{updateContactJacobians()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Rigid\+Body\+Chain\+::update\+Contact\+Jacobians (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00149}{149}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_a43f86be45c12a0c60d6edeeeafd1f0c1}\label{class_motion_planner_1_1_rigid_body_chain_a43f86be45c12a0c60d6edeeeafd1f0c1}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!updateContactPoints@{updateContactPoints}}
+\index{updateContactPoints@{updateContactPoints}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{updateContactPoints()}{updateContactPoints()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Rigid\+Body\+Chain\+::update\+Contact\+Points (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, \mbox{\hyperlink{struct_motion_planner_1_1_contact_point}{Contact\+Point}} $>$ \&}]{contact\+Points }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00206}{206}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+\mbox{\Hypertarget{class_motion_planner_1_1_rigid_body_chain_aed9df3426edd5ea9eedbe26883954074}\label{class_motion_planner_1_1_rigid_body_chain_aed9df3426edd5ea9eedbe26883954074}} 
+\index{MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}!updateSpatialJacobians@{updateSpatialJacobians}}
+\index{updateSpatialJacobians@{updateSpatialJacobians}!MotionPlanner::RigidBodyChain@{MotionPlanner::RigidBodyChain}}
+\doxysubsubsection{\texorpdfstring{updateSpatialJacobians()}{updateSpatialJacobians()}}
+{\footnotesize\ttfamily void Motion\+Planner\+::\+Rigid\+Body\+Chain\+::update\+Spatial\+Jacobians (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_rigid_body_chain_8cpp_source_l00117}{117}} of file \mbox{\hyperlink{_rigid_body_chain_8cpp_source}{Rigid\+Body\+Chain.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{_rigid_body_chain_8h}{Rigid\+Body\+Chain.\+h}}\item 
+src/\mbox{\hyperlink{_rigid_body_chain_8cpp}{Rigid\+Body\+Chain.\+cpp}}\end{DoxyCompactItemize}

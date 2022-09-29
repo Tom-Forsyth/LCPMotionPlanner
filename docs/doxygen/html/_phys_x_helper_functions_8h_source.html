@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>LCPMotionPlanner: C:/Projects/LCPMotionPlanner/include/PhysXHelperFunctions.h Source File</title>
+<title>LCPMotionPlanner: include/PhysXHelperFunctions.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectalign">
    <div id="projectname">LCPMotionPlanner
    </div>
-   <div id="projectbrief">A robot motion planner with LCP based collision avoidance.</div>
+   <div id="projectbrief">A ScLERP motion planner with LCP collision avoidance.</div>
   </td>
  </tr>
  </tbody>
@@ -104,34 +104,30 @@ $(document).ready(function(){initNavTree('_phys_x_helper_functions_8h_source.htm
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_motion_planner.html">MotionPlanner</a></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>{</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="comment">// Convert an Eigen::Matrix4d to a PxTransform.</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    physx::PxTransform <a class="code hl_function" href="namespace_motion_planner.html#a838cea8f45278eb0326d5c7e528ac2f2">eigenMatrixToPxTransform</a>(<span class="keyword">const</span> Eigen::Matrix4d&amp; eigenMatrix);</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="comment">// Convert a PxVec3 to an Eigen::Vector3d.</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    Eigen::Vector3d <a class="code hl_function" href="namespace_motion_planner.html#a1a09d20421f943f271a310380abbfa41">pxVecToEigenVec</a>(<span class="keyword">const</span> physx::PxVec3&amp; pxVec);</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="comment">// Convert a Sphere to a PxSphereGeometry.</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    physx::PxSphereGeometry <a class="code hl_function" href="namespace_motion_planner.html#aa2022e3f0fd2991f4f1a55433b19ab20">getPxSphereGeometry</a>(<span class="keyword">const</span> Sphere&amp; sphere);</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="comment">// Convert a Capsule to a PxCapsuleGeometry.</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    physx::PxCapsuleGeometry <a class="code hl_function" href="namespace_motion_planner.html#afdea9a17396da6b4a31fedaf7d09cbfc">getPxCapsuleGeometry</a>(<span class="keyword">const</span> Capsule&amp; capsule);</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    physx::PxTransform <a class="code hl_function" href="namespace_motion_planner.html#a838cea8f45278eb0326d5c7e528ac2f2">eigenMatrixToPxTransform</a>(<span class="keyword">const</span> Eigen::Matrix4d&amp; eigenMatrix);</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="comment">// Convert a PxVec3 to an Eigen::Vector3d.</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    Eigen::Vector3d <a class="code hl_function" href="namespace_motion_planner.html#a1a09d20421f943f271a310380abbfa41">pxVecToEigenVec</a>(<span class="keyword">const</span> physx::PxVec3&amp; pxVec);</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="comment">// Convert a Box to a PxBoxGeometry.</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    physx::PxBoxGeometry <a class="code hl_function" href="namespace_motion_planner.html#a47f69fbf2dccb145dfbe6e481174e7cf">getPxBoxGeometry</a>(<span class="keyword">const</span> Box&amp; box);</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="comment">// Convert a Shape to a PxGeometry.</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    std::unique_ptr&lt;physx::PxGeometry&gt; <a class="code hl_function" href="namespace_motion_planner.html#a9f065fef79f13d23e7c084691a30a62e">getPxGeometry</a>(<span class="keyword">const</span> Shape&amp; shape);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    physx::PxSphereGeometry <a class="code hl_function" href="namespace_motion_planner.html#aa2022e3f0fd2991f4f1a55433b19ab20">getPxSphereGeometry</a>(<span class="keyword">const</span> Sphere&amp; sphere);</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    physx::PxCapsuleGeometry <a class="code hl_function" href="namespace_motion_planner.html#afdea9a17396da6b4a31fedaf7d09cbfc">getPxCapsuleGeometry</a>(<span class="keyword">const</span> Capsule&amp; capsule);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    physx::PxBoxGeometry <a class="code hl_function" href="namespace_motion_planner.html#a47f69fbf2dccb145dfbe6e481174e7cf">getPxBoxGeometry</a>(<span class="keyword">const</span> Box&amp; box);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    std::unique_ptr&lt;physx::PxGeometry&gt; <a class="code hl_function" href="namespace_motion_planner.html#a9f065fef79f13d23e7c084691a30a62e">getPxGeometry</a>(<span class="keyword">const</span> Shape&amp; shape);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>}</div>
 <div class="ttc" id="a_box_8h_html"><div class="ttname"><a href="_box_8h.html">Box.h</a></div></div>
 <div class="ttc" id="a_capsule_8h_html"><div class="ttname"><a href="_capsule_8h.html">Capsule.h</a></div></div>
 <div class="ttc" id="a_sphere_8h_html"><div class="ttname"><a href="_sphere_8h.html">Sphere.h</a></div></div>
-<div class="ttc" id="anamespace_motion_planner_html"><div class="ttname"><a href="namespace_motion_planner.html">MotionPlanner</a></div><div class="ttdef"><b>Definition:</b> Box.h:9</div></div>
-<div class="ttc" id="anamespace_motion_planner_html_a1a09d20421f943f271a310380abbfa41"><div class="ttname"><a href="namespace_motion_planner.html#a1a09d20421f943f271a310380abbfa41">MotionPlanner::pxVecToEigenVec</a></div><div class="ttdeci">Eigen::Vector3d pxVecToEigenVec(const physx::PxVec3 &amp;pxVec)</div><div class="ttdef"><b>Definition:</b> PhysXHelperFunctions.cpp:24</div></div>
-<div class="ttc" id="anamespace_motion_planner_html_a47f69fbf2dccb145dfbe6e481174e7cf"><div class="ttname"><a href="namespace_motion_planner.html#a47f69fbf2dccb145dfbe6e481174e7cf">MotionPlanner::getPxBoxGeometry</a></div><div class="ttdeci">physx::PxBoxGeometry getPxBoxGeometry(const Box &amp;box)</div><div class="ttdef"><b>Definition:</b> PhysXHelperFunctions.cpp:42</div></div>
-<div class="ttc" id="anamespace_motion_planner_html_a838cea8f45278eb0326d5c7e528ac2f2"><div class="ttname"><a href="namespace_motion_planner.html#a838cea8f45278eb0326d5c7e528ac2f2">MotionPlanner::eigenMatrixToPxTransform</a></div><div class="ttdeci">physx::PxTransform eigenMatrixToPxTransform(const Eigen::Matrix4d &amp;eigenMatrix)</div><div class="ttdef"><b>Definition:</b> PhysXHelperFunctions.cpp:13</div></div>
-<div class="ttc" id="anamespace_motion_planner_html_a9f065fef79f13d23e7c084691a30a62e"><div class="ttname"><a href="namespace_motion_planner.html#a9f065fef79f13d23e7c084691a30a62e">MotionPlanner::getPxGeometry</a></div><div class="ttdeci">std::unique_ptr&lt; physx::PxGeometry &gt; getPxGeometry(const Shape &amp;shape)</div><div class="ttdef"><b>Definition:</b> PhysXHelperFunctions.cpp:50</div></div>
-<div class="ttc" id="anamespace_motion_planner_html_aa2022e3f0fd2991f4f1a55433b19ab20"><div class="ttname"><a href="namespace_motion_planner.html#aa2022e3f0fd2991f4f1a55433b19ab20">MotionPlanner::getPxSphereGeometry</a></div><div class="ttdeci">physx::PxSphereGeometry getPxSphereGeometry(const Sphere &amp;sphere)</div><div class="ttdef"><b>Definition:</b> PhysXHelperFunctions.cpp:29</div></div>
-<div class="ttc" id="anamespace_motion_planner_html_afdea9a17396da6b4a31fedaf7d09cbfc"><div class="ttname"><a href="namespace_motion_planner.html#afdea9a17396da6b4a31fedaf7d09cbfc">MotionPlanner::getPxCapsuleGeometry</a></div><div class="ttdeci">physx::PxCapsuleGeometry getPxCapsuleGeometry(const Capsule &amp;capsule)</div><div class="ttdef"><b>Definition:</b> PhysXHelperFunctions.cpp:35</div></div>
+<div class="ttc" id="anamespace_motion_planner_html"><div class="ttname"><a href="namespace_motion_planner.html">MotionPlanner</a></div><div class="ttdef"><b>Definition:</b> <a href="_box_8h_source.html#l00008">Box.h:9</a></div></div>
+<div class="ttc" id="anamespace_motion_planner_html_a1a09d20421f943f271a310380abbfa41"><div class="ttname"><a href="namespace_motion_planner.html#a1a09d20421f943f271a310380abbfa41">MotionPlanner::pxVecToEigenVec</a></div><div class="ttdeci">Eigen::Vector3d pxVecToEigenVec(const physx::PxVec3 &amp;pxVec)</div><div class="ttdoc">Convert a PxVec3 to an Eigen::Vector3d.</div><div class="ttdef"><b>Definition:</b> <a href="_phys_x_helper_functions_8cpp_source.html#l00024">PhysXHelperFunctions.cpp:24</a></div></div>
+<div class="ttc" id="anamespace_motion_planner_html_a47f69fbf2dccb145dfbe6e481174e7cf"><div class="ttname"><a href="namespace_motion_planner.html#a47f69fbf2dccb145dfbe6e481174e7cf">MotionPlanner::getPxBoxGeometry</a></div><div class="ttdeci">physx::PxBoxGeometry getPxBoxGeometry(const Box &amp;box)</div><div class="ttdoc">Convert a Box to a PxBoxGeometry.</div><div class="ttdef"><b>Definition:</b> <a href="_phys_x_helper_functions_8cpp_source.html#l00042">PhysXHelperFunctions.cpp:42</a></div></div>
+<div class="ttc" id="anamespace_motion_planner_html_a838cea8f45278eb0326d5c7e528ac2f2"><div class="ttname"><a href="namespace_motion_planner.html#a838cea8f45278eb0326d5c7e528ac2f2">MotionPlanner::eigenMatrixToPxTransform</a></div><div class="ttdeci">physx::PxTransform eigenMatrixToPxTransform(const Eigen::Matrix4d &amp;eigenMatrix)</div><div class="ttdoc">Convert an Eigen::Matrix4d to a PxTransform.</div><div class="ttdef"><b>Definition:</b> <a href="_phys_x_helper_functions_8cpp_source.html#l00013">PhysXHelperFunctions.cpp:13</a></div></div>
+<div class="ttc" id="anamespace_motion_planner_html_a9f065fef79f13d23e7c084691a30a62e"><div class="ttname"><a href="namespace_motion_planner.html#a9f065fef79f13d23e7c084691a30a62e">MotionPlanner::getPxGeometry</a></div><div class="ttdeci">std::unique_ptr&lt; physx::PxGeometry &gt; getPxGeometry(const Shape &amp;shape)</div><div class="ttdoc">Convert a Shape to the corresponding PxGeometry.</div><div class="ttdef"><b>Definition:</b> <a href="_phys_x_helper_functions_8cpp_source.html#l00050">PhysXHelperFunctions.cpp:50</a></div></div>
+<div class="ttc" id="anamespace_motion_planner_html_aa2022e3f0fd2991f4f1a55433b19ab20"><div class="ttname"><a href="namespace_motion_planner.html#aa2022e3f0fd2991f4f1a55433b19ab20">MotionPlanner::getPxSphereGeometry</a></div><div class="ttdeci">physx::PxSphereGeometry getPxSphereGeometry(const Sphere &amp;sphere)</div><div class="ttdoc">Convert a Sphere to a PxSphereGeometry.</div><div class="ttdef"><b>Definition:</b> <a href="_phys_x_helper_functions_8cpp_source.html#l00029">PhysXHelperFunctions.cpp:29</a></div></div>
+<div class="ttc" id="anamespace_motion_planner_html_afdea9a17396da6b4a31fedaf7d09cbfc"><div class="ttname"><a href="namespace_motion_planner.html#afdea9a17396da6b4a31fedaf7d09cbfc">MotionPlanner::getPxCapsuleGeometry</a></div><div class="ttdeci">physx::PxCapsuleGeometry getPxCapsuleGeometry(const Capsule &amp;capsule)</div><div class="ttdoc">Convert a Capsule to a PxCapsuleGeometry.</div><div class="ttdef"><b>Definition:</b> <a href="_phys_x_helper_functions_8cpp_source.html#l00035">PhysXHelperFunctions.cpp:35</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

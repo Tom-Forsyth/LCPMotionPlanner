@@ -1,0 +1,55 @@
+\hypertarget{_spatial_manipulator_8h_source}{}\doxysection{Spatial\+Manipulator.\+h}
+\label{_spatial_manipulator_8h_source}\index{include/SpatialManipulator.h@{include/SpatialManipulator.h}}
+\mbox{\hyperlink{_spatial_manipulator_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00001}00001 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_rigid_body_chain_8h}{RigidBodyChain.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00004}00004 \textcolor{preprocessor}{\#include <Eigen/Dense>}}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00005}00005 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00007}00007 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_motion_planner}{MotionPlanner}}}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00009}00009     \textcolor{keyword}{class }PhysicsScene;}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00011}\mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator}{00011}}     \textcolor{keyword}{class }\mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator}{SpatialManipulator}}}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00012}00012     \{}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00013}00013     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00014}\mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator_a8161d81a0e1e0ca9a4321c344243f8d6}{00014}}         \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain}{RigidBodyChain}} \mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator_a8161d81a0e1e0ca9a4321c344243f8d6}{m\_rigidBodyChain}};}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00015}\mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator_a393545fc2319ab6283488456041442b7}{00015}}         \mbox{\hyperlink{class_motion_planner_1_1_physics_scene}{PhysicsScene}}* \mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator_a393545fc2319ab6283488456041442b7}{m\_physicsScene}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00017}00017     \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00018}00018         \textcolor{comment}{// Constructors.}}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00019}00019         \mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator_a19f4688d36a3a25f3f01284753e707de}{SpatialManipulator}}();}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00020}00020         \mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator_a19f4688d36a3a25f3f01284753e707de}{SpatialManipulator}}(\textcolor{keyword}{const} Eigen::Matrix4d\& baseTransform);}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00022}00022         \textcolor{comment}{// Set base transform.}}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00023}00023         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator_af2d1d8319bdf3843d42e50798a931f21}{setBaseTransform}}(\textcolor{keyword}{const} Eigen::Matrix4d\& baseTransform);}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00025}00025         \textcolor{comment}{// Set the physics scene.}}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00026}00026         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator_a397ed731bbfa82e78392d0060cd93710}{setPhysicsScene}}(\mbox{\hyperlink{class_motion_planner_1_1_physics_scene}{PhysicsScene}}* physicsScene);}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00028}00028         \textcolor{comment}{// Set joint displacements.}}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00029}00029         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator_a5119faa935bc11dc513a5cf8897730a6}{setJointDisplacements}}(\textcolor{keyword}{const} Eigen::VectorXd\& jointDisplacements);}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00031}00031         \textcolor{comment}{// Get transform of end frame.}}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00032}00032         Eigen::Matrix4d \mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator_a17f46fc575ca2bcbdb1d870dccaad9f2}{getEndFrameSpatialTransform}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00034}00034         \textcolor{comment}{// Return the last rigid body of the chain.}}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00035}00035         \mbox{\hyperlink{class_motion_planner_1_1_rigid_body}{RigidBody}} \mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator_a019f95c38bde2cabdeebc5c9807904d3}{getEndFrame}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00037}00037         \textcolor{comment}{// Get DoF/nMovableBodies of manipulator.}}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00038}00038         \textcolor{keywordtype}{int} \mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator_aa7bf2915cbbd3b68fc6efcdc9241fceb}{getDof}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00040}00040         \textcolor{comment}{// Get const reference to the rigid body chain.}}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00041}00041         \textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain}{RigidBodyChain}}\& \mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator_a2c6575a1cac697922a54d1c6a038f3d8}{getRigidBodyChain}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00043}00043         \textcolor{comment}{// Get the current joint displacements.}}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00044}00044         Eigen::VectorXd \mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator_ad842e413bfd4923f5a76eb63d734f44c}{getJointDisplacements}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00046}00046         \textcolor{comment}{// Generate motion plan.}}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00047}00047         std::vector<Eigen::VectorXd> \mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator_a957b98e821483a5308bc593eb68a194c}{motionPlan}}(\textcolor{keyword}{const} Eigen::Matrix4d\& goalTransform);}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00048}00048     \};}
+\DoxyCodeLine{\Hypertarget{_spatial_manipulator_8h_source_l00049}00049 \}}
+
+\end{DoxyCode}

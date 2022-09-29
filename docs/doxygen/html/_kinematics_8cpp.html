@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>LCPMotionPlanner: C:/Projects/LCPMotionPlanner/src/Kinematics.cpp File Reference</title>
+<title>LCPMotionPlanner: src/Kinematics.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectalign">
    <div id="projectname">LCPMotionPlanner
    </div>
-   <div id="projectbrief">A robot motion planner with LCP based collision avoidance.</div>
+   <div id="projectbrief">A ScLERP motion planner with LCP collision avoidance.</div>
   </td>
  </tr>
  </tbody>
@@ -99,32 +99,36 @@ $(document).ready(function(){initNavTree('_kinematics_8cpp.html',''); initResiza
 <div class="textblock"><code>#include &quot;<a class="el" href="_kinematics_8h_source.html">Kinematics.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_dual_quaternion_8h_source.html">DualQuaternion.h</a>&quot;</code><br />
 <code>#include &lt;Eigen/Dense&gt;</code><br />
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for Kinematics.cpp:</div>
-<div class="dyncontent">
-<div class="center"><img src="_kinematics_8cpp__incl.png" border="0" usemap="#a_c_1_2_projects_2_l_c_p_motion_planner_2src_2_kinematics_8cpp" alt=""/></div>
 </div>
-</div><table class="memberdecls">
+<p><a href="_kinematics_8cpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespace_motion_planner"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner.html">MotionPlanner</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespace_motion_planner_1_1_kinematics"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner_1_1_kinematics.html">MotionPlanner::Kinematics</a></td></tr>
+<tr class="memdesc:namespace_motion_planner_1_1_kinematics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Robotics kinematics functions. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a35be98501567026badfaa3995595171f"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner_1_1_kinematics.html#a35be98501567026badfaa3995595171f">MotionPlanner::Kinematics::skew</a> (const Eigen::Vector3d &amp;w)</td></tr>
+<tr class="memdesc:a35be98501567026badfaa3995595171f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute skew symmetric form of an axis.  <a href="namespace_motion_planner_1_1_kinematics.html#a35be98501567026badfaa3995595171f">More...</a><br /></td></tr>
 <tr class="separator:a35be98501567026badfaa3995595171f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a958c657b6d57210377ffd98127caab1c"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner_1_1_kinematics.html#a958c657b6d57210377ffd98127caab1c">MotionPlanner::Kinematics::AxisAngletoRot</a> (const Eigen::Vector3d &amp;axis, double angle)</td></tr>
+<tr class="memdesc:a958c657b6d57210377ffd98127caab1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the rotation matrix from axis-angle representation.  <a href="namespace_motion_planner_1_1_kinematics.html#a958c657b6d57210377ffd98127caab1c">More...</a><br /></td></tr>
 <tr class="separator:a958c657b6d57210377ffd98127caab1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64952c9c34bb9e9cc9ba118e1b92894f"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix&lt; double, 6, 6 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner_1_1_kinematics.html#a64952c9c34bb9e9cc9ba118e1b92894f">MotionPlanner::Kinematics::adjoint</a> (const Eigen::Matrix4d &amp;G)</td></tr>
+<tr class="memdesc:a64952c9c34bb9e9cc9ba118e1b92894f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the adjoint matrix of a transformation matrix.  <a href="namespace_motion_planner_1_1_kinematics.html#a64952c9c34bb9e9cc9ba118e1b92894f">More...</a><br /></td></tr>
 <tr class="separator:a64952c9c34bb9e9cc9ba118e1b92894f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba112ed0d13dc4796b3efbda147ff22b"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix4d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner_1_1_kinematics.html#aba112ed0d13dc4796b3efbda147ff22b">MotionPlanner::Kinematics::transformInverse</a> (const Eigen::Matrix4d &amp;transform)</td></tr>
+<tr class="memdesc:aba112ed0d13dc4796b3efbda147ff22b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute an efficient inverse of a transformation matrix.  <a href="namespace_motion_planner_1_1_kinematics.html#aba112ed0d13dc4796b3efbda147ff22b">More...</a><br /></td></tr>
 <tr class="separator:aba112ed0d13dc4796b3efbda147ff22b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15017555684d4fc24821ed0e944275c8"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner_1_1_kinematics.html#a15017555684d4fc24821ed0e944275c8">MotionPlanner::Kinematics::spatialToAnalyticJacobian</a> (const Eigen::MatrixXd &amp;spatialJacobian, const Eigen::Vector3d &amp;point)</td></tr>
+<tr class="memdesc:a15017555684d4fc24821ed0e944275c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert the spatial jacobian to an analytic jacobian at a given point represented in the spatial frame.  <a href="namespace_motion_planner_1_1_kinematics.html#a15017555684d4fc24821ed0e944275c8">More...</a><br /></td></tr>
 <tr class="separator:a15017555684d4fc24821ed0e944275c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc8cc192134d01ef289f8588825907ca"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_motion_planner_1_1_kinematics.html#afc8cc192134d01ef289f8588825907ca">MotionPlanner::Kinematics::BMatrix</a> (const Eigen::MatrixXd &amp;J, const Eigen::Matrix4d &amp;pose)</td></tr>
+<tr class="memdesc:afc8cc192134d01ef289f8588825907ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate jacobian to convert gammaDot to thetaDot.  <a href="namespace_motion_planner_1_1_kinematics.html#afc8cc192134d01ef289f8588825907ca">More...</a><br /></td></tr>
 <tr class="separator:afc8cc192134d01ef289f8588825907ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

@@ -1,0 +1,128 @@
+\hypertarget{_collision_aggregate_8cpp_source}{}\doxysection{Collision\+Aggregate.\+cpp}
+\label{_collision_aggregate_8cpp_source}\index{src/CollisionAggregate.cpp@{src/CollisionAggregate.cpp}}
+\mbox{\hyperlink{_collision_aggregate_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_collision_aggregate_8h}{CollisionAggregate.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00002}00002 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_sphere_8h}{Sphere.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_capsule_8h}{Capsule.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_box_8h}{Box.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00005}00005 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00006}00006 \textcolor{preprocessor}{\#include <map>}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00007}00007 \textcolor{preprocessor}{\#include <Eigen/Dense>}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00009}00009 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_motion_planner}{MotionPlanner}}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00010}00010 \{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00011}00011     \textcolor{comment}{// Default constructor.}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00012}\mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a11b563f79418ede17924ee5957005a30}{00012}}     \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a11b563f79418ede17924ee5957005a30}{CollisionAggregate::CollisionAggregate}}()}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00013}00013         : m\_spheres(std::vector<\mbox{\hyperlink{class_motion_planner_1_1_sphere}{Sphere}}> \{\}), m\_capsules(std::vector<Capsule> \{\}), m\_boxes(std::vector<Box> \{\}) \{ \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00016}00016     \textcolor{comment}{// Add sphere.}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00017}\mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a9b25860605f8f9ba7b3af811974e0a42}{00017}}     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a9b25860605f8f9ba7b3af811974e0a42}{CollisionAggregate::addShape}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_sphere}{Sphere}}\& sphere)}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00018}00018     \{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00019}00019         m\_spheres.emplace\_back(sphere);}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00020}00020         m\_localTransforms.emplace(sphere.\mbox{\hyperlink{class_motion_planner_1_1_shape_aa3c8b0855477f802a4dd0f3c70fae83f}{getName}}(), sphere.\mbox{\hyperlink{class_motion_planner_1_1_shape_a3b70c302b3b3171e9162a495c6722842}{getTransform}}());}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00021}00021     \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00023}00023     \textcolor{comment}{// Add capsule.}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00024}\mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_abf0b4fd84aca5cc4aee63f765f40fd70}{00024}}     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a9b25860605f8f9ba7b3af811974e0a42}{CollisionAggregate::addShape}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_capsule}{Capsule}}\& capsule)}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00025}00025     \{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00026}00026         m\_capsules.emplace\_back(capsule);}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00027}00027         m\_localTransforms.emplace(capsule.\mbox{\hyperlink{class_motion_planner_1_1_shape_aa3c8b0855477f802a4dd0f3c70fae83f}{getName}}(), capsule.\mbox{\hyperlink{class_motion_planner_1_1_shape_a3b70c302b3b3171e9162a495c6722842}{getTransform}}());}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00028}00028     \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00030}00030     \textcolor{comment}{// Add box.}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00031}\mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_aa957a9cef894e3384c9babe0252df4bf}{00031}}     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a9b25860605f8f9ba7b3af811974e0a42}{CollisionAggregate::addShape}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_box}{Box}}\& box)}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00032}00032     \{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00033}00033         m\_boxes.emplace\_back(box);}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00034}00034         m\_localTransforms.emplace(box.\mbox{\hyperlink{class_motion_planner_1_1_shape_aa3c8b0855477f802a4dd0f3c70fae83f}{getName}}(), box.\mbox{\hyperlink{class_motion_planner_1_1_shape_a3b70c302b3b3171e9162a495c6722842}{getTransform}}());}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00035}00035     \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00037}00037     \textcolor{comment}{// Get spheres.}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00038}\mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a39d50722e8a46d4a0da63e9301c3eb3f}{00038}}     std::vector<Sphere> \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a39d50722e8a46d4a0da63e9301c3eb3f}{CollisionAggregate::getSpheres}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00039}00039 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00040}00040         \textcolor{keywordflow}{return} m\_spheres;}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00041}00041     \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00043}00043     \textcolor{comment}{// Get capsules.}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00044}\mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a74e7142c550e2467103222a855419cef}{00044}}     std::vector<Capsule> \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a74e7142c550e2467103222a855419cef}{CollisionAggregate::getCapsules}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00045}00045 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00046}00046         \textcolor{keywordflow}{return} m\_capsules;}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00047}00047     \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00049}00049     \textcolor{comment}{// Get boxes.}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00050}\mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a0af14c6fc470264fcb6c20e21687b02b}{00050}}     std::vector<Box> \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a0af14c6fc470264fcb6c20e21687b02b}{CollisionAggregate::getBoxes}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00051}00051 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00052}00052         \textcolor{keywordflow}{return} m\_boxes;}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00053}00053     \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00055}\mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a5419de6191dda281178dc747b2083270}{00055}}     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a5419de6191dda281178dc747b2083270}{CollisionAggregate::updateColliderTransforms}}(\textcolor{keyword}{const} Eigen::Matrix4d\& worldTransform)}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00056}00056     \{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00057}00057         \textcolor{keywordflow}{for} (\mbox{\hyperlink{class_motion_planner_1_1_sphere}{Sphere}}\& sphere : m\_spheres)}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00058}00058         \{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00059}00059             \textcolor{keyword}{const} std::string name = sphere.getName();}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00060}00060             \textcolor{keyword}{const} Eigen::Matrix4d localTransform = m\_localTransforms.at(name);}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00061}00061             sphere.setTransform(worldTransform * localTransform);}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00062}00062         \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00064}00064         \textcolor{keywordflow}{for} (\mbox{\hyperlink{class_motion_planner_1_1_capsule}{Capsule}}\& capsule : m\_capsules)}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00065}00065         \{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00066}00066             \textcolor{keyword}{const} std::string name = capsule.getName();}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00067}00067             \textcolor{keyword}{const} Eigen::Matrix4d localTransform = m\_localTransforms.at(name);}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00068}00068             capsule.setTransform(worldTransform * localTransform);}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00069}00069         \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00070}00070 }
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00071}00071         \textcolor{keywordflow}{for} (\mbox{\hyperlink{class_motion_planner_1_1_box}{Box}}\& box : m\_boxes)}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00072}00072         \{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00073}00073             \textcolor{keyword}{const} std::string name = box.getName();}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00074}00074             \textcolor{keyword}{const} Eigen::Matrix4d localTransform = m\_localTransforms.at(name);}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00075}00075             box.setTransform(worldTransform * localTransform);}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00076}00076         \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00077}00077     \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00079}\mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_ad9f842e6dd24effa782ddbff9a40061f}{00079}}     std::vector<const Shape*> \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_ad9f842e6dd24effa782ddbff9a40061f}{CollisionAggregate::getColliders}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00080}00080 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00081}00081         \textcolor{comment}{// Setup vector of shape pointers.}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00082}00082         std::vector<const Shape*> colliders;}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00083}00083         \textcolor{keywordtype}{size\_t} numColliders = m\_spheres.size() + m\_capsules.size() + m\_boxes.size();}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00084}00084         colliders.reserve(numColliders);}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00085}00085 }
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00086}00086         \textcolor{comment}{// Loop over all colliders and add pointer to the vector.}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00087}00087         \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_sphere}{Sphere}}\& sphere : m\_spheres)}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00088}00088         \{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00089}00089             \textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_shape}{Shape}}* spherePointer = \&sphere;}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00090}00090             colliders.emplace\_back(spherePointer);}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00091}00091         \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00092}00092         \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_capsule}{Capsule}}\& capsule : m\_capsules)}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00093}00093         \{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00094}00094             \textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_shape}{Shape}}* capsulePointer = \&capsule;}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00095}00095             colliders.emplace\_back(capsulePointer);}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00096}00096         \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00097}00097         \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_box}{Box}}\& box : m\_boxes)}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00098}00098         \{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00099}00099             \textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_shape}{Shape}}* boxPointer = \&box;}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00100}00100             colliders.emplace\_back(boxPointer);}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00101}00101         \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00102}00102 }
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00103}00103         \textcolor{comment}{// Return vector.}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00104}00104         \textcolor{keywordflow}{return} colliders;}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00105}00105     \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00106}00106 }
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00107}\mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a521f9be855acbcd4d3e63afd27efefc6}{00107}}     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_collision_aggregate_a521f9be855acbcd4d3e63afd27efefc6}{CollisionAggregate::setParentBodyName}}(\textcolor{keyword}{const} std::string\& parentBodyName)}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00108}00108     \{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00109}00109         \textcolor{keywordflow}{for} (\mbox{\hyperlink{class_motion_planner_1_1_sphere}{Sphere}}\& sphere : m\_spheres)}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00110}00110         \{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00111}00111             sphere.setParentBodyName(parentBodyName);}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00112}00112         \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00113}00113         \textcolor{keywordflow}{for} (\mbox{\hyperlink{class_motion_planner_1_1_capsule}{Capsule}}\& capsule : m\_capsules)}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00114}00114         \{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00115}00115             capsule.setParentBodyName(parentBodyName);}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00116}00116         \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00117}00117         \textcolor{keywordflow}{for} (\mbox{\hyperlink{class_motion_planner_1_1_box}{Box}}\& box : m\_boxes)}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00118}00118         \{}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00119}00119             box.setParentBodyName(parentBodyName);}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00120}00120         \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00121}00121     \}}
+\DoxyCodeLine{\Hypertarget{_collision_aggregate_8cpp_source_l00122}00122 \}}
+
+\end{DoxyCode}

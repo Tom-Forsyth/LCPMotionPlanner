@@ -1,0 +1,77 @@
+\hypertarget{_rigid_body_chain_8h_source}{}\doxysection{Rigid\+Body\+Chain.\+h}
+\label{_rigid_body_chain_8h_source}\index{include/RigidBodyChain.h@{include/RigidBodyChain.h}}
+\mbox{\hyperlink{_rigid_body_chain_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00001}00001 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00003}00003 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_rigid_body_8h}{RigidBody.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00006}00006 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_motion_planner}{MotionPlanner}}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00007}00007 \{}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00008}\mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain}{00008}}     \textcolor{keyword}{class }\mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain}{RigidBodyChain}}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00009}00009     \{}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00010}00010     \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00011}00011         std::vector<RigidBody> m\_rigidBodies;}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00012}00012         Eigen::Matrix4d m\_baseTransform;}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00013}00013         \textcolor{keywordtype}{size\_t} m\_nBodies;}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00014}00014         \textcolor{keywordtype}{size\_t} m\_nMovableBodies;}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00016}00016     \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00017}00017         \textcolor{comment}{// Default constructor.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00018}00018         \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a38f6e022b0e496be958538d8383d6cae}{RigidBodyChain}}();}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00020}00020         \textcolor{comment}{// Rigid body vector constructor.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00021}00021         \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a38f6e022b0e496be958538d8383d6cae}{RigidBodyChain}}(\textcolor{keyword}{const} std::vector<RigidBody>\& rigidBodies);}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00023}00023         \textcolor{comment}{// Set base transform.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00024}00024         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a8170447ee3cd9c4d3aad4dffd9fa7b5d}{setBaseTransform}}(\textcolor{keyword}{const} Eigen::Matrix4d\& baseTransform);}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00026}00026         \textcolor{comment}{// Add rigid body.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00027}00027         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a66da511f9af98e17d55abc8d07ba0f4f}{addBody}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body}{RigidBody}}\& rigidBody);}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00029}00029         \textcolor{comment}{// Called to finish initialization once chain is created.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00030}00030         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a8b28ad053be712328c6b9499dc7c5e89}{postInit}}();}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00032}00032         \textcolor{comment}{// Forward kinematics.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00033}00033         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a5e410c6414b3e2e3cdb8fd1488fa950c}{forwardKinematics}}();}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00035}00035         \textcolor{comment}{// Set joint displacements.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00036}00036         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_ae2ff7178e007e96bec2a0ece13562178}{setJointDisplacements}}(\textcolor{keyword}{const} Eigen::VectorXd\& jointDisplacements);}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00038}00038         \textcolor{comment}{// Get reference to rigid bodies.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00039}00039         \textcolor{keyword}{const} std::vector<RigidBody>\& \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a4b354a7d2a3100b91ff78192d87e2453}{getRigidBodies}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00041}00041         \textcolor{comment}{// Get number of total bodies.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00042}00042         \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a894d2643a22d514175d2652c0b50ff23}{getNBodies}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00044}00044         \textcolor{comment}{// Get number of movable bodies.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00045}00045         \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_ae3fd4b367528dd982b0a4a8e670d3fae}{getNMovableBodies}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00047}00047         \textcolor{comment}{// Update spatial jacobian for each body.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00048}00048         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_aed9df3426edd5ea9eedbe26883954074}{updateSpatialJacobians}}();}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00050}00050         \textcolor{comment}{// Update contact jacobians for the active contacts.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00051}00051         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_abcef75531665c07e0e79141cbb92d45b}{updateContactJacobians}}();}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00053}00053         \textcolor{comment}{// Get end frame transform.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00054}00054         Eigen::Matrix4d \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a3d9de6ab9b4a9553124ac4d1d9d42b6b}{getEndFrameSpatialTransform}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00056}00056         \textcolor{comment}{// Get end frame.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00057}00057         \mbox{\hyperlink{class_motion_planner_1_1_rigid_body}{RigidBody}} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_af67da81fcb61c6eaa5a971c1c4f5682f}{getEndFrame}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00059}00059         \textcolor{comment}{// Get the current joint displacements.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00060}00060         Eigen::VectorXd \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_acf4ee9dc4e0f1f774ee924b837dd1017}{getJointDisplacements}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00062}00062         \textcolor{comment}{// Update the world transforms of the collision primatives.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00063}00063         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a2ca3e77fa260169165072774de628206}{updateColliderTransforms}}();}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00065}00065         \textcolor{comment}{// Deactivate contacts.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00066}00066         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_afab4df7237fa2c381e66e18999cf808c}{deactivateContacts}}();}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00068}00068         \textcolor{comment}{// Update the contact points of the bodies of the chain.}}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00069}00069         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_rigid_body_chain_a43f86be45c12a0c60d6edeeeafd1f0c1}{updateContactPoints}}(\textcolor{keyword}{const} std::map<std::string, ContactPoint>\& contactPoints);}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00070}00070     \};}
+\DoxyCodeLine{\Hypertarget{_rigid_body_chain_8h_source_l00071}00071 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,56 @@
+\hypertarget{_joint_8h_source}{}\doxysection{Joint.\+h}
+\label{_joint_8h_source}\index{include/Joint.h@{include/Joint.h}}
+\mbox{\hyperlink{_joint_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00001}00001 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00003}00003 \textcolor{preprocessor}{\#include <Eigen/Dense>}}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00005}00005 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_motion_planner}{MotionPlanner}}}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00006}00006 \{}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00007}\mbox{\hyperlink{namespace_motion_planner_ac5f205f0b14daa687444a9fc4d272c28}{00007}}     \textcolor{keyword}{enum class} \mbox{\hyperlink{namespace_motion_planner_ac5f205f0b14daa687444a9fc4d272c28}{JointType}}}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00008}00008     \{}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00009}00009         \mbox{\hyperlink{namespace_motion_planner_ac5f205f0b14daa687444a9fc4d272c28a358561ac4d41f41d479b7c54b19b639e}{Revolute}},}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00010}00010         \mbox{\hyperlink{namespace_motion_planner_ac5f205f0b14daa687444a9fc4d272c28a35fa8acd1b8b1beb23e6c2e24313570c}{Prismatic}},}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00011}00011         \mbox{\hyperlink{namespace_motion_planner_ac5f205f0b14daa687444a9fc4d272c28a4457d440870ad6d42bab9082d9bf9b61}{Fixed}}}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00012}00012     \};}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00014}\mbox{\hyperlink{class_motion_planner_1_1_joint}{00014}}     \textcolor{keyword}{class }\mbox{\hyperlink{class_motion_planner_1_1_joint}{Joint}}}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00015}00015     \{}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00016}00016     \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00017}00017         \textcolor{comment}{// Members.}}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00018}00018         \mbox{\hyperlink{namespace_motion_planner_ac5f205f0b14daa687444a9fc4d272c28}{JointType}} m\_type;}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00019}00019         Eigen::Vector3d m\_axis;}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00020}00020         Eigen::Vector3d m\_point;}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00021}00021         \textcolor{keywordtype}{double} m\_displacement;}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00022}00022         Eigen::Vector<double, 6> m\_twistCoord;}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00023}00023         Eigen::Matrix4d m\_twist;}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00024}00024         Eigen::Matrix4d m\_relativeTransformation;}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00026}00026     \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00027}00027         \textcolor{comment}{// Constructor.}}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00028}00028         \mbox{\hyperlink{class_motion_planner_1_1_joint}{Joint}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespace_motion_planner_ac5f205f0b14daa687444a9fc4d272c28}{JointType}}\& type, \textcolor{keyword}{const} Eigen::Vector3d\& axis, \textcolor{keyword}{const} Eigen::Vector3d\& point);}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00030}00030         \textcolor{comment}{// Compute twist coordinate and twist.}}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00031}00031         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_joint_aacdaa25efb13e1003e5751ebd2e121e5}{computeTwistCoord}}();}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00032}00032         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_joint_aa88ad0eb13673b10c84930b84758a8b8}{computeTwist}}();}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00034}00034         \textcolor{comment}{// Compute displacement transformation.}}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00035}00035         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_joint_a371d485ec22759e4fffe39805a1023b2}{computeRelativeTransformation}}();}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00036}00036         Eigen::Matrix4d \mbox{\hyperlink{class_motion_planner_1_1_joint_aaf8d8a1e53054aa2d904d71da5fa9881}{getRelativeTransformation}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00038}00038         \textcolor{comment}{// Set joint displacement.}}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00039}00039         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_joint_af01a32b099045bb0a9ee9b8549bdb802}{setDisplacement}}(\textcolor{keyword}{const} \textcolor{keywordtype}{double}\& displacement);}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00041}00041         \textcolor{comment}{// Get type.}}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00042}00042         \mbox{\hyperlink{namespace_motion_planner_ac5f205f0b14daa687444a9fc4d272c28}{JointType}} \mbox{\hyperlink{class_motion_planner_1_1_joint_a670c87b83417f2449f9418e0a888a3b3}{getType}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00044}00044         \textcolor{comment}{// Get twist coordinate.}}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00045}00045         Eigen::Vector<double, 6> \mbox{\hyperlink{class_motion_planner_1_1_joint_af409cd797c4fab0859169422fa64ce99}{getTwistCoord}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00047}00047         \textcolor{comment}{// Get displacement.}}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00048}00048         \textcolor{keywordtype}{double} \mbox{\hyperlink{class_motion_planner_1_1_joint_adc539bc539cf67b48c8d88536816977d}{getDisplacement}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00049}00049     \};}
+\DoxyCodeLine{\Hypertarget{_joint_8h_source_l00050}00050 \}}
+
+\end{DoxyCode}

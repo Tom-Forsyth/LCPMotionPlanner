@@ -1,11 +1,10 @@
-#ifndef LCPSOLVE_H_
-#define LCPSOLVE_H_
+#pragma once
 
 #include <Eigen/Dense>
 
-namespace MotionPlanner
+namespace LCPSolve
 {
-    // Linear complementarity problem datatype.
+    /// @brief Linear complementarity problem datatype.
     struct LCP {
         int exitCond;
         Eigen::VectorXd w{};
@@ -14,8 +13,9 @@ namespace MotionPlanner
         Eigen::VectorXd q{};
     };
 
-    // LCP Solver.
+    /// @brief Linear complementarity problem solver.
+    /// @param M Matrix.
+    /// @param q Vector.
+    /// @return Solved LCP (z and w vectors).
     LCP LCPSolve(Eigen::MatrixXd M, Eigen::VectorXd q);
 }
-
-#endif

@@ -1,0 +1,159 @@
+\hypertarget{namespace_l_c_p_solve}{}\doxysection{LCPSolve Namespace Reference}
+\label{namespace_l_c_p_solve}\index{LCPSolve@{LCPSolve}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_l_c_p_solve_1_1_l_c_p}{LCP}}
+\begin{DoxyCompactList}\small\item\em Linear complementarity problem datatype. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_l_c_p_solve_1_1_l_c_p}{LCP}} \mbox{\hyperlink{namespace_l_c_p_solve_a5d48bcc628ea239bb5edf87b475faa6a}{LCPSolve}} (Eigen\+::\+Matrix\+Xd M, Eigen\+::\+Vector\+Xd q)
+\begin{DoxyCompactList}\small\item\em Linear complementarity problem solver. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{namespace_l_c_p_solve_a37003b67fa1b121b5c2c9055508b95b9}{check\+Compatability}} (const Eigen\+::\+Matrix\+Xd \&M, const int \&dim)
+\item 
+bool \mbox{\hyperlink{namespace_l_c_p_solve_a2428989bb1468022ae893d8ef19970b4}{check\+Trivial\+Sol}} (const Eigen\+::\+Vector\+Xd \&q)
+\item 
+Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{namespace_l_c_p_solve_aaf8b87fed6263d1186efdd549ce554d2}{construct\+Tableau}} (const Eigen\+::\+Matrix\+Xd \&M, const Eigen\+::\+Vector\+Xd \&q)
+\item 
+void \mbox{\hyperlink{namespace_l_c_p_solve_aa552542e280745356303a69c76d46ffb}{pivot}} (Eigen\+::\+Matrix\+Xd \&tableau, const int \&row, const int \&col)
+\item 
+int \mbox{\hyperlink{namespace_l_c_p_solve_a97bf0148533845893efcdf365d589ba2}{initialize\+Tableau}} (Eigen\+::\+Matrix\+Xd \&tableau)
+\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{namespace_l_c_p_solve_afce7da8f1a5a8f630d38775c7db2153b}{basic\+Vars}} (const Eigen\+::\+Matrix\+Xd \&tableau)
+\item 
+bool \mbox{\hyperlink{namespace_l_c_p_solve_aac2557f47f04203dababdcf1b98a3f4a}{check\+Sol}} (const Eigen\+::\+Matrix\+Xd \&tableau)
+\item 
+bool \mbox{\hyperlink{namespace_l_c_p_solve_a679dc1b9bd775406f11635fcec2d6c78}{check\+Ray\+Termination}} (const Eigen\+::\+Matrix\+Xd \&tableu, const int \&pivot\+Col)
+\item 
+int \mbox{\hyperlink{namespace_l_c_p_solve_a8e4f7ef0d77ed87f445f2829e125f34e}{min\+Ratio\+Test}} (const Eigen\+::\+Matrix\+Xd \&tableau, const int \&pivot\+Col)
+\item 
+Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{namespace_l_c_p_solve_ab6932f1af570a918120b238ec80abaf9}{extract\+Solution}} (const Eigen\+::\+Matrix\+Xd \&tableau)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespace_l_c_p_solve_afce7da8f1a5a8f630d38775c7db2153b}\label{namespace_l_c_p_solve_afce7da8f1a5a8f630d38775c7db2153b}} 
+\index{LCPSolve@{LCPSolve}!basicVars@{basicVars}}
+\index{basicVars@{basicVars}!LCPSolve@{LCPSolve}}
+\doxysubsubsection{\texorpdfstring{basicVars()}{basicVars()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector\+Xd LCPSolve\+::basic\+Vars (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix\+Xd \&}]{tableau }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_l_c_p_solve_8cpp_source_l00173}{173}} of file \mbox{\hyperlink{_l_c_p_solve_8cpp_source}{LCPSolve.\+cpp}}.
+
+\mbox{\Hypertarget{namespace_l_c_p_solve_a37003b67fa1b121b5c2c9055508b95b9}\label{namespace_l_c_p_solve_a37003b67fa1b121b5c2c9055508b95b9}} 
+\index{LCPSolve@{LCPSolve}!checkCompatability@{checkCompatability}}
+\index{checkCompatability@{checkCompatability}!LCPSolve@{LCPSolve}}
+\doxysubsubsection{\texorpdfstring{checkCompatability()}{checkCompatability()}}
+{\footnotesize\ttfamily bool LCPSolve\+::check\+Compatability (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix\+Xd \&}]{M,  }\item[{const int \&}]{dim }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_l_c_p_solve_8cpp_source_l00101}{101}} of file \mbox{\hyperlink{_l_c_p_solve_8cpp_source}{LCPSolve.\+cpp}}.
+
+\mbox{\Hypertarget{namespace_l_c_p_solve_a679dc1b9bd775406f11635fcec2d6c78}\label{namespace_l_c_p_solve_a679dc1b9bd775406f11635fcec2d6c78}} 
+\index{LCPSolve@{LCPSolve}!checkRayTermination@{checkRayTermination}}
+\index{checkRayTermination@{checkRayTermination}!LCPSolve@{LCPSolve}}
+\doxysubsubsection{\texorpdfstring{checkRayTermination()}{checkRayTermination()}}
+{\footnotesize\ttfamily bool LCPSolve\+::check\+Ray\+Termination (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix\+Xd \&}]{tableu,  }\item[{const int \&}]{pivot\+Col }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_l_c_p_solve_8cpp_source_l00223}{223}} of file \mbox{\hyperlink{_l_c_p_solve_8cpp_source}{LCPSolve.\+cpp}}.
+
+\mbox{\Hypertarget{namespace_l_c_p_solve_aac2557f47f04203dababdcf1b98a3f4a}\label{namespace_l_c_p_solve_aac2557f47f04203dababdcf1b98a3f4a}} 
+\index{LCPSolve@{LCPSolve}!checkSol@{checkSol}}
+\index{checkSol@{checkSol}!LCPSolve@{LCPSolve}}
+\doxysubsubsection{\texorpdfstring{checkSol()}{checkSol()}}
+{\footnotesize\ttfamily bool LCPSolve\+::check\+Sol (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix\+Xd \&}]{tableau }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_l_c_p_solve_8cpp_source_l00193}{193}} of file \mbox{\hyperlink{_l_c_p_solve_8cpp_source}{LCPSolve.\+cpp}}.
+
+\mbox{\Hypertarget{namespace_l_c_p_solve_a2428989bb1468022ae893d8ef19970b4}\label{namespace_l_c_p_solve_a2428989bb1468022ae893d8ef19970b4}} 
+\index{LCPSolve@{LCPSolve}!checkTrivialSol@{checkTrivialSol}}
+\index{checkTrivialSol@{checkTrivialSol}!LCPSolve@{LCPSolve}}
+\doxysubsubsection{\texorpdfstring{checkTrivialSol()}{checkTrivialSol()}}
+{\footnotesize\ttfamily bool LCPSolve\+::check\+Trivial\+Sol (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Vector\+Xd \&}]{q }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_l_c_p_solve_8cpp_source_l00114}{114}} of file \mbox{\hyperlink{_l_c_p_solve_8cpp_source}{LCPSolve.\+cpp}}.
+
+\mbox{\Hypertarget{namespace_l_c_p_solve_aaf8b87fed6263d1186efdd549ce554d2}\label{namespace_l_c_p_solve_aaf8b87fed6263d1186efdd549ce554d2}} 
+\index{LCPSolve@{LCPSolve}!constructTableau@{constructTableau}}
+\index{constructTableau@{constructTableau}!LCPSolve@{LCPSolve}}
+\doxysubsubsection{\texorpdfstring{constructTableau()}{constructTableau()}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix\+Xd LCPSolve\+::construct\+Tableau (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix\+Xd \&}]{M,  }\item[{const Eigen\+::\+Vector\+Xd \&}]{q }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_l_c_p_solve_8cpp_source_l00123}{123}} of file \mbox{\hyperlink{_l_c_p_solve_8cpp_source}{LCPSolve.\+cpp}}.
+
+\mbox{\Hypertarget{namespace_l_c_p_solve_ab6932f1af570a918120b238ec80abaf9}\label{namespace_l_c_p_solve_ab6932f1af570a918120b238ec80abaf9}} 
+\index{LCPSolve@{LCPSolve}!extractSolution@{extractSolution}}
+\index{extractSolution@{extractSolution}!LCPSolve@{LCPSolve}}
+\doxysubsubsection{\texorpdfstring{extractSolution()}{extractSolution()}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix\+Xd LCPSolve\+::extract\+Solution (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix\+Xd \&}]{tableau }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_l_c_p_solve_8cpp_source_l00265}{265}} of file \mbox{\hyperlink{_l_c_p_solve_8cpp_source}{LCPSolve.\+cpp}}.
+
+\mbox{\Hypertarget{namespace_l_c_p_solve_a97bf0148533845893efcdf365d589ba2}\label{namespace_l_c_p_solve_a97bf0148533845893efcdf365d589ba2}} 
+\index{LCPSolve@{LCPSolve}!initializeTableau@{initializeTableau}}
+\index{initializeTableau@{initializeTableau}!LCPSolve@{LCPSolve}}
+\doxysubsubsection{\texorpdfstring{initializeTableau()}{initializeTableau()}}
+{\footnotesize\ttfamily int LCPSolve\+::initialize\+Tableau (\begin{DoxyParamCaption}\item[{Eigen\+::\+Matrix\+Xd \&}]{tableau }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_l_c_p_solve_8cpp_source_l00151}{151}} of file \mbox{\hyperlink{_l_c_p_solve_8cpp_source}{LCPSolve.\+cpp}}.
+
+\mbox{\Hypertarget{namespace_l_c_p_solve_a5d48bcc628ea239bb5edf87b475faa6a}\label{namespace_l_c_p_solve_a5d48bcc628ea239bb5edf87b475faa6a}} 
+\index{LCPSolve@{LCPSolve}!LCPSolve@{LCPSolve}}
+\index{LCPSolve@{LCPSolve}!LCPSolve@{LCPSolve}}
+\doxysubsubsection{\texorpdfstring{LCPSolve()}{LCPSolve()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_l_c_p_solve_1_1_l_c_p}{LCP}} LCPSolve\+::\+LCPSolve (\begin{DoxyParamCaption}\item[{Eigen\+::\+Matrix\+Xd}]{M,  }\item[{Eigen\+::\+Vector\+Xd}]{q }\end{DoxyParamCaption})}
+
+
+
+Linear complementarity problem solver. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em M} & Matrix. \\
+\hline
+{\em q} & Vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Solved \mbox{\hyperlink{struct_l_c_p_solve_1_1_l_c_p}{LCP}} (z and w vectors). 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_l_c_p_solve_8cpp_source_l00019}{19}} of file \mbox{\hyperlink{_l_c_p_solve_8cpp_source}{LCPSolve.\+cpp}}.
+
+\mbox{\Hypertarget{namespace_l_c_p_solve_a8e4f7ef0d77ed87f445f2829e125f34e}\label{namespace_l_c_p_solve_a8e4f7ef0d77ed87f445f2829e125f34e}} 
+\index{LCPSolve@{LCPSolve}!minRatioTest@{minRatioTest}}
+\index{minRatioTest@{minRatioTest}!LCPSolve@{LCPSolve}}
+\doxysubsubsection{\texorpdfstring{minRatioTest()}{minRatioTest()}}
+{\footnotesize\ttfamily int LCPSolve\+::min\+Ratio\+Test (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix\+Xd \&}]{tableau,  }\item[{const int \&}]{pivot\+Col }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_l_c_p_solve_8cpp_source_l00241}{241}} of file \mbox{\hyperlink{_l_c_p_solve_8cpp_source}{LCPSolve.\+cpp}}.
+
+\mbox{\Hypertarget{namespace_l_c_p_solve_aa552542e280745356303a69c76d46ffb}\label{namespace_l_c_p_solve_aa552542e280745356303a69c76d46ffb}} 
+\index{LCPSolve@{LCPSolve}!pivot@{pivot}}
+\index{pivot@{pivot}!LCPSolve@{LCPSolve}}
+\doxysubsubsection{\texorpdfstring{pivot()}{pivot()}}
+{\footnotesize\ttfamily void LCPSolve\+::pivot (\begin{DoxyParamCaption}\item[{Eigen\+::\+Matrix\+Xd \&}]{tableau,  }\item[{const int \&}]{row,  }\item[{const int \&}]{col }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_l_c_p_solve_8cpp_source_l00135}{135}} of file \mbox{\hyperlink{_l_c_p_solve_8cpp_source}{LCPSolve.\+cpp}}.
+

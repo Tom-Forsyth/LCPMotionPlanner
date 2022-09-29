@@ -27,7 +27,7 @@
   <td id="projectalign">
    <div id="projectname">LCPMotionPlanner
    </div>
-   <div id="projectbrief">A robot motion planner with LCP based collision avoidance.</div>
+   <div id="projectbrief">A ScLERP motion planner with LCP collision avoidance.</div>
   </td>
  </tr>
  </tbody>
@@ -98,27 +98,40 @@ $(document).ready(function(){initNavTree('struct_motion_planner_1_1_contact_poin
 </div><!--header-->
 <div class="contents">
 
+<p>Struct to hold contact information.  
+ <a href="struct_motion_planner_1_1_contact_point.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_contact_point_8h_source.html">ContactPoint.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a255d0bdd7bd4f9f4a49054557b31e28c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_motion_planner_1_1_contact_point.html#a255d0bdd7bd4f9f4a49054557b31e28c">ContactPoint</a> ()</td></tr>
+<tr class="memdesc:a255d0bdd7bd4f9f4a49054557b31e28c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="struct_motion_planner_1_1_contact_point.html#a255d0bdd7bd4f9f4a49054557b31e28c">More...</a><br /></td></tr>
 <tr class="separator:a255d0bdd7bd4f9f4a49054557b31e28c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a569d9ffcebb370e2192ff66f067eb2da"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_motion_planner_1_1_contact_point.html#a569d9ffcebb370e2192ff66f067eb2da">ContactPoint</a> (const Eigen::Vector3d &amp;point, const Eigen::Vector3d &amp;normal, double distance, bool isActive)</td></tr>
+<tr class="memdesc:a569d9ffcebb370e2192ff66f067eb2da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="struct_motion_planner_1_1_contact_point.html#a569d9ffcebb370e2192ff66f067eb2da">More...</a><br /></td></tr>
 <tr class="separator:a569d9ffcebb370e2192ff66f067eb2da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ac0aad1fa572a8659f83807e1a4e2045e"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_motion_planner_1_1_contact_point.html#ac0aad1fa572a8659f83807e1a4e2045e">m_point</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="memdesc:ac0aad1fa572a8659f83807e1a4e2045e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Position of the contact point.  <a href="struct_motion_planner_1_1_contact_point.html#ac0aad1fa572a8659f83807e1a4e2045e">More...</a><br /></td></tr>
 <tr class="separator:ac0aad1fa572a8659f83807e1a4e2045e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3deebc02210c62daa4bb4e0259cd9b17"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_motion_planner_1_1_contact_point.html#a3deebc02210c62daa4bb4e0259cd9b17">m_normal</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="memdesc:a3deebc02210c62daa4bb4e0259cd9b17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Normal of the contact point, typically pointing towards the robot.  <a href="struct_motion_planner_1_1_contact_point.html#a3deebc02210c62daa4bb4e0259cd9b17">More...</a><br /></td></tr>
 <tr class="separator:a3deebc02210c62daa4bb4e0259cd9b17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a645c45a3a45c3b181ed3cca046b39733"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_motion_planner_1_1_contact_point.html#a645c45a3a45c3b181ed3cca046b39733">m_distance</a> = 1000</td></tr>
+<tr class="memdesc:a645c45a3a45c3b181ed3cca046b39733"><td class="mdescLeft">&#160;</td><td class="mdescRight">Separation distance to contact pair.  <a href="struct_motion_planner_1_1_contact_point.html#a645c45a3a45c3b181ed3cca046b39733">More...</a><br /></td></tr>
 <tr class="separator:a645c45a3a45c3b181ed3cca046b39733"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5526f69bb4550ea37edb2e731a23cee0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_motion_planner_1_1_contact_point.html#a5526f69bb4550ea37edb2e731a23cee0">m_isActive</a> = false</td></tr>
+<tr class="memdesc:a5526f69bb4550ea37edb2e731a23cee0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag to determine if the contact is currently active and needs to be solved.  <a href="struct_motion_planner_1_1_contact_point.html#a5526f69bb4550ea37edb2e731a23cee0">More...</a><br /></td></tr>
 <tr class="separator:a5526f69bb4550ea37edb2e731a23cee0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Struct to hold contact information. </p>
+
+<p class="definition">Definition at line <a class="el" href="_contact_point_8h_source.html#l00008">8</a> of file <a class="el" href="_contact_point_8h_source.html">ContactPoint.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a255d0bdd7bd4f9f4a49054557b31e28c" name="a255d0bdd7bd4f9f4a49054557b31e28c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a255d0bdd7bd4f9f4a49054557b31e28c">&#9670;&#160;</a></span>ContactPoint() <span class="overload">[1/2]</span></h2>
 
@@ -133,6 +146,10 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Default constructor. </p>
+
+<p class="definition">Definition at line <a class="el" href="_contact_point_8cpp_source.html#l00006">6</a> of file <a class="el" href="_contact_point_8cpp_source.html">ContactPoint.cpp</a>.</p>
 
 </div>
 </div>
@@ -174,6 +191,19 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">point</td><td>Position of the contact point. </td></tr>
+    <tr><td class="paramname">normal</td><td>Normal of the contact point, typically pointer towards the robot. </td></tr>
+    <tr><td class="paramname">distance</td><td>Separation distance to the contact pair. </td></tr>
+    <tr><td class="paramname">isActive</td><td>Flag to determine if the contact is currently active. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_contact_point_8cpp_source.html#l00010">10</a> of file <a class="el" href="_contact_point_8cpp_source.html">ContactPoint.cpp</a>.</p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -189,6 +219,10 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Separation distance to contact pair. </p>
+
+<p class="definition">Definition at line <a class="el" href="_contact_point_8h_source.html#l00017">17</a> of file <a class="el" href="_contact_point_8h_source.html">ContactPoint.h</a>.</p>
+
 </div>
 </div>
 <a id="a5526f69bb4550ea37edb2e731a23cee0" name="a5526f69bb4550ea37edb2e731a23cee0"></a>
@@ -202,6 +236,10 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Flag to determine if the contact is currently active and needs to be solved. </p>
+
+<p class="definition">Definition at line <a class="el" href="_contact_point_8h_source.html#l00020">20</a> of file <a class="el" href="_contact_point_8h_source.html">ContactPoint.h</a>.</p>
 
 </div>
 </div>
@@ -217,6 +255,10 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Normal of the contact point, typically pointing towards the robot. </p>
+
+<p class="definition">Definition at line <a class="el" href="_contact_point_8h_source.html#l00014">14</a> of file <a class="el" href="_contact_point_8h_source.html">ContactPoint.h</a>.</p>
+
 </div>
 </div>
 <a id="ac0aad1fa572a8659f83807e1a4e2045e" name="ac0aad1fa572a8659f83807e1a4e2045e"></a>
@@ -231,11 +273,15 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Position of the contact point. </p>
+
+<p class="definition">Definition at line <a class="el" href="_contact_point_8h_source.html#l00011">11</a> of file <a class="el" href="_contact_point_8h_source.html">ContactPoint.h</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following files:<ul>
-<li>C:/Projects/LCPMotionPlanner/include/<a class="el" href="_contact_point_8h_source.html">ContactPoint.h</a></li>
-<li>C:/Projects/LCPMotionPlanner/src/<a class="el" href="_contact_point_8cpp.html">ContactPoint.cpp</a></li>
+<li>include/<a class="el" href="_contact_point_8h_source.html">ContactPoint.h</a></li>
+<li>src/<a class="el" href="_contact_point_8cpp_source.html">ContactPoint.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

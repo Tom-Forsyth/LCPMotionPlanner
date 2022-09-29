@@ -1,0 +1,70 @@
+\hypertarget{_manipulator_motion_planner_8h_source}{}\doxysection{Manipulator\+Motion\+Planner.\+h}
+\label{_manipulator_motion_planner_8h_source}\index{include/ManipulatorMotionPlanner.h@{include/ManipulatorMotionPlanner.h}}
+\mbox{\hyperlink{_manipulator_motion_planner_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00001}00001 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_dual_quaternion_8h}{DualQuaternion.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00004}00004 \textcolor{preprocessor}{\#include <Eigen/Dense>}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00005}00005 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_rigid_body_8h}{RigidBody.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_l_c_p_solve_8h}{LCPSolve.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00009}00009 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_motion_planner}{MotionPlanner}}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00010}00010 \{}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00011}00011     \textcolor{keyword}{class }SpatialManipulator;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00013}\mbox{\hyperlink{class_motion_planner_1_1_manipulator_motion_planner}{00013}}     \textcolor{keyword}{class }\mbox{\hyperlink{class_motion_planner_1_1_manipulator_motion_planner}{ManipulatorMotionPlanner}}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00014}00014     \{}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00015}00015     \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00016}00016         \mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator}{SpatialManipulator}}* m\_pSpatialManipulator = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00017}00017         std::vector<Eigen::VectorXd> m\_plan;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00019}00019         \textcolor{comment}{// Plan parameters.}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00020}00020         \textcolor{keywordtype}{bool} m\_isRunning = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00021}00021         \textcolor{keywordtype}{size\_t} m\_maxIterations = 3000;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00022}00022         \textcolor{keywordtype}{double} m\_tau = 0.01;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00023}00023         \textcolor{keywordtype}{double} m\_timeStep = 0.01;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00024}00024         \textcolor{keywordtype}{double} m\_safetyDistance = 0.01;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00025}00025         \textcolor{keywordtype}{double} m\_maxScLERPDisplacementChange = 0.001;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00026}00026         \textcolor{keywordtype}{double} m\_maxCollisionDisplacementChange = 0.001;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00027}00027         \textcolor{keywordtype}{double} m\_maxTotalDisplacementChange = 0.005;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00028}00028         \textcolor{keywordtype}{bool} m\_tauIsMax = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00029}00029         \textcolor{keywordtype}{double} m\_positionTolerance = 0.02;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00030}00030         \textcolor{keywordtype}{double} m\_quatTolerance = 0.02;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00032}00032         \textcolor{comment}{// Manipulator information.}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00033}00033         \mbox{\hyperlink{class_motion_planner_1_1_rigid_body}{RigidBody}} m\_endFrame;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00034}00034         \textcolor{keywordtype}{int} m\_dof;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00035}00035         Eigen::Matrix4d m\_goalTransform;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00036}00036         Eigen::Matrix4d m\_currentTransform;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00037}00037         \mbox{\hyperlink{class_motion_planner_1_1_dual_quaternion}{DualQuaternion}} m\_currentDualQuat;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00038}00038         \mbox{\hyperlink{class_motion_planner_1_1_dual_quaternion}{DualQuaternion}} m\_goalDualQuat;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00039}00039         Eigen::Vector<double, 7> m\_currentConcat;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00040}00040         Eigen::Vector<double, 7> m\_goalConcat;}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00042}00042     \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00043}00043         \textcolor{comment}{// Constructor.}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00044}00044         \mbox{\hyperlink{class_motion_planner_1_1_manipulator_motion_planner}{ManipulatorMotionPlanner}}(\mbox{\hyperlink{class_motion_planner_1_1_spatial_manipulator}{SpatialManipulator}}* pSpatialManipulator, \textcolor{keyword}{const} Eigen::Matrix4d\& goalTransform);}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00046}00046         \textcolor{comment}{// Get the change in joint displacements before correction using ScLERP.}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00047}00047         Eigen::VectorXd \mbox{\hyperlink{class_motion_planner_1_1_manipulator_motion_planner_a3f8aac288befc3ebfb244690cc177506}{getJointDisplacementChange}}();}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00049}00049         \textcolor{comment}{// Get the null space term.}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00050}00050         \textcolor{keywordtype}{double} \mbox{\hyperlink{class_motion_planner_1_1_manipulator_motion_planner_a506d942e13860dd5c93c164da06c73d3}{getNullSpaceTerm}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00052}00052         \textcolor{comment}{// Formulate and solve LCP to get the compensating velocities and get joint displacements.}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00053}00053         Eigen::VectorXd \mbox{\hyperlink{class_motion_planner_1_1_manipulator_motion_planner_ae6b6ed04bacad0c3320a0093b9d03094}{getCollisionDisplacementChange}}(\textcolor{keyword}{const} Eigen::VectorXd\& displacementChange) \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00055}00055         \textcolor{comment}{// Add joint displacements and ensure they respect the linearization assumption.}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00056}00056         Eigen::VectorXd \mbox{\hyperlink{class_motion_planner_1_1_manipulator_motion_planner_a5956f7c82b533377d72d6223fe0366da}{getTotalDisplacementChange}}(\textcolor{keyword}{const} Eigen::VectorXd\& displacementChange, \textcolor{keyword}{const} Eigen::VectorXd\& collisionDisplacementChange);}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00058}00058         \textcolor{comment}{// Generate motion plan.}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00059}00059         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_motion_planner_1_1_manipulator_motion_planner_a9b7171efe0c7bdf5b82c4e99da2cd93a}{computePlan}}();}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00061}00061         \textcolor{comment}{// Get the motion plan.}}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00062}00062         \textcolor{keyword}{const} std::vector<Eigen::VectorXd>\& \mbox{\hyperlink{class_motion_planner_1_1_manipulator_motion_planner_ab105992372fdb773c60020cac3fde93e}{getPlan}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00063}00063     \};}
+\DoxyCodeLine{\Hypertarget{_manipulator_motion_planner_8h_source_l00064}00064 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,33 @@
+\hypertarget{_dual_number_8cpp_source}{}\doxysection{Dual\+Number.\+cpp}
+\label{_dual_number_8cpp_source}\index{src/DualNumber.cpp@{src/DualNumber.cpp}}
+\mbox{\hyperlink{_dual_number_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_dual_number_8h}{DualNumber.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00003}00003 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_motion_planner}{MotionPlanner}}}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00005}00005     \textcolor{comment}{// Constructors.}}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00006}\mbox{\hyperlink{class_motion_planner_1_1_dual_number_a2dc227e0b43b3e0710ad5ea00bfdcddc}{00006}}     \mbox{\hyperlink{class_motion_planner_1_1_dual_number_a2dc227e0b43b3e0710ad5ea00bfdcddc}{DualNumber::DualNumber}}()}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00007}00007         : m\_real(0), m\_dual(0) \{ \}}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00009}\mbox{\hyperlink{class_motion_planner_1_1_dual_number_a83695f18323f5d3a986cbeb3f11faf42}{00009}}     \mbox{\hyperlink{class_motion_planner_1_1_dual_number_a2dc227e0b43b3e0710ad5ea00bfdcddc}{DualNumber::DualNumber}}(\textcolor{keyword}{const} \textcolor{keywordtype}{double}\& real, \textcolor{keyword}{const} \textcolor{keywordtype}{double}\& dual)}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00010}00010         : m\_real(real), m\_dual(dual) \{ \}}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00012}00012     \textcolor{comment}{// Addition.}}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00013}\mbox{\hyperlink{class_motion_planner_1_1_dual_number_a581ed3b9eed71bc6ddc726a0c3fdeaf8}{00013}}     \mbox{\hyperlink{class_motion_planner_1_1_dual_number}{DualNumber}} \mbox{\hyperlink{class_motion_planner_1_1_dual_number_a581ed3b9eed71bc6ddc726a0c3fdeaf8}{DualNumber::operator+}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_dual_number}{DualNumber}}\& dualNumber)\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00014}00014 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00015}00015         \textcolor{keywordtype}{double} realNew = \mbox{\hyperlink{class_motion_planner_1_1_dual_number_a7f1af2095879db25ddc34332d58e90ff}{m\_real}} + dualNumber.\mbox{\hyperlink{class_motion_planner_1_1_dual_number_a7f1af2095879db25ddc34332d58e90ff}{m\_real}};}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00016}00016         \textcolor{keywordtype}{double} dualNew = \mbox{\hyperlink{class_motion_planner_1_1_dual_number_a302faaea1779807a8b4b91ea32a6184f}{m\_dual}} + dualNumber.\mbox{\hyperlink{class_motion_planner_1_1_dual_number_a302faaea1779807a8b4b91ea32a6184f}{m\_dual}};}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00017}00017         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_motion_planner_1_1_dual_number_a2dc227e0b43b3e0710ad5ea00bfdcddc}{DualNumber}}(realNew, dualNew);}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00018}00018     \}}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00020}00020     \textcolor{comment}{// Multiplication.}}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00021}\mbox{\hyperlink{class_motion_planner_1_1_dual_number_a2c05d46720cf18720248b34f7d0a4725}{00021}}     \mbox{\hyperlink{class_motion_planner_1_1_dual_number}{DualNumber}} \mbox{\hyperlink{class_motion_planner_1_1_dual_number_a2c05d46720cf18720248b34f7d0a4725}{DualNumber::operator*}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_motion_planner_1_1_dual_number}{DualNumber}}\& dualNumber)\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00022}00022 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00023}00023         \textcolor{keywordtype}{double} realNew = \mbox{\hyperlink{class_motion_planner_1_1_dual_number_a7f1af2095879db25ddc34332d58e90ff}{m\_real}} * dualNumber.\mbox{\hyperlink{class_motion_planner_1_1_dual_number_a7f1af2095879db25ddc34332d58e90ff}{m\_real}};}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00024}00024         \textcolor{keywordtype}{double} dualNew = (\mbox{\hyperlink{class_motion_planner_1_1_dual_number_a7f1af2095879db25ddc34332d58e90ff}{m\_real}} * dualNumber.\mbox{\hyperlink{class_motion_planner_1_1_dual_number_a302faaea1779807a8b4b91ea32a6184f}{m\_dual}}) + (dualNumber.\mbox{\hyperlink{class_motion_planner_1_1_dual_number_a7f1af2095879db25ddc34332d58e90ff}{m\_real}} * \mbox{\hyperlink{class_motion_planner_1_1_dual_number_a302faaea1779807a8b4b91ea32a6184f}{m\_dual}});}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00025}00025         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_motion_planner_1_1_dual_number_a2dc227e0b43b3e0710ad5ea00bfdcddc}{DualNumber}}(realNew, dualNew);}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00026}00026     \}}
+\DoxyCodeLine{\Hypertarget{_dual_number_8cpp_source_l00027}00027 \}}
+
+\end{DoxyCode}

@@ -6,7 +6,7 @@ var hierarchy =
     [ "MotionPlanner::DualNumber", "class_motion_planner_1_1_dual_number.html", null ],
     [ "MotionPlanner::DualQuaternion", "class_motion_planner_1_1_dual_quaternion.html", null ],
     [ "MotionPlanner::Joint", "class_motion_planner_1_1_joint.html", null ],
-    [ "MotionPlanner::LCP", "struct_motion_planner_1_1_l_c_p.html", null ],
+    [ "LCPSolve::LCP", "struct_l_c_p_solve_1_1_l_c_p.html", null ],
     [ "MotionPlanner::ManipulatorMotionPlanner", "class_motion_planner_1_1_manipulator_motion_planner.html", null ],
     [ "MotionPlanner::PhysicsCore", "class_motion_planner_1_1_physics_core.html", null ],
     [ "MotionPlanner::PhysicsScene", "class_motion_planner_1_1_physics_scene.html", null ],
