@@ -12,6 +12,7 @@
 
 namespace MotionPlanner
 {
+	
 	void ContactReportCallback::onConstraintBreak(physx::PxConstraintInfo* constraints, physx::PxU32 count)
 	{
 		PX_UNUSED(constraints);

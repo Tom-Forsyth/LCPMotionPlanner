@@ -5,15 +5,12 @@
 
 namespace MotionPlanner
 {
-    // Default constructor.
     DualQuaternion::DualQuaternion()
         : m_real(Eigen::Quaterniond(1, 0, 0, 0)), m_dual(Eigen::Quaterniond(1, 0, 0, 0)) { }
 
-    // From quaternions constructor.
     DualQuaternion::DualQuaternion(const Eigen::Quaterniond& real, const Eigen::Quaterniond& dual)
         : m_real(real), m_dual(dual) { }
 
-    // From transform constructor.
     DualQuaternion::DualQuaternion(const Eigen::Matrix4d& transform)
     {
         Eigen::Matrix3d R = transform.block(0, 0, 3, 3);
@@ -26,7 +23,6 @@ namespace MotionPlanner
         m_dual = Eigen::Quaterniond(realQuat * realVec);
     }
 
-    // Addition.
     DualQuaternion DualQuaternion::operator+(const DualQuaternion& dualQuaternion) const
     {
         Eigen::Vector4d realVec = m_real.coeffs() + dualQuaternion.m_real.coeffs();
@@ -34,7 +30,6 @@ namespace MotionPlanner
         return DualQuaternion(Eigen::Quaterniond(realVec), Eigen::Quaterniond(dualVec));
     }
 
-    // Subtraction.
     DualQuaternion DualQuaternion::operator-(const DualQuaternion& dualQuaternion) const
     {
         Eigen::Vector4d realVec = m_real.coeffs() - dualQuaternion.m_real.coeffs();
@@ -42,7 +37,6 @@ namespace MotionPlanner
         return DualQuaternion(Eigen::Quaterniond(realVec), Eigen::Quaterniond(dualVec));
     }
 
-    // Multiplication.
     DualQuaternion DualQuaternion::operator*(const DualQuaternion& dualQuaternion) const
     {
         Eigen::Quaterniond realQuat = m_real * dualQuaternion.m_real;
@@ -52,19 +46,16 @@ namespace MotionPlanner
         return DualQuaternion(realQuat, dualQuat);
     }
 
-    // Conjugate.
     DualQuaternion DualQuaternion::conjugate() const
     {
         return DualQuaternion(m_real.conjugate(), m_dual.conjugate());
     }
 
-    // Magnitude.
     double DualQuaternion::norm() const
     {
         return m_real.norm();
     }
 
-    // Normalize.
     void DualQuaternion::normalize()
     {
         double norm = this->norm();
@@ -74,7 +65,6 @@ namespace MotionPlanner
         m_dual = Eigen::Quaterniond(dualVec);
     }
 
-    // Power.
     DualQuaternion DualQuaternion::pow(const double& exponent) const
     {
         // Get axis and angle from the real portion of the dual quaternion.
@@ -118,14 +108,12 @@ namespace MotionPlanner
         return DualQuaternion(realQuat, dualQuat);
     }
 
-    // Screw linear interpolation.
     DualQuaternion DualQuaternion::ScLERP(const DualQuaternion& dualQuaternionEnd, const double& tau) const
     {
         DualQuaternion dualQuatInterp = this->conjugate() * dualQuaternionEnd;
         return *this * dualQuatInterp.pow(tau);
     }
 
-    // Convert to transformation matrix.
     Eigen::Matrix4d DualQuaternion::toTransformationMatrix() const
     {
         Eigen::Matrix3d R = m_real.toRotationMatrix();
@@ -137,7 +125,6 @@ namespace MotionPlanner
         return transformation;
     }
 
-    // Convert to position & orientation quaternion concatination representation.
     Eigen::Vector<double, 7> DualQuaternion::toConcat() const
     {
         Eigen::Vector4d p4 = 2 * (m_dual * m_real.conjugate()).coeffs();

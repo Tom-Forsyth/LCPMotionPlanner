@@ -8,45 +8,45 @@
 
 namespace MotionPlanner
 {
-	// Default constructor.
 	CollisionAggregate::CollisionAggregate()
-		: m_spheres(std::vector<Sphere> {}), m_capsules(std::vector<Capsule> {}), m_boxes(std::vector<Box> {}) { }
-
-
-	// Add sphere.
-	void CollisionAggregate::addShape(const Sphere& sphere)
 	{
-		m_spheres.emplace_back(sphere);
-		m_localTransforms.emplace(sphere.getName(), sphere.getTransform());
+
 	}
 
-	// Add capsule.
-	void CollisionAggregate::addShape(const Capsule& capsule)
+	CollisionAggregate::~CollisionAggregate()
 	{
-		m_capsules.emplace_back(capsule);
-		m_localTransforms.emplace(capsule.getName(), capsule.getTransform());
+
 	}
 
-	// Add box.
-	void CollisionAggregate::addShape(const Box& box)
+	void CollisionAggregate::addShape(const Shape& shape)
 	{
-		m_boxes.emplace_back(box);
-		m_localTransforms.emplace(box.getName(), box.getTransform());
+		ShapeType shapeType = shape.getShapeType();
+		if (shapeType == ShapeType::Sphere)
+		{
+			m_spheres.emplace_back(static_cast<const Sphere&>(shape));
+		}
+		if (shapeType == ShapeType::Capsule)
+		{
+			m_capsules.emplace_back(static_cast<const Capsule&>(shape));
+		}
+		if (shapeType == ShapeType::Box)
+		{
+			m_boxes.emplace_back(static_cast<const Box&>(shape));
+		}
+
+		m_localTransforms.emplace(shape.getName(), shape.getTransform());
 	}
 
-	// Get spheres.
 	std::vector<Sphere> CollisionAggregate::getSpheres() const
 	{
 		return m_spheres;
 	}
 
-	// Get capsules.
 	std::vector<Capsule> CollisionAggregate::getCapsules() const
 	{
 		return m_capsules;
 	}
 
-	// Get boxes.
 	std::vector<Box> CollisionAggregate::getBoxes() const
 	{
 		return m_boxes;

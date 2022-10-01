@@ -8,42 +8,59 @@ namespace MotionPlanner
 {
 	class PhysicsScene;
 
+	/// @brief Base interface for a manipulator to create motion plans.
 	class SpatialManipulator
 	{
 	protected:
+		/// @brief Kinematic chain of the manipulator.
 		RigidBodyChain m_rigidBodyChain;
+
+		/// @brief Physics scene that the manipulator belongs to.
 		PhysicsScene* m_physicsScene = nullptr;
 
 	public:
-		// Constructors.
+		/// @brief Default constructor.
 		SpatialManipulator();
+
+		/// @brief Constructor at a location.
+		/// @param baseTransform Pose of base of robot.
 		SpatialManipulator(const Eigen::Matrix4d& baseTransform);
 
-		// Set base transform.
+		/// @brief Set the base transform of the robot.
+		/// @param baseTransform Robot base transform.
 		void setBaseTransform(const Eigen::Matrix4d& baseTransform);
 
-		// Set the physics scene.
+		/// @brief Set the physics scene pointer.
+		/// @param physicsScene Pointer to physics scene.
 		void setPhysicsScene(PhysicsScene* physicsScene);
 
-		// Set joint displacements.
+		/// @brief Set the joint displacements and compute forward kinematics.
+		/// @param jointDisplacements Joint displacements.
 		void setJointDisplacements(const Eigen::VectorXd& jointDisplacements);
 
-		// Get transform of end frame.
+		/// @brief Get the spatial transform of the end effector.
+		/// @return End effector spatial transform.
 		Eigen::Matrix4d getEndFrameSpatialTransform() const;
 
-		// Return the last rigid body of the chain.
+		/// @brief Get the last rigid body in the kinematic chain.
+		/// @return Last rigid body in kinematic chain.
 		RigidBody getEndFrame() const;
 
-		// Get DoF/nMovableBodies of manipulator.
+		/// @brief Get the DoF of the manipulator.
+		/// @return DoF.
 		int getDof() const;
 
-		// Get const reference to the rigid body chain.
+		/// @brief Get the rigid body chain.
+		/// @return Rigid body chain.
 		const RigidBodyChain& getRigidBodyChain() const;
 
-		// Get the current joint displacements.
-		Eigen::VectorXd getJointDisplacements() const;
+		/// @brief Get the current joint displacements.
+		/// @return Joint displacements.
+		const Eigen::VectorXd& getJointDisplacements() const;
 
-		// Generate motion plan.
+		/// @brief Generate a motion plan to the specfied pose.
+		/// @param goalTransform Goal pose.
+		/// @return Sequence of joint displacements.
 		std::vector<Eigen::VectorXd> motionPlan(const Eigen::Matrix4d& goalTransform);
 	};
 }
