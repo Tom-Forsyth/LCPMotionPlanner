@@ -9,11 +9,8 @@
 
 namespace MotionPlanner
 {
-	// Constructor.
 	RigidBody::RigidBody(const Joint& joint, const Eigen::Matrix4d& referenceSpatialTransform, const std::string& name)
-		: m_joint(joint), m_referenceSpatialTransform(referenceSpatialTransform), m_name(name), 
-		m_collisionAggregate(CollisionAggregate()), m_currentSpatialTransform(Eigen::Matrix4d::Identity()), 
-		m_currentWorldTransform(Eigen::Matrix4d::Identity()), m_contactPoint()
+		: m_joint(joint), m_referenceSpatialTransform(referenceSpatialTransform), m_name(name)
 	{
 		if (joint.getType() == JointType::Fixed)
 		{
@@ -28,155 +25,85 @@ namespace MotionPlanner
 		m_collisionAggregate.setParentBodyName(m_name);
 	}
 
-	// Add sphere collider.
-	void RigidBody::addCollider(Sphere& sphere)
+	std::string RigidBody::getName() const
 	{
-		sphere.setParentBodyName(this->getName());
-		m_collisionAggregate.addShape(sphere);
+		return m_name;
 	}
 
-
-	// Add capsule collider.
-	void RigidBody::addCollider(Capsule& capsule)
+	void RigidBody::addCollider(Shape& shape)
 	{
-		capsule.setParentBodyName(this->getName());
-		m_collisionAggregate.addShape(capsule);
+		shape.setParentBodyName(getName());
+		m_collisionAggregate.addShape(shape);
 	}
 
-	// Add box collider.
-	void RigidBody::addCollider(Box& box)
+	void RigidBody::updateColliderTransforms()
 	{
-		box.setParentBodyName(this->getName());
-		m_collisionAggregate.addShape(box);
+		m_collisionAggregate.updateColliderTransforms(m_worldTransform);
 	}
 
-	// Get relative transformation from the joint.
-	Eigen::Matrix4d RigidBody::getRelativeTransformation() const
-	{
-		return m_joint.getRelativeTransformation();
-	}
-
-	// Get reference spatial transform.
-	Eigen::Matrix4d RigidBody::getReferenceSpatialTransform() const
-	{
-		return m_referenceSpatialTransform;
-	}
-
-	// Set current spatial transform.
-	void RigidBody::setCurrentSpatialTransform(const Eigen::Matrix4d& spatialTransform)
-	{
-		m_currentSpatialTransform = spatialTransform;
-	}
-
-	// Set current world transform.
-	void RigidBody::setCurrentWorldTransform(const Eigen::Matrix4d& worldTransform)
-	{
-		m_currentWorldTransform = worldTransform;
-	}
-
-	// Set joint displacement.
-	void RigidBody::setJointDisplacement(const double& displacement)
-	{
-		m_joint.setDisplacement(displacement);
-	}
-
-	// Get reference to collision aggregate.
 	const CollisionAggregate& RigidBody::getCollisionAggregate() const
 	{
 		return m_collisionAggregate;
 	}
 
-	// Get current world transform.
-	Eigen::Matrix4d RigidBody::getCurrentWorldTransform() const
+	Eigen::Matrix4d RigidBody::getRelativeTransformation() const
 	{
-		return m_currentWorldTransform;
+		return m_joint.getRelativeTransformation();
 	}
 
-	// Get joint type.
-	JointType RigidBody::getJointType() const
+	Eigen::Matrix4d RigidBody::getReferenceSpatialTransform() const
 	{
-		return m_joint.getType();
+		return m_referenceSpatialTransform;
 	}
 
-	// Get contact point.
-	const ContactPoint& RigidBody::getContactPoint() const
+	Eigen::Matrix4d RigidBody::getSpatialTransform() const
 	{
-		return m_contactPoint;
+		return m_spatialTransform;
 	}
 
-	// Update spatial jacobian.
-	void RigidBody::setSpatialJacobian(const Eigen::MatrixXd& spatialJacobian)
+	void RigidBody::setSpatialTransform(const Eigen::Matrix4d& spatialTransform)
 	{
-		m_spatialJacobian = spatialJacobian;
+		m_spatialTransform = spatialTransform;
 	}
 
-	// Get joint twist coordinate.
-	Eigen::Vector<double, 6> RigidBody::getJointTwistCoord() const
+	Eigen::Matrix4d RigidBody::getWorldTransform() const
 	{
-		return m_joint.getTwistCoord();
+		return m_worldTransform;
 	}
 
-	// Determine if the body is movable.
-	bool RigidBody::isMovable() const
+	void RigidBody::setWorldTransform(const Eigen::Matrix4d& worldTransform)
 	{
-		return m_isMovableBody;
+		m_worldTransform = worldTransform;
 	}
 
-	// Set the contact jacobian.
-	void RigidBody::setContactJacobian(const Eigen::MatrixXd& contactJacobian)
-	{
-		m_contactJacobian = contactJacobian;
-	}
-
-	// Get the spatial jacobian.
-	Eigen::MatrixXd RigidBody::getSpatialJacobian() const
-	{
-		return m_spatialJacobian;
-	}
-
-	// Get the contact jacobian.
-	Eigen::MatrixXd RigidBody::getContactJacobian() const
-	{
-		return m_contactJacobian;
-	}
-
-	// Update the contact jacobian.
-	void RigidBody::updateContactJacobian()
-	{
-		// Extract contact point in world frame and convert to spatial frame.
-		const Eigen::Vector3d& contactPointWorld = m_contactPoint.m_point;
-		Eigen::Vector4d contactPointWorldHomo{ contactPointWorld[0], contactPointWorld[1], contactPointWorld[2], 1 };
-		Eigen::Vector3d contactPointSpatial = (m_currentSpatialTransform * contactPointWorldHomo).head(3);
-
-		// Get analytic jacobian of the contact point (contact jacobian) using the point and this frames spatial jacobian.
-		m_contactJacobian = Kinematics::spatialToAnalyticJacobian(m_spatialJacobian, contactPointSpatial);
-	}
-
-	// Get the current spatial transform.
-	Eigen::Matrix4d RigidBody::getCurrentSpatialTransform() const
-	{
-		return m_currentSpatialTransform;
-	}
-
-	// Get joint displacement.
 	double RigidBody::getJointDisplacement() const
 	{
 		return m_joint.getDisplacement();
 	}
 
-	void RigidBody::updateColliderTransforms()
+	void RigidBody::setJointDisplacement(const double& displacement)
 	{
-		m_collisionAggregate.updateColliderTransforms(m_currentWorldTransform);
+		m_joint.setDisplacement(displacement);
 	}
 
-	void RigidBody::deactivateContactPoint()
+	JointType RigidBody::getJointType() const
 	{
-		m_contactPoint.m_isActive = false;
+		return m_joint.getType();
 	}
 
-	std::string RigidBody::getName() const
+	bool RigidBody::isMovable() const
 	{
-		return m_name;
+		return m_isMovableBody;
+	}
+
+	Eigen::Vector<double, 6> RigidBody::getJointTwistCoord() const
+	{
+		return m_joint.getTwistCoord();
+	}
+
+	const ContactPoint& RigidBody::getContactPoint() const
+	{
+		return m_contactPoint;
 	}
 
 	void RigidBody::setContactPoint(const ContactPoint& contactPoint)
@@ -184,4 +111,39 @@ namespace MotionPlanner
 		m_contactPoint = contactPoint;
 	}
 
+	void RigidBody::deactivateContactPoint()
+	{
+		m_contactPoint.m_isActive = false;
+	}
+
+	Eigen::MatrixXd RigidBody::getContactJacobian() const
+	{
+		return m_contactJacobian;
+	}
+
+	void RigidBody::setContactJacobian(const Eigen::MatrixXd& contactJacobian)
+	{
+		m_contactJacobian = contactJacobian;
+	}
+
+	void RigidBody::updateContactJacobian()
+	{
+		// Extract contact point in world frame and convert to spatial frame.
+		const Eigen::Vector3d& contactPointWorld = m_contactPoint.m_point;
+		Eigen::Vector4d contactPointWorldHomo{ contactPointWorld[0], contactPointWorld[1], contactPointWorld[2], 1 };
+		Eigen::Vector3d contactPointSpatial = (m_spatialTransform * contactPointWorldHomo).head(3);
+
+		// Get analytic jacobian of the contact point (contact jacobian) using the point and this frames spatial jacobian.
+		m_contactJacobian = Kinematics::spatialToAnalyticJacobian(m_spatialJacobian, contactPointSpatial);
+	}
+
+	Eigen::MatrixXd RigidBody::getSpatialJacobian() const
+	{
+		return m_spatialJacobian;
+	}
+
+	void RigidBody::setSpatialJacobian(const Eigen::MatrixXd& spatialJacobian)
+	{
+		m_spatialJacobian = spatialJacobian;
+	}
 }

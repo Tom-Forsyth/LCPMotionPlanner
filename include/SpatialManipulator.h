@@ -56,7 +56,7 @@ namespace MotionPlanner
 
 		/// @brief Get the current joint displacements.
 		/// @return Joint displacements.
-		const Eigen::VectorXd& getJointDisplacements() const;
+		Eigen::VectorXd getJointDisplacements() const;
 
 		/// @brief Generate a motion plan to the specfied pose.
 		/// @param goalTransform Goal pose.

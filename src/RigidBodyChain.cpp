@@ -12,11 +12,6 @@ namespace MotionPlanner
 		: m_rigidBodies(std::vector<RigidBody> {}), m_baseTransform(Eigen::Matrix4d::Identity()),
 		m_nBodies(0), m_nMovableBodies(0) { }
 
-	// Rigid body vector constructor.
-	RigidBodyChain::RigidBodyChain(const std::vector<RigidBody>& rigidBodies)
-		: m_rigidBodies(rigidBodies), m_baseTransform(Eigen::Matrix4d::Identity()),
-		m_nBodies(0), m_nMovableBodies(0) { }
-
 	// Set base transform.
 	void RigidBodyChain::setBaseTransform(const Eigen::Matrix4d& baseTransform)
 	{
@@ -66,8 +61,8 @@ namespace MotionPlanner
 			displacementProduct *= body.getRelativeTransformation();
 			Eigen::Matrix4d spatialTransform = displacementProduct * body.getReferenceSpatialTransform();
 			Eigen::Matrix4d worldTransform = m_baseTransform * spatialTransform;
-			body.setCurrentSpatialTransform(spatialTransform);
-			body.setCurrentWorldTransform(worldTransform);
+			body.setSpatialTransform(spatialTransform);
+			body.setWorldTransform(worldTransform);
 		}
 	}
 
@@ -161,7 +156,7 @@ namespace MotionPlanner
 	// Get end frame transform.
 	Eigen::Matrix4d RigidBodyChain::getEndFrameSpatialTransform() const
 	{
-		return m_rigidBodies[m_nBodies - 1].getCurrentSpatialTransform();
+		return m_rigidBodies[m_nBodies - 1].getSpatialTransform();
 	}
 
 	// Get end frame.
