@@ -29,13 +29,9 @@ namespace MotionPlanner
 		/// @brief Update the spatial jacobian for each body.
 		void updateSpatialJacobians();
 
-
-
 		/// @brief Update the transforms of the collision actors in each body.
 		/// @bug Delete this and move functionality to the rigid body.
 		void updateColliderTransforms();
-
-
 
 	public:
 		/// @brief Constructor.
@@ -49,9 +45,16 @@ namespace MotionPlanner
 		/// @param rigidBody Robot link.
 		void addBody(const RigidBody& rigidBody);
 
+		/// @brief Perform post initialization tasks such as determining jacobian dimensions and forward kinematics.
+		void postInit();
+
 		/// @brief Set the joint displacements of the chain.
 		/// @param jointDisplacements Joint displacements.
 		void setJointDisplacements(const Eigen::VectorXd& jointDisplacements);
+
+		/// @brief Get the joint displacements of the kinematic chain.
+		/// @return Joint displacements.
+		Eigen::VectorXd getJointDisplacements() const;
 
 		/// @brief Get a vector of rigid bodies in the chain.
 		/// @return Vector of rigid bodies.
@@ -73,10 +76,6 @@ namespace MotionPlanner
 		/// @return End effector.
 		RigidBody getEndFrame() const;
 
-		/// @brief Get the joint displacements of the kinematic chain.
-		/// @return Joint displacements.
-		Eigen::VectorXd getJointDisplacements() const;
-
 		/// @brief Deactivate the contacts in each rigid body.
 		/// @bug Move functionality to the rigid body.
 		void deactivateContacts();
@@ -88,8 +87,5 @@ namespace MotionPlanner
 		/// @brief Update contact jacobians for each body.
 		/// @bug Delete this, and move functionality to RigidBody::setContactPoint().
 		void updateContactJacobians();
-
-		/// @brief Perform post initialization tasks such as determining jacobian dimensions and forward kinematics.
-		void postInit();
 	};
 }

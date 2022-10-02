@@ -11,6 +11,32 @@ namespace MotionPlanner
         computeTwist();
     }
 
+    double Joint::getDisplacement() const
+    {
+        return m_displacement;
+    }
+
+    void Joint::setDisplacement(const double& displacement)
+    {
+        m_displacement = displacement;
+        computeRelativeTransformation();
+    }
+
+    Eigen::Matrix4d Joint::getRelativeTransformation() const
+    {
+        return m_relativeTransformation;
+    }
+
+    JointType Joint::getType() const
+    {
+        return m_type;
+    }
+
+    Eigen::Vector<double, 6> Joint::getTwistCoord() const
+    {
+        return m_twistCoord;
+    }
+
     void Joint::computeTwistCoord()
     {
         if (m_type == JointType::Revolute)
@@ -44,31 +70,5 @@ namespace MotionPlanner
         {
             m_relativeTransformation.block(0, 3, 3, 1) = m_twistCoord.segment(3, 3) * m_displacement;
         }
-    }
-
-    double Joint::getDisplacement() const
-    {
-        return m_displacement;
-    }
-
-    void Joint::setDisplacement(const double& displacement)
-    {
-        m_displacement = displacement;
-        computeRelativeTransformation();
-    }
-
-    Eigen::Matrix4d Joint::getRelativeTransformation() const
-    {
-        return m_relativeTransformation;
-    }
-
-    JointType Joint::getType() const
-    {
-        return m_type;
-    }
-
-    Eigen::Vector<double, 6> Joint::getTwistCoord() const
-    {
-        return m_twistCoord;
     }
 }

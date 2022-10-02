@@ -38,6 +38,10 @@ namespace MotionPlanner
 		/// @param jointDisplacements Joint displacements.
 		void setJointDisplacements(const Eigen::VectorXd& jointDisplacements);
 
+		/// @brief Get the current joint displacements.
+		/// @return Joint displacements.
+		Eigen::VectorXd getJointDisplacements() const;
+
 		/// @brief Get the spatial transform of the end effector.
 		/// @return End effector spatial transform.
 		Eigen::Matrix4d getEndFrameSpatialTransform() const;
@@ -53,10 +57,6 @@ namespace MotionPlanner
 		/// @brief Get the rigid body chain.
 		/// @return Rigid body chain.
 		const RigidBodyChain& getRigidBodyChain() const;
-
-		/// @brief Get the current joint displacements.
-		/// @return Joint displacements.
-		Eigen::VectorXd getJointDisplacements() const;
 
 		/// @brief Generate a motion plan to the specfied pose.
 		/// @param goalTransform Goal pose.

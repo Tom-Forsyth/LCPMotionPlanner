@@ -7,19 +7,16 @@
 
 namespace MotionPlanner
 {
-	// Default constructor.
 	RigidBodyChain::RigidBodyChain()
 		: m_rigidBodies(std::vector<RigidBody> {}), m_baseTransform(Eigen::Matrix4d::Identity()),
 		m_nBodies(0), m_nMovableBodies(0) { }
 
-	// Set base transform.
 	void RigidBodyChain::setBaseTransform(const Eigen::Matrix4d& baseTransform)
 	{
 		m_baseTransform = baseTransform;
 		forwardKinematics();
 	}
 
-	// Add rigid body.
 	void RigidBodyChain::addBody(const RigidBody& rigidBody)
 	{
 		m_rigidBodies.emplace_back(rigidBody);
@@ -32,7 +29,6 @@ namespace MotionPlanner
 		}
 	}
 
-	// Called to finish initialization once chain is created.
 	void RigidBodyChain::postInit()
 	{
 		// Initialize jacobians with zero matrices.
@@ -49,24 +45,6 @@ namespace MotionPlanner
 
 	}
 
-	// Forward kinematics.
-	void RigidBodyChain::forwardKinematics()
-	{
-		// Keep running product of displacements rather than storing each.
-		Eigen::Matrix4d displacementProduct = Eigen::Matrix4d::Identity();
-
-		// Loop over each body in the chain.
-		for (RigidBody& body : m_rigidBodies)
-		{
-			displacementProduct *= body.getRelativeTransformation();
-			Eigen::Matrix4d spatialTransform = displacementProduct * body.getReferenceSpatialTransform();
-			Eigen::Matrix4d worldTransform = m_baseTransform * spatialTransform;
-			body.setSpatialTransform(spatialTransform);
-			body.setWorldTransform(worldTransform);
-		}
-	}
-
-	// Set joint displacements.
 	void RigidBodyChain::setJointDisplacements(const Eigen::VectorXd& jointDisplacements)
 	{
 		// Set displacement for each body's joint.
@@ -90,82 +68,6 @@ namespace MotionPlanner
 		updateColliderTransforms();
 	}
 
-	// Get reference to rigid bodies.
-	const std::vector<RigidBody>& RigidBodyChain::getRigidBodies() const
-	{
-		return m_rigidBodies;
-	}
-
-	// Get number of bodies.
-	size_t RigidBodyChain::getNBodies() const
-	{
-		return m_nBodies;
-	}
-
-	// Get number of movable bodies.
-	size_t RigidBodyChain::getNMovableBodies() const
-	{
-		return m_nMovableBodies;
-	}
-
-	// Update spatial jacobian for each body.
-	void RigidBodyChain::updateSpatialJacobians()
-	{
-		// Loop over each body, adding columns for movable joints and updating the member.
-		Eigen::MatrixXd spatialJacobian = Eigen::MatrixXd::Zero(6, m_nMovableBodies);
-		Eigen::Matrix4d displacementProduct = Eigen::Matrix4d::Identity();
-		int bodyIndex = 0;
-		for (RigidBody& body : m_rigidBodies)
-		{
-			if (body.isMovable())
-			{
-				// Compute column of jacobian.
-				Eigen::Vector<double, 6> twistCoord = body.getJointTwistCoord();
-				if (bodyIndex == 0)
-				{
-					spatialJacobian.col(bodyIndex) = twistCoord;
-				}
-				else
-				{
-					spatialJacobian.col(bodyIndex) = Kinematics::adjoint(displacementProduct) * twistCoord;
-				}
-
-				// Compute next iteration's product of i-1.
-				displacementProduct *= body.getRelativeTransformation();
-				bodyIndex++;
-			}
-
-			// Set the body's spatial jacobian with zero padding.
-			body.setSpatialJacobian(spatialJacobian);
-		}
-	}
-
-	// Update contact jacobians for the active contacts.
-	void RigidBodyChain::updateContactJacobians()
-	{
-		for (RigidBody& body : m_rigidBodies)
-		{
-			const ContactPoint& contactPoint = body.getContactPoint();
-			if (contactPoint.m_isActive)
-			{
-				body.updateContactJacobian();
-			}
-		}
-	}
-
-	// Get end frame transform.
-	Eigen::Matrix4d RigidBodyChain::getEndFrameSpatialTransform() const
-	{
-		return m_rigidBodies[m_nBodies - 1].getSpatialTransform();
-	}
-
-	// Get end frame.
-	RigidBody RigidBodyChain::getEndFrame() const
-	{
-		return m_rigidBodies[m_nBodies - 1];
-	}
-
-	// Get the current joint displacements.
 	Eigen::VectorXd RigidBodyChain::getJointDisplacements() const
 	{
 		Eigen::VectorXd jointDisplacements = Eigen::VectorXd::Zero(m_nMovableBodies);
@@ -182,12 +84,29 @@ namespace MotionPlanner
 		return jointDisplacements;
 	}
 
-	void RigidBodyChain::updateColliderTransforms()
+	const std::vector<RigidBody>& RigidBodyChain::getRigidBodies() const
 	{
-		for (RigidBody& rigidBody : m_rigidBodies)
-		{
-			rigidBody.updateColliderTransforms();
-		}
+		return m_rigidBodies;
+	}
+
+	size_t RigidBodyChain::getNBodies() const
+	{
+		return m_nBodies;
+	}
+
+	size_t RigidBodyChain::getNMovableBodies() const
+	{
+		return m_nMovableBodies;
+	}
+
+	Eigen::Matrix4d RigidBodyChain::getEndFrameSpatialTransform() const
+	{
+		return m_rigidBodies[m_nBodies - 1].getSpatialTransform();
+	}
+
+	RigidBody RigidBodyChain::getEndFrame() const
+	{
+		return m_rigidBodies[m_nBodies - 1];
 	}
 
 	void RigidBodyChain::deactivateContacts()
@@ -219,4 +138,70 @@ namespace MotionPlanner
 		}
 	}
 
+	void RigidBodyChain::updateContactJacobians()
+	{
+		for (RigidBody& body : m_rigidBodies)
+		{
+			const ContactPoint& contactPoint = body.getContactPoint();
+			if (contactPoint.m_isActive)
+			{
+				body.updateContactJacobian();
+			}
+		}
+	}
+
+	void RigidBodyChain::forwardKinematics()
+	{
+		// Keep running product of displacements rather than storing each.
+		Eigen::Matrix4d displacementProduct = Eigen::Matrix4d::Identity();
+
+		// Loop over each body in the chain.
+		for (RigidBody& body : m_rigidBodies)
+		{
+			displacementProduct *= body.getRelativeTransformation();
+			Eigen::Matrix4d spatialTransform = displacementProduct * body.getReferenceSpatialTransform();
+			Eigen::Matrix4d worldTransform = m_baseTransform * spatialTransform;
+			body.setSpatialTransform(spatialTransform);
+			body.setWorldTransform(worldTransform);
+		}
+	}
+
+	void RigidBodyChain::updateSpatialJacobians()
+	{
+		// Loop over each body, adding columns for movable joints and updating the member.
+		Eigen::MatrixXd spatialJacobian = Eigen::MatrixXd::Zero(6, m_nMovableBodies);
+		Eigen::Matrix4d displacementProduct = Eigen::Matrix4d::Identity();
+		int bodyIndex = 0;
+		for (RigidBody& body : m_rigidBodies)
+		{
+			if (body.isMovable())
+			{
+				// Compute column of jacobian.
+				Eigen::Vector<double, 6> twistCoord = body.getJointTwistCoord();
+				if (bodyIndex == 0)
+				{
+					spatialJacobian.col(bodyIndex) = twistCoord;
+				}
+				else
+				{
+					spatialJacobian.col(bodyIndex) = Kinematics::adjoint(displacementProduct) * twistCoord;
+				}
+
+				// Compute next iteration's product of i-1.
+				displacementProduct *= body.getRelativeTransformation();
+				bodyIndex++;
+			}
+
+			// Set the body's spatial jacobian with zero padding.
+			body.setSpatialJacobian(spatialJacobian);
+		}
+	}
+
+	void RigidBodyChain::updateColliderTransforms()
+	{
+		for (RigidBody& rigidBody : m_rigidBodies)
+		{
+			rigidBody.updateColliderTransforms();
+		}
+	}
 }

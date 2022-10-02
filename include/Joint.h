@@ -53,13 +53,13 @@ namespace MotionPlanner
 		/// @param point Origin.
 		Joint(const JointType& type, const Eigen::Vector3d& axis, const Eigen::Vector3d& point);
 
-		/// @brief Set joint displacement.
-		/// @param displacement Joint displacement.
-		void setDisplacement(const double& displacement);
-
 		/// @brief Get joint displacement.
 		/// @return Joint displacement.
 		double getDisplacement() const;
+
+		/// @brief Set joint displacement.
+		/// @param displacement Joint displacement.
+		void setDisplacement(const double& displacement);
 
 		/// @brief Get relative transformation.
 		/// @return Relative transformation.

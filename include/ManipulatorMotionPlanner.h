@@ -1,64 +1,85 @@
 #pragma once
 
 #include "DualQuaternion.h"
-#include <Eigen/Dense>
-#include <vector>
 #include "RigidBody.h"
 #include "LCPSolve.h"
+#include "MotionPlanningParameters.h"
+#include <Eigen/Dense>
+#include <vector>
 
 namespace MotionPlanner
 {
 	class SpatialManipulator;
 
+	/// @brief ScLERP motion planner with LCP collision avoidance. 
 	class ManipulatorMotionPlanner
 	{
 	private:
+		/// @brief Pointer to the spatial manipulator to generate motion plan with.
 		SpatialManipulator* m_pSpatialManipulator = nullptr;
+
+		/// @brief Motion plan.
 		std::vector<Eigen::VectorXd> m_plan;
 
-		// Plan parameters.
-		bool m_isRunning = true;
-		size_t m_maxIterations = 3000;
-		double m_tau = 0.01;
-		double m_timeStep = 0.01;
-		double m_safetyDistance = 0.01;
-		double m_maxScLERPDisplacementChange = 0.001;
-		double m_maxCollisionDisplacementChange = 0.001;
-		double m_maxTotalDisplacementChange = 0.005;
-		bool m_tauIsMax = false;
-		double m_positionTolerance = 0.02;
-		double m_quatTolerance = 0.02;
+		/// @brief Struct with motion planning parameters.
+		MotionPlanningParameters m_params;
 
-		// Manipulator information.
-		RigidBody m_endFrame;
+		/// @brief Flag to determine if the plan is still computing.
+		bool m_isRunning = true;
+
+		/// @brief Degree of freedom of manipulator.
 		int m_dof;
-		Eigen::Matrix4d m_goalTransform;
-		Eigen::Matrix4d m_currentTransform;
-		DualQuaternion m_currentDualQuat;
+
+		/// @brief Goal pose transform.
+		const Eigen::Matrix4d m_goalTransform;
+
+		/// @brief Goal pose dual quaternion.
 		DualQuaternion m_goalDualQuat;
-		Eigen::Vector<double, 7> m_currentConcat;
+
+		/// @brief Goal pose position/quaternion.
 		Eigen::Vector<double, 7> m_goalConcat;
 
-	public:
-		// Constructor.
-		ManipulatorMotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform);
+		/// @brief Current pose transform.
+		Eigen::Matrix4d m_currentTransform;
 
-		// Get the change in joint displacements before correction using ScLERP.
+		/// @brief Current pose dual quaternion.
+		DualQuaternion m_currentDualQuat;
+		
+		/// @brief Current pose position/quaternion.
+		Eigen::Vector<double, 7> m_currentConcat;
+
+		/// @brief End frame of manipulator.
+		RigidBody m_endFrame;
+
+		/// @brief Compute the change in joint displacements due to ScLERP.
+		/// @return Joint displacements.
 		Eigen::VectorXd getJointDisplacementChange();
 
-		// Get the null space term.
-		double getNullSpaceTerm() const;
-
-		// Formulate and solve LCP to get the compensating velocities and get joint displacements.
+		/// @brief Formulate and solve LCP to get the joint displacement change to avoid obstacles.
 		Eigen::VectorXd getCollisionDisplacementChange(const Eigen::VectorXd& displacementChange) const;
 
-		// Add joint displacements and ensure they respect the linearization assumption.
+		/// @brief Add the ScLERP and collision avoidance joint displacements and ensure they respect linearization.
+		/// @param displacementChange Change in displacements due to ScLERP.
+		/// @param collisionDisplacementChange Change in displacements due to collision avoidance.
+		/// @return Total joint displacement change for the current step.
 		Eigen::VectorXd getTotalDisplacementChange(const Eigen::VectorXd& displacementChange, const Eigen::VectorXd& collisionDisplacementChange);
 
-		// Generate motion plan.
+		/// @brief Get the null space term.
+		/// @return Null space term.
+		/// @bug Currently not implemented, returns 1.
+		double getNullSpaceTerm() const;
+
+	public:
+		/// @brief Constructor.
+		/// @param pSpatialManipulator Pointer to the spatial manipulator to generate the plan with.
+		/// @param goalTransform Goal transform of the end-effector.
+		ManipulatorMotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform);
+
+		/// @brief Generate motion plan.
 		void computePlan();
 
-		// Get the motion plan.
+		/// @brief Get the motion plan.
+		/// @return Vector of joint displacements.
 		const std::vector<Eigen::VectorXd>& getPlan() const;
 	};
 }
