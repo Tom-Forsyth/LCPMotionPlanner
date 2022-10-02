@@ -2,3 +2,5 @@
 .vscode/
 bin/
 build/
+docs/doxygen
+!docs/doxygen/Doxyfile
