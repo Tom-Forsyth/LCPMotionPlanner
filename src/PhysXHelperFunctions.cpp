@@ -35,15 +35,15 @@ namespace MotionPlanner
 	physx::PxCapsuleGeometry getPxCapsuleGeometry(const Capsule& capsule)
 	{
 		const physx::PxReal radius = static_cast<physx::PxReal>(capsule.m_radius);
-		const physx::PxReal halfHeight = static_cast<physx::PxReal>(capsule.m_halfHeight);
-		return physx::PxCapsuleGeometry(radius, halfHeight);
+		const physx::PxReal m_halfHeight = static_cast<physx::PxReal>(capsule.m_halfHeight);
+		return physx::PxCapsuleGeometry(radius, m_halfHeight);
 	}
 
 	physx::PxBoxGeometry getPxBoxGeometry(const Box& box)
 	{
-		const physx::PxReal xRadius = static_cast<physx::PxReal>(box.m_radii(0));
-		const physx::PxReal yRadius = static_cast<physx::PxReal>(box.m_radii(1));
-		const physx::PxReal zRadius = static_cast<physx::PxReal>(box.m_radii(2));
+		const physx::PxReal xRadius = static_cast<physx::PxReal>(box.m_halfExtents(0));
+		const physx::PxReal yRadius = static_cast<physx::PxReal>(box.m_halfExtents(1));
+		const physx::PxReal zRadius = static_cast<physx::PxReal>(box.m_halfExtents(2));
 		return physx::PxBoxGeometry(xRadius, yRadius, zRadius);
 	}
 

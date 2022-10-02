@@ -4,25 +4,40 @@
 
 namespace MotionPlanner
 {
-    // Robotics kinematics functions.
+    /// @brief Robotics kinematics functions.
     namespace Kinematics
     {
-        // Compute skew-symmetrix form of an axis.
+        /// @brief Compute skew symmetric form of an axis.
+        /// @param w Axis.
+        /// @return Skew symmetric form of axis.
         Eigen::Matrix3d skew(const Eigen::Vector3d& w);
 
-        // Compute the rotation matrix from axis-angle representation.
+        /// @brief Compute the rotation matrix from axis-angle representation.
+        /// @param axis Axis.
+        /// @param angle Angle.
+        /// @return Rotation matrix.
         Eigen::Matrix3d AxisAngletoRot(const Eigen::Vector3d& axis, double angle);
 
-        // Compute the adjoint matrix of a transformation matrix.
+        /// @brief Compute the adjoint matrix of a transformation matrix.
+        /// @param G Transformation matrix.
+        /// @return Adjoint form of transformation matrix.
         Eigen::Matrix<double, 6, 6> adjoint(const Eigen::Matrix4d& G);
 
-        // Compute an efficient inverse of a transformation inverse.
+        /// @brief Compute an efficient inverse of a transformation matrix.
+        /// @param transform Transformation matrix.
+        /// @return Inverse transformation.
         Eigen::Matrix4d transformInverse(const Eigen::Matrix4d& transform);
 
-        // Convert spatial jacobian to analytic jacobian at a point in the space frame.
+        /// @brief Convert the spatial jacobian to an analytic jacobian at a given point represented in the spatial frame.
+        /// @param spatialJacobian Spatial jacobian.
+        /// @param point Point in spatial frame at which to find the analytic jacobian. 
+        /// @return Analytic jacobian.
         Eigen::MatrixXd spatialToAnalyticJacobian(const Eigen::MatrixXd& spatialJacobian, const Eigen::Vector3d& point);
 
-        /*FILL THIS IN LATER*/
+        /// @brief Calculate jacobian to convert gammaDot to thetaDot.
+        /// @param J Spatial jacobian of end-effector.
+        /// @param pose Transform of end-effector.
+        /// @return B matrix to convert gammaDot to thetaDot.
         Eigen::MatrixXd BMatrix(const Eigen::MatrixXd& J, const Eigen::Matrix4d& pose);
     }
 }

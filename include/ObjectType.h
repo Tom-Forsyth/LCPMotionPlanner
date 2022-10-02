@@ -2,7 +2,7 @@
 
 namespace MotionPlanner
 {
-	// Flag to determine object type for collision filtering.
+	/// @brief Flag to determine object type for collision filtering.
 	enum class ObjectType
 	{
 		Unassigned,

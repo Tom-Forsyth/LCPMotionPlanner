@@ -58,6 +58,7 @@
     <ClInclude Include="include\Kinematics.h" />
     <ClInclude Include="include\LCPSolve.h" />
     <ClInclude Include="include\ManipulatorMotionPlanner.h" />
+    <ClInclude Include="include\MotionPlanningParameters.h" />
     <ClInclude Include="include\ObjectType.h" />
     <ClInclude Include="include\PhysicsCore.h" />
     <ClInclude Include="include\PhysicsScene.h" />

@@ -9,7 +9,6 @@ namespace MotionPlanner
 #ifndef NDEBUG
 		bEnablePVD = true;
 #endif
-		bEnablePVD = true;
 	}
 
 	PhysicsCore::~PhysicsCore()

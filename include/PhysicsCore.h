@@ -8,60 +8,63 @@ namespace MotionPlanner
 {
 	class PhysicsScene;
 
-	// Class to create core PhysX instance.
+	/// @brief Class to create core PhysX instance.
 	class PhysicsCore
 	{
 	private:
-		// Allocator.
+		/// @brief PhysX memory allocator.
 		physx::PxAllocatorCallback* m_allocator = nullptr;
 
-		// Error callback.
+		/// @brief PhysX error callback.
 		physx::PxErrorCallback* m_errorCallback = nullptr;
 
-		// Tolerance scale.
+		/// @brief PhysX tolerance scale.
 		physx::PxTolerancesScale* m_toleranceScale = nullptr;
 
-		// Foundation.
+		/// @brief PhysX foundation.
 		physx::PxFoundation* m_foundation = nullptr;
 
-		// Physics factory class.
+		/// @brief PhysX physics factory class.
 		physx::PxPhysics* m_physics = nullptr;
 
-		// CPU dispatcher.
+		/// @brief PhysX CPU dispatcher.
 		physx::PxCpuDispatcher* m_dispatcher = nullptr;
 
-		// PhysX Visual Debugger instance.
+		/// @brief PhysX visual debugger instance.
 		physx::PxPvd* m_pvd = nullptr;
 
-		// Number of threads to give to PhysX.
+		/// @brief Number of threads to run PhysX simulation on.
 		physx::PxU32 m_numThreads = 1;
 
-		// Bool to determine if we own the PhysX instance or if external software does.
+		/// @brief Flag to determine if this class created the PhysX instance, or if we are simply connecting to an applications PhysX instance.
 		bool bOwnPhysicsInstance = false;
 
-		// Bool to determine if PhysicsCore has been initialized.
+		/// @brief Flag to determine if PhysX has been initialized.
 		bool bIsInitialized = false;
 
-		// Bool to determine if we want to setup PVD.
+		/// @brief Flag to determine if PVD should be connected to.
 		bool bEnablePVD = false;
 
-		// Map of the created scenes.
+		/// @brief Scenes belonging to this PhysX instance.
 		std::map<std::string, PhysicsScene*> m_scenes;
 
 	public:
-		// Constructor.
+		/// @brief Constructor.
 		PhysicsCore();
 
-		// Destructor.
+		/// @brief Destructor.
 		~PhysicsCore();
 
-		// Create PhysX instance.
+		/// @brief Create PhysX instance.
 		void createPhysicsCore();
 
-		// TODO: Connect to Unreal Engine's PhysX instance.
+		/// @brief Connect to Unreal Engine's PhysX instance.
+		/// @bug Not yet implemented.
 		void connectPhysicsCore();
 
-		// Create a Physics Scene.
+		/// @brief Create a physics scene.
+		/// @param sceneName Name of physics scene.
+		/// @return Pointer to physics scene.
 		PhysicsScene* createPhysicsScene(const std::string& sceneName);
 	};
 }

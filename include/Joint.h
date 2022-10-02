@@ -4,6 +4,7 @@
 
 namespace MotionPlanner
 {
+	/// @brief Joint type classification.
 	enum class JointType
 	{
 		Revolute,
@@ -11,40 +12,65 @@ namespace MotionPlanner
 		Fixed
 	};
 
+	/// @brief Joint.
 	class Joint
 	{
 	private:
-		// Members.
+		/// @brief Joint type.
 		JointType m_type;
+
+		/// @brief Joint axis.
 		Eigen::Vector3d m_axis;
+
+		/// @brief Position of joint.
 		Eigen::Vector3d m_point;
-		double m_displacement;
-		Eigen::Vector<double, 6> m_twistCoord;
-		Eigen::Matrix4d m_twist;
-		Eigen::Matrix4d m_relativeTransformation;
 
-	public:
-		// Constructor.
-		Joint(const JointType& type, const Eigen::Vector3d& axis, const Eigen::Vector3d& point);
+		/// @brief Joint displacement.
+		double m_displacement = 0;
 
-		// Compute twist coordinate and twist.
+		/// @brief Twist coordinate of joint.
+		Eigen::Vector<double, 6> m_twistCoord = Eigen::Vector<double, 6>::Zero();
+
+		/// @brief Joint twist.
+		Eigen::Matrix4d m_twist = Eigen::Matrix4d::Zero();
+
+		/// @brief Relative transformation computed from exponential formula of joint twist.
+		Eigen::Matrix4d m_relativeTransformation = Eigen::Matrix4d::Identity();
+
+		/// @brief Compute twist coordinate.
 		void computeTwistCoord();
+
+		/// @brief Compute twist.
 		void computeTwist();
 
-		// Compute displacement transformation.
+		/// @brief Compute relative transfmation using exponential formula.
 		void computeRelativeTransformation();
-		Eigen::Matrix4d getRelativeTransformation() const;
 
-		// Set joint displacement.
+	public:
+		/// @brief Constructor.
+		/// @param type Joint type.
+		/// @param axis Joint axis.
+		/// @param point Origin.
+		Joint(const JointType& type, const Eigen::Vector3d& axis, const Eigen::Vector3d& point);
+
+		/// @brief Get joint displacement.
+		/// @return Joint displacement.
+		double getDisplacement() const;
+
+		/// @brief Set joint displacement.
+		/// @param displacement Joint displacement.
 		void setDisplacement(const double& displacement);
 
-		// Get type.
+		/// @brief Get relative transformation.
+		/// @return Relative transformation.
+		Eigen::Matrix4d getRelativeTransformation() const;
+
+		/// @brief Get joint type.
+		/// @return Joint type.
 		JointType getType() const;
 
-		// Get twist coordinate.
+		/// @brief Get twist coordinate.
+		/// @return Twist coordinate.
 		Eigen::Vector<double, 6> getTwistCoord() const;
-
-		// Get displacement.
-		double getDisplacement() const;
 	};
 }

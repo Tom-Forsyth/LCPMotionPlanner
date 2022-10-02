@@ -7,13 +7,19 @@
 
 namespace MotionPlanner
 {
+	/// @brief Box geometry actor.
 	class Box : public Shape
 	{
 	public:
-		// Vector of X, Y, and Z direction radii.
-		Eigen::Vector3d m_radii;
+		/// @brief Half extents of the box.
+		Eigen::Vector3d m_halfExtents;
 
-		// Origin + RPY constructor.
-		Box(const Eigen::Vector3d& origin, const Eigen::Vector3d& rollPitchYaw, const Eigen::Vector3d& radii, const std::string& name, ObjectType objectType);
+		/// @brief Constructor.
+		/// @param origin Position of actor.
+		/// @param rollPitchYaw Orientation of actor.
+		/// @param halfExtents Half extents/radii of box.
+		/// @param name Name of actor.
+		/// @param objectType Object type classification (Robot, Obstacle, etc).
+		Box(const Eigen::Vector3d& origin, const Eigen::Vector3d& rollPitchYaw, const Eigen::Vector3d& halfExtents, const std::string& name, ObjectType objectType);
 	};
 }
