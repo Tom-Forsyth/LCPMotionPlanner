@@ -1,6 +1,6 @@
 #include <iostream>
 #include <Eigen/Dense>
-#include "PxPhysicsAPI.h"
+//#include "PxPhysicsAPI.h"
 #include <chrono>
 
 #include "Sphere.h"
@@ -10,12 +10,13 @@
 #include "FrankaPanda.h"
 #include "ObjectType.h"
 
-#include "PhysicsCore.h"
-#include "PhysicsScene.h"
+//#include "PhysicsCore.h"
+//#include "PhysicsScene.h"
 
 using namespace MotionPlanner;
 
 void testFrankaPanda();
+void testCMake();
 
 int main()
 {
@@ -27,13 +28,21 @@ int main()
 	rand();
 
 	// Test planner.
-	testFrankaPanda();
+	//testFrankaPanda();
+	testCMake();
 
 	return 0;
 }
 
+void testCMake()
+{
+	Box tableTop(Eigen::Vector3d::Random(), Eigen::Vector3d::Random(), Eigen::Vector3d::Random(), "MyBox", ObjectType::Visual);
+	std::cout << tableTop.getTransform() << "\n";
+}
+
 void testFrankaPanda()
 {
+	/*
 	constexpr double pi = 3.14159265358979323846;
 
 	// Create physics core and scene.
@@ -132,6 +141,7 @@ void testFrankaPanda()
 	// Elapsed time.
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
 	std::cout << "Elapsed Time: " << elapsedTime << " ms\n";
+	*/
 }
 
 
