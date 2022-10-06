@@ -62,6 +62,19 @@ set(PX_OUTPUT_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR}/externals/physx)
 # Call into PhysX's CMake scripts
 add_subdirectory(${PHYSX_PATH}/compiler/public external/physx)
 
+# Disable warning errors for PhysX bugs on linux.
+if (UNIX)
+	#set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Wno-error=restrict)
+	#set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Wno-error=class-memaccess)
+	#fast math, openmp, ndebug/debug
+
+	#target_compile_options(PhysXVehicle PUBLIC -Wno-error
+	#set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG} -g)
+	#set(CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG)
+	#target_compile_definitions(LCPMotionPlannerLib PRIVATE _DEBUG)
+	#target_compile_definitions(LCPMotionPlannerTest PRIVATE _DEBUG)
+endif()
+
 # Add source code subdirectory to create LCPMotionPlannerLib.
 add_subdirectory(src)
 

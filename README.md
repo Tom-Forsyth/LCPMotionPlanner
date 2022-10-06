@@ -6,7 +6,7 @@ The motion planning is screw linear interpolation (ScLERP) based, and the obstac
 
 <p align="center">
   <img src="docs/LCPMotionPlanner.png"
-  width = 500
+  width = auto
   height = auto />
 </p>
 
@@ -40,7 +40,7 @@ Open "LCPMotionPlanner.sln" inside of the build directory. In the solution explo
 
 If you are on Linux, generate a make file for the desired build configuration.
 ```bash
-cmake -B build --config Release
+cmake -B build -DCMAKE_BUILD_TYPE=release
 ```
 
 You can now build and run the project.
@@ -88,13 +88,18 @@ void generateMotionPlan()
 	Eigen::Vector3d legOffsets(0.03, 0.03, legLength / 2);
 	double legZVal = legLength / 2;
 	MotionPlanner::ObjectType tableObjectType = MotionPlanner::ObjectType::Obstacle;
+	Eigen::Vector3d zeroVec = Eigen::Vector3d::Zero();
 
 	// Create table top and legs.
-	MotionPlanner::Box tableTop(tableOrigin, Eigen::Vector3d(0, 0, 0), tableOffsets, "Table Top", tableObjectType);
-	MotionPlanner::Box tableLeg1(Eigen::Vector3d(1.5 - 0.3 + legOffsets(0), 1 - 0.5 + legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 1", tableObjectType);
-	MotionPlanner::Box tableLeg2(Eigen::Vector3d(1.5 - 0.3 + legOffsets(0), 1 + 0.5 - legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 2", tableObjectType);
-	MotionPlanner::Box tableLeg3(Eigen::Vector3d(1.5 + 0.3 - legOffsets(0), 1 - 0.5 + legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 3", tableObjectType);
-	MotionPlanner::Box tableLeg4(Eigen::Vector3d(1.5 + 0.3 - legOffsets(0), 1 + 0.5 - legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 4", tableObjectType);
+	Eigen::Vector3d legOrigin1 = Eigen::Vector3d(1.5 - 0.3 + legOffsets(0), 1 - 0.5 + legOffsets(1), legZVal);
+	Eigen::Vector3d legOrigin2 = Eigen::Vector3d(1.5 - 0.3 + legOffsets(0), 1 + 0.5 - legOffsets(1), legZVal);
+	Eigen::Vector3d legOrigin3 = Eigen::Vector3d(1.5 + 0.3 - legOffsets(0), 1 - 0.5 + legOffsets(1), legZVal);
+	Eigen::Vector3d legOrigin4 = Eigen::Vector3d(1.5 + 0.3 - legOffsets(0), 1 + 0.5 - legOffsets(1), legZVal);
+	MotionPlanner::Box tableTop(tableOrigin, zeroVec, tableOffsets, "Table Top", tableObjectType);
+	MotionPlanner::Box tableLeg1(legOrigin1, zeroVec, legOffsets, "Table Leg 1", tableObjectType);
+	MotionPlanner::Box tableLeg2(legOrigin2, zeroVec, legOffsets, "Table Leg 2", tableObjectType);
+	MotionPlanner::Box tableLeg3(legOrigin3, zeroVec, legOffsets, "Table Leg 3", tableObjectType);
+	MotionPlanner::Box tableLeg4(legOrigin4, zeroVec, legOffsets, "Table Leg 4", tableObjectType);
 
 	// Add table to the scene.
 	physicsScene->addObstacle(tableTop);
@@ -104,9 +109,9 @@ void generateMotionPlan()
 	physicsScene->addObstacle(tableLeg4);
 
 	// Obstacles on table.
-	MotionPlanner::Box boxObstacle(Eigen::Vector3d(1.5, 1, 0.35), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0.1, 0.1, 0.1), "Box Obstacle", tableObjectType);
-	MotionPlanner::Sphere object1(Eigen::Vector3d(1.65, 0.65, 0.32), Eigen::Vector3d(0, 0, 0), 0.05, "Object 1", tableObjectType);
-	MotionPlanner::Sphere object2(Eigen::Vector3d(1.65, 1.35, 0.32), Eigen::Vector3d(0, 0, 0), 0.05, "Object 2", tableObjectType);
+	MotionPlanner::Box boxObstacle(Eigen::Vector3d(1.5, 1, 0.35), zeroVec, Eigen::Vector3d(0.1, 0.1, 0.1), "Box Obstacle", tableObjectType);
+	MotionPlanner::Sphere object1(Eigen::Vector3d(1.65, 0.65, 0.32), zeroVec, 0.05, "Object 1", tableObjectType);
+	MotionPlanner::Sphere object2(Eigen::Vector3d(1.65, 1.35, 0.32), zeroVec, 0.05, "Object 2", tableObjectType);
 	physicsScene->addObstacle(boxObstacle);
 	physicsScene->addObstacle(object1);
 	physicsScene->addObstacle(object2);
@@ -131,28 +136,49 @@ void generateMotionPlan()
 	// Setup goal poses.
 	Eigen::Matrix4d goalTransform1(startTransform);
 	Eigen::Matrix4d goalTransform2(startTransform);
-    goalTransform1.block(0, 0, 3, 3) = Eigen::Matrix3d{
-        {1, 0, 0},
-        {0, 1, 0},
-        {0, 0, 1}
-    };
-    goalTransform2.block(0, 0, 3, 3) = Eigen::Matrix3d{
-        {1, 0,  0},
-        {0, 0, -1},
-        {0, 1,  0}
-    };
+	const int plan = 0;
+
+	// Pure translation.
+	if (plan == 0)
+	{
+		goalTransform1.block(0, 3, 3, 1) = Eigen::Vector3d(0.65, -0.35, 0.4);
+		goalTransform2.block(0, 3, 3, 1) = Eigen::Vector3d(0.65, 0.35, 0.4);
+	}
+
+	// Pure rotation.
+	if (plan == 1)
+	{
+		goalTransform1.block(0, 0, 3, 3) = Eigen::Matrix3d{
+			{1, 0, 0},
+			{0, 1, 0},
+			{0, 0, 1}
+		};
+		goalTransform2.block(0, 0, 3, 3) = Eigen::Matrix3d{
+			{1, 0,  0},
+			{0, 0, -1},
+			{0, 1,  0}
+		};
+	}
 
 	// Generate motion plan.
+	auto start = std::chrono::steady_clock::now();
 	panda.motionPlan(goalTransform1);
 	Eigen::Matrix4d achievedTransform1 = panda.getEndFrameSpatialTransform();
+	Eigen::VectorXd currentJointAngles = panda.getJointDisplacements();
+	panda.setJointDisplacements(currentJointAngles);
 	panda.motionPlan(goalTransform2);
 	Eigen::Matrix4d achievedTransform2 = panda.getEndFrameSpatialTransform();
+	auto stop = std::chrono::steady_clock::now();
 
 	std::cout << "Start Transform: \n" << startTransform << "\n\n";
 	std::cout << "Goal Transform 1: \n" << goalTransform1 << "\n\n";
 	std::cout << "Acheived Transform 1: \n" << achievedTransform1 << "\n\n";
 	std::cout << "Goal Transform 2: \n" << goalTransform2 << "\n\n";
 	std::cout << "Acheived Transform 2: \n" << achievedTransform2 << "\n\n";
+
+	// Elapsed time.
+	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
+	std::cout << "Elapsed Time: " << elapsedTime << " ms\n";
 }
 
 int main()
