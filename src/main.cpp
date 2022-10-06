@@ -118,8 +118,6 @@ void testFrankaPanda()
 	auto start = std::chrono::steady_clock::now();
 	panda.motionPlan(goalTransform1);
 	Eigen::Matrix4d achievedTransform1 = panda.getEndFrameSpatialTransform();
-	Eigen::VectorXd currentJointAngles = panda.getJointDisplacements();
-	panda.setJointDisplacements(currentJointAngles);
 	panda.motionPlan(goalTransform2);
 	Eigen::Matrix4d achievedTransform2 = panda.getEndFrameSpatialTransform();
 	auto stop = std::chrono::steady_clock::now();

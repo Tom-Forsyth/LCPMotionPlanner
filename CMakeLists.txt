@@ -58,21 +58,15 @@ set(CMAKEMODULES_VERSION "1.27")
 set(CMAKEMODULES_PATH ${PHYSX_PATH}/../externals/cmakemodules)
 set(PX_OUTPUT_LIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/externals/physx)
 set(PX_OUTPUT_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR}/externals/physx)
-  
+
 # Call into PhysX's CMake scripts
 add_subdirectory(${PHYSX_PATH}/compiler/public external/physx)
 
-# Disable warning errors for PhysX bugs on linux.
+# Linux/GCC specific flags to avoid PhysX build errors as of GCC 9.4.0.
 if (UNIX)
-	#set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Wno-error=restrict)
-	#set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Wno-error=class-memaccess)
-	#fast math, openmp, ndebug/debug
-
-	#target_compile_options(PhysXVehicle PUBLIC -Wno-error
-	#set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG} -g)
-	#set(CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG)
-	#target_compile_definitions(LCPMotionPlannerLib PRIVATE _DEBUG)
-	#target_compile_definitions(LCPMotionPlannerTest PRIVATE _DEBUG)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+	target_compile_options(PhysXCommon PRIVATE "-Wno-error=restrict")
+	target_compile_options(PhysXExtensions PRIVATE "-Wno-error=class-memaccess")
 endif()
 
 # Add source code subdirectory to create LCPMotionPlannerLib.
@@ -83,6 +77,31 @@ add_executable(LCPMotionPlannerTest src/main.cpp)
 target_link_libraries(LCPMotionPlannerTest 
     PUBLIC LCPMotionPlannerLib
 )
+
+# LCPMotionPlanner compile options for PhysX build types.
+if (UNIX)
+	set(LCPDebugFlags "-D_DEBUG" "-g")
+	set(LCPCheckedFlags "-D_DEBUG" "-O2" "-fopenmp" "-g")
+	set(LCPProfileFlags "-D_DEBUG" "-O2" "-fopenmp" "-g")
+	set(LCPReleaseFlags "-fopenmp" "-O2")
+elseif (WIN32)
+
+endif()
+
+# Choose correct set of flags.
+if (${CMAKE_BUILD_TYPE} STREQUAL "debug")
+	set(LCPFlags ${LCPDebugFlags})
+elseif (${CMAKE_BUILD_TYPE} STREQUAL "checked")
+	set(LCPFlags ${LCPCheckedFlags})
+elseif (${CMAKE_BUILD_TYPE} STREQUAL "profile")
+	set(LCPFlags ${LCPProfileFlags})
+elseif (${CMAKE_BUILD_TYPE} STREQUAL "release")
+	set(LCPFlags ${LCPReleaseFlags})
+endif()
+
+# Set flags.
+target_compile_options(LCPMotionPlannerLib PRIVATE ${LCPFlags})
+target_compile_options(LCPMotionPlannerTest PRIVATE ${LCPFlags})
 
 # Windows only: Copy DLL files to directory of executable post build.
 if (TARGET_BUILD_PLATFORM STREQUAL "windows")

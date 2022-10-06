@@ -11,7 +11,7 @@ The motion planning is screw linear interpolation (ScLERP) based, and the obstac
 </p>
 
 ## Supported Platforms
-Currently, Windows and Linux are supported.
+Currently, Windows and Linux are supported. For Windows, builds have been tested on Windows 11 with MSVC 17. For Linux, builds have been tested on Ubuntu 20.04 with GCC 9.4.0.
 
 ## Dependencies
 LCPMotionPlanner has two dependencies, Eigen and PhysX. They are included as submodules of this repository and handled by CMake, so no extra effort is required to get started.
@@ -21,6 +21,13 @@ If you are on Linux, you may need some extra packages for PhysX. Run the below c
 ```bash
 sudo apt-get install libxxf86vm-dev libgl1-mesa-dev libglu1-mesa-dev gcc-multilib g++-multilib freeglut3-dev lib32z1
 ```
+
+## Build Configurations
+PhysX ships with four build configurations. Prefer to use the debug or release mode as they are most stable with LCPMotionPlanner.
+"debug": Full debug build of PhysX + LCPMotionPlanner with checks and visualization.
+"checked": Release build of PhysX with checks and visualization + release build of LCPMotionPlanner with debugging.
+"profile": Release build of PhysX without chceks but still with visualization + release build of LCPMotionPlanner with debugging.
+"release": Full release build of PhysX + LCPMotionPlanner with no visualization or debugging.
 
 ## Build Instructions
 Clone the repository and setup submodules.
