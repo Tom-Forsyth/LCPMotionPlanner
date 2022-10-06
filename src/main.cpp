@@ -7,11 +7,9 @@
 #include "PhysicsScene.h"
 #include <iostream>
 #include <Eigen/Dense>
-#include "PxPhysicsAPI.h"
 #include <chrono>
 
 void testFrankaPanda();
-void testCMake();
 
 int main()
 {
@@ -24,18 +22,8 @@ int main()
 
 	// Test planner.
 	testFrankaPanda();
-	//testCMake();
 
 	return 0;
-}
-
-void testCMake()
-{
-	MotionPlanner::Box tableTop(Eigen::Vector3d::Random(), Eigen::Vector3d::Random(), Eigen::Vector3d::Random(), "MyBox", MotionPlanner::ObjectType::Visual);
-	std::cout << tableTop.getTransform() << "\n";
-
-	physx::PxVec3 testVec = {1, 2, 3};
-	std::cout << testVec[0] + testVec[1] + testVec[2] << "\n";
 }
 
 void testFrankaPanda()
@@ -54,13 +42,18 @@ void testFrankaPanda()
 	Eigen::Vector3d legOffsets(0.03, 0.03, legLength / 2);
 	double legZVal = legLength / 2;
 	MotionPlanner::ObjectType tableObjectType = MotionPlanner::ObjectType::Obstacle;
+	Eigen::Vector3d zeroVec = Eigen::Vector3d::Zero();
 
 	// Create table top and legs.
-	MotionPlanner::Box tableTop(tableOrigin, Eigen::Vector3d(0, 0, 0), tableOffsets, "Table Top", tableObjectType);
-	MotionPlanner::Box tableLeg1(Eigen::Vector3d(1.5 - 0.3 + legOffsets(0), 1 - 0.5 + legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 1", tableObjectType);
-	MotionPlanner::Box tableLeg2(Eigen::Vector3d(1.5 - 0.3 + legOffsets(0), 1 + 0.5 - legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 2", tableObjectType);
-	MotionPlanner::Box tableLeg3(Eigen::Vector3d(1.5 + 0.3 - legOffsets(0), 1 - 0.5 + legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 3", tableObjectType);
-	MotionPlanner::Box tableLeg4(Eigen::Vector3d(1.5 + 0.3 - legOffsets(0), 1 + 0.5 - legOffsets(1), legZVal), Eigen::Vector3d(0, 0, 0), legOffsets, "Table Leg 4", tableObjectType);
+	Eigen::Vector3d legOrigin1 = Eigen::Vector3d(1.5 - 0.3 + legOffsets(0), 1 - 0.5 + legOffsets(1), legZVal);
+	Eigen::Vector3d legOrigin2 = Eigen::Vector3d(1.5 - 0.3 + legOffsets(0), 1 + 0.5 - legOffsets(1), legZVal);
+	Eigen::Vector3d legOrigin3 = Eigen::Vector3d(1.5 + 0.3 - legOffsets(0), 1 - 0.5 + legOffsets(1), legZVal);
+	Eigen::Vector3d legOrigin4 = Eigen::Vector3d(1.5 + 0.3 - legOffsets(0), 1 + 0.5 - legOffsets(1), legZVal);
+	MotionPlanner::Box tableTop(tableOrigin, zeroVec, tableOffsets, "Table Top", tableObjectType);
+	MotionPlanner::Box tableLeg1(legOrigin1, zeroVec, legOffsets, "Table Leg 1", tableObjectType);
+	MotionPlanner::Box tableLeg2(legOrigin2, zeroVec, legOffsets, "Table Leg 2", tableObjectType);
+	MotionPlanner::Box tableLeg3(legOrigin3, zeroVec, legOffsets, "Table Leg 3", tableObjectType);
+	MotionPlanner::Box tableLeg4(legOrigin4, zeroVec, legOffsets, "Table Leg 4", tableObjectType);
 
 	// Add table to the scene.
 	physicsScene->addObstacle(tableTop);
@@ -70,9 +63,9 @@ void testFrankaPanda()
 	physicsScene->addObstacle(tableLeg4);
 
 	// Obstacles on table.
-	MotionPlanner::Box boxObstacle(Eigen::Vector3d(1.5, 1, 0.35), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0.1, 0.1, 0.1), "Box Obstacle", tableObjectType);
-	MotionPlanner::Sphere object1(Eigen::Vector3d(1.65, 0.65, 0.32), Eigen::Vector3d(0, 0, 0), 0.05, "Object 1", tableObjectType);
-	MotionPlanner::Sphere object2(Eigen::Vector3d(1.65, 1.35, 0.32), Eigen::Vector3d(0, 0, 0), 0.05, "Object 2", tableObjectType);
+	MotionPlanner::Box boxObstacle(Eigen::Vector3d(1.5, 1, 0.35), zeroVec, Eigen::Vector3d(0.1, 0.1, 0.1), "Box Obstacle", tableObjectType);
+	MotionPlanner::Sphere object1(Eigen::Vector3d(1.65, 0.65, 0.32), zeroVec, 0.05, "Object 1", tableObjectType);
+	MotionPlanner::Sphere object2(Eigen::Vector3d(1.65, 1.35, 0.32), zeroVec, 0.05, "Object 2", tableObjectType);
 	physicsScene->addObstacle(boxObstacle);
 	physicsScene->addObstacle(object1);
 	physicsScene->addObstacle(object2);
@@ -125,6 +118,8 @@ void testFrankaPanda()
 	auto start = std::chrono::steady_clock::now();
 	panda.motionPlan(goalTransform1);
 	Eigen::Matrix4d achievedTransform1 = panda.getEndFrameSpatialTransform();
+	Eigen::VectorXd currentJointAngles = panda.getJointDisplacements();
+	panda.setJointDisplacements(currentJointAngles);
 	panda.motionPlan(goalTransform2);
 	Eigen::Matrix4d achievedTransform2 = panda.getEndFrameSpatialTransform();
 	auto stop = std::chrono::steady_clock::now();
