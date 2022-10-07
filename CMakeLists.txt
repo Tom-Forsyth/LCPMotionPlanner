@@ -34,15 +34,16 @@ set(PHYSX_LIBRARIES
 )
 
 # Setup PhysX build platform.
-if(WIN32)
+if(WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 	set(TARGET_BUILD_PLATFORM "windows")
 
 	# Windows Only - These were forgotten in PhysX's Windows CMakeLists.txt.
 	SET(CMAKE_EXE_LINKER_FLAGS_PROFILE "/DEBUG")
 	SET(CMAKE_EXE_LINKER_FLAGS_CHECKED "/DEBUG")	
-endif()
-if(UNIX)
+elseif(UNIX AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 	set(TARGET_BUILD_PLATFORM "linux")
+else()
+	message(FATAL_ERROR "Only Windows (MSVC) and Linux (GNU) platforms are supported.")
 endif()
 
 # Set PhysX variables.
@@ -63,7 +64,7 @@ set(PX_OUTPUT_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR}/externals/physx)
 add_subdirectory(${PHYSX_PATH}/compiler/public external/physx)
 
 # Linux/GCC specific flags to avoid PhysX build errors as of GCC 9.4.0.
-if (UNIX)
+if (TARGET_BUILD_PLATFORM STREQUAL "linux")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 	target_compile_options(PhysXCommon PRIVATE "-Wno-error=restrict")
 	target_compile_options(PhysXExtensions PRIVATE "-Wno-error=class-memaccess")
@@ -77,26 +78,41 @@ add_executable(LCPMotionPlannerTest src/main.cpp)
 target_link_libraries(LCPMotionPlannerTest 
     PUBLIC LCPMotionPlannerLib
 )
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT LCPMotionPlannerTest)
 
-# LCPMotionPlanner compile options for PhysX build types.
-if (UNIX)
-	set(LCPDebugFlags "-D_DEBUG" "-g")
-	set(LCPCheckedFlags "-D_DEBUG" "-O2" "-fopenmp" "-g")
-	set(LCPProfileFlags "-D_DEBUG" "-O2" "-fopenmp" "-g")
-	set(LCPReleaseFlags "-fopenmp" "-O2")
-elseif (WIN32)
-
+# Ensure a valid build type is specified.
+if (NOT DEFINED CMAKE_BUILD_TYPE)
+	message(FATAL_ERROR "Please specify a build type with -DCMAKE_BUILD_TYPE=<build type>.")
+endif()
+if ((NOT ${CMAKE_BUILD_TYPE} STREQUAL "debug") AND (NOT ${CMAKE_BUILD_TYPE} STREQUAL "checked")
+  AND (NOT ${CMAKE_BUILD_TYPE} STREQUAL "profile") AND (NOT ${CMAKE_BUILD_TYPE} STREQUAL "release"))
+	message(FATAL_ERROR "Invalid build type! Please use one of the following: 'debug', 'checked', 'profile', or 'release'.")
 endif()
 
-# Choose correct set of flags.
-if (${CMAKE_BUILD_TYPE} STREQUAL "debug")
-	set(LCPFlags ${LCPDebugFlags})
-elseif (${CMAKE_BUILD_TYPE} STREQUAL "checked")
-	set(LCPFlags ${LCPCheckedFlags})
-elseif (${CMAKE_BUILD_TYPE} STREQUAL "profile")
-	set(LCPFlags ${LCPProfileFlags})
-elseif (${CMAKE_BUILD_TYPE} STREQUAL "release")
-	set(LCPFlags ${LCPReleaseFlags})
+# Ensure that only the specified build type is available in IDEs.
+set(CMAKE_CONFIGURATION_TYPES "${CMAKE_BUILD_TYPE}")
+
+# LCPMotionPlanner compile options.
+if (TARGET_BUILD_PLATFORM STREQUAL "linux")
+	if (${CMAKE_BUILD_TYPE} STREQUAL "debug")
+		set(LCPFlags "-D_DEBUG" "-g")
+	elseif(${CMAKE_BUILD_TYPE} STREQUAL "checked")
+		set(LCPFlags "-D_DEBUG" "-O2" "-fopenmp" "-g")
+	elseif(${CMAKE_BUILD_TYPE} STREQUAL "profile")
+		set(LCPFlags "-D_DEBUG" "-O2" "-fopenmp" "-g")
+	elseif(${CMAKE_BUILD_TYPE} STREQUAL "release")
+		set(LCPFlags "-fopenmp" "-O2")
+	endif()
+elseif (TARGET_BUILD_PLATFORM STREQUAL "windows")
+	if (${CMAKE_BUILD_TYPE} STREQUAL "debug")
+		set(LCPFlags "/MP" "/D_DEBUG")
+	elseif(${CMAKE_BUILD_TYPE} STREQUAL "checked")
+		set(LCPFlags "/MP" "/openmp" "/O2" "/D_DEBUG" "/Zo")
+	elseif(${CMAKE_BUILD_TYPE} STREQUAL "profile")
+		set(LCPFlags "/MP" "/openmp" "/O2" "/D_DEBUG" "/Zo")
+	elseif(${CMAKE_BUILD_TYPE} STREQUAL "release")
+		set(LCPFlags "/MP" "/openmp" "/O2")
+	endif()
 endif()
 
 # Set flags.

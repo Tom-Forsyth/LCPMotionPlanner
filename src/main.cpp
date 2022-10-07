@@ -118,6 +118,7 @@ void testFrankaPanda()
 	auto start = std::chrono::steady_clock::now();
 	panda.motionPlan(goalTransform1);
 	Eigen::Matrix4d achievedTransform1 = panda.getEndFrameSpatialTransform();
+	panda.setJointDisplacements(panda.getJointDisplacements());
 	panda.motionPlan(goalTransform2);
 	Eigen::Matrix4d achievedTransform2 = panda.getEndFrameSpatialTransform();
 	auto stop = std::chrono::steady_clock::now();
