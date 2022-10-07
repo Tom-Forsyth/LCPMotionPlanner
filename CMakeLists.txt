@@ -81,11 +81,11 @@ target_link_libraries(LCPMotionPlannerTest
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT LCPMotionPlannerTest)
 
 # Ensure a valid build type is specified.
-if (NOT DEFINED CMAKE_BUILD_TYPE)
+if (NOT DEFINED CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "")
 	message(FATAL_ERROR "Please specify a build type with -DCMAKE_BUILD_TYPE=<build type>.")
 endif()
-if ((NOT ${CMAKE_BUILD_TYPE} STREQUAL "debug") AND (NOT ${CMAKE_BUILD_TYPE} STREQUAL "checked")
-  AND (NOT ${CMAKE_BUILD_TYPE} STREQUAL "profile") AND (NOT ${CMAKE_BUILD_TYPE} STREQUAL "release"))
+if((NOT ${CMAKE_BUILD_TYPE} STREQUAL "debug") AND (NOT ${CMAKE_BUILD_TYPE} STREQUAL "checked") AND 
+(NOT ${CMAKE_BUILD_TYPE} STREQUAL "profile") AND (NOT ${CMAKE_BUILD_TYPE} STREQUAL "release"))
 	message(FATAL_ERROR "Invalid build type! Please use one of the following: 'debug', 'checked', 'profile', or 'release'.")
 endif()
 

@@ -11,7 +11,7 @@ The motion planning is screw linear interpolation (ScLERP) based, and the obstac
 </p>
 
 ## Supported Platforms
-Currently, Windows and Linux are supported. For Windows, builds have been tested on Windows 11 with MSVC 17. For Linux, builds have been tested on Ubuntu 20.04 with GCC 9.4.0.
+Currently, only Windows and Linux are supported. For Windows, builds have been tested on Windows 11 with MSVC 17. For Linux, builds have been tested on Ubuntu 20.04 with GCC 9.4.0.
 
 ## Dependencies
 LCPMotionPlanner has two dependencies, Eigen and PhysX. They are included as submodules of this repository and handled by CMake, so no extra effort is required to get started.
@@ -19,7 +19,7 @@ LCPMotionPlanner has two dependencies, Eigen and PhysX. They are included as sub
 If you are on Linux, you may need some extra packages for PhysX. Run the below command to ensure you do not get any issues related to missing header files.
 
 ```bash
-sudo apt-get install libxxf86vm-dev libgl1-mesa-dev libglu1-mesa-dev gcc-multilib g++-multilib freeglut3-dev lib32z1
+sudo apt-get install build-essential libxxf86vm-dev libgl1-mesa-dev libglu1-mesa-dev gcc-multilib g++-multilib freeglut3-dev lib32z1
 ```
 
 ## Build Configurations
@@ -31,32 +31,26 @@ PhysX ships with four build configurations. Prefer to use the debug or release m
 
 ## Build Instructions
 Clone the repository and setup submodules.
-```cmd
+```bash
 git clone https://github.com/Tom-Forsyth/LCPMotionPlanner.git
 cd LCPMotionPlanner
 git submodule init
 git submodule update --recursive
 ```
 
-If you are on Windows, generate a Visual Studio solution with CMake.
-```powershell
-cmake -B build
-```
-
-Open "LCPMotionPlanner.sln" inside of the build directory. In the solution explorer, right click "LCPMotionPlannerTest" and select "Set as Startup Project". Select the desired build configuration, and you are ready to build the solution and run.
-
-If you are on Linux, generate a make file for the desired build configuration.
+Run CMake with the desired build configuration to generate a makefile (Linux) or Visual Studio solution (Windows).
 ```bash
 cmake -B build -DCMAKE_BUILD_TYPE=release
 ```
 
-You can now build and run the project.
+If you are on Linux, build the project using the make file, and run the code.
 ```bash
 cd build
-make -j12
-cd Release
+make -j20
 ./LCPMotionPlanner
 ```
+
+If you are on Windows, open "LCPMotionPlanner.sln" inside of the build directory. Press F7 to compile the project, and run the code.
 
 ## Debug Visualization
 Currently, visualization is only supported through PhysX Visual Debugger, which is only available for Windows. PhysX provides primative a rendering application for scenes for Linux that will be supported shortly.
