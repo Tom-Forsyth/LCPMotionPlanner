@@ -13,6 +13,14 @@ The motion planning is screw linear interpolation (ScLERP) based, and the obstac
 ## Supported Platforms
 Currently, only Windows and Linux are supported. For Windows, builds have been tested on Windows 11 with MSVC 17. For Linux, builds have been tested on Ubuntu 20.04 with GCC 9.4.0.
 
+## Documentation
+To generate documentation, run doxygen using the supplied Doxyfile, and open index.html.
+```bash
+cd docs/doxygen
+doxygen Doxyfile
+cd html && firefox index.html
+```
+
 ## Dependencies
 LCPMotionPlanner has two dependencies, Eigen and PhysX. They are included as submodules of this repository and handled by CMake, so no extra effort is required to get started.
 
@@ -24,10 +32,10 @@ sudo apt-get install build-essential libxxf86vm-dev libgl1-mesa-dev libglu1-mesa
 
 ## Build Configurations
 PhysX ships with four build configurations. Prefer to use the debug or release mode as they are most stable with LCPMotionPlanner.
-"debug": Full debug build of PhysX + LCPMotionPlanner with checks and visualization.
-"checked": Release build of PhysX with checks and visualization + release build of LCPMotionPlanner with debugging.
-"profile": Release build of PhysX without chceks but still with visualization + release build of LCPMotionPlanner with debugging.
-"release": Full release build of PhysX + LCPMotionPlanner with no visualization or debugging.
+- "debug": Full debug build of PhysX + LCPMotionPlanner with checks and visualization.
+- "checked": Release build of PhysX with checks and visualization + release build of LCPMotionPlanner with debugging.
+- "profile": Release build of PhysX without chceks but still with visualization + release build of LCPMotionPlanner with debugging.
+- "release": Full release build of PhysX + LCPMotionPlanner with no visualization or debugging.
 
 ## Build Instructions
 Clone the repository and setup submodules.
@@ -53,12 +61,10 @@ make -j20
 If you are on Windows, open "LCPMotionPlanner.sln" inside of the build directory. Press F7 to compile the project, and run the code.
 
 ## Debug Visualization
-Currently, visualization is only supported through PhysX Visual Debugger, which is only available for Windows. PhysX provides primative a rendering application for scenes for Linux that will be supported shortly.
-
-With PhysX Visual Debugger open, run the project in debug mode, and the primatives of the scene will appear in the PVD player.
+Currently, debug visualization is only supported through PhysX Visual Debugger, which is only available for Windows. With PhysX Visual Debugger open, run the simulation, and the primatives of the scene will appear in the PVD player. Release builds do not support debug visualization - please use debug, checked, or profile builds.
 
 ## High Fidelity Visualization
-Realistic visualation is available through UnrealSim, where we are using this module to generate collision free plans for the Franka Panda manipulator. Objects can be placed into the UnrealSim simulation scene, and the objects will then be loaded in as primatives into this library to generate and visualze a collision free plan. See more:
+Realistic visualation is available through UnrealSim, where we are using this module to generate collision free plans for the Franka Panda manipulator. Objects can be placed into the UnrealSim simulation scene, and the objects will then be loaded in as primatives into this library to generate and visualze a collision free plan.
 
 ## Example Use
 Below can find an example of how to create a manipulator, add obstacles, and generate a collision free motion plan. The public facing API of this project is provided through UnrealSim, so the internal API must be used here.
