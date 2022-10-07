@@ -22,6 +22,10 @@ namespace MotionPlanner
 
     void ManipulatorMotionPlanner::computePlan()
     {
+        // Include starting joint displacements in plan.
+        Eigen::VectorXd startJointDisplacements = m_pSpatialManipulator->getJointDisplacements();
+        m_plan.emplace_back(startJointDisplacements);
+
         // Run stepping until convergence or divergence.
         size_t iter = 0;
         bool running = true;
