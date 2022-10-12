@@ -9,6 +9,8 @@
 #include <vector>
 #include <map>
 
+#include <iostream>
+
 namespace MotionPlanner
 {
     ManipulatorMotionPlanner::ManipulatorMotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
@@ -33,6 +35,12 @@ namespace MotionPlanner
         {
             // Update end frame.
             m_endFrame = m_pSpatialManipulator->getEndFrame();
+
+            // Compute null space term.
+            const int dim = m_pSpatialManipulator->getDof();
+            const Eigen::MatrixXd spatialJacobian = m_endFrame.getSpatialJacobian();
+            const Eigen::MatrixXd spatialJacobianInv = spatialJacobian.completeOrthogonalDecomposition().pseudoInverse();
+            m_nullSpaceTerm = Eigen::MatrixXd::Identity(dim, dim) - (spatialJacobianInv * spatialJacobian);
 
             // Get the joint displacement change from ScLERP, scaled to respect linearization.
             Eigen::VectorXd displacementChange = getJointDisplacementChange();
@@ -150,7 +158,7 @@ namespace MotionPlanner
                 Eigen::MatrixXd colContactJacobian = rigidBodies[pair2.first].getContactJacobian();
                 Eigen::VectorXd colPaddedNormal = Eigen::Vector<double, 6>::Zero();
                 colPaddedNormal.head(3) = pair2.second.m_normal;
-                M(row, col) = (((paddedNormal.transpose() * contactJacobian) * getNullSpaceTerm()) * colContactJacobian.completeOrthogonalDecomposition().pseudoInverse()) * colPaddedNormal;
+                M(row, col) = (((paddedNormal.transpose() * contactJacobian) * m_nullSpaceTerm) * colContactJacobian.completeOrthogonalDecomposition().pseudoInverse()) * colPaddedNormal;
                 col++;
             }
             row++;
@@ -190,7 +198,7 @@ namespace MotionPlanner
         // Adjust total step to respect the maximum collision displacement change.
         double maxCollisionDisplacement = collisionDisplacementChange.cwiseAbs().maxCoeff();
         double collisionScaleFactor = 1 / (std::max(maxCollisionDisplacement / m_params.maxCollisionDisplacementChange, 1.0));
-        Eigen::VectorXd totalDisplacementChange = displacementChange + (getNullSpaceTerm() * collisionDisplacementChange);
+        Eigen::VectorXd totalDisplacementChange = displacementChange + (m_nullSpaceTerm * collisionDisplacementChange);
         totalDisplacementChange *= collisionScaleFactor;
 
         // Check that this is within the total displacement change limits.
@@ -199,10 +207,5 @@ namespace MotionPlanner
         totalDisplacementChange *= totalScaleFactor;
 
         return totalDisplacementChange;
-    }
-
-    double ManipulatorMotionPlanner::getNullSpaceTerm() const
-    {
-        return 1;
     }
 }
