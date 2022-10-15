@@ -76,6 +76,13 @@ namespace MotionPlanner
                 }
             }
 
+            // Check for penetration.
+            bool isPenetrating = checkPenetration();
+            if (isPenetrating)
+            {
+                running = false;
+            }
+
             iter++;
         }
     }
@@ -207,5 +214,17 @@ namespace MotionPlanner
         totalDisplacementChange *= totalScaleFactor;
 
         return totalDisplacementChange;
+    }
+
+    bool ManipulatorMotionPlanner::checkPenetration()
+    {
+        for (const auto& body : m_pSpatialManipulator->getRigidBodyChain().getRigidBodies())
+        {
+            if (body.getContactPoint().m_distance <= 0)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

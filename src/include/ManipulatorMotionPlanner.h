@@ -67,6 +67,10 @@ namespace MotionPlanner
 		/// @return Total joint displacement change for the current step.
 		Eigen::VectorXd getTotalDisplacementChange(const Eigen::VectorXd& displacementChange, const Eigen::VectorXd& collisionDisplacementChange);
 
+		/// @brief Ensure that the robot is not colliding with obstacles.
+		/// @return Penetration condition.
+		bool checkPenetration();
+
 	public:
 		/// @brief Constructor.
 		/// @param pSpatialManipulator Pointer to the spatial manipulator to generate the plan with.
