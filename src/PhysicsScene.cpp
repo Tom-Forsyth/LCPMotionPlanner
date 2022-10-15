@@ -86,6 +86,9 @@ namespace MotionPlanner
 			const physx::PxGeometry& pxGeom = *(pxGeomPtr.get());
 			physx::PxShape* pxShape = m_physics->createShape(pxGeom, *m_material, true);
 
+			// Set the contact offset for the shape.
+			pxShape->setContactOffset(static_cast<physx::PxReal>(m_contactGenOffset));
+
 			// Set the object type as an obstacle for collision filtering.
 			physx::PxFilterData filterData;
 			filterData.word0 = static_cast<uint32_t>(ObjectType::Obstacle);
