@@ -135,8 +135,10 @@ namespace MotionPlanner
 		Eigen::Vector3d spatialAxis7 = transform7.block(0, 0, 3, 3) * localAxis7;
 		Joint joint7(JointType::Revolute, spatialAxis7, transform7.block(0, 3, 3, 1));
 		RigidBody link7(joint7, transform7, "panda_link7");
-		Box link7_box0(Eigen::Vector3d(0, 0, 0.1070 - (0.02)), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0.05, 0.05, 0.02), "panda_link7_box0", ObjectType::RobotGeometry);
+		Box link7_box0(Eigen::Vector3d(0, 0, 0.1070 - (0.02)), Eigen::Vector3d(0, 0, -pi/4), Eigen::Vector3d(0.025, 0.075, 0.03), "panda_link7_box0", ObjectType::RobotGeometry);
+		Box link7_box1(Eigen::Vector3d(0, 0, 0.125), Eigen::Vector3d(0, 0, -pi/4), Eigen::Vector3d(0.025, 0.1, 0.05), "panda_link7_box1", ObjectType::RobotGeometry);
 		link7.addCollider(link7_box0);
+		link7.addCollider(link7_box1);
 
 		// Tip frame.
 		Eigen::Matrix4d transformTip = Eigen::Matrix4d{
@@ -148,9 +150,12 @@ namespace MotionPlanner
 		Eigen::Vector3d localAxisTip(0, 0, 0);
 		Eigen::Vector3d spatialAxisTip = transformTip.block(0, 0, 3, 3) * localAxisTip;
 		Joint jointTip(JointType::Fixed, spatialAxisTip, transformTip.block(0, 3, 3, 1));
+		double fingerOffset = 0.015;
 		RigidBody linkTip(jointTip, transformTip, "panda_linkTip");
-		Sphere linkTip_sphere0(Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0, 0, 0), 0.01, "panda_linkTip_sphere0", ObjectType::RobotGeometry);
-		linkTip.addCollider(linkTip_sphere0);
+		Box linkTip_box0(Eigen::Vector3d(fingerOffset, fingerOffset, 0.09), Eigen::Vector3d(0, 0, -pi/4), Eigen::Vector3d(0.01, 0.01, 0.03), "panda_linkTip_box0", ObjectType::RobotGeometry);
+		Box linkTip_box1(Eigen::Vector3d(-fingerOffset, -fingerOffset, 0.09), Eigen::Vector3d(0, 0, -pi/4), Eigen::Vector3d(0.01, 0.01, 0.03), "panda_linkTip_box1", ObjectType::RobotGeometry);
+		linkTip.addCollider(linkTip_box0);
+		linkTip.addCollider(linkTip_box1);
 
 		// Create chain.
 		m_rigidBodyChain.addBody(link0);
