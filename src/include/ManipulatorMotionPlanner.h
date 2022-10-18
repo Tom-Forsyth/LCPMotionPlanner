@@ -51,6 +51,9 @@ namespace MotionPlanner
 		/// @brief End frame of manipulator.
 		RigidBody m_endFrame;
 
+		/// @brief Null space matrix.
+		Eigen::MatrixXd m_nullSpaceTerm;
+
 		/// @brief Compute the change in joint displacements due to ScLERP.
 		/// @return Joint displacements.
 		Eigen::VectorXd getJointDisplacementChange();
@@ -64,10 +67,9 @@ namespace MotionPlanner
 		/// @return Total joint displacement change for the current step.
 		Eigen::VectorXd getTotalDisplacementChange(const Eigen::VectorXd& displacementChange, const Eigen::VectorXd& collisionDisplacementChange);
 
-		/// @brief Get the null space term.
-		/// @return Null space term.
-		/// @bug Currently not implemented, returns 1.
-		double getNullSpaceTerm() const;
+		/// @brief Ensure that the robot is not colliding with obstacles.
+		/// @return Penetration condition.
+		bool checkPenetration();
 
 	public:
 		/// @brief Constructor.

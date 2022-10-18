@@ -102,6 +102,11 @@ namespace MotionPlanner
 						normal = -normal;
 					}
 
+					/// @bug Cannot figure out how to determine which shape the contact is generated on.
+					/// Ex: [ ]x   [ ]    or     [ ]     x[ ]
+					/// Where [ ] is a box and x is the contact.
+					/// So, for now, I will always assume the contact is generated on the robot.
+
 					// Create contact point and add to the contact manager.
 					const ContactPoint contactPoint(point, normal, separation, true);
 					physicsScene->addContact(linkName, contactPoint);

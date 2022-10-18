@@ -1,6 +1,7 @@
 #include "PhysicsCore.h"
 #include "PxPhysicsAPI.h"
 #include "PhysicsScene.h"
+#include <stdexcept>
 
 namespace MotionPlanner
 {
@@ -55,6 +56,10 @@ namespace MotionPlanner
 
 			// Create foundation.
 			m_foundation = PxCreateFoundation(PX_PHYSICS_VERSION, *m_allocator, *m_errorCallback);
+			if (!m_foundation)
+			{
+				throw std::runtime_error("PhysX foundation creation failed!");
+			}
 
 			// Create and connect to PVD if in debug mode since it is time/resource intensive.
 			bool bTrackAllocations = false;
@@ -76,6 +81,10 @@ namespace MotionPlanner
 
 			// Create PhysX factory class.
 			m_physics = PxCreatePhysics(PX_PHYSICS_VERSION, *m_foundation, *m_toleranceScale, bTrackAllocations, m_pvd);
+			if (!m_physics)
+			{
+				throw std::runtime_error("PhysX physics creation failed!");
+			}
 			PxInitExtensions(*m_physics, m_pvd);
 
 			// Create dispatcher.
