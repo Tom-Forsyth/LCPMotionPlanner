@@ -68,13 +68,15 @@ namespace MotionPlanner
 
             // Check for convergence.
             Eigen::Vector<double, 7> concatError = m_goalConcat - m_currentConcat;
-            if (concatError.head(3).norm() < m_params.positionTolerance)
+            double posError = concatError.head(3).norm();
+            double quatError = concatError.tail(4).norm();
+            if (posError < m_params.positionTolerance && quatError < m_params.quatTolerance)
             {
-                if (concatError.tail(4).norm() < m_params.quatTolerance)
-                {
-                    running = false;
-                }
+                running = false;
             }
+
+            // Check if we are near goal to tighten linearization.
+            //checkNearGoal(posError, quatError);
 
             // Check for penetration.
             bool isPenetrating = checkPenetration();
@@ -226,5 +228,23 @@ namespace MotionPlanner
             }
         }
         return false;
+    }
+
+    void ManipulatorMotionPlanner::checkNearGoal(double posError, double quatError)
+    {
+        if (!m_isNearGoal)
+        {
+            // Determine if near the goal.
+            double thresh = 0.03;
+            if ((posError < thresh) && (quatError < thresh))
+            {
+                // Enforce stricter linearization assumptions.
+                m_isNearGoal = true;
+                double maxAngleChange = 0.001;
+                m_params.maxScLERPDisplacementChange = maxAngleChange;
+                m_params.maxCollisionDisplacementChange = maxAngleChange;
+                m_params.maxTotalDisplacementChange = maxAngleChange;
+            }
+        }
     }
 }
