@@ -27,6 +27,9 @@ namespace MotionPlanner
 		/// @brief Flag to determine if the plan is still computing.
 		bool m_isRunning = true;
 
+		/// @brief Enforce stricter linearization near goal.
+		bool m_isNearGoal = false;
+
 		/// @brief Degree of freedom of manipulator.
 		int m_dof;
 
@@ -70,6 +73,9 @@ namespace MotionPlanner
 		/// @brief Ensure that the robot is not colliding with obstacles.
 		/// @return Penetration condition.
 		bool checkPenetration();
+
+		/// @brief Check if the robot is near the goal to change the linearization mode.
+		void checkNearGoal(double posError, double quatError);
 
 	public:
 		/// @brief Constructor.
