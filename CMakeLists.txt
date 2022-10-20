@@ -70,6 +70,9 @@ if (TARGET_BUILD_PLATFORM STREQUAL "linux")
 	target_compile_options(PhysXExtensions PRIVATE "-Wno-error=class-memaccess")
 endif()
 
+# LCPSolve.
+add_subdirectory(external/LCPSolve)
+
 # Add source code subdirectory to create LCPMotionPlannerLib.
 add_subdirectory(src)
 

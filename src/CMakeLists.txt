@@ -12,7 +12,6 @@ set (SOURCES
     FrankaPanda.cpp
     Joint.cpp
     Kinematics.cpp
-    LCPSolve.cpp
     ManipulatorMotionPlanner.cpp
     PhysicsCore.cpp
     PhysicsScene.cpp
@@ -38,7 +37,6 @@ set(INCLUDES
     include/FrankaPanda.h
     include/Joint.h
     include/Kinematics.h
-    include/LCPSolve.h
     include/ManipulatorMotionPlanner.h
     include/MotionPlanningParameters.h
     include/ObjectType.h
@@ -67,4 +65,5 @@ target_include_directories(LCPMotionPlannerLib
 target_link_libraries(LCPMotionPlannerLib
     PUBLIC Eigen3::Eigen
     PUBLIC ${PHYSX_LIBRARIES}
+    PRIVATE LCPSolveLib
 )
