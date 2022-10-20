@@ -9,10 +9,10 @@ namespace MotionPlanner
 		const size_t maxIterations = 3000;
 
 		/// @brief Distance at which to start avoiding obstacles.
-		const double safetyDistance = 0.005;
+		const double safetyDistance = 0.01;
 
 		/// @brief Max displacement change of any of the joints due to ScLERP.
-		double maxScLERPDisplacementChange = 0.005;
+		double maxScLERPDisplacementChange = 0.0025;
 
 		/// @brief Max displacement change of any of the joints due to collision avoidance.
 		double maxCollisionDisplacementChange = 0.005;

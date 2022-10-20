@@ -9,8 +9,6 @@
 #include <vector>
 #include <map>
 
-#include <iostream>
-
 namespace MotionPlanner
 {
     ManipulatorMotionPlanner::ManipulatorMotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
@@ -76,7 +74,7 @@ namespace MotionPlanner
             }
 
             // Check if we are near goal to tighten linearization.
-            //checkNearGoal(posError, quatError);
+            checkNearGoal(posError, quatError);
 
             // Check for penetration.
             bool isPenetrating = checkPenetration();
