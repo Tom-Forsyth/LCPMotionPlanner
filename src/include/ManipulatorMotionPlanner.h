@@ -11,6 +11,13 @@ namespace MotionPlanner
 {
 	class SpatialManipulator;
 
+	enum class LocalPlannerExitCodes
+	{
+		Success,
+		LCPError,
+		MaxIterationsExcceeded
+	};
+
 	/// @brief ScLERP motion planner with LCP collision avoidance. 
 	class ManipulatorMotionPlanner
 	{
@@ -29,6 +36,9 @@ namespace MotionPlanner
 
 		/// @brief Enforce stricter linearization near goal.
 		bool m_isNearGoal = false;
+
+		/// @brief Exit code for the LCP solver.
+		int m_exitCodeLCP = -1;
 
 		/// @brief Degree of freedom of manipulator.
 		int m_dof;
@@ -62,7 +72,7 @@ namespace MotionPlanner
 		Eigen::VectorXd getJointDisplacementChange();
 
 		/// @brief Formulate and solve LCP to get the joint displacement change to avoid obstacles.
-		Eigen::VectorXd getCollisionDisplacementChange(const Eigen::VectorXd& displacementChange) const;
+		Eigen::VectorXd getCollisionDisplacementChange(const Eigen::VectorXd& displacementChange);
 
 		/// @brief Add the ScLERP and collision avoidance joint displacements and ensure they respect linearization.
 		/// @param displacementChange Change in displacements due to ScLERP.

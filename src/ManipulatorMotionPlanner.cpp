@@ -28,8 +28,7 @@ namespace MotionPlanner
 
         // Run stepping until convergence or divergence.
         size_t iter = 0;
-        bool running = true;
-        while (running && iter < m_params.maxIterations)
+        while (m_isRunning && iter < m_params.maxIterations)
         {
             // Update end frame.
             m_endFrame = m_pSpatialManipulator->getEndFrame();
@@ -70,7 +69,7 @@ namespace MotionPlanner
             double quatError = concatError.tail(4).norm();
             if (posError < m_params.positionTolerance && quatError < m_params.quatTolerance)
             {
-                running = false;
+                m_isRunning = false;
             }
 
             // Check if we are near goal to tighten linearization.
@@ -80,7 +79,7 @@ namespace MotionPlanner
             bool isPenetrating = checkPenetration();
             if (isPenetrating)
             {
-                running = false;
+                m_isRunning = false;
             }
 
             iter++;
@@ -120,7 +119,7 @@ namespace MotionPlanner
         return displacementChange;
     }
 
-    Eigen::VectorXd ManipulatorMotionPlanner::getCollisionDisplacementChange(const Eigen::VectorXd& displacementChange) const
+    Eigen::VectorXd ManipulatorMotionPlanner::getCollisionDisplacementChange(const Eigen::VectorXd& displacementChange)
     {
         // Get the active contacts.
         std::map<int, const ContactPoint&> contactPoints;
@@ -174,6 +173,7 @@ namespace MotionPlanner
         // Solve LCP for compensating velocites.
         LCPSolve::LCP solution = LCPSolve::LCPSolve(M, q);
         Eigen::VectorXd compensatingVelocities = solution.z;
+        m_exitCodeLCP = solution.exitCond;
 
         // Find the change in displacements based on compensating velocities.
         Eigen::VectorXd collisionDisplacementChange = Eigen::VectorXd::Zero(m_dof);
