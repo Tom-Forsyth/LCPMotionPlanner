@@ -121,6 +121,8 @@ endif()
 # Set flags.
 target_compile_options(LCPMotionPlannerLib PRIVATE ${LCPFlags})
 target_compile_options(LCPMotionPlannerTest PRIVATE ${LCPFlags})
+target_compile_options(LCPSolveLib PRIVATE ${LCPFlags})
+target_compile_options(LCPSolveTests PRIVATE ${LCPFlags})
 
 # Windows only: Copy DLL files to directory of executable post build.
 if (TARGET_BUILD_PLATFORM STREQUAL "windows")
