@@ -19,7 +19,7 @@ namespace MotionPlanner
 	};
 
 	/// @brief ScLERP motion planner with LCP collision avoidance. 
-	class ManipulatorMotionPlanner
+	class LocalPlanner
 	{
 	private:
 		/// @brief Pointer to the spatial manipulator to generate motion plan with.
@@ -91,7 +91,7 @@ namespace MotionPlanner
 		/// @brief Constructor.
 		/// @param pSpatialManipulator Pointer to the spatial manipulator to generate the plan with.
 		/// @param goalTransform Goal transform of the end-effector.
-		ManipulatorMotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform);
+		LocalPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform);
 
 		/// @brief Generate motion plan.
 		void computePlan();

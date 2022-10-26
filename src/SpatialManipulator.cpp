@@ -1,6 +1,6 @@
 #include "SpatialManipulator.h"
 #include "RigidBodyChain.h"
-#include "ManipulatorMotionPlanner.h"
+#include "LocalMotionPlanner.h"
 #include "PhysicsScene.h"
 #include "ContactPoint.h"
 #include <Eigen/Dense>
@@ -70,7 +70,7 @@ namespace MotionPlanner
 	std::vector<Eigen::VectorXd> SpatialManipulator::motionPlan(const Eigen::Matrix4d& goalTransform)
 	{
 		// Setup planner.
-		ManipulatorMotionPlanner planner(this, goalTransform);
+		LocalPlanner planner(this, goalTransform);
 
 		// Generate plan.
 		planner.computePlan();

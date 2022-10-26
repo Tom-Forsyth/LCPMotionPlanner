@@ -1,4 +1,4 @@
-#include "ManipulatorMotionPlanner.h"
+#include "LocalPlanner.h"
 #include "SpatialManipulator.h"
 #include "DualQuaternion.h"
 #include "RigidBody.h"
@@ -11,7 +11,7 @@
 
 namespace MotionPlanner
 {
-    ManipulatorMotionPlanner::ManipulatorMotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
+    LocalPlanner::LocalPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
         : m_pSpatialManipulator(pSpatialManipulator), m_goalTransform(goalTransform), m_plan(std::vector<Eigen::VectorXd>{}),
         m_endFrame(pSpatialManipulator->getEndFrame()), m_dof(pSpatialManipulator->getDof()), m_currentTransform(m_endFrame.getSpatialTransform()),
         m_currentDualQuat(DualQuaternion(m_currentTransform)), m_goalDualQuat(DualQuaternion(m_goalTransform)), m_currentConcat(m_currentDualQuat.toConcat()),
@@ -20,7 +20,7 @@ namespace MotionPlanner
         m_plan.reserve(m_params.maxIterations + 1);
     }
 
-    void ManipulatorMotionPlanner::computePlan()
+    void LocalPlanner::computePlan()
     {
         // Include starting joint displacements in plan.
         Eigen::VectorXd startJointDisplacements = m_pSpatialManipulator->getJointDisplacements();
@@ -86,12 +86,12 @@ namespace MotionPlanner
         }
     }
 
-    const std::vector<Eigen::VectorXd>& ManipulatorMotionPlanner::getPlan() const
+    const std::vector<Eigen::VectorXd>& LocalPlanner::getPlan() const
     {
         return m_plan;
     }
 
-    Eigen::VectorXd ManipulatorMotionPlanner::getJointDisplacementChange()
+    Eigen::VectorXd LocalPlanner::getJointDisplacementChange()
     {
         // Get the joint displacement change from ScLERP.
         Eigen::MatrixXd spatialJacobian = m_endFrame.getSpatialJacobian();
@@ -119,7 +119,7 @@ namespace MotionPlanner
         return displacementChange;
     }
 
-    Eigen::VectorXd ManipulatorMotionPlanner::getCollisionDisplacementChange(const Eigen::VectorXd& displacementChange)
+    Eigen::VectorXd LocalPlanner::getCollisionDisplacementChange(const Eigen::VectorXd& displacementChange)
     {
         // Get the active contacts.
         std::map<int, const ContactPoint&> contactPoints;
@@ -200,7 +200,7 @@ namespace MotionPlanner
         return collisionDisplacementChange;
     }
 
-    Eigen::VectorXd ManipulatorMotionPlanner::getTotalDisplacementChange(const Eigen::VectorXd& displacementChange, const Eigen::VectorXd& collisionDisplacementChange)
+    Eigen::VectorXd LocalPlanner::getTotalDisplacementChange(const Eigen::VectorXd& displacementChange, const Eigen::VectorXd& collisionDisplacementChange)
     {
         // Adjust total step to respect the maximum collision displacement change.
         double maxCollisionDisplacement = collisionDisplacementChange.cwiseAbs().maxCoeff();
@@ -216,7 +216,7 @@ namespace MotionPlanner
         return totalDisplacementChange;
     }
 
-    bool ManipulatorMotionPlanner::checkPenetration()
+    bool LocalPlanner::checkPenetration()
     {
         for (const auto& body : m_pSpatialManipulator->getRigidBodyChain().getRigidBodies())
         {
@@ -228,7 +228,7 @@ namespace MotionPlanner
         return false;
     }
 
-    void ManipulatorMotionPlanner::checkNearGoal(double posError, double quatError)
+    void LocalPlanner::checkNearGoal(double posError, double quatError)
     {
         if (!m_isNearGoal)
         {

@@ -12,7 +12,7 @@ set (SOURCES
     FrankaPanda.cpp
     Joint.cpp
     Kinematics.cpp
-    ManipulatorMotionPlanner.cpp
+    LocalPlanner.cpp
     PhysicsCore.cpp
     PhysicsScene.cpp
     PhysXHelperFunctions.cpp
@@ -37,7 +37,7 @@ set(INCLUDES
     include/FrankaPanda.h
     include/Joint.h
     include/Kinematics.h
-    include/ManipulatorMotionPlanner.h
+    include/LocalPlanner.h
     include/MotionPlanningParameters.h
     include/ObjectType.h
     include/PhysicsCore.h
