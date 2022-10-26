@@ -10,6 +10,7 @@ set (SOURCES
     DualNumber.cpp
     DualQuaternion.cpp
     FrankaPanda.cpp
+    GlobalPlanner.cpp
     Joint.cpp
     Kinematics.cpp
     LocalPlanner.cpp
@@ -35,6 +36,7 @@ set(INCLUDES
     include/DualNumber.h
     include/DualQuaternion.h
     include/FrankaPanda.h
+    include/GlobalPlanner.h
     include/Joint.h
     include/Kinematics.h
     include/LocalPlanner.h

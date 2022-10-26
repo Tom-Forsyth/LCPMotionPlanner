@@ -1,6 +1,6 @@
 #include "SpatialManipulator.h"
 #include "RigidBodyChain.h"
-#include "LocalMotionPlanner.h"
+#include "LocalPlanner.h"
 #include "PhysicsScene.h"
 #include "ContactPoint.h"
 #include <Eigen/Dense>
