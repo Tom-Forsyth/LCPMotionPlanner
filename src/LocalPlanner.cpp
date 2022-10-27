@@ -19,7 +19,7 @@ namespace MotionPlanner
 {
     LocalPlanner::LocalPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
         : m_pSpatialManipulator(pSpatialManipulator), m_goalTransform(goalTransform), m_plan(std::vector<Eigen::VectorXd>{}),
-        m_endFrame(pSpatialManipulator->getEndFrame()), m_dof(pSpatialManipulator->getDof()), m_currentTransform(m_endFrame.getSpatialTransform()),
+        m_dof(pSpatialManipulator->getDof()), m_currentTransform(m_pSpatialManipulator->getEndFrameSpatialTransform()),
         m_currentDualQuat(DualQuaternion(m_currentTransform)), m_goalDualQuat(DualQuaternion(m_goalTransform)), m_currentConcat(m_currentDualQuat.toConcat()),
         m_goalConcat(m_goalDualQuat.toConcat())
     {
@@ -36,8 +36,8 @@ namespace MotionPlanner
         size_t iter = 0;
         while (m_isRunning)
         {
-            // Update end frame and null space term.
-            m_endFrame = m_pSpatialManipulator->getEndFrame();
+            // Update spatial jacobian and null space term.
+            m_spatialJacobian = m_pSpatialManipulator->getEndFrame().getSpatialJacobian();
             computeNullSpaceTerm();
 
             // Get the joint displacement change from ScLERP, scaled to respect linearization.
@@ -109,8 +109,7 @@ namespace MotionPlanner
     Eigen::VectorXd LocalPlanner::getJointDisplacementChange()
     {
         // Get the joint displacement change from ScLERP.
-        Eigen::MatrixXd spatialJacobian = m_endFrame.getSpatialJacobian();
-        Eigen::MatrixXd B = Kinematics::BMatrix(spatialJacobian, m_currentTransform);
+        Eigen::MatrixXd B = Kinematics::BMatrix(m_spatialJacobian, m_currentTransform);
         DualQuaternion nextDualQuat = m_currentDualQuat.ScLERP(m_goalTransform, m_params.tau);
         Eigen::Vector<double, 7> nextConcat = nextDualQuat.toConcat();
         Eigen::VectorXd displacementChange = B * (nextConcat - m_currentConcat);
@@ -263,9 +262,7 @@ namespace MotionPlanner
 
     void LocalPlanner::computeNullSpaceTerm()
     {
-        const int dim = m_pSpatialManipulator->getDof();
-        const Eigen::MatrixXd spatialJacobian = m_endFrame.getSpatialJacobian();
-        const Eigen::MatrixXd spatialJacobianInv = spatialJacobian.completeOrthogonalDecomposition().pseudoInverse();
-        m_nullSpaceTerm = Eigen::MatrixXd::Identity(dim, dim) - (spatialJacobianInv * spatialJacobian);
+        const Eigen::MatrixXd spatialJacobianInv = m_spatialJacobian.completeOrthogonalDecomposition().pseudoInverse();
+        m_nullSpaceTerm = Eigen::MatrixXd::Identity(m_dof, m_dof) - (spatialJacobianInv * m_spatialJacobian);
     }
 }

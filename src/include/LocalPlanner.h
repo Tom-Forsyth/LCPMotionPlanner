@@ -11,6 +11,7 @@ namespace MotionPlanner
 {
 	class SpatialManipulator;
 
+	/// @brief Local planner exit codes.
 	enum class LocalPlannerExitCode
 	{
 		Success,
@@ -20,10 +21,17 @@ namespace MotionPlanner
 		Undefined
 	};
 
+	/// @brief Return type for local planner.
 	struct LocalPlannerResults
 	{
+		/// @brief Exit code.
 		LocalPlannerExitCode exitCode;
-		
+
+		/// @brief Vector of joint displacements.
+		std::vector<Eigen::VectorXd> jointDisplacements;
+
+		/// @brief Acheived end-effector pose.
+		Eigen::Matrix4d achievedPose;
 	};
 
 	/// @brief ScLERP motion planner with LCP collision avoidance. 
@@ -72,8 +80,8 @@ namespace MotionPlanner
 		/// @brief Current pose position/quaternion.
 		Eigen::Vector<double, 7> m_currentConcat;
 
-		/// @brief End frame of manipulator.
-		RigidBody m_endFrame;
+		/// @brief Manipulator spatial jacobian.
+		Eigen::MatrixXd m_spatialJacobian;
 
 		/// @brief Null space matrix.
 		Eigen::MatrixXd m_nullSpaceTerm;
