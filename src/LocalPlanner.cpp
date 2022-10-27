@@ -9,6 +9,12 @@
 #include <vector>
 #include <map>
 
+/*
+To-Do:
+  1. Create local planner exit info struct with exit code, iterations, plan vector, achieved pose, etc.
+  2. Store jacobian rather than storing the end frame.
+  3. Clean up main local planner loop.
+*/
 namespace MotionPlanner
 {
     LocalPlanner::LocalPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
@@ -28,16 +34,11 @@ namespace MotionPlanner
 
         // Run stepping until convergence or divergence.
         size_t iter = 0;
-        while (m_isRunning && iter < m_params.maxIterations)
+        while (m_isRunning)
         {
-            // Update end frame.
+            // Update end frame and null space term.
             m_endFrame = m_pSpatialManipulator->getEndFrame();
-
-            // Compute null space term.
-            const int dim = m_pSpatialManipulator->getDof();
-            const Eigen::MatrixXd spatialJacobian = m_endFrame.getSpatialJacobian();
-            const Eigen::MatrixXd spatialJacobianInv = spatialJacobian.completeOrthogonalDecomposition().pseudoInverse();
-            m_nullSpaceTerm = Eigen::MatrixXd::Identity(dim, dim) - (spatialJacobianInv * spatialJacobian);
+            computeNullSpaceTerm();
 
             // Get the joint displacement change from ScLERP, scaled to respect linearization.
             Eigen::VectorXd displacementChange = getJointDisplacementChange();
@@ -70,20 +71,34 @@ namespace MotionPlanner
             if (posError < m_params.positionTolerance && quatError < m_params.quatTolerance)
             {
                 m_isRunning = false;
+                m_exitCodePlanner = LocalPlannerExitCode::Success;
             }
 
-            // Check if we are near goal to tighten linearization.
-            checkNearGoal(posError, quatError);
-
-            // Check for penetration.
-            bool isPenetrating = checkPenetration();
-            if (isPenetrating)
+            // Determine if there was an LCP error.
+            if (m_exitCodeLCP)
             {
                 m_isRunning = false;
+                m_exitCodePlanner = LocalPlannerExitCode::LCPError;
             }
 
+            // Check for penetration.
+            if (isPenetrating())
+            {
+                m_isRunning = false;
+                m_exitCodePlanner = LocalPlannerExitCode::Collision;
+            }
+
+            if (iter == m_params.maxIterations - 1)
+            {
+                m_isRunning = false;
+                m_exitCodePlanner = LocalPlannerExitCode::MaxIterationsExcceeded;
+            }
+
+            // Check if we are near goal to tighten linearization for next iteration.
+            checkNearGoal(posError, quatError);
             iter++;
         }
+      
     }
 
     const std::vector<Eigen::VectorXd>& LocalPlanner::getPlan() const
@@ -216,7 +231,7 @@ namespace MotionPlanner
         return totalDisplacementChange;
     }
 
-    bool LocalPlanner::checkPenetration()
+    bool LocalPlanner::isPenetrating()
     {
         for (const auto& body : m_pSpatialManipulator->getRigidBodyChain().getRigidBodies())
         {
@@ -244,5 +259,13 @@ namespace MotionPlanner
                 m_params.maxTotalDisplacementChange = maxAngleChange;
             }
         }
+    }
+
+    void LocalPlanner::computeNullSpaceTerm()
+    {
+        const int dim = m_pSpatialManipulator->getDof();
+        const Eigen::MatrixXd spatialJacobian = m_endFrame.getSpatialJacobian();
+        const Eigen::MatrixXd spatialJacobianInv = spatialJacobian.completeOrthogonalDecomposition().pseudoInverse();
+        m_nullSpaceTerm = Eigen::MatrixXd::Identity(dim, dim) - (spatialJacobianInv * spatialJacobian);
     }
 }

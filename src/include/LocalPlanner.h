@@ -11,11 +11,19 @@ namespace MotionPlanner
 {
 	class SpatialManipulator;
 
-	enum class LocalPlannerExitCodes
+	enum class LocalPlannerExitCode
 	{
 		Success,
+		Collision,
 		LCPError,
-		MaxIterationsExcceeded
+		MaxIterationsExcceeded,
+		Undefined
+	};
+
+	struct LocalPlannerResults
+	{
+		LocalPlannerExitCode exitCode;
+		
 	};
 
 	/// @brief ScLERP motion planner with LCP collision avoidance. 
@@ -39,6 +47,9 @@ namespace MotionPlanner
 
 		/// @brief Exit code for the LCP solver.
 		int m_exitCodeLCP = -1;
+
+		/// @brief Exit code for the local motion planner.
+		LocalPlannerExitCode m_exitCodePlanner = LocalPlannerExitCode::Undefined;
 
 		/// @brief Degree of freedom of manipulator.
 		int m_dof;
@@ -82,10 +93,13 @@ namespace MotionPlanner
 
 		/// @brief Ensure that the robot is not colliding with obstacles.
 		/// @return Penetration condition.
-		bool checkPenetration();
+		bool isPenetrating();
 
 		/// @brief Check if the robot is near the goal to change the linearization mode.
 		void checkNearGoal(double posError, double quatError);
+
+		/// @brief Compute the null space term.
+		void computeNullSpaceTerm();
 
 	public:
 		/// @brief Constructor.
