@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RigidBodyChain.h"
+#include "MotionPlanResults.h"
 #include <Eigen/Dense>
 #include <vector>
 
@@ -60,7 +61,7 @@ namespace MotionPlanner
 
 		/// @brief Generate a motion plan to the specfied pose.
 		/// @param goalTransform Goal pose.
-		/// @return Sequence of joint displacements.
-		std::vector<Eigen::VectorXd> motionPlan(const Eigen::Matrix4d& goalTransform);
+		/// @return Motion plan results.
+		MotionPlanResults motionPlan(const Eigen::Matrix4d& goalTransform);
 	};
 }

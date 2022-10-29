@@ -4,35 +4,14 @@
 #include "RigidBody.h"
 #include "LCPSolve.h"
 #include "MotionPlanningParameters.h"
+#include "MotionPlanResults.h"
+#include "PlannerExitCodes.h"
 #include <Eigen/Dense>
 #include <vector>
 
 namespace MotionPlanner
 {
 	class SpatialManipulator;
-
-	/// @brief Local planner exit codes.
-	enum class LocalPlannerExitCode
-	{
-		Success,
-		Collision,
-		LCPError,
-		MaxIterationsExcceeded,
-		Undefined
-	};
-
-	/// @brief Return type for local planner.
-	struct LocalPlannerResults
-	{
-		/// @brief Exit code.
-		LocalPlannerExitCode exitCode;
-
-		/// @brief Vector of joint displacements.
-		std::vector<Eigen::VectorXd> jointDisplacements;
-
-		/// @brief Acheived end-effector pose.
-		Eigen::Matrix4d achievedPose;
-	};
 
 	/// @brief ScLERP motion planner with LCP collision avoidance. 
 	class LocalPlanner
@@ -61,6 +40,12 @@ namespace MotionPlanner
 
 		/// @brief Degree of freedom of manipulator.
 		int m_dof;
+
+		/// @brief Initial end-effector pose.
+		const Eigen::Matrix4d m_startTransform;
+
+		/// @brief Initial joint space configuration.
+		const Eigen::MatrixXd m_startDisplacements;
 
 		/// @brief Goal pose transform.
 		const Eigen::Matrix4d m_goalTransform;
@@ -120,6 +105,6 @@ namespace MotionPlanner
 
 		/// @brief Get the motion plan.
 		/// @return Vector of joint displacements.
-		const std::vector<Eigen::VectorXd>& getPlan() const;
+		MotionPlanResults getPlanResults() const;
 	};
 }

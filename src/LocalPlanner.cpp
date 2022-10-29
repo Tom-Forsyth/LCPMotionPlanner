@@ -5,6 +5,7 @@
 #include "Kinematics.h"
 #include "ContactPoint.h"
 #include "MotionPlanningParameters.h"
+#include "MotionPlanResults.h"
 #include <Eigen/Dense>
 #include <vector>
 #include <map>
@@ -21,7 +22,8 @@ namespace MotionPlanner
         : m_pSpatialManipulator(pSpatialManipulator), m_goalTransform(goalTransform), m_plan(std::vector<Eigen::VectorXd>{}),
         m_dof(pSpatialManipulator->getDof()), m_currentTransform(m_pSpatialManipulator->getEndFrameSpatialTransform()),
         m_currentDualQuat(DualQuaternion(m_currentTransform)), m_goalDualQuat(DualQuaternion(m_goalTransform)), m_currentConcat(m_currentDualQuat.toConcat()),
-        m_goalConcat(m_goalDualQuat.toConcat())
+        m_goalConcat(m_goalDualQuat.toConcat()), m_startTransform(m_pSpatialManipulator->getEndFrameSpatialTransform()), 
+        m_startDisplacements(m_pSpatialManipulator->getJointDisplacements())
     {
         m_plan.reserve(m_params.maxIterations + 1);
     }
@@ -101,9 +103,17 @@ namespace MotionPlanner
       
     }
 
-    const std::vector<Eigen::VectorXd>& LocalPlanner::getPlan() const
+    MotionPlanResults LocalPlanner::getPlanResults() const
     {
-        return m_plan;
+        MotionPlanResults planResults;
+        planResults.startPose = m_startTransform;
+        planResults.startJointDisplacements = m_startDisplacements;
+        planResults.goalPose = m_goalTransform;
+        planResults.achievedPose = m_currentTransform;
+        planResults.achievedJointDisplacements = m_pSpatialManipulator->getJointDisplacements();
+        planResults.exitCode = static_cast<int>(m_exitCodePlanner);
+        planResults.motionPlan = m_plan;
+        return planResults;
     }
 
     Eigen::VectorXd LocalPlanner::getJointDisplacementChange()

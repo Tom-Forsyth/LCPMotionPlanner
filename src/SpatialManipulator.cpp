@@ -3,6 +3,8 @@
 #include "LocalPlanner.h"
 #include "PhysicsScene.h"
 #include "ContactPoint.h"
+#include "GlobalPlanner.h"
+#include "MotionPlanResults.h"
 #include <Eigen/Dense>
 #include <vector>
 #include <map>
@@ -67,13 +69,13 @@ namespace MotionPlanner
 		return m_rigidBodyChain;
 	}
 
-	std::vector<Eigen::VectorXd> SpatialManipulator::motionPlan(const Eigen::Matrix4d& goalTransform)
+	MotionPlanResults SpatialManipulator::motionPlan(const Eigen::Matrix4d& goalTransform)
 	{
-		// Setup planner.
-		LocalPlanner planner(this, goalTransform);
+		// Intialize global planner.
+		GlobalPlanner globalPlanner(this, goalTransform);
 
 		// Generate plan.
-		planner.computePlan();
-		return planner.getPlan();
+		globalPlanner.computePlan();
+		return globalPlanner.getPlanResults();
 	}
 }
