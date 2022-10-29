@@ -4,6 +4,8 @@
 #include "RigidBody.h"
 #include "LCPSolve.h"
 #include "MotionPlanningParameters.h"
+#include "MotionPlanResults.h"
+#include "PlannerExitCodes.h"
 #include <Eigen/Dense>
 #include <vector>
 
@@ -12,7 +14,7 @@ namespace MotionPlanner
 	class SpatialManipulator;
 
 	/// @brief ScLERP motion planner with LCP collision avoidance. 
-	class ManipulatorMotionPlanner
+	class LocalPlanner
 	{
 	private:
 		/// @brief Pointer to the spatial manipulator to generate motion plan with.
@@ -30,8 +32,20 @@ namespace MotionPlanner
 		/// @brief Enforce stricter linearization near goal.
 		bool m_isNearGoal = false;
 
+		/// @brief Exit code for the LCP solver.
+		int m_exitCodeLCP = -1;
+
+		/// @brief Exit code for the local motion planner.
+		LocalPlannerExitCode m_exitCodePlanner = LocalPlannerExitCode::Undefined;
+
 		/// @brief Degree of freedom of manipulator.
 		int m_dof;
+
+		/// @brief Initial end-effector pose.
+		const Eigen::Matrix4d m_startTransform;
+
+		/// @brief Initial joint space configuration.
+		const Eigen::MatrixXd m_startDisplacements;
 
 		/// @brief Goal pose transform.
 		const Eigen::Matrix4d m_goalTransform;
@@ -51,8 +65,8 @@ namespace MotionPlanner
 		/// @brief Current pose position/quaternion.
 		Eigen::Vector<double, 7> m_currentConcat;
 
-		/// @brief End frame of manipulator.
-		RigidBody m_endFrame;
+		/// @brief Manipulator spatial jacobian.
+		Eigen::MatrixXd m_spatialJacobian;
 
 		/// @brief Null space matrix.
 		Eigen::MatrixXd m_nullSpaceTerm;
@@ -62,7 +76,7 @@ namespace MotionPlanner
 		Eigen::VectorXd getJointDisplacementChange();
 
 		/// @brief Formulate and solve LCP to get the joint displacement change to avoid obstacles.
-		Eigen::VectorXd getCollisionDisplacementChange(const Eigen::VectorXd& displacementChange) const;
+		Eigen::VectorXd getCollisionDisplacementChange(const Eigen::VectorXd& displacementChange);
 
 		/// @brief Add the ScLERP and collision avoidance joint displacements and ensure they respect linearization.
 		/// @param displacementChange Change in displacements due to ScLERP.
@@ -72,22 +86,25 @@ namespace MotionPlanner
 
 		/// @brief Ensure that the robot is not colliding with obstacles.
 		/// @return Penetration condition.
-		bool checkPenetration();
+		bool isPenetrating();
 
 		/// @brief Check if the robot is near the goal to change the linearization mode.
 		void checkNearGoal(double posError, double quatError);
+
+		/// @brief Compute the null space term.
+		void computeNullSpaceTerm();
 
 	public:
 		/// @brief Constructor.
 		/// @param pSpatialManipulator Pointer to the spatial manipulator to generate the plan with.
 		/// @param goalTransform Goal transform of the end-effector.
-		ManipulatorMotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform);
+		LocalPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform);
 
 		/// @brief Generate motion plan.
 		void computePlan();
 
 		/// @brief Get the motion plan.
 		/// @return Vector of joint displacements.
-		const std::vector<Eigen::VectorXd>& getPlan() const;
+		MotionPlanResults getPlanResults() const;
 	};
 }

@@ -1,28 +1,34 @@
-#include "ManipulatorMotionPlanner.h"
+#include "LocalPlanner.h"
 #include "SpatialManipulator.h"
 #include "DualQuaternion.h"
 #include "RigidBody.h"
 #include "Kinematics.h"
 #include "ContactPoint.h"
 #include "MotionPlanningParameters.h"
+#include "MotionPlanResults.h"
 #include <Eigen/Dense>
 #include <vector>
 #include <map>
 
-#include <iostream>
-
+/*
+To-Do:
+  1. Create local planner exit info struct with exit code, iterations, plan vector, achieved pose, etc.
+  2. Store jacobian rather than storing the end frame.
+  3. Clean up main local planner loop.
+*/
 namespace MotionPlanner
 {
-    ManipulatorMotionPlanner::ManipulatorMotionPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
+    LocalPlanner::LocalPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
         : m_pSpatialManipulator(pSpatialManipulator), m_goalTransform(goalTransform), m_plan(std::vector<Eigen::VectorXd>{}),
-        m_endFrame(pSpatialManipulator->getEndFrame()), m_dof(pSpatialManipulator->getDof()), m_currentTransform(m_endFrame.getSpatialTransform()),
+        m_dof(pSpatialManipulator->getDof()), m_currentTransform(m_pSpatialManipulator->getEndFrameSpatialTransform()),
         m_currentDualQuat(DualQuaternion(m_currentTransform)), m_goalDualQuat(DualQuaternion(m_goalTransform)), m_currentConcat(m_currentDualQuat.toConcat()),
-        m_goalConcat(m_goalDualQuat.toConcat())
+        m_goalConcat(m_goalDualQuat.toConcat()), m_startTransform(m_pSpatialManipulator->getEndFrameSpatialTransform()), 
+        m_startDisplacements(m_pSpatialManipulator->getJointDisplacements())
     {
         m_plan.reserve(m_params.maxIterations + 1);
     }
 
-    void ManipulatorMotionPlanner::computePlan()
+    void LocalPlanner::computePlan()
     {
         // Include starting joint displacements in plan.
         Eigen::VectorXd startJointDisplacements = m_pSpatialManipulator->getJointDisplacements();
@@ -30,17 +36,11 @@ namespace MotionPlanner
 
         // Run stepping until convergence or divergence.
         size_t iter = 0;
-        bool running = true;
-        while (running && iter < m_params.maxIterations)
+        while (m_isRunning)
         {
-            // Update end frame.
-            m_endFrame = m_pSpatialManipulator->getEndFrame();
-
-            // Compute null space term.
-            const int dim = m_pSpatialManipulator->getDof();
-            const Eigen::MatrixXd spatialJacobian = m_endFrame.getSpatialJacobian();
-            const Eigen::MatrixXd spatialJacobianInv = spatialJacobian.completeOrthogonalDecomposition().pseudoInverse();
-            m_nullSpaceTerm = Eigen::MatrixXd::Identity(dim, dim) - (spatialJacobianInv * spatialJacobian);
+            // Update spatial jacobian and null space term.
+            m_spatialJacobian = m_pSpatialManipulator->getEndFrame().getSpatialJacobian();
+            computeNullSpaceTerm();
 
             // Get the joint displacement change from ScLERP, scaled to respect linearization.
             Eigen::VectorXd displacementChange = getJointDisplacementChange();
@@ -72,33 +72,54 @@ namespace MotionPlanner
             double quatError = concatError.tail(4).norm();
             if (posError < m_params.positionTolerance && quatError < m_params.quatTolerance)
             {
-                running = false;
+                m_isRunning = false;
+                m_exitCodePlanner = LocalPlannerExitCode::Success;
             }
 
-            // Check if we are near goal to tighten linearization.
-            //checkNearGoal(posError, quatError);
+            // Determine if there was an LCP error.
+            if (m_exitCodeLCP)
+            {
+                m_isRunning = false;
+                m_exitCodePlanner = LocalPlannerExitCode::LCPError;
+            }
 
             // Check for penetration.
-            bool isPenetrating = checkPenetration();
-            if (isPenetrating)
+            if (isPenetrating())
             {
-                running = false;
+                m_isRunning = false;
+                m_exitCodePlanner = LocalPlannerExitCode::Collision;
             }
 
+            if (iter == m_params.maxIterations - 1)
+            {
+                m_isRunning = false;
+                m_exitCodePlanner = LocalPlannerExitCode::MaxIterationsExcceeded;
+            }
+
+            // Check if we are near goal to tighten linearization for next iteration.
+            checkNearGoal(posError, quatError);
             iter++;
         }
+      
     }
 
-    const std::vector<Eigen::VectorXd>& ManipulatorMotionPlanner::getPlan() const
+    MotionPlanResults LocalPlanner::getPlanResults() const
     {
-        return m_plan;
+        MotionPlanResults planResults;
+        planResults.startPose = m_startTransform;
+        planResults.startJointDisplacements = m_startDisplacements;
+        planResults.goalPose = m_goalTransform;
+        planResults.achievedPose = m_currentTransform;
+        planResults.achievedJointDisplacements = m_pSpatialManipulator->getJointDisplacements();
+        planResults.exitCode = static_cast<int>(m_exitCodePlanner);
+        planResults.motionPlan = m_plan;
+        return planResults;
     }
 
-    Eigen::VectorXd ManipulatorMotionPlanner::getJointDisplacementChange()
+    Eigen::VectorXd LocalPlanner::getJointDisplacementChange()
     {
         // Get the joint displacement change from ScLERP.
-        Eigen::MatrixXd spatialJacobian = m_endFrame.getSpatialJacobian();
-        Eigen::MatrixXd B = Kinematics::BMatrix(spatialJacobian, m_currentTransform);
+        Eigen::MatrixXd B = Kinematics::BMatrix(m_spatialJacobian, m_currentTransform);
         DualQuaternion nextDualQuat = m_currentDualQuat.ScLERP(m_goalTransform, m_params.tau);
         Eigen::Vector<double, 7> nextConcat = nextDualQuat.toConcat();
         Eigen::VectorXd displacementChange = B * (nextConcat - m_currentConcat);
@@ -122,7 +143,7 @@ namespace MotionPlanner
         return displacementChange;
     }
 
-    Eigen::VectorXd ManipulatorMotionPlanner::getCollisionDisplacementChange(const Eigen::VectorXd& displacementChange) const
+    Eigen::VectorXd LocalPlanner::getCollisionDisplacementChange(const Eigen::VectorXd& displacementChange)
     {
         // Get the active contacts.
         std::map<int, const ContactPoint&> contactPoints;
@@ -176,6 +197,7 @@ namespace MotionPlanner
         // Solve LCP for compensating velocites.
         LCPSolve::LCP solution = LCPSolve::LCPSolve(M, q);
         Eigen::VectorXd compensatingVelocities = solution.z;
+        m_exitCodeLCP = solution.exitCond;
 
         // Find the change in displacements based on compensating velocities.
         Eigen::VectorXd collisionDisplacementChange = Eigen::VectorXd::Zero(m_dof);
@@ -202,7 +224,7 @@ namespace MotionPlanner
         return collisionDisplacementChange;
     }
 
-    Eigen::VectorXd ManipulatorMotionPlanner::getTotalDisplacementChange(const Eigen::VectorXd& displacementChange, const Eigen::VectorXd& collisionDisplacementChange)
+    Eigen::VectorXd LocalPlanner::getTotalDisplacementChange(const Eigen::VectorXd& displacementChange, const Eigen::VectorXd& collisionDisplacementChange)
     {
         // Adjust total step to respect the maximum collision displacement change.
         double maxCollisionDisplacement = collisionDisplacementChange.cwiseAbs().maxCoeff();
@@ -218,7 +240,7 @@ namespace MotionPlanner
         return totalDisplacementChange;
     }
 
-    bool ManipulatorMotionPlanner::checkPenetration()
+    bool LocalPlanner::isPenetrating()
     {
         for (const auto& body : m_pSpatialManipulator->getRigidBodyChain().getRigidBodies())
         {
@@ -230,7 +252,7 @@ namespace MotionPlanner
         return false;
     }
 
-    void ManipulatorMotionPlanner::checkNearGoal(double posError, double quatError)
+    void LocalPlanner::checkNearGoal(double posError, double quatError)
     {
         if (!m_isNearGoal)
         {
@@ -246,5 +268,11 @@ namespace MotionPlanner
                 m_params.maxTotalDisplacementChange = maxAngleChange;
             }
         }
+    }
+
+    void LocalPlanner::computeNullSpaceTerm()
+    {
+        const Eigen::MatrixXd spatialJacobianInv = m_spatialJacobian.completeOrthogonalDecomposition().pseudoInverse();
+        m_nullSpaceTerm = Eigen::MatrixXd::Identity(m_dof, m_dof) - (spatialJacobianInv * m_spatialJacobian);
     }
 }

@@ -5,3 +5,6 @@
 [submodule "external/PhysX"]
 	path = external/PhysX
 	url = https://github.com/NVIDIAGameWorks/PhysX.git
+[submodule "external/LCPSolve"]
+	path = external/LCPSolve
+	url = git@github.com:Tom-Forsyth/LCPSolve.git

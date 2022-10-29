@@ -5,12 +5,14 @@
 #include "ObjectType.h"
 #include "PhysicsCore.h"
 #include "PhysicsScene.h"
+#include "MotionPlanResults.h"
 #include <iostream>
 #include <Eigen/Dense>
 #include <chrono>
 
 void testFrankaPanda();
 void testFrankaPanda2();
+void displayPlanResults(const MotionPlanner::MotionPlanResults& planResults, int n);
 
 int main()
 {
@@ -93,18 +95,13 @@ void testFrankaPanda()
 
 	// Generate motion plan.
 	auto start = std::chrono::steady_clock::now();
-	panda.motionPlan(goalTransform1);
-	Eigen::Matrix4d achievedTransform1 = panda.getEndFrameSpatialTransform();
-	panda.setJointDisplacements(panda.getJointDisplacements());
-	panda.motionPlan(goalTransform2);
-	Eigen::Matrix4d achievedTransform2 = panda.getEndFrameSpatialTransform();
+	MotionPlanner::MotionPlanResults planResults1 = panda.motionPlan(goalTransform1);
+	MotionPlanner::MotionPlanResults planResults2 = panda.motionPlan(goalTransform2);
 	auto stop = std::chrono::steady_clock::now();
 
-	std::cout << "Start Transform: \n" << startTransform << "\n\n";
-	std::cout << "Goal Transform 1: \n" << goalTransform1 << "\n\n";
-	std::cout << "Acheived Transform 1: \n" << achievedTransform1 << "\n\n";
-	std::cout << "Goal Transform 2: \n" << goalTransform2 << "\n\n";
-	std::cout << "Acheived Transform 2: \n" << achievedTransform2 << "\n\n";
+	// Display results.
+	displayPlanResults(planResults1, 1);
+	displayPlanResults(planResults2, 2);
 
 	// Elapsed time.
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
@@ -113,6 +110,7 @@ void testFrankaPanda()
 
 void testFrankaPanda2()
 {
+	/*
 	constexpr double pi = 3.14159265358979323846;
 
 	// Create physics core and scene.
@@ -195,4 +193,15 @@ void testFrankaPanda2()
 	// Elapsed time.
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
 	std::cout << "Elapsed Time: " << elapsedTime << " ms\n";
+	*/
+}
+
+void displayPlanResults(const MotionPlanner::MotionPlanResults& planResults, int n)
+{
+	std::cout << "----- Motion Plan " << n << " Results -----\n";
+	std::cout << "Exit Code: " << planResults.exitCode << "\n";
+	std::cout << "Plan Size: " << planResults.motionPlan.size() << "\n";
+	std::cout << "Start Pose: \n" << planResults.startPose << "\n";
+	std::cout << "Goal Pose: \n" << planResults.goalPose << "\n";
+	std::cout << "Achieved Pose: \n" << planResults.achievedPose << "\n\n";
 }

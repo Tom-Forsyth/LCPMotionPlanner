@@ -10,15 +10,16 @@ set (SOURCES
     DualNumber.cpp
     DualQuaternion.cpp
     FrankaPanda.cpp
+    GlobalPlanner.cpp
     Joint.cpp
     Kinematics.cpp
-    LCPSolve.cpp
-    ManipulatorMotionPlanner.cpp
+    LocalPlanner.cpp
     PhysicsCore.cpp
     PhysicsScene.cpp
     PhysXHelperFunctions.cpp
     RigidBody.cpp
     RigidBodyChain.cpp
+    RobotConfiguration.cpp
     Shape.cpp
     SpatialManipulator.cpp
     Sphere.cpp
@@ -36,17 +37,20 @@ set(INCLUDES
     include/DualNumber.h
     include/DualQuaternion.h
     include/FrankaPanda.h
+    include/GlobalPlanner.h
     include/Joint.h
     include/Kinematics.h
-    include/LCPSolve.h
-    include/ManipulatorMotionPlanner.h
+    include/LocalPlanner.h
     include/MotionPlanningParameters.h
+    include/MotionPlanResults.h
     include/ObjectType.h
     include/PhysicsCore.h
     include/PhysicsScene.h
     include/PhysXHelperFunctions.h
+    include/PlannerExitCodes.h
     include/RigidBody.h
     include/RigidBodyChain.h
+    include/RobotConfiguration.h
     include/Shape.h
     include/SpatialManipulator.h
     include/Sphere.h
@@ -67,4 +71,5 @@ target_include_directories(LCPMotionPlannerLib
 target_link_libraries(LCPMotionPlannerLib
     PUBLIC Eigen3::Eigen
     PUBLIC ${PHYSX_LIBRARIES}
+    PRIVATE LCPSolveLib
 )
