@@ -28,6 +28,9 @@ namespace MotionPlanner
 		/// @brief Joint displacement.
 		double m_displacement = 0;
 
+		/// @brief Min and max joint displacement.
+		std::pair<double, double> m_jointLimits;
+
 		/// @brief Twist coordinate of joint.
 		Eigen::Vector<double, 6> m_twistCoord = Eigen::Vector<double, 6>::Zero();
 
@@ -51,7 +54,7 @@ namespace MotionPlanner
 		/// @param type Joint type.
 		/// @param axis Joint axis.
 		/// @param point Origin.
-		Joint(const JointType& type, const Eigen::Vector3d& axis, const Eigen::Vector3d& point);
+		Joint(const JointType& type, const Eigen::Vector3d& axis, const Eigen::Vector3d& point, const std::pair<double, double>& jointLimits);
 
 		/// @brief Get joint displacement.
 		/// @return Joint displacement.

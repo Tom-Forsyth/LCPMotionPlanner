@@ -4,8 +4,8 @@
 
 namespace MotionPlanner
 {
-    Joint::Joint(const JointType& type, const Eigen::Vector3d& axis, const Eigen::Vector3d& point)
-        : m_type(type), m_axis(axis), m_point(point)
+    Joint::Joint(const JointType& type, const Eigen::Vector3d& axis, const Eigen::Vector3d& point, const std::pair<double, double>& jointLimits)
+        : m_type(type), m_axis(axis), m_point(point), m_jointLimits(jointLimits)
     {
         computeTwistCoord();
         computeTwist();
