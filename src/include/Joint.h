@@ -49,6 +49,10 @@ namespace MotionPlanner
 		/// @brief Compute relative transfmation using exponential formula.
 		void computeRelativeTransformation();
 
+		/// @brief Determine if the joint displacement input would violate limits.
+		/// @return Would the displacement violate limits.
+		bool wouldViolateLimits(double displacement) const;
+
 	public:
 		/// @brief Constructor.
 		/// @param type Joint type.
@@ -62,7 +66,8 @@ namespace MotionPlanner
 
 		/// @brief Set joint displacement.
 		/// @param displacement Joint displacement.
-		void setDisplacement(const double& displacement);
+		/// @return If the joint displacement was successfully set.
+		bool setDisplacement(const double& displacement);
 
 		/// @brief Get relative transformation.
 		/// @return Relative transformation.

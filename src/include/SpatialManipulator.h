@@ -37,7 +37,8 @@ namespace MotionPlanner
 
 		/// @brief Set the joint displacements and compute forward kinematics.
 		/// @param jointDisplacements Joint displacements.
-		void setJointDisplacements(const Eigen::VectorXd& jointDisplacements);
+		/// @return If the joint displacements were successfully set.
+		bool setJointDisplacements(const Eigen::VectorXd& jointDisplacements);
 
 		/// @brief Get the current joint displacements.
 		/// @return Joint displacements.

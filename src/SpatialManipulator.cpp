@@ -32,16 +32,21 @@ namespace MotionPlanner
 		m_physicsScene = physicsScene;
 	}
 
-	void SpatialManipulator::setJointDisplacements(const Eigen::VectorXd& jointDisplacements)
+	bool SpatialManipulator::setJointDisplacements(const Eigen::VectorXd& jointDisplacements)
 	{
-		m_rigidBodyChain.setJointDisplacements(jointDisplacements);
-		if (m_physicsScene)
+		// If the joint displacements are valid and not violating joint limits, update physics and kinematics.
+		bool validDisplacements = m_rigidBodyChain.setJointDisplacements(jointDisplacements);
+		if (validDisplacements)
 		{
-			m_rigidBodyChain.deactivateContacts();
-			const std::map<std::string, ContactPoint>& contactPoints = m_physicsScene->generateContacts();
-			m_rigidBodyChain.updateContactPoints(contactPoints);
+			if (m_physicsScene)
+			{
+				m_rigidBodyChain.deactivateContacts();
+				const std::map<std::string, ContactPoint>& contactPoints = m_physicsScene->generateContacts();
+				m_rigidBodyChain.updateContactPoints(contactPoints);
+			}
+			m_rigidBodyChain.updateContactJacobians();
 		}
-		m_rigidBodyChain.updateContactJacobians();
+		return validDisplacements;
 	}
 
 	Eigen::VectorXd SpatialManipulator::getJointDisplacements() const

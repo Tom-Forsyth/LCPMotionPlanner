@@ -16,7 +16,8 @@ namespace MotionPlanner
 		Success,
 		Collision,
 		LCPError,
-		MaxIterationsExcceeded,
+		MaxIterationsExceeded,
+		JointLimitViolation,
 		Undefined
 	};
 }

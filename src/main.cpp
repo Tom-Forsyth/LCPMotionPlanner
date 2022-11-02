@@ -84,7 +84,7 @@ void testFrankaPanda()
 
 	// Setup start joint angles and transform.
 	Eigen::Vector<double, 7> startAngles(0, 0, 0, -pi / 2, 0, pi / 2, 0);
-	panda.setJointDisplacements(startAngles);
+	static_cast<void>(panda.setJointDisplacements(startAngles));
 	Eigen::Matrix4d startTransform = panda.getEndFrameSpatialTransform();
 
 	// Setup goal poses.
@@ -205,3 +205,10 @@ void displayPlanResults(const MotionPlanner::MotionPlanResults& planResults, int
 	std::cout << "Goal Pose: \n" << planResults.goalPose << "\n";
 	std::cout << "Achieved Pose: \n" << planResults.achievedPose << "\n\n";
 }
+
+/*
+To-Do:
+  1. Create local planner exit info struct with exit code, iterations, plan vector, achieved pose, etc.
+  2. Store jacobian rather than storing the end frame.
+  3. Clean up main local planner loop.
+*/

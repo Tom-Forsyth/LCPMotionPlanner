@@ -99,7 +99,8 @@ namespace MotionPlanner
 
 		/// @brief Set the displacement of the joint.
 		/// @param displacement Displacement.
-		void setJointDisplacement(const double& displacement);
+		/// @return If setting the joint displacement was successful.
+		bool setJointDisplacement(const double& displacement);
 
 		/// @brief Get the type of the joint.
 		/// @return Joint type.

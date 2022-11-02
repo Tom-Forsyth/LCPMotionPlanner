@@ -10,12 +10,6 @@
 #include <vector>
 #include <map>
 
-/*
-To-Do:
-  1. Create local planner exit info struct with exit code, iterations, plan vector, achieved pose, etc.
-  2. Store jacobian rather than storing the end frame.
-  3. Clean up main local planner loop.
-*/
 namespace MotionPlanner
 {
     LocalPlanner::LocalPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
@@ -54,7 +48,14 @@ namespace MotionPlanner
             // Update the robot's joint displacements.
             Eigen::VectorXd nextJointDisplacements = m_pSpatialManipulator->getJointDisplacements() + totalDisplacementChange;
             m_plan.emplace_back(nextJointDisplacements);
-            m_pSpatialManipulator->setJointDisplacements(nextJointDisplacements);
+            bool displacementsAreValid = m_pSpatialManipulator->setJointDisplacements(nextJointDisplacements);
+            
+            // Check for joint limit violation.
+            if (!displacementsAreValid)
+            {
+                m_isRunning = false;
+                m_exitCodePlanner = LocalPlannerExitCode::JointLimitViolation;
+            }
 
             // Get achieved pose after forward kinematics and update variables.
             Eigen::Matrix4d correctedTransform = m_pSpatialManipulator->getEndFrameSpatialTransform();
@@ -93,7 +94,7 @@ namespace MotionPlanner
             if (iter == m_params.maxIterations - 1)
             {
                 m_isRunning = false;
-                m_exitCodePlanner = LocalPlannerExitCode::MaxIterationsExcceeded;
+                m_exitCodePlanner = LocalPlannerExitCode::MaxIterationsExceeded;
             }
 
             // Check if we are near goal to tighten linearization for next iteration.

@@ -45,16 +45,24 @@ namespace MotionPlanner
 
 	}
 
-	void RigidBodyChain::setJointDisplacements(const Eigen::VectorXd& jointDisplacements)
+	bool RigidBodyChain::setJointDisplacements(const Eigen::VectorXd& jointDisplacements)
 	{
 		// Set displacement for each body's joint.
-		int i = 0;
+		int displacementIndex = 0;
 		for (RigidBody& body : m_rigidBodies)
 		{
+			// Attempt to set displacement for the joint.
+			bool withinJointLimits = true;
 			if (body.getJointType() != JointType::Fixed)
 			{
-				body.setJointDisplacement(jointDisplacements[i]);
-				i++;
+				withinJointLimits = body.setJointDisplacement(jointDisplacements[displacementIndex]);
+				displacementIndex++;
+			}
+
+			// If there is a limit violation, exit and return a failure.
+			if (!withinJointLimits)
+			{
+				return false;
 			}
 		}
 
@@ -66,6 +74,8 @@ namespace MotionPlanner
 
 		// Update the world transforms of the collision primatives.
 		updateColliderTransforms();
+
+		return true;
 	}
 
 	Eigen::VectorXd RigidBodyChain::getJointDisplacements() const

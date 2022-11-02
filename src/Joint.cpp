@@ -16,10 +16,15 @@ namespace MotionPlanner
         return m_displacement;
     }
 
-    void Joint::setDisplacement(const double& displacement)
+    bool Joint::setDisplacement(const double& displacement)
     {
-        m_displacement = displacement;
-        computeRelativeTransformation();
+        if (!wouldViolateLimits(displacement))
+        {
+            m_displacement = displacement;
+            computeRelativeTransformation();
+            return true;
+        }
+        return false;
     }
 
     Eigen::Matrix4d Joint::getRelativeTransformation() const
@@ -70,5 +75,18 @@ namespace MotionPlanner
         {
             m_relativeTransformation.block(0, 3, 3, 1) = m_twistCoord.segment(3, 3) * m_displacement;
         }
+    }
+
+    bool Joint::wouldViolateLimits(double displacement) const 
+    {
+        // If the joint is not fixed, check for joint limit violation.
+        if (m_type != JointType::Fixed)
+        {
+            if ((displacement < m_jointLimits.first) || (displacement > m_jointLimits.second))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
