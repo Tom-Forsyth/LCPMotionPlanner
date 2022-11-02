@@ -81,9 +81,9 @@ namespace MotionPlanner
 		return m_joint.getDisplacement();
 	}
 
-	void RigidBody::setJointDisplacement(const double& displacement)
+	bool RigidBody::setJointDisplacement(const double& displacement)
 	{
-		m_joint.setDisplacement(displacement);
+		return m_joint.setDisplacement(displacement);
 	}
 
 	JointType RigidBody::getJointType() const

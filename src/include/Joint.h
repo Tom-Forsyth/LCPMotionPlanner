@@ -28,6 +28,9 @@ namespace MotionPlanner
 		/// @brief Joint displacement.
 		double m_displacement = 0;
 
+		/// @brief Min and max joint displacement.
+		std::pair<double, double> m_jointLimits;
+
 		/// @brief Twist coordinate of joint.
 		Eigen::Vector<double, 6> m_twistCoord = Eigen::Vector<double, 6>::Zero();
 
@@ -46,12 +49,16 @@ namespace MotionPlanner
 		/// @brief Compute relative transfmation using exponential formula.
 		void computeRelativeTransformation();
 
+		/// @brief Determine if the joint displacement input would violate limits.
+		/// @return Would the displacement violate limits.
+		bool wouldViolateLimits(double displacement) const;
+
 	public:
 		/// @brief Constructor.
 		/// @param type Joint type.
 		/// @param axis Joint axis.
 		/// @param point Origin.
-		Joint(const JointType& type, const Eigen::Vector3d& axis, const Eigen::Vector3d& point);
+		Joint(const JointType& type, const Eigen::Vector3d& axis, const Eigen::Vector3d& point, const std::pair<double, double>& jointLimits);
 
 		/// @brief Get joint displacement.
 		/// @return Joint displacement.
@@ -59,7 +66,8 @@ namespace MotionPlanner
 
 		/// @brief Set joint displacement.
 		/// @param displacement Joint displacement.
-		void setDisplacement(const double& displacement);
+		/// @return If the joint displacement was successfully set.
+		bool setDisplacement(const double& displacement);
 
 		/// @brief Get relative transformation.
 		/// @return Relative transformation.
