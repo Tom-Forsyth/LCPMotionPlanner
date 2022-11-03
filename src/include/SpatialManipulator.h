@@ -19,6 +19,9 @@ namespace MotionPlanner
 		/// @brief Physics scene that the manipulator belongs to.
 		PhysicsScene* m_physicsScene = nullptr;
 
+		/// @brief Maximum reach of the manipulator.
+		double m_maxReach = 0;
+
 	public:
 		/// @brief Default constructor.
 		SpatialManipulator();
@@ -30,6 +33,10 @@ namespace MotionPlanner
 		/// @brief Set the base transform of the robot.
 		/// @param baseTransform Robot base transform.
 		void setBaseTransform(const Eigen::Matrix4d& baseTransform);
+
+		/// @brief Get the base transform of the manipulator.
+		/// @return Base transform.
+		Eigen::Matrix4d getBaseTransform() const;
 
 		/// @brief Set the physics scene pointer.
 		/// @param physicsScene Pointer to physics scene.
@@ -59,6 +66,13 @@ namespace MotionPlanner
 		/// @brief Get the rigid body chain.
 		/// @return Rigid body chain.
 		const RigidBodyChain& getRigidBodyChain() const;
+
+		/// @brief Set maximum reach of the manipulator.
+		void setMaxReach(double maxReach);
+
+		/// @brief Get the maximum reach of the manipulator.
+		/// @return Maximum reach.
+		double getMaxReach() const;
 
 		/// @brief Generate a motion plan to the specfied pose.
 		/// @param goalTransform Goal pose.

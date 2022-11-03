@@ -4,13 +4,17 @@
 #include "MotionPlanResults.h"
 #include "PlannerExitCodes.h"
 #include "LocalPlanner.h"
+#include "TaskSpaceSampler.h"
 #include <Eigen/Dense>
+#include <random>
 
 namespace MotionPlanner
 {
 	GlobalPlanner::GlobalPlanner(SpatialManipulator* spatialManipulator, const Eigen::Matrix4d& goalPose)
-		: m_spatialManipulator(spatialManipulator), m_goalPose(goalPose)
+		: m_spatialManipulator(spatialManipulator), m_goalPose(goalPose),
+		m_sampler(spatialManipulator->getBaseTransform().block(0, 3, 3, 1), spatialManipulator->getMaxReach())
 	{
+		// Add initial configuration.
 		addConfiguration(m_spatialManipulator->getEndFrameSpatialTransform(), m_spatialManipulator->getJointDisplacements());
 
 		// Reserve space for joint trajectory vector.

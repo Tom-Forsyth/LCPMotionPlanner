@@ -3,6 +3,7 @@
 #include "RobotConfiguration.h"
 #include "MotionPlanResults.h"
 #include "PlannerExitCodes.h"
+#include "TaskSpaceSampler.h"
 #include <Eigen/Dense>
 #include <vector>
 
@@ -30,6 +31,9 @@ namespace MotionPlanner
 
 		/// @brief True when the planner is running.
 		bool m_isRunning = true;
+
+		/// @brief Draws samples from the task space.
+		TaskSpaceSampler m_sampler;
 
 		/// @brief Add robot configuration.
 		/// @param pose End-effector pose.

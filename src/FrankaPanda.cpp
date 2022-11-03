@@ -178,6 +178,7 @@ namespace MotionPlanner
 		m_rigidBodyChain.addBody(linkTip);
 
 		// Finish initialization.
+		setMaxReach(0.855);
 		m_rigidBodyChain.postInit();
 	}
 }

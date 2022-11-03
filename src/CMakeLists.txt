@@ -23,6 +23,7 @@ set (SOURCES
     Shape.cpp
     SpatialManipulator.cpp
     Sphere.cpp
+    TaskSpaceSampler.cpp
 )
 
 # Header files.
@@ -54,6 +55,7 @@ set(INCLUDES
     include/Shape.h
     include/SpatialManipulator.h
     include/Sphere.h
+    include/TaskSpaceSampler.h
 )
 
 # Create library.

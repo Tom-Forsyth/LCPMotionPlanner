@@ -41,6 +41,10 @@ namespace MotionPlanner
 		/// @param baseTransform Base transform.
 		void setBaseTransform(const Eigen::Matrix4d& baseTransform);
 
+		/// @brief Get the base transform of the kinematic chain.
+		/// @return Base transform.
+		Eigen::Matrix4d getBaseTransform() const;
+
 		/// @brief Add a link.body to the kinematic chain.
 		/// @param rigidBody Robot link.
 		void addBody(const RigidBody& rigidBody);
