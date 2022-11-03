@@ -73,6 +73,11 @@ endif()
 # LCPSolve.
 add_subdirectory(external/LCPSolve)
 
+# Boost.
+set(BOOST_ROOT "C:/src/boost_1_80_0")
+set(BOOST_INCLUDEDIR "${BOOST_ROOT}/boost")
+find_package(Boost REQUIRED)
+
 # Add source code subdirectory to create LCPMotionPlannerLib.
 add_subdirectory(src)
 
