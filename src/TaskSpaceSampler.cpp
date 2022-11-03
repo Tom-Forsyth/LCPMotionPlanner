@@ -6,7 +6,7 @@
 namespace MotionPlanner
 {
 	TaskSpaceSampler::TaskSpaceSampler(const Eigen::Vector3d& robotOrigin, double samplingSphereRadius)
-		: m_robotOrigin(robotOrigin), m_samplingSphereRadius(samplingSphereRadius*2),
+		: m_robotOrigin(robotOrigin), m_samplingSphereRadius(samplingSphereRadius),
 		m_engine(std::mt19937(m_randomDevice())), 
 		m_uniformDist(std::uniform_real_distribution<double>(-1, 1))
 	{
@@ -16,7 +16,7 @@ namespace MotionPlanner
 	Eigen::Vector3d TaskSpaceSampler::drawR3Sample()
 	{
 		// Draw displacement sample within the hemi-sphere.
-		Eigen::Vector3d sample(drawNormalReal(), drawNormalReal(), abs(drawNormalReal()));
+		Eigen::Vector3d sample(drawUniformReal(), drawUniformReal(), abs(drawUniformReal()));
 		sample *= m_samplingSphereRadius;
 
 		// Add to the robot origin and return.

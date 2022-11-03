@@ -46,7 +46,7 @@ namespace MotionPlanner
 			// Run the local planner.
 			MotionPlanResults localPlan = generateLocalPlan(m_graph[closestNode], intermediatePose);
 
-			// If the plan was at least minimally successful, add to graph.
+			// If the plan was minimally successful, add to graph.
 			if (localPlan.motionPlan.size() >= m_params.minLocalPlanSize)
 			{
 				addNode(localPlan.achievedPose, localPlan.achievedJointDisplacements);

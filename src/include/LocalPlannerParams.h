@@ -6,7 +6,7 @@ namespace MotionPlanner
 	struct LocalPlannerParams
 	{
 		/// @brief Max iterations before termination.
-		const size_t maxIterations = 1000;
+		const size_t maxIterations = 500;
 
 		/// @brief Distance at which to start avoiding obstacles.
 		const double safetyDistance = 0.01;

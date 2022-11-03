@@ -73,21 +73,18 @@ namespace MotionPlanner
             m_currentConcat = correctedConcat;
             m_currentTransform = correctedTransform;
 
-            // Check for convergence.
-            Eigen::Vector<double, 7> concatError = m_goalConcat - m_currentConcat;
-            double posError = concatError.head(3).norm();
-            double quatError = concatError.tail(4).norm();
-            if (posError < m_params.positionTolerance && quatError < m_params.quatTolerance)
-            {
-                m_isRunning = false;
-                m_exitCodePlanner = LocalPlannerExitCode::Success;
-            }
-
             // Determine if there was an LCP error.
             if (m_exitCodeLCP)
             {
                 m_isRunning = false;
                 m_exitCodePlanner = LocalPlannerExitCode::LCPError;
+            }
+
+            // Check for maximum iterations.
+            if (iter == m_params.maxIterations - 1)
+            {
+                m_isRunning = false;
+                m_exitCodePlanner = LocalPlannerExitCode::MaxIterationsExceeded;
             }
 
             // Check for penetration.
@@ -97,20 +94,27 @@ namespace MotionPlanner
                 m_exitCodePlanner = LocalPlannerExitCode::Collision;
             }
 
-            if (iter == m_params.maxIterations - 1)
+            // Check for convergence.
+            Eigen::Vector<double, 7> concatError = m_goalConcat - m_currentConcat;
+            double posError = concatError.head(3).norm();
+            double quatError = concatError.tail(4).norm();
+            if (posError < m_params.positionTolerance && quatError < m_params.quatTolerance)
             {
-                m_isRunning = false;
-                m_exitCodePlanner = LocalPlannerExitCode::MaxIterationsExceeded;
+                if (m_isRunning)
+                {
+                    m_isRunning = false;
+                    m_exitCodePlanner = LocalPlannerExitCode::Success;
+                }
             }
-
-            // Check if we are near goal to tighten linearization for next iteration.
-            checkNearGoal(posError, quatError);
 
             // If the planner did not terminate with an error, add the joint configuration to the plan.
             if (m_exitCodePlanner == LocalPlannerExitCode::Success || m_exitCodePlanner == LocalPlannerExitCode::Undefined)
             {
                 m_plan.emplace_back(nextJointDisplacements);
             }
+
+            // Check if we are near goal to tighten linearization for next iteration.
+            checkNearGoal(posError, quatError);
 
             iter++;
         }
