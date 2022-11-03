@@ -89,6 +89,18 @@ namespace MotionPlanner
 		return m_maxReach;
 	}
 
+	bool SpatialManipulator::isColliding() const
+	{
+		for (const auto& body : getRigidBodyChain().getRigidBodies())
+		{
+			if (body.getContactPoint().m_distance <= 0)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	MotionPlanResults SpatialManipulator::motionPlan(const Eigen::Matrix4d& goalTransform)
 	{
 		// Intialize global planner.

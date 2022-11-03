@@ -74,6 +74,10 @@ namespace MotionPlanner
 		/// @return Maximum reach.
 		double getMaxReach() const;
 
+		/// @brief Check if the robot is colliding with any obstacles.
+		/// @return If the robot is colliding with the environment.
+		bool isColliding() const;
+
 		/// @brief Generate a motion plan to the specfied pose.
 		/// @param goalTransform Goal pose.
 		/// @return Motion plan results.

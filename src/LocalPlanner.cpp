@@ -4,7 +4,7 @@
 #include "RigidBody.h"
 #include "Kinematics.h"
 #include "ContactPoint.h"
-#include "MotionPlanningParameters.h"
+#include "LocalPlannerParams.h"
 #include "MotionPlanResults.h"
 #include <Eigen/Dense>
 #include <vector>
@@ -243,14 +243,7 @@ namespace MotionPlanner
 
     bool LocalPlanner::isPenetrating()
     {
-        for (const auto& body : m_pSpatialManipulator->getRigidBodyChain().getRigidBodies())
-        {
-            if (body.getContactPoint().m_distance <= 0)
-            {
-                return true;
-            }
-        }
-        return false;
+        return m_pSpatialManipulator->isColliding();
     }
 
     void LocalPlanner::checkNearGoal(double posError, double quatError)
