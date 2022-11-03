@@ -3,7 +3,7 @@
 namespace MotionPlanner
 {
 	/// @brief Default motion planning parameters.
-	struct MotionPlanningParameters
+	struct LocalPlannerParams
 	{
 		/// @brief Max iterations before termination.
 		const size_t maxIterations = 3000;
