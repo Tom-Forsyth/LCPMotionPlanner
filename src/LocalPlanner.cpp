@@ -47,7 +47,6 @@ namespace MotionPlanner
 
             // Update the robot's joint displacements.
             Eigen::VectorXd nextJointDisplacements = m_pSpatialManipulator->getJointDisplacements() + totalDisplacementChange;
-            m_plan.emplace_back(nextJointDisplacements);
             bool displacementsAreValid = m_pSpatialManipulator->setJointDisplacements(nextJointDisplacements);
             
             // Check for joint limit violation.
@@ -99,6 +98,13 @@ namespace MotionPlanner
 
             // Check if we are near goal to tighten linearization for next iteration.
             checkNearGoal(posError, quatError);
+
+            // If the planner did not terminate with an error, add the joint configuration to the plan.
+            if (m_exitCodePlanner == LocalPlannerExitCode::Success || m_exitCodePlanner == LocalPlannerExitCode::Undefined)
+            {
+                m_plan.emplace_back(nextJointDisplacements);
+            }
+
             iter++;
         }
       
