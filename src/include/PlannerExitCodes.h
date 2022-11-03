@@ -7,6 +7,7 @@ namespace MotionPlanner
 	{
 		Success,
 		NoPathFound,
+		MaxIterationsExceeded,
 		Undefined
 	};
 
@@ -18,6 +19,7 @@ namespace MotionPlanner
 		LCPError,
 		MaxIterationsExceeded,
 		JointLimitViolation,
+		StuckAtLocalMinimum,
 		Undefined
 	};
 }

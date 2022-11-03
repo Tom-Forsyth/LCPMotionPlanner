@@ -32,6 +32,9 @@ namespace MotionPlanner
 		/// @brief Flag to determine if tau has been increased to 1 and we should stop trying to increase.
 		bool tauIsMax = false;
 
+		/// @brief Minimum change in end-effector position and quaternion concatination vector norm to be considered not stuck at a local minimum.
+		const double concatDisplacementThreshold = 0.001;
+
 		/// @brief Time step for motion plan.
 		/// @note Unused, since the time step factors out in the LCP, and we are clamping step size with joint displacement change.
 		const double timeStep = 0.01;

@@ -94,6 +94,9 @@ namespace MotionPlanner
 		/// @brief Compute the null space term.
 		void computeNullSpaceTerm();
 
+		/// @brief Check if the manipulator is stuck at a local minimum.
+		bool isAtLocalMinimum(const Eigen::VectorXd& previousConcat, const Eigen::VectorXd& newConcat) const;
+
 	public:
 		/// @brief Constructor.
 		/// @param pSpatialManipulator Pointer to the spatial manipulator to generate the plan with.

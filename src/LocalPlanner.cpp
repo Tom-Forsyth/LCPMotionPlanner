@@ -10,6 +10,8 @@
 #include <vector>
 #include <map>
 
+#include <iostream>
+
 namespace MotionPlanner
 {
     LocalPlanner::LocalPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
@@ -60,6 +62,13 @@ namespace MotionPlanner
             Eigen::Matrix4d correctedTransform = m_pSpatialManipulator->getEndFrameSpatialTransform();
             DualQuaternion correctedDualQuat(correctedTransform);
             Eigen::Vector<double, 7> correctedConcat = correctedDualQuat.toConcat();
+
+            // Check if we are stuck at a local minimum.
+            if (isAtLocalMinimum(m_currentConcat, correctedConcat))
+            {
+                m_isRunning = false;
+                m_exitCodePlanner = LocalPlannerExitCode::StuckAtLocalMinimum;
+            }
 
             // Store old variables and restart loop.
             m_currentDualQuat = correctedDualQuat;
@@ -116,7 +125,7 @@ namespace MotionPlanner
         planResults.startPose = m_startTransform;
         planResults.startJointDisplacements = m_startDisplacements;
         planResults.goalPose = m_goalTransform;
-        planResults.achievedPose = m_currentTransform;
+        planResults.achievedPose = m_pSpatialManipulator->getEndFrameSpatialTransform();
         planResults.achievedJointDisplacements = m_pSpatialManipulator->getJointDisplacements();
         planResults.exitCode = static_cast<int>(m_exitCodePlanner);
         planResults.motionPlan = m_plan;
@@ -274,5 +283,15 @@ namespace MotionPlanner
     {
         const Eigen::MatrixXd spatialJacobianInv = m_spatialJacobian.completeOrthogonalDecomposition().pseudoInverse();
         m_nullSpaceTerm = Eigen::MatrixXd::Identity(m_dof, m_dof) - (spatialJacobianInv * m_spatialJacobian);
+    }
+
+    bool LocalPlanner::isAtLocalMinimum(const Eigen::VectorXd& previousConcat, const Eigen::VectorXd& newConcat) const
+    {
+        std::cout << ((newConcat - previousConcat).norm()) << std::endl;
+        if ((newConcat - previousConcat).norm() < m_params.concatDisplacementThreshold)
+        {
+            return true;
+        }
+        return false;
     }
 }
