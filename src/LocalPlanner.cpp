@@ -10,8 +10,6 @@
 #include <vector>
 #include <map>
 
-#include <iostream>
-
 namespace MotionPlanner
 {
     LocalPlanner::LocalPlanner(SpatialManipulator* pSpatialManipulator, const Eigen::Matrix4d& goalTransform)
@@ -287,7 +285,6 @@ namespace MotionPlanner
 
     bool LocalPlanner::isAtLocalMinimum(const Eigen::VectorXd& previousConcat, const Eigen::VectorXd& newConcat) const
     {
-        std::cout << ((newConcat - previousConcat).norm()) << std::endl;
         if ((newConcat - previousConcat).norm() < m_params.concatDisplacementThreshold)
         {
             return true;
