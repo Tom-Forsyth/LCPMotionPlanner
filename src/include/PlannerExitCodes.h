@@ -6,7 +6,6 @@ namespace MotionPlanner
 	enum class GlobalPlannerExitCode
 	{
 		Success,
-		NoPathFound,
 		MaxIterationsExceeded,
 		Undefined
 	};

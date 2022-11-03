@@ -13,6 +13,9 @@ namespace MotionPlanner
 		/// @brief Joint displacements of robot.
 		Eigen::VectorXd jointDisplacements;
 
+		/// @brief Default constructor.
+		RobotConfiguration();
+
 		/// @brief Constructor.
 		RobotConfiguration(const Eigen::Matrix4d& argEndEffectorPose, const Eigen::VectorXd& argJointDisplacements);
 	};

@@ -23,9 +23,16 @@ namespace MotionPlanner
 		/// @brief Uniform distribution to draw from.
 		std::uniform_real_distribution<double> m_uniformDist;
 
-		/// @brief Generate random number between -1 and 1.
-		/// @return Random number.
-		double drawNum();
+		/// @brief Normal distribution to draw from.
+		std::normal_distribution<double> m_normalDist;
+
+		/// @brief Draw a real number from the uniform distribution between -1 and 1.
+		/// @return Random real number.
+		double drawUniformReal();
+
+		/// @brief Draw a real number from the normal distribution between -1 and 1.
+		/// @return Random real number.
+		double drawNormalReal();
 
 	public:
 		/// @brief Constructor.
