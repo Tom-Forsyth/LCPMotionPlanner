@@ -4,7 +4,7 @@
 #include "RigidBody.h"
 #include "Kinematics.h"
 #include "ContactPoint.h"
-#include "MotionPlanningParameters.h"
+#include "LocalPlannerParams.h"
 #include "MotionPlanResults.h"
 #include <Eigen/Dense>
 #include <vector>
@@ -47,7 +47,6 @@ namespace MotionPlanner
 
             // Update the robot's joint displacements.
             Eigen::VectorXd nextJointDisplacements = m_pSpatialManipulator->getJointDisplacements() + totalDisplacementChange;
-            m_plan.emplace_back(nextJointDisplacements);
             bool displacementsAreValid = m_pSpatialManipulator->setJointDisplacements(nextJointDisplacements);
             
             // Check for joint limit violation.
@@ -62,26 +61,30 @@ namespace MotionPlanner
             DualQuaternion correctedDualQuat(correctedTransform);
             Eigen::Vector<double, 7> correctedConcat = correctedDualQuat.toConcat();
 
+            // Check if we are stuck at a local minimum.
+            if (isAtLocalMinimum(m_currentConcat, correctedConcat))
+            {
+                m_isRunning = false;
+                m_exitCodePlanner = LocalPlannerExitCode::StuckAtLocalMinimum;
+            }
+
             // Store old variables and restart loop.
             m_currentDualQuat = correctedDualQuat;
             m_currentConcat = correctedConcat;
             m_currentTransform = correctedTransform;
-
-            // Check for convergence.
-            Eigen::Vector<double, 7> concatError = m_goalConcat - m_currentConcat;
-            double posError = concatError.head(3).norm();
-            double quatError = concatError.tail(4).norm();
-            if (posError < m_params.positionTolerance && quatError < m_params.quatTolerance)
-            {
-                m_isRunning = false;
-                m_exitCodePlanner = LocalPlannerExitCode::Success;
-            }
 
             // Determine if there was an LCP error.
             if (m_exitCodeLCP)
             {
                 m_isRunning = false;
                 m_exitCodePlanner = LocalPlannerExitCode::LCPError;
+            }
+
+            // Check for maximum iterations.
+            if (iter == m_params.maxIterations - 1)
+            {
+                m_isRunning = false;
+                m_exitCodePlanner = LocalPlannerExitCode::MaxIterationsExceeded;
             }
 
             // Check for penetration.
@@ -91,14 +94,28 @@ namespace MotionPlanner
                 m_exitCodePlanner = LocalPlannerExitCode::Collision;
             }
 
-            if (iter == m_params.maxIterations - 1)
+            // Check for convergence.
+            Eigen::Vector<double, 7> concatError = m_goalConcat - m_currentConcat;
+            double posError = concatError.head(3).norm();
+            double quatError = concatError.tail(4).norm();
+            if (posError < m_params.positionTolerance && quatError < m_params.quatTolerance)
             {
-                m_isRunning = false;
-                m_exitCodePlanner = LocalPlannerExitCode::MaxIterationsExceeded;
+                if (m_isRunning)
+                {
+                    m_isRunning = false;
+                    m_exitCodePlanner = LocalPlannerExitCode::Success;
+                }
+            }
+
+            // If the planner did not terminate with an error, add the joint configuration to the plan.
+            if (m_exitCodePlanner == LocalPlannerExitCode::Success || m_exitCodePlanner == LocalPlannerExitCode::Undefined)
+            {
+                m_plan.emplace_back(nextJointDisplacements);
             }
 
             // Check if we are near goal to tighten linearization for next iteration.
             checkNearGoal(posError, quatError);
+
             iter++;
         }
       
@@ -110,7 +127,7 @@ namespace MotionPlanner
         planResults.startPose = m_startTransform;
         planResults.startJointDisplacements = m_startDisplacements;
         planResults.goalPose = m_goalTransform;
-        planResults.achievedPose = m_currentTransform;
+        planResults.achievedPose = m_pSpatialManipulator->getEndFrameSpatialTransform();
         planResults.achievedJointDisplacements = m_pSpatialManipulator->getJointDisplacements();
         planResults.exitCode = static_cast<int>(m_exitCodePlanner);
         planResults.motionPlan = m_plan;
@@ -243,14 +260,7 @@ namespace MotionPlanner
 
     bool LocalPlanner::isPenetrating()
     {
-        for (const auto& body : m_pSpatialManipulator->getRigidBodyChain().getRigidBodies())
-        {
-            if (body.getContactPoint().m_distance <= 0)
-            {
-                return true;
-            }
-        }
-        return false;
+        return m_pSpatialManipulator->isColliding();
     }
 
     void LocalPlanner::checkNearGoal(double posError, double quatError)
@@ -275,5 +285,14 @@ namespace MotionPlanner
     {
         const Eigen::MatrixXd spatialJacobianInv = m_spatialJacobian.completeOrthogonalDecomposition().pseudoInverse();
         m_nullSpaceTerm = Eigen::MatrixXd::Identity(m_dof, m_dof) - (spatialJacobianInv * m_spatialJacobian);
+    }
+
+    bool LocalPlanner::isAtLocalMinimum(const Eigen::VectorXd& previousConcat, const Eigen::VectorXd& newConcat) const
+    {
+        if ((newConcat - previousConcat).norm() < m_params.concatDisplacementThreshold)
+        {
+            return true;
+        }
+        return false;
     }
 }

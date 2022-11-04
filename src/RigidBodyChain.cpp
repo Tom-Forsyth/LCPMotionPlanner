@@ -17,6 +17,11 @@ namespace MotionPlanner
 		forwardKinematics();
 	}
 
+	Eigen::Matrix4d RigidBodyChain::getBaseTransform() const
+	{
+		return m_baseTransform;
+	}
+
 	void RigidBodyChain::addBody(const RigidBody& rigidBody)
 	{
 		m_rigidBodies.emplace_back(rigidBody);

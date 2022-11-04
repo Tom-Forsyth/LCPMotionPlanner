@@ -6,7 +6,7 @@ namespace MotionPlanner
 	enum class GlobalPlannerExitCode
 	{
 		Success,
-		NoPathFound,
+		MaxIterationsExceeded,
 		Undefined
 	};
 
@@ -18,6 +18,7 @@ namespace MotionPlanner
 		LCPError,
 		MaxIterationsExceeded,
 		JointLimitViolation,
+		StuckAtLocalMinimum,
 		Undefined
 	};
 }

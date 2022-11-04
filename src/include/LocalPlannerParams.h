@@ -3,10 +3,10 @@
 namespace MotionPlanner
 {
 	/// @brief Default motion planning parameters.
-	struct MotionPlanningParameters
+	struct LocalPlannerParams
 	{
 		/// @brief Max iterations before termination.
-		const size_t maxIterations = 3000;
+		const size_t maxIterations = 500;
 
 		/// @brief Distance at which to start avoiding obstacles.
 		const double safetyDistance = 0.01;
@@ -31,6 +31,9 @@ namespace MotionPlanner
 
 		/// @brief Flag to determine if tau has been increased to 1 and we should stop trying to increase.
 		bool tauIsMax = false;
+
+		/// @brief Minimum change in end-effector position and quaternion concatination vector norm to be considered not stuck at a local minimum.
+		const double concatDisplacementThreshold = 0.0001;
 
 		/// @brief Time step for motion plan.
 		/// @note Unused, since the time step factors out in the LCP, and we are clamping step size with joint displacement change.

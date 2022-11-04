@@ -27,6 +27,11 @@ namespace MotionPlanner
 		m_rigidBodyChain.setBaseTransform(baseTransform);
 	}
 
+	Eigen::Matrix4d SpatialManipulator::getBaseTransform() const
+	{
+		return m_rigidBodyChain.getBaseTransform();
+	}
+
 	void SpatialManipulator::setPhysicsScene(PhysicsScene* physicsScene)
 	{
 		m_physicsScene = physicsScene;
@@ -72,6 +77,28 @@ namespace MotionPlanner
 	const RigidBodyChain& SpatialManipulator::getRigidBodyChain() const
 	{
 		return m_rigidBodyChain;
+	}
+
+	void SpatialManipulator::setMaxReach(double maxReach)
+	{
+		m_maxReach = maxReach;
+	}
+
+	double SpatialManipulator::getMaxReach() const
+	{
+		return m_maxReach;
+	}
+
+	bool SpatialManipulator::isColliding() const
+	{
+		for (const auto& body : getRigidBodyChain().getRigidBodies())
+		{
+			if (body.getContactPoint().m_distance <= 0)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	MotionPlanResults SpatialManipulator::motionPlan(const Eigen::Matrix4d& goalTransform)

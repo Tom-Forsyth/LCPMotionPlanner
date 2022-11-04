@@ -3,7 +3,7 @@
 #include "DualQuaternion.h"
 #include "RigidBody.h"
 #include "LCPSolve.h"
-#include "MotionPlanningParameters.h"
+#include "LocalPlannerParams.h"
 #include "MotionPlanResults.h"
 #include "PlannerExitCodes.h"
 #include <Eigen/Dense>
@@ -24,7 +24,7 @@ namespace MotionPlanner
 		std::vector<Eigen::VectorXd> m_plan;
 
 		/// @brief Struct with motion planning parameters.
-		MotionPlanningParameters m_params;
+		LocalPlannerParams m_params;
 
 		/// @brief Flag to determine if the plan is still computing.
 		bool m_isRunning = true;
@@ -93,6 +93,9 @@ namespace MotionPlanner
 
 		/// @brief Compute the null space term.
 		void computeNullSpaceTerm();
+
+		/// @brief Check if the manipulator is stuck at a local minimum.
+		bool isAtLocalMinimum(const Eigen::VectorXd& previousConcat, const Eigen::VectorXd& newConcat) const;
 
 	public:
 		/// @brief Constructor.

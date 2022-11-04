@@ -23,6 +23,7 @@ set (SOURCES
     Shape.cpp
     SpatialManipulator.cpp
     Sphere.cpp
+    TaskSpaceSampler.cpp
 )
 
 # Header files.
@@ -38,10 +39,11 @@ set(INCLUDES
     include/DualQuaternion.h
     include/FrankaPanda.h
     include/GlobalPlanner.h
+    include/GlobalPlannerParams.h
     include/Joint.h
     include/Kinematics.h
     include/LocalPlanner.h
-    include/MotionPlanningParameters.h
+    include/LocalPlannerParams.h
     include/MotionPlanResults.h
     include/ObjectType.h
     include/PhysicsCore.h
@@ -54,6 +56,7 @@ set(INCLUDES
     include/Shape.h
     include/SpatialManipulator.h
     include/Sphere.h
+    include/TaskSpaceSampler.h
 )
 
 # Create library.
@@ -65,6 +68,7 @@ add_library(LCPMotionPlannerLib STATIC
 # Set include directories.
 target_include_directories(LCPMotionPlannerLib 
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${Boost_INCLUDE_DIR}
 )
 
 # Link against Eigen and PhysX.
