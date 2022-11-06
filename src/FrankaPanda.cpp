@@ -166,6 +166,19 @@ namespace MotionPlanner
 		linkTip.addCollider(linkTip_box0);
 		linkTip.addCollider(linkTip_box1);
 
+		// End effector.
+		Eigen::Matrix4d transformEE = Eigen::Matrix4d{
+			{1,  0,  0, 0.0880},
+			{0, -1,  0,      0},
+			{0,  0, -1,  0.926},
+			{0,  0,  0,      1}
+		};
+		Eigen::Vector3d localAxisEE(0, 0, 0);
+		Eigen::Vector3d spatialAxisEE = transformEE.block(0, 0, 3, 3) * localAxisEE;
+		std::pair<double, double> jointLimitsEE = { 0, 0 };
+		Joint jointEE(JointType::Fixed, spatialAxisEE, transformEE.block(0, 3, 3, 1), jointLimitsEE);
+		RigidBody linkEE(jointEE, transformEE, "panda_linkEE");
+
 		// Create chain.
 		m_rigidBodyChain.addBody(link0);
 		m_rigidBodyChain.addBody(link1);
@@ -176,6 +189,7 @@ namespace MotionPlanner
 		m_rigidBodyChain.addBody(link6);
 		m_rigidBodyChain.addBody(link7);
 		m_rigidBodyChain.addBody(linkTip);
+		m_rigidBodyChain.addBody(linkEE);
 
 		// Finish initialization.
 		setMaxReach(0.855);

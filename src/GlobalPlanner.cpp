@@ -46,8 +46,8 @@ namespace MotionPlanner
 			// Run the local planner.
 			MotionPlanResults localPlan = generateLocalPlan(m_graph[closestNode], intermediatePose);
 
-			// If the plan was minimally successful, add to graph.
-			if (localPlan.motionPlan.size() >= m_params.minLocalPlanSize)
+			// If the local plan was successful, add to graph.
+			if (static_cast<LocalPlannerExitCode>(localPlan.exitCode) == LocalPlannerExitCode::Success)
 			{
 				addNode(localPlan.achievedPose, localPlan.achievedJointDisplacements);
 				addEdge(localPlan, closestNode, m_vertexDescriptors.back());

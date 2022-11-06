@@ -139,17 +139,17 @@ namespace MotionPlanner
 		{
 			// Advance location in rigid body chain until we find the body of the contact point or hit a the max.
 			std::string rigidBodyName = m_rigidBodies[rigidBodyIndex].getName();
-			while ((contactPoint.first != rigidBodyName) && (rigidBodyIndex < m_nBodies - 1))
+			while ((contactPoint.first != rigidBodyName) && (rigidBodyIndex < m_nBodies))
 			{
 				rigidBodyIndex++;
 				rigidBodyName = m_rigidBodies[rigidBodyIndex].getName();
 			}
 
 			// If we have not hit the max, we can assign the contact point.
-			if (rigidBodyIndex != m_nBodies - 1)
-			{
+			//if (rigidBodyIndex != m_nBodies - 1)
+			//{
 				m_rigidBodies[rigidBodyIndex].setContactPoint(contactPoint.second);
-			}
+			//}
 		}
 	}
 

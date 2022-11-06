@@ -231,11 +231,20 @@ namespace MotionPlanner
 
 	const std::map<std::string, ContactPoint>& PhysicsScene::generateContacts()
 	{
+		// Update PxShape/PxActor locations to the new locations of collision geometry after forward kinematics.
 		syncTransforms();
+
+		// Clear old contacts and reserve memory.
 		m_contactManager.clearContacts();
+
+		// Simulate the scene and add contacts to the contact manager on collision events.
 		m_scene->simulate(m_timeStep);
 		m_scene->fetchResults(true);
+
+		// For links with multiple contacts, use only the closest one.
 		m_contactManager.reduceContacts();
+
+		// Get the contact map. 
 		return m_contactManager.getContacts();
 	}
 }
