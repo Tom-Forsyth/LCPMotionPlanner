@@ -35,7 +35,7 @@ namespace MotionPlanner
 		physx::PxMaterial* m_material = nullptr;
 
 		/// @brief Offset in meters at which to start generating contacts.
-		double m_contactGenOffset = 0.05;
+		double m_contactGenOffset = 0.06;
 
 		/// @brief Simulation time step.
 		double m_timeStep = 0.01;

@@ -8,7 +8,7 @@ namespace MotionPlanner
 {
 	ContactManager::ContactManager()
 	{
-	
+		m_rawContacts.reserve(m_maxNumContacts);
 	}
 
 	ContactManager::~ContactManager()
@@ -18,54 +18,41 @@ namespace MotionPlanner
 
 	void ContactManager::addContact(const std::string& linkName, const ContactPoint& contactPoint)
 	{
-		m_contacts.emplace(linkName, contactPoint);
+		m_rawContacts.emplace_back(std::pair<std::string, ContactPoint>(linkName, contactPoint));
 	}
 
 	void ContactManager::clearContacts()
 	{
-		m_contacts.clear();
+		// Clear containers and reserve memory for next iteration.
+		m_rawContacts.clear();
+		m_processedContacts.clear();
+		m_rawContacts.reserve(m_maxNumContacts);
 	}
 
 	void ContactManager::reduceContacts()
-	{
-		std::string previousLink = "None";
-		double previousDistance = 1e10;
-		std::vector<std::string> contactsToErase;
-		for (const std::pair<std::string, ContactPoint>& contact : m_contacts)
+	{	
+		for (const std::pair<std::string, ContactPoint>& contact : m_rawContacts)
 		{
-			// If there are multiple contacts for a link, keep only the closest contact.
-			bool updatePrevious = true;
-			if (contact.first == previousLink)
+			// If the link does not have an existing contact, add it to the contact map, else compare the two.
+			if (m_processedContacts.find(contact.first) == m_processedContacts.end())
 			{
-				// Remove contact with larger distance.
-				if (contact.second.m_distance > previousDistance)
+				// Add to the contact map.
+				m_processedContacts.emplace(contact.first, contact.second);
+			}
+			else
+			{
+				// Compare the contacts, and keep the one with the smallest distance.
+				const double currentDistance = m_processedContacts.at(contact.first).m_distance;
+				if (currentDistance > contact.second.m_distance)
 				{
-					contactsToErase.emplace_back(contact.first);
-					updatePrevious = false;
-				}
-				else
-				{
-					contactsToErase.emplace_back(previousLink);
+					m_processedContacts.at(contact.first) = contact.second;
 				}
 			}
-
-			// If we did not remove the current contact point, mark as previous.
-			if (updatePrevious)
-			{
-				previousLink = contact.first;
-				previousDistance = contact.second.m_distance;
-			}
-		}
-
-		// Erase contacts that were marked for removal.
-		for (const std::string& contactName : contactsToErase)
-		{
-			m_contacts.erase(contactName);
 		}
 	}
 
 	const std::map<std::string, ContactPoint>& ContactManager::getContacts() const
 	{
-		return m_contacts;
+		return m_processedContacts;
 	}
 }

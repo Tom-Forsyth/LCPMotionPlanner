@@ -6,10 +6,10 @@ namespace MotionPlanner
 	struct LocalPlannerParams
 	{
 		/// @brief Max iterations before termination.
-		const size_t maxIterations = 500;
+		const size_t maxIterations = 2000;
 
 		/// @brief Distance at which to start avoiding obstacles.
-		const double safetyDistance = 0.01;
+		const double safetyDistance = 0.005;
 
 		/// @brief Max displacement change of any of the joints due to ScLERP.
 		double maxScLERPDisplacementChange = 0.0025;
@@ -33,7 +33,7 @@ namespace MotionPlanner
 		bool tauIsMax = false;
 
 		/// @brief Minimum change in end-effector position and quaternion concatination vector norm to be considered not stuck at a local minimum.
-		const double concatDisplacementThreshold = 0.0001;
+		const double concatDisplacementThreshold = 0.00001;
 
 		/// @brief Time step for motion plan.
 		/// @note Unused, since the time step factors out in the LCP, and we are clamping step size with joint displacement change.

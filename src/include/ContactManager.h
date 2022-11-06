@@ -3,14 +3,21 @@
 #include "ContactPoint.h"
 #include <string>
 #include <map>
+#include <vector>
 
 namespace MotionPlanner
 {
 	class ContactManager
 	{
 	private:
-		/// @brief Rigid body name and contact point pairs.
-		std::map<std::string, ContactPoint> m_contacts;
+		/// @brief Rigid body name and contact point pairs before processing.
+		std::vector<std::pair<std::string, ContactPoint>> m_rawContacts;
+
+		/// @brief Rigid body name and contact point pairs after processing.
+		std::map<std::string, ContactPoint> m_processedContacts;
+
+		/// @brief Estimated upper bound on number of contacts to reserve memory.
+		const size_t m_maxNumContacts = 50;
 
 	public:
 		/// @brief Constructor.

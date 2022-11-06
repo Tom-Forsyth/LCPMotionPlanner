@@ -68,11 +68,13 @@ void testFrankaPanda()
 
 	// Obstacles on table.
 	MotionPlanner::Sphere sphereObstacle(Eigen::Vector3d(1.5, 0.75, 0.85), Eigen::Vector3d::Zero(), 0.12, "Sphere Obstacle", MotionPlanner::ObjectType::Obstacle);
+	MotionPlanner::Sphere sphereObstacle2(Eigen::Vector3d(1.55, 1, 0.35), Eigen::Vector3d::Zero(), 0.075, "Sphere Obstacle", MotionPlanner::ObjectType::Obstacle);
 	MotionPlanner::Capsule capsuleObstacle(Eigen::Vector3d(1.3, 1.25, 0.55), Eigen::Vector3d(0, pi/2, 0), 0.2, 0.05, "Capsule Obstacle", MotionPlanner::ObjectType::Obstacle);
 	MotionPlanner::Box boxObstacle(Eigen::Vector3d(1.8, 1, 0.45), Eigen::Vector3d(0, 0, 0), Eigen::Vector3d(0.05, 0.2, 0.2), "Box Obstacle", MotionPlanner::ObjectType::Obstacle);
-	physicsScene->addObstacle(sphereObstacle);
+	//physicsScene->addObstacle(sphereObstacle);
 	physicsScene->addObstacle(capsuleObstacle);
-	physicsScene->addObstacle(boxObstacle);
+	//physicsScene->addObstacle(boxObstacle);
+	physicsScene->addObstacle(sphereObstacle2);
 
 	// Create robot.
 	Eigen::Matrix4d pandaBaseTransform{

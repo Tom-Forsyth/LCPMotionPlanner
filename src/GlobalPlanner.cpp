@@ -58,7 +58,7 @@ namespace MotionPlanner
 			// Run the local planner.
 			MotionPlanResults localPlan = generateLocalPlan(m_graph[closestNode], intermediatePose);
 
-			// If the plan was successful, add to graph.
+			// If the local plan was successful, add to graph.
 			if (static_cast<LocalPlannerExitCode>(localPlan.exitCode) == LocalPlannerExitCode::Success)
 			{
 				addNode(localPlan.achievedPose, localPlan.achievedJointDisplacements);
