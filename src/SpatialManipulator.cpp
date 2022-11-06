@@ -101,6 +101,11 @@ namespace MotionPlanner
 		return false;
 	}
 
+	std::vector<std::pair<double, double>> SpatialManipulator::getJointLimits() const
+	{
+		return m_rigidBodyChain.getJointLimits();
+	}
+
 	MotionPlanResults SpatialManipulator::motionPlan(const Eigen::Matrix4d& goalTransform)
 	{
 		// Intialize global planner.

@@ -92,5 +92,9 @@ namespace MotionPlanner
 		/// @brief Update contact jacobians for each body.
 		/// @bug Delete this, and move functionality to RigidBody::setContactPoint().
 		void updateContactJacobians();
+
+		/// @brief Get the joint limits for each of the rigid body's joints.
+		/// @return Joint limits.
+		std::vector<std::pair<double, double>> getJointLimits() const;
 	};
 }
