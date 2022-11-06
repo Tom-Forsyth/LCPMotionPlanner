@@ -78,6 +78,10 @@ namespace MotionPlanner
 		/// @return If the robot is colliding with the environment.
 		bool isColliding() const;
 
+		/// @brief Get the joint limits of the manipulator.
+		/// @return Joint limits.
+		std::vector<std::pair<double, double>> getJointLimits() const;
+
 		/// @brief Generate a motion plan to the specfied pose.
 		/// @param goalTransform Goal pose.
 		/// @return Motion plan results.

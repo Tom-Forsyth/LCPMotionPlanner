@@ -6,7 +6,7 @@ namespace MotionPlanner
 	struct GlobalPlannerParams
 	{
 		/// @brief Max iterations.
-		const int maxIterations = 1000;
+		const int maxIterations = 2000;
 
 		/// @brief Connection distance between nodes in meters.
 		const double maxConnectionDistance = 0.05;
@@ -16,5 +16,8 @@ namespace MotionPlanner
 
 		/// @brief Determines if the sampled pose should use the previous orientation or a new one.
 		const bool sampleOrientation = false;
+
+		/// @brief If true, generate samples in the joint space instead of task space.
+		const bool jointSpaceSampling = false;
 	};
 }

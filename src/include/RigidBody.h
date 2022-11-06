@@ -147,5 +147,9 @@ namespace MotionPlanner
 		/// @brief Set the spatial jacobian of link.
 		/// @param spatialJacobian Spatial jacobian.
 		void setSpatialJacobian(const Eigen::MatrixXd& spatialJacobian);
+
+		/// @brief Get the joint limits.
+		/// @return Joint limits.
+		std::pair<double, double> getJointLimits() const;
 	};
 }

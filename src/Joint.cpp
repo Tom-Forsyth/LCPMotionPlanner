@@ -89,4 +89,9 @@ namespace MotionPlanner
         }
         return false;
     }
+
+    std::pair<double, double> Joint::getLimits() const
+    {
+        return m_jointLimits;
+    }
 }

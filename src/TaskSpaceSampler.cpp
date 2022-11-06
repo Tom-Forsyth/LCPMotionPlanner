@@ -1,4 +1,5 @@
 #include "TaskSpaceSampler.h"
+#include "SpatialManipulator.h"
 #include <Eigen/Dense>
 #include <random>
 #include <math.h>
@@ -6,7 +7,7 @@
 namespace MotionPlanner
 {
 	TaskSpaceSampler::TaskSpaceSampler(const Eigen::Vector3d& robotOrigin, double samplingSphereRadius)
-		: m_robotOrigin(robotOrigin), m_samplingSphereRadius(samplingSphereRadius),
+		: m_robotOrigin(0, 0, 0), m_samplingSphereRadius(samplingSphereRadius),
 		m_engine(std::mt19937(m_randomDevice())), 
 		m_uniformDist(std::uniform_real_distribution<double>(-1, 1))
 	{
@@ -19,7 +20,7 @@ namespace MotionPlanner
 		Eigen::Vector3d sample(drawUniformReal(), drawUniformReal(), abs(drawUniformReal()));
 		sample *= m_samplingSphereRadius;
 
-		// Add to the robot origin and return.
+		// Add to the robot origin and return. 
 		return sample + m_robotOrigin;
 	}
 
@@ -52,5 +53,24 @@ namespace MotionPlanner
 	double TaskSpaceSampler::drawNormalReal()
 	{
 		return (m_normalDist(m_engine) * 2) - 1;
+	}
+
+	Eigen::VectorXd TaskSpaceSampler::drawJointSpaceSample(const SpatialManipulator* robot)
+	{
+		// Get the joint angle limits.
+		std::vector<std::pair<double, double>> jointLimits = robot->getJointLimits();
+
+		// Draw a uniform sample in the range of the joint for each joint.
+		size_t dim = jointLimits.size();
+		Eigen::VectorXd sample = Eigen::VectorXd::Zero(dim);
+		for (int i = 0; i < dim; i++)
+		{
+			// Sample interpolation factor between 0 and 1 and linear interpolate.
+			double interpFactor = abs(drawUniformReal());
+			const std::pair<double, double>& jointLimit = jointLimits[i];
+			sample[i] = jointLimit.first + interpFactor * jointLimit.second;
+		}
+
+		return sample;
 	}
 }

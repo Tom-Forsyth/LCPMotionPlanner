@@ -34,8 +34,20 @@ namespace MotionPlanner
 		int iter = 0;
 		while (m_isRunning)
 		{
-			// Sample task space pose.
-			const Eigen::Matrix4d sampledPose = drawPoseSample(iter);
+			// Sample task space or joint space pose.
+			Eigen::Matrix4d sampledPose;
+			if (m_params.jointSpaceSampling)
+			{
+				// Draw joint space configuration and find the corresponding pose.
+				const Eigen::VectorXd jointSpaceSample = m_sampler.drawJointSpaceSample(m_spatialManipulator);
+				m_spatialManipulator->setJointDisplacements(jointSpaceSample);
+				sampledPose = m_spatialManipulator->getEndFrameSpatialTransform();
+			}
+			else
+			{
+				// Draw SE3 configuration.
+				sampledPose = drawPoseSample(iter);
+			}
 
 			// Find closest node.
 			const VertexDescriptor closestNode = findClosestNode(sampledPose);

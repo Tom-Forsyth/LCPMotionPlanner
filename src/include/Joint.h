@@ -80,5 +80,9 @@ namespace MotionPlanner
 		/// @brief Get twist coordinate.
 		/// @return Twist coordinate.
 		Eigen::Vector<double, 6> getTwistCoord() const;
+
+		/// @brief Get the joint limits.
+		/// @return Joint limits.
+		std::pair<double, double> getLimits() const;
 	};
 }
