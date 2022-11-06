@@ -146,4 +146,9 @@ namespace MotionPlanner
 	{
 		m_spatialJacobian = spatialJacobian;
 	}
+
+	std::pair<double, double> RigidBody::getJointLimits() const
+	{
+		return m_joint.getLimits();
+	}
 }

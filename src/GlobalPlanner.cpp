@@ -34,8 +34,20 @@ namespace MotionPlanner
 		int iter = 0;
 		while (m_isRunning)
 		{
-			// Sample task space pose.
-			const Eigen::Matrix4d sampledPose = drawPoseSample(iter);
+			// Sample task space or joint space pose.
+			Eigen::Matrix4d sampledPose;
+			if (m_params.jointSpaceSampling)
+			{
+				// Draw joint space configuration and find the corresponding pose.
+				const Eigen::VectorXd jointSpaceSample = m_sampler.drawJointSpaceSample(m_spatialManipulator);
+				m_spatialManipulator->setJointDisplacements(jointSpaceSample);
+				sampledPose = m_spatialManipulator->getEndFrameSpatialTransform();
+			}
+			else
+			{
+				// Draw SE3 configuration.
+				sampledPose = drawPoseSample(iter);
+			}
 
 			// Find closest node.
 			const VertexDescriptor closestNode = findClosestNode(sampledPose);
@@ -46,8 +58,8 @@ namespace MotionPlanner
 			// Run the local planner.
 			MotionPlanResults localPlan = generateLocalPlan(m_graph[closestNode], intermediatePose);
 
-			// If the plan was minimally successful, add to graph.
-			if (localPlan.motionPlan.size() >= m_params.minLocalPlanSize)
+			// If the plan was successful, add to graph.
+			if (static_cast<LocalPlannerExitCode>(localPlan.exitCode) == LocalPlannerExitCode::Success)
 			{
 				addNode(localPlan.achievedPose, localPlan.achievedJointDisplacements);
 				addEdge(localPlan, closestNode, m_vertexDescriptors.back());

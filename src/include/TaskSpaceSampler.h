@@ -5,6 +5,8 @@
 
 namespace MotionPlanner
 {
+	class SpatialManipulator;
+
 	/// @brief Generates pose samples in the task space.
 	class TaskSpaceSampler
 	{
@@ -51,5 +53,10 @@ namespace MotionPlanner
 		/// @brief Draw a pose sample from SE3
 		/// @return SE3 sample.
 		Eigen::Matrix4d drawSE3Sample();
+
+		/// @brief Draw a valid joint space configuration.
+		/// @param robot Spatial manipulator to generate configuration for.
+		/// @return Joint space configuration.
+		Eigen::VectorXd drawJointSpaceSample(const SpatialManipulator* robot);
 	};
 }

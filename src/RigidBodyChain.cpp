@@ -219,4 +219,19 @@ namespace MotionPlanner
 			rigidBody.updateColliderTransforms();
 		}
 	}
+
+	std::vector<std::pair<double, double>> RigidBodyChain::getJointLimits() const
+	{
+		size_t dim = getNMovableBodies();
+		std::vector<std::pair<double, double>> jointLimits;
+		jointLimits.reserve(dim);
+		for (const RigidBody& body : m_rigidBodies)
+		{
+			if (body.isMovable())
+			{
+				jointLimits.emplace_back(body.getJointLimits());
+			}
+		}
+		return jointLimits;
+	}
 }
