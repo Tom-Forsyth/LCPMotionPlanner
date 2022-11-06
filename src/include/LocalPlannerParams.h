@@ -6,10 +6,10 @@ namespace MotionPlanner
 	struct LocalPlannerParams
 	{
 		/// @brief Max iterations before termination.
-		const size_t maxIterations = 500;
+		const size_t maxIterations = 1000;
 
 		/// @brief Distance at which to start avoiding obstacles.
-		const double safetyDistance = 0.01;
+		const double safetyDistance = 0.015;
 
 		/// @brief Max displacement change of any of the joints due to ScLERP.
 		double maxScLERPDisplacementChange = 0.0025;
