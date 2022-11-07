@@ -5,6 +5,7 @@
 #include "PlannerExitCodes.h"
 #include "TaskSpaceSampler.h"
 #include "GlobalPlannerParams.h"
+#include "Timer.h"
 #include <Eigen/Dense>
 #include <vector>
 #include <boost/graph/adjacency_list.hpp>
@@ -67,6 +68,12 @@ namespace MotionPlanner
 
 		/// @brief Parameters for the global RRT planner.
 		GlobalPlannerParams m_params;
+
+		/// @brief Code timer.
+		Timer m_timer;
+
+		/// @brief Iterations of the global planner.
+		size_t m_plannerIterations = 0;
 
 		/// @brief Add robot configuration node to the graph.
 		/// @param pose End-effector pose.

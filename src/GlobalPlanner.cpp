@@ -6,6 +6,7 @@
 #include "LocalPlanner.h"
 #include "TaskSpaceSampler.h"
 #include "GlobalPlannerParams.h"
+#include "Timer.h"
 #include <Eigen/Dense>
 #include <random>
 #include <boost/graph/adjacency_list.hpp>
@@ -32,6 +33,7 @@ namespace MotionPlanner
 	{
 		// Initialize RRT planner.
 		int iter = 0;
+		m_timer.start();
 		while (m_isRunning)
 		{
 			// Sample task space or joint space pose.
@@ -100,6 +102,8 @@ namespace MotionPlanner
 
 			iter++;
 		}
+		m_timer.stop();
+		m_plannerIterations = iter;
 	}
 
 	void GlobalPlanner::addNode(const Eigen::Matrix4d& pose, const Eigen::VectorXd& jointDisplacements)
@@ -129,6 +133,10 @@ namespace MotionPlanner
 		const RobotConfiguration& finalConfig = m_graph[m_vertexDescriptors.back()];
 		globalPlanResults.achievedPose = finalConfig.endEffectorPose;
 		globalPlanResults.achievedJointDisplacements = finalConfig.jointDisplacements;
+
+		// Time and iterations.
+		globalPlanResults.computeTimeMilli = m_timer.getTimeMilli();
+		globalPlanResults.plannerIterations = m_plannerIterations;
 
 		return globalPlanResults;
 	}

@@ -6,6 +6,7 @@
 #include "ContactPoint.h"
 #include "LocalPlannerParams.h"
 #include "MotionPlanResults.h"
+#include "Timer.h"
 #include <Eigen/Dense>
 #include <vector>
 #include <map>
@@ -30,6 +31,7 @@ namespace MotionPlanner
 
         // Run stepping until convergence or divergence.
         size_t iter = 0;
+        m_timer.start();
         while (m_isRunning)
         {
             // Update spatial jacobian and null space term.
@@ -118,6 +120,7 @@ namespace MotionPlanner
 
             iter++;
         }
+        m_timer.stop();
       
     }
 
@@ -130,6 +133,8 @@ namespace MotionPlanner
         planResults.achievedPose = m_pSpatialManipulator->getEndFrameSpatialTransform();
         planResults.achievedJointDisplacements = m_pSpatialManipulator->getJointDisplacements();
         planResults.exitCode = static_cast<int>(m_exitCodePlanner);
+        planResults.computeTimeMilli = m_timer.getTimeMilli();
+        planResults.plannerIterations = m_plan.size();
         planResults.motionPlan = m_plan;
         return planResults;
     }

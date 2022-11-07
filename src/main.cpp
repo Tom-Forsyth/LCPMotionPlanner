@@ -8,10 +8,8 @@
 #include "MotionPlanResults.h"
 #include <iostream>
 #include <Eigen/Dense>
-#include <chrono>
 
 void testFrankaPanda();
-void testFrankaPanda2();
 void displayPlanResults(const MotionPlanner::MotionPlanResults& planResults, int n);
 
 int main()
@@ -25,7 +23,6 @@ int main()
 
 	// Test planner.
 	testFrankaPanda();
-	//testFrankaPanda2();
 
 	return 0;
 }
@@ -100,121 +97,22 @@ void testFrankaPanda()
 	goalTransform2.block(0, 3, 3, 1) = Eigen::Vector3d(0.6, 0.35, 0.45);
 
 	// Generate motion plan.
-	auto start = std::chrono::steady_clock::now();
 	MotionPlanner::MotionPlanResults planResults1 = panda.motionPlan(goalTransform1);
 	MotionPlanner::MotionPlanResults planResults2 = panda.motionPlan(goalTransform2);
-	auto stop = std::chrono::steady_clock::now();
 
 	// Display results.
 	displayPlanResults(planResults1, 1);
 	displayPlanResults(planResults2, 2);
-
-	// Elapsed time.
-	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
-	std::cout << "Elapsed Time: " << elapsedTime << " ms\n";
-}
-
-void testFrankaPanda2()
-{
-	/*
-	constexpr double pi = 3.14159265358979323846;
-
-	// Create physics core and scene.
-	MotionPlanner::PhysicsCore physics;
-	physics.createPhysicsCore();
-	MotionPlanner::PhysicsScene* physicsScene = physics.createPhysicsScene("MyTestScene");
-
-	// Obstacles.
-	MotionPlanner::ObjectType objectType = MotionPlanner::ObjectType::Obstacle;
-	//Eigen::Vector3d position(0.35, -0.2, 0.70); //overflow/underflow
-	//Eigen::Vector3d position(0.18, -0.2, 0.60); // overflow/underflow
-	//Eigen::Vector3d position(0.35, -0.25, 0.55); // overflow/underflow
-	Eigen::Vector3d position(-0.15, 0, 0.63); // good one
-	Eigen::Vector3d orientation = Eigen::Vector3d::Zero();
-	Eigen::Vector3d halfExtents(0.05, 0.05, 0.05);
-	MotionPlanner::Box myBox(position, orientation, halfExtents, "MyBox", objectType);
-	MotionPlanner::Sphere mySphere(position, orientation, 0.05, "MySphere", objectType);
-	physicsScene->addObstacle(mySphere);
-	//physicsScene->addObstacle(myBox);
-
-	// Create robot.
-	Eigen::Matrix4d pandaBaseTransform{
-		{1, 0, 0, -0},
-		{0, 1, 0,  0.000000},
-		{0, 0, 1,  0},
-		{0, 0, 0, 1}
-	};
-	MotionPlanner::FrankaPanda panda(pandaBaseTransform);
-
-	// Add robot to the scene.
-	physicsScene->addSpatialManipulator(panda);
-
-	// Setup start joint angles and transform.
-	Eigen::Vector<double, 7> startAngles(0, 0, 0, -pi / 2, 0, pi / 2, 0);
-	panda.setJointDisplacements(startAngles);
-	Eigen::Matrix4d startTransform = panda.getEndFrameSpatialTransform();
-
-	// Setup goal poses.
-	Eigen::Matrix4d goalTransform1{
-		{1,  0,  0,  0.00000},
-		{0, -1,  0, -0.70000},
-		{0,  0, -1,  0.4},
-		{0,  0,  0,  1.00000}
-	};
-	Eigen::Matrix4d goalTransform2{
-		{1,  0,  0,  0.58120},
-		{0,  0,  1,  0.30000},
-		{0, -1,  0,  0.51633},
-		{0,  0,  0,  1.00000}
-	};
-	Eigen::Matrix4d goalTransform3{
-		{0,  1,  0,  0.63120},
-		{1,  0,  0, -0.00000},
-		{0,  0,  1,  0.56633},
-		{0,  0,  0,  1.00000}
-	};
-
-	// Generate motion plan.
-	auto start = std::chrono::steady_clock::now();
-	panda.motionPlan(goalTransform1);
-	Eigen::Matrix4d achievedTransform1 = panda.getEndFrameSpatialTransform();
-	//panda.motionPlan(goalTransform2);
-	Eigen::Matrix4d achievedTransform2 = panda.getEndFrameSpatialTransform();
-	//panda.motionPlan(goalTransform3);
-	Eigen::Matrix4d achievedTransform3 = panda.getEndFrameSpatialTransform();
-	auto stop = std::chrono::steady_clock::now();
-
-	std::cout << "Start Transform 1: \n" << startTransform << "\n\n";
-	std::cout << "Goal Transform 1: \n" << goalTransform1 << "\n\n";
-	std::cout << "Acheived Transform 1: \n" << achievedTransform1 << "\n\n\n";
-
-	std::cout << "Start Transform 2: \n" << achievedTransform1 << "\n\n";
-	std::cout << "Goal Transform 2: \n" << goalTransform2 << "\n\n";
-	std::cout << "Acheived Transform 2: \n" << achievedTransform2 << "\n\n\n";
-
-	std::cout << "Start Transform 3: \n" << achievedTransform2 << "\n\n";
-	std::cout << "Goal Transform 3: \n" << goalTransform3 << "\n\n";
-	std::cout << "Acheived Transform 3: \n" << achievedTransform3 << "\n\n\n";
-
-	// Elapsed time.
-	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
-	std::cout << "Elapsed Time: " << elapsedTime << " ms\n";
-	*/
 }
 
 void displayPlanResults(const MotionPlanner::MotionPlanResults& planResults, int n)
 {
 	std::cout << "----- Motion Plan " << n << " Results -----\n";
 	std::cout << "Exit Code: " << planResults.exitCode << "\n";
+	std::cout << "Compute Time: " << planResults.computeTimeMilli << " ms\n";
+	std::cout << "Planner Iterations: " << planResults.plannerIterations << "\n";
 	std::cout << "Plan Size: " << planResults.motionPlan.size() << "\n";
 	std::cout << "Start Pose: \n" << planResults.startPose << "\n";
 	std::cout << "Goal Pose: \n" << planResults.goalPose << "\n";
 	std::cout << "Achieved Pose: \n" << planResults.achievedPose << "\n\n";
 }
-
-/*
-To-Do:
-  1. Create local planner exit info struct with exit code, iterations, plan vector, achieved pose, etc.
-  2. Store jacobian rather than storing the end frame.
-  3. Clean up main local planner loop.
-*/

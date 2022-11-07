@@ -24,6 +24,7 @@ set (SOURCES
     SpatialManipulator.cpp
     Sphere.cpp
     TaskSpaceSampler.cpp
+    Timer.cpp
 )
 
 # Header files.
@@ -57,6 +58,7 @@ set(INCLUDES
     include/SpatialManipulator.h
     include/Sphere.h
     include/TaskSpaceSampler.h
+    include/Timer.h
 )
 
 # Create library.

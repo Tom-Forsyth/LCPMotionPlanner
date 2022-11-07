@@ -6,6 +6,7 @@
 #include "LocalPlannerParams.h"
 #include "MotionPlanResults.h"
 #include "PlannerExitCodes.h"
+#include "Timer.h"
 #include <Eigen/Dense>
 #include <vector>
 
@@ -70,6 +71,9 @@ namespace MotionPlanner
 
 		/// @brief Null space matrix.
 		Eigen::MatrixXd m_nullSpaceTerm;
+
+		/// @brief Code timer.
+		Timer m_timer;
 
 		/// @brief Compute the change in joint displacements due to ScLERP.
 		/// @return Joint displacements.
