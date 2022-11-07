@@ -17,10 +17,6 @@ int main()
 	// Round outputs to console.
 	std::cout.precision(4);
 
-	// Reset seed.
-	srand(static_cast<unsigned int>(time(nullptr)));
-	rand();
-
 	// Test planner.
 	testFrankaPanda();
 

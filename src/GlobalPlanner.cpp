@@ -113,7 +113,7 @@ namespace MotionPlanner
 
 	void GlobalPlanner::addEdge(const MotionPlanResults& planResults, const VertexDescriptor& startNode, const VertexDescriptor& endNode)
 	{
-		//m_edgeDescriptors.emplace_back(boost::add_edge(startNode, endNode, { planResults }, m_graph));
+		m_edges.emplace_back(boost::add_edge(startNode, endNode, { planResults }, m_graph));
 	}
 
 	MotionPlanResults GlobalPlanner::getPlanResults() const

@@ -28,7 +28,7 @@ namespace MotionPlanner
 	typedef boost::graph_traits<Graph>::vertex_descriptor VertexDescriptor;
 
 	/// @brief Edge descriptor for custom graph type.
-	typedef boost::graph_traits<Graph>::edge_descriptor EdgeDescriptor;
+	typedef std::pair<boost::detail::edge_desc_impl<boost::directed_tag, size_t>, bool> Edge;
 
 	/// @brief Global RRT framework for local LCP/SclERP planner.
 	class GlobalPlanner
@@ -45,8 +45,8 @@ namespace MotionPlanner
 		/// @brief Vertex descriptors of the nodes of the graph.
 		std::vector<VertexDescriptor> m_vertexDescriptors;
 
-		/// @brief Edge descriptors for the graph.
-		std::vector<EdgeDescriptor> m_edgeDescriptors;
+		/// @brief Edges of the graph.
+		std::vector<Edge> m_edges;
 
 		/// @brief Joint trajectory of the robot after planning.
 		std::vector<Eigen::VectorXd> m_jointTrajectory;
