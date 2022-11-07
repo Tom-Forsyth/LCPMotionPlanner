@@ -14,6 +14,9 @@ namespace MotionPlanner
 		/// @brief Probability the goal pose will be sampled when an SE3 sample is requested.
 		const double sampleGoalProbability = 0.25;
 
+		/// @brief Probability that when the goal pose is sampled, the max connection distance is ignored.
+		const double straightToGoalProbability = 0.5;
+
 		/// @brief Determines if the sampled pose should use the previous orientation or a new one.
 		const bool sampleOrientation = false;
 

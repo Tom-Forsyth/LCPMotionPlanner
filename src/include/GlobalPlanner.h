@@ -59,6 +59,9 @@ namespace MotionPlanner
 		/// @brief True when the intermediate goal pose is the goal itself.
 		bool m_attemptingGoal = false;
 
+		/// @brief Number of times the planner has attempt the goal without an intermediate pose.
+		int m_goalAttemptCount = 0;
+
 		/// @brief Draws samples from the task space.
 		TaskSpaceSampler m_sampler;
 

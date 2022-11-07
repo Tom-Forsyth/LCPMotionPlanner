@@ -52,8 +52,24 @@ namespace MotionPlanner
 			// Find closest node.
 			const VertexDescriptor closestNode = findClosestNode(sampledPose);
 
-			// Generate an intermediate goal pose a fixed distance from the sampled node.
-			const Eigen::Matrix4d intermediatePose = createIntermediatePose(sampledPose, closestNode);
+			// Determine if the connection distance should be enforced.
+			bool enforceConnectionDistance = true;
+			const int nearestInt = round(1.0 / m_params.straightToGoalProbability);
+			if (m_attemptingGoal && !(m_goalAttemptCount % nearestInt))
+			{
+				enforceConnectionDistance = false;
+			}
+
+			// Generate an intermediate goal pose between the start and goal in we enforce the connection distance.
+			Eigen::Matrix4d intermediatePose;
+			if (enforceConnectionDistance)
+			{
+				intermediatePose = createIntermediatePose(sampledPose, closestNode);
+			}
+			else
+			{
+				intermediatePose = sampledPose;
+			}
 
 			// Run the local planner.
 			MotionPlanResults localPlan = generateLocalPlan(m_graph[closestNode], intermediatePose);
@@ -150,6 +166,7 @@ namespace MotionPlanner
 		// If attempting to go straight to the goal, do not create an intermediate pose.
 		if (m_attemptingGoal)
 		{
+			m_goalAttemptCount++;
 			return sampledPose;
 		}
 
