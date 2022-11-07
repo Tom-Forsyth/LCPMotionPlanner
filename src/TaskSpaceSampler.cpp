@@ -7,7 +7,7 @@
 namespace MotionPlanner
 {
 	TaskSpaceSampler::TaskSpaceSampler(const Eigen::Vector3d& robotOrigin, double samplingSphereRadius)
-		: m_robotOrigin(0, 0, 0), m_samplingSphereRadius(samplingSphereRadius),
+		: m_robotOrigin(0.5, 0, 0.25), m_samplingSphereRadius(samplingSphereRadius),
 		m_engine(std::mt19937(m_randomDevice())), 
 		m_uniformDist(std::uniform_real_distribution<double>(-1, 1))
 	{

@@ -166,7 +166,6 @@ namespace MotionPlanner
 		// If attempting to go straight to the goal, do not create an intermediate pose.
 		if (m_attemptingGoal)
 		{
-			m_goalAttemptCount++;
 			return sampledPose;
 		}
 
@@ -211,6 +210,7 @@ namespace MotionPlanner
 		else
 		{
 			m_attemptingGoal = true;
+			m_goalAttemptCount++;
 			return m_goalPose;
 		}
 	}
