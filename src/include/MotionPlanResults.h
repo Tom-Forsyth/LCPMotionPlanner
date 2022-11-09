@@ -32,8 +32,8 @@ namespace MotionPlanner
 		/// @brief Iterations of the inner planning loop.
 		size_t plannerIterations;
 
-		/// @brief Temporary weight value equal to plannerIterations/1000 for Dijkstra's algorithm.
-		double weight;
+		/// @brief Linear displacement of end effector through entire motion.
+		double linearDisplacement;
 
 		/// @brief Joint space trajectory of motion plan.
 		std::vector<Eigen::VectorXd> motionPlan;

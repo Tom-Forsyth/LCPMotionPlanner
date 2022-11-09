@@ -136,9 +136,10 @@ namespace MotionPlanner
 		globalPlanResults.achievedPose = finalConfig.endEffectorPose;
 		globalPlanResults.achievedJointDisplacements = finalConfig.jointDisplacements;
 
-		// Time and iterations.
+		// Time, iterations, distance traveled.
 		globalPlanResults.computeTimeMilli = m_timer.getTimeMilli();
 		globalPlanResults.plannerIterations = m_plannerIterations;
+		globalPlanResults.linearDisplacement = m_linearDisplacement;
 
 		return globalPlanResults;
 	}
@@ -239,7 +240,7 @@ namespace MotionPlanner
 		dijkstra_shortest_paths(m_graph, m_vertexDescriptors.front(),
 			predecessor_map(boost::get(&RobotConfiguration::pathPredecessor, m_graph))
 			.distance_map(boost::get(&RobotConfiguration::pathPredecessor, m_graph))
-			.weight_map(boost::get(&MotionPlanResults::weight, m_graph)));
+			.weight_map(boost::get(&MotionPlanResults::linearDisplacement, m_graph)));
 
 		// Extract the indices of the shortest path from goal to start.
 		std::vector<VertexDescriptor> shortestPath;
@@ -264,6 +265,9 @@ namespace MotionPlanner
 			{
 				m_plan.emplace_back(displacements);
 			}
+
+			// Increment the displacement of the end-effector in plan results.
+			m_linearDisplacement += localPlanResults.linearDisplacement;
 		}
 	}
 }

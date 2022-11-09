@@ -75,6 +75,9 @@ namespace MotionPlanner
 		/// @brief Code timer.
 		Timer m_timer;
 
+		/// @brief Linear displacement traveled by end-effector.
+		double m_linearDisplacement = 0;
+
 		/// @brief Compute the change in joint displacements due to ScLERP.
 		/// @return Joint displacements.
 		Eigen::VectorXd getJointDisplacementChange();

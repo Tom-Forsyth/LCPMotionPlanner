@@ -70,6 +70,9 @@ namespace MotionPlanner
                 m_exitCodePlanner = LocalPlannerExitCode::StuckAtLocalMinimum;
             }
 
+            // Update travel of end-effector to linear displacement.
+            m_linearDisplacement += (correctedConcat.head(3) - m_currentConcat.head(3)).norm();
+
             // Store old variables and restart loop.
             m_currentDualQuat = correctedDualQuat;
             m_currentConcat = correctedConcat;
@@ -120,12 +123,13 @@ namespace MotionPlanner
 
             iter++;
         }
+
         m_timer.stop();
-      
     }
 
     MotionPlanResults LocalPlanner::getPlanResults() const
     {
+        // Populate plan results.
         MotionPlanResults planResults;
         planResults.startPose = m_startTransform;
         planResults.startJointDisplacements = m_startDisplacements;
@@ -136,7 +140,7 @@ namespace MotionPlanner
         planResults.computeTimeMilli = m_timer.getTimeMilli();
         planResults.plannerIterations = m_plan.size();
         planResults.motionPlan = m_plan;
-        planResults.weight = m_plan.size() / 1000;
+        planResults.linearDisplacement = m_linearDisplacement;
         return planResults;
     }
 

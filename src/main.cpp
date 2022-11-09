@@ -118,6 +118,7 @@ void displayPlanResults(const MotionPlanner::MotionPlanResults& planResults, int
 	std::cout << "Compute Time: " << planResults.computeTimeMilli << " ms\n";
 	std::cout << "Planner Iterations: " << planResults.plannerIterations << "\n";
 	std::cout << "Plan Size: " << planResults.motionPlan.size() << "\n";
+	std::cout << "Linear Displacement of EE: " << planResults.linearDisplacement << " m\n";
 	std::cout << "Start Pose: \n" << planResults.startPose << "\n";
 	std::cout << "Goal Pose: \n" << planResults.goalPose << "\n";
 	std::cout << "Achieved Pose: \n" << planResults.achievedPose << "\n\n";

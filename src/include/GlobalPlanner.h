@@ -72,6 +72,9 @@ namespace MotionPlanner
 		/// @brief Iterations of the global planner.
 		size_t m_plannerIterations = 0;
 
+		/// @brief Linear displacement of end-effector of the final path.
+		double m_linearDisplacement = 0;
+
 		/// @brief Shortest path motion plan.
 		std::vector<Eigen::VectorXd> m_plan;
 
