@@ -13,6 +13,10 @@ namespace MotionPlanner
 		/// @brief Joint displacements of robot.
 		Eigen::VectorXd jointDisplacements;
 
+		/// @brief Predecessor configuration in shortest path.
+		/// @note Internal use only in shortest path computation.
+		int pathPredecessor;
+
 		/// @brief Default constructor.
 		RobotConfiguration();
 

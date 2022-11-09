@@ -13,6 +13,7 @@
 #include <boost/graph/dijkstra_shortest_paths.hpp>
 #include <boost/graph/graph_utility.hpp>
 #include <boost/graph/graph_traits.hpp>
+#include <iostream>
 
 namespace MotionPlanner
 {
@@ -20,13 +21,12 @@ namespace MotionPlanner
 		: m_spatialManipulator(spatialManipulator), m_goalPose(goalPose),
 		m_sampler(spatialManipulator->getBaseTransform().block(0, 3, 3, 1), spatialManipulator->getMaxReach())
 	{
+		// Reserve space for vectors.
+		m_vertexDescriptors.reserve(m_params.maxIterations);
+		m_edgeDescriptors.reserve(m_params.maxIterations);
+
 		// Add initial configuration.
 		addNode(m_spatialManipulator->getEndFrameSpatialTransform(), m_spatialManipulator->getJointDisplacements());
-
-		// Reserve space for joint trajectory vector.
-		size_t maxLocalPlanSize = 2000;
-		size_t maxGlobalPlanSize = m_params.maxIterations;
-		m_jointTrajectory.reserve(maxLocalPlanSize * maxGlobalPlanSize);
 	}
 
 	void GlobalPlanner::computePlan()
@@ -104,6 +104,9 @@ namespace MotionPlanner
 		}
 		m_timer.stop();
 		m_plannerIterations = iter;
+
+		// Find the shortest path with Dijkstra's algorithm.
+		findShortestPath();
 	}
 
 	void GlobalPlanner::addNode(const Eigen::Matrix4d& pose, const Eigen::VectorXd& jointDisplacements)
@@ -113,7 +116,7 @@ namespace MotionPlanner
 
 	void GlobalPlanner::addEdge(const MotionPlanResults& planResults, const VertexDescriptor& startNode, const VertexDescriptor& endNode)
 	{
-		m_edges.emplace_back(boost::add_edge(startNode, endNode, { planResults }, m_graph));
+		m_edgeDescriptors.emplace_back(boost::add_edge(startNode, endNode, { planResults }, m_graph).first);
 	}
 
 	MotionPlanResults GlobalPlanner::getPlanResults() const
@@ -121,7 +124,7 @@ namespace MotionPlanner
 		// Plan results and goal pose.
 		MotionPlanResults globalPlanResults;
 		globalPlanResults.exitCode = static_cast<int>(m_exitCode);
-		globalPlanResults.motionPlan = m_jointTrajectory;
+		globalPlanResults.motionPlan = m_plan;
 		globalPlanResults.goalPose = m_goalPose;
 
 		// Starting parameters.
@@ -172,6 +175,14 @@ namespace MotionPlanner
 	Eigen::Matrix4d GlobalPlanner::createIntermediatePose(const Eigen::Matrix4d& sampledPose, const VertexDescriptor& closestNode)
 	{
 		// If attempting to go straight to the goal, do not create an intermediate pose.
+		/*
+		*
+		* 
+		* FIX!!!
+		* 
+		* 
+		* 
+		*/
 		if (m_attemptingGoal)
 		{
 			return sampledPose;
@@ -221,5 +232,68 @@ namespace MotionPlanner
 			m_goalAttemptCount++;
 			return m_goalPose;
 		}
+	}
+
+	void GlobalPlanner::findShortestPath()
+	{
+		Timer timer;
+		timer.start();
+
+		// Find shortest path with Dijkstra's algorithm.
+		dijkstra_shortest_paths(m_graph, m_vertexDescriptors.front(),
+			predecessor_map(boost::get(&RobotConfiguration::pathPredecessor, m_graph))
+			.distance_map(boost::get(&RobotConfiguration::pathPredecessor, m_graph))
+			.weight_map(boost::get(&MotionPlanResults::weight, m_graph)));
+
+		// DEBUG
+		std::vector<RobotConfiguration> testVec;
+		for (const auto& elem : m_vertexDescriptors)
+		{
+			testVec.emplace_back(m_graph[elem]);
+		}
+
+		for (const auto& edgeDesc : boost::make_iterator_range(edges(m_graph)))
+		{
+			auto test = edgeDesc;
+			int a = 1;
+		}
+
+		for (const auto& vertexDesc : boost::make_iterator_range(vertices(m_graph)))
+		{
+			auto test = vertexDesc;
+		}
+
+		// Display graph.
+		std::cout << "\nGraph Display: \n";
+		boost::print_graph(m_graph);
+		std::cout << "\n";
+
+		// Extract the indices of the shortest path from goal to start.
+		std::vector<VertexDescriptor> shortestPath;
+		VertexDescriptor currentVertex = m_vertexDescriptors.back();
+		while (currentVertex != m_vertexDescriptors.front())
+		{
+			shortestPath.push_back(currentVertex);
+			currentVertex = m_graph[currentVertex].pathPredecessor;
+		}
+
+		// Reverse path into the shortest path from start to goal.
+		std::reverse(shortestPath.begin(), shortestPath.end());
+
+		// Extract the joint trajectories of the local plans of the shortest path.
+		size_t localPlanSize = 1000;
+		m_plan.reserve(shortestPath.size() * localPlanSize);
+		for (int nodeIndex : shortestPath)
+		{
+			// Extract the joint displacements in the local plan.
+			const MotionPlanResults& localPlanResults = m_graph[m_edgeDescriptors[nodeIndex - 1]];
+			for (const Eigen::VectorXd& displacements : localPlanResults.motionPlan)
+			{
+				m_plan.emplace_back(displacements);
+			}
+		}
+
+		timer.stop();
+		std::cout << "Dijkstra Time (us): " << timer.getTimeMicro() << "\n";
 	}
 }

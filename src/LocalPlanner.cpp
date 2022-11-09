@@ -136,6 +136,7 @@ namespace MotionPlanner
         planResults.computeTimeMilli = m_timer.getTimeMilli();
         planResults.plannerIterations = m_plan.size();
         planResults.motionPlan = m_plan;
+        planResults.weight = m_plan.size() / 1000;
         return planResults;
     }
 

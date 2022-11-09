@@ -27,8 +27,8 @@ namespace MotionPlanner
 	/// @brief Vertex descriptor for custom graph type.
 	typedef boost::graph_traits<Graph>::vertex_descriptor VertexDescriptor;
 
-	/// @brief Edge descriptor for custom graph type.
-	typedef std::pair<boost::detail::edge_desc_impl<boost::directed_tag, size_t>, bool> Edge;
+	/// @brief Edge decriptor for custom graph type.
+	typedef boost::graph_traits<Graph>::edge_descriptor EdgeDescriptor;
 
 	/// @brief Global RRT framework for local LCP/SclERP planner.
 	class GlobalPlanner
@@ -42,14 +42,11 @@ namespace MotionPlanner
 		/// @brief Graph with nodes as robot configuration and edges as local plans.
 		Graph m_graph;
 
-		/// @brief Vertex descriptors of the nodes of the graph.
+		/// @brief Vertex descriptors of the graph, representing robot configurations.
 		std::vector<VertexDescriptor> m_vertexDescriptors;
 
-		/// @brief Edges of the graph.
-		std::vector<Edge> m_edges;
-
-		/// @brief Joint trajectory of the robot after planning.
-		std::vector<Eigen::VectorXd> m_jointTrajectory;
+		/// @brief Edge descriptors of the graph, representing local motion plans between configurations.
+		std::vector<EdgeDescriptor> m_edgeDescriptors;
 
 		/// @brief Global planner exit code.
 		GlobalPlannerExitCode m_exitCode = GlobalPlannerExitCode::Undefined;
@@ -74,6 +71,9 @@ namespace MotionPlanner
 
 		/// @brief Iterations of the global planner.
 		size_t m_plannerIterations = 0;
+
+		/// @brief Shortest path motion plan.
+		std::vector<Eigen::VectorXd> m_plan;
 
 		/// @brief Add robot configuration node to the graph.
 		/// @param pose End-effector pose.
@@ -105,6 +105,9 @@ namespace MotionPlanner
 		/// @param iteration Iteration number used in sampling probability.
 		/// @return Pose sample.
 		Eigen::Matrix4d drawPoseSample(int iteration);
+
+		/// @brief Find the shortest path.
+		void findShortestPath();
 
 	public:
 		/// @brief Constructor.
