@@ -55,7 +55,7 @@ namespace MotionPlanner
 			// Determine if the connection distance should be enforced.
 			bool enforceConnectionDistance = true;
 			const int nearestInt = round(1.0 / m_params.straightToGoalProbability);
-			if (m_attemptingGoal && !(m_goalAttemptCount % nearestInt))
+			if (m_attemptingGoal && !((m_goalAttemptCount - 1) % nearestInt))
 			{
 				enforceConnectionDistance = false;
 			}
@@ -82,7 +82,7 @@ namespace MotionPlanner
 			}
 
 			// If local plan to the goal is successful, problem is solved.
-			if (m_attemptingGoal)
+			if (m_attemptingGoal && !enforceConnectionDistance)
 			{
 				if (static_cast<LocalPlannerExitCode>(localPlan.exitCode) == LocalPlannerExitCode::Success)
 				{
@@ -173,20 +173,6 @@ namespace MotionPlanner
 
 	Eigen::Matrix4d GlobalPlanner::createIntermediatePose(const Eigen::Matrix4d& sampledPose, const VertexDescriptor& closestNode)
 	{
-		// If attempting to go straight to the goal, do not create an intermediate pose.
-		/*
-		*
-		* 
-		* FIX!!!
-		* 
-		* 
-		* 
-		*/
-		if (m_attemptingGoal)
-		{
-			return sampledPose;
-		}
-
 		// Determine if the sampled pose is too far from the closest node.
 		const Eigen::Vector3d sampledPosition = sampledPose.block(0, 3, 3, 1);
 		const Eigen::Matrix4d closestPose = m_graph[closestNode].endEffectorPose;
