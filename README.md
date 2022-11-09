@@ -1,11 +1,15 @@
 # LCPMotionPlanner
 ## Summary
-LCPMotionPlanner is a task space motion planner with obstacle avoidance for spatial manipulators. 
+LCPMotionPlanner is a task space motion planner with global and local obstacle avoidance for spatial manipulators.
 
-The motion planning is screw linear interpolation (ScLERP) based, and the obstacle avoidance is formulated as a linear complementarity problem (LCP). The benefit of using this approach is the natural expression of task space constraints, even with collision avoidance. Additionally, this approach is much more computationally efficient than random sampling.
+The planning framework consists of a global and local planner. The global planner is an RRT planner that will sample poses in the task space. The local planner, also a task space planner, is screw linear interpolation (ScLERP) based, and has obstacle avoidance formulated as a linear complementarity problem (LCP). 
+
+Movement of the manipulator to avoid obstacles is projected onto the null space of the jacobian, which ensures end-effector constraints will always be satisfied, even while actively avoiding obstacles.
+
+The benefits of this approach over a traditional joint space RRT planner are computational efficiency, natural motion generation, and intuitive expression of the motion planning problem for everyday manipulation tasks.
 
 <p align="center">
-  <img src="docs/LCPMotionPlanner.png"
+  <img src="docs/MotionPlanExample.gif"
   width = auto
   height = auto />
 </p>
@@ -22,7 +26,7 @@ cd html && firefox index.html
 ```
 
 ## Dependencies
-LCPMotionPlanner has two dependencies, Eigen and PhysX. They are included as submodules of this repository and handled by CMake, so no extra effort is required to get started.
+LCPMotionPlanner has three dependencies - Eigen, PhysX, and Boost. Eigen and PhysX are included as submodules of this repository and handled by CMake, so no extra effort is required to get started. A local installation of Boost will be needed. Please download the header files, and modifiy the location of the folder in the root CMakeLists.txt.
 
 If you are on Linux, you may need some extra packages for PhysX. Run the below command to ensure you do not get any issues related to missing header files.
 
@@ -42,8 +46,7 @@ Clone the repository and setup submodules.
 ```bash
 git clone https://github.com/Tom-Forsyth/LCPMotionPlanner.git
 cd LCPMotionPlanner
-git submodule init
-git submodule update --recursive
+git submodule update --recursive --init
 ```
 
 Run CMake with the desired build configuration to generate a makefile (Linux) or Visual Studio solution (Windows).
