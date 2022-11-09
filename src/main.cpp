@@ -99,6 +99,16 @@ void testFrankaPanda()
 	// Display results.
 	displayPlanResults(planResults1, 1);
 	displayPlanResults(planResults2, 2);
+
+	// Play back motion plan.
+	std::vector<MotionPlanner::MotionPlanResults> motionPlans {planResults1, planResults2};
+	for (const MotionPlanner::MotionPlanResults& plan : motionPlans)
+	{
+		for (const Eigen::VectorXd& jointDisplacement : plan.motionPlan)
+		{
+			panda.setJointDisplacements(jointDisplacement);
+		}
+	}
 }
 
 void displayPlanResults(const MotionPlanner::MotionPlanResults& planResults, int n)
