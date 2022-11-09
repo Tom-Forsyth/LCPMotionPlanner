@@ -44,6 +44,13 @@ namespace MotionPlanner
             // Formulate and solve LCP to get the compensating velocities and compute joint displacement change.
             Eigen::VectorXd collisionDisplacementChange = getCollisionDisplacementChange(displacementChange);
 
+            // Determine if there was an LCP error.
+            if (m_exitCodeLCP)
+            {
+                m_isRunning = false;
+                m_exitCodePlanner = LocalPlannerExitCode::LCPError;
+            }
+
             // Add joint displacements and ensure they respect the linearization assumption.
             Eigen::VectorXd totalDisplacementChange = getTotalDisplacementChange(displacementChange, collisionDisplacementChange);
 
@@ -52,7 +59,7 @@ namespace MotionPlanner
             bool displacementsAreValid = m_pSpatialManipulator->setJointDisplacements(nextJointDisplacements);
             
             // Check for joint limit violation.
-            if (!displacementsAreValid)
+            if (!displacementsAreValid && m_isRunning)
             {
                 m_isRunning = false;
                 m_exitCodePlanner = LocalPlannerExitCode::JointLimitViolation;
@@ -64,7 +71,7 @@ namespace MotionPlanner
             Eigen::Vector<double, 7> correctedConcat = correctedDualQuat.toConcat();
 
             // Check if we are stuck at a local minimum.
-            if (isAtLocalMinimum(m_currentConcat, correctedConcat))
+            if (isAtLocalMinimum(m_currentConcat, correctedConcat) && m_isRunning)
             {
                 m_isRunning = false;
                 m_exitCodePlanner = LocalPlannerExitCode::StuckAtLocalMinimum;
@@ -78,22 +85,15 @@ namespace MotionPlanner
             m_currentConcat = correctedConcat;
             m_currentTransform = correctedTransform;
 
-            // Determine if there was an LCP error.
-            if (m_exitCodeLCP)
-            {
-                m_isRunning = false;
-                m_exitCodePlanner = LocalPlannerExitCode::LCPError;
-            }
-
             // Check for maximum iterations.
-            if (iter == m_params.maxIterations - 1)
+            if (iter == m_params.maxIterations - 1 && m_isRunning)
             {
                 m_isRunning = false;
                 m_exitCodePlanner = LocalPlannerExitCode::MaxIterationsExceeded;
             }
 
             // Check for penetration.
-            if (isPenetrating())
+            if (isPenetrating() && m_isRunning)
             {
                 m_isRunning = false;
                 m_exitCodePlanner = LocalPlannerExitCode::Collision;
