@@ -26,6 +26,15 @@ namespace MotionPlanner
 		/// @brief Planner exit code.
 		int exitCode;
 
+		/// @brief Plan computation time in ms.
+		double computeTimeMilli;
+
+		/// @brief Iterations of the inner planning loop.
+		size_t plannerIterations;
+
+		/// @brief Linear displacement of end effector through entire motion.
+		double linearDisplacement;
+
 		/// @brief Joint space trajectory of motion plan.
 		std::vector<Eigen::VectorXd> motionPlan;
 	};

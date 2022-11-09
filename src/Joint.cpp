@@ -18,7 +18,7 @@ namespace MotionPlanner
 
     bool Joint::setDisplacement(const double& displacement)
     {
-        if (!wouldViolateLimits(displacement))
+        if (!wouldViolateLimits(displacement) && std::isfinite(displacement))
         {
             m_displacement = displacement;
             computeRelativeTransformation();

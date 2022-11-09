@@ -6,6 +6,7 @@
 #include "ContactPoint.h"
 #include "LocalPlannerParams.h"
 #include "MotionPlanResults.h"
+#include "Timer.h"
 #include <Eigen/Dense>
 #include <vector>
 #include <map>
@@ -30,6 +31,7 @@ namespace MotionPlanner
 
         // Run stepping until convergence or divergence.
         size_t iter = 0;
+        m_timer.start();
         while (m_isRunning)
         {
             // Update spatial jacobian and null space term.
@@ -42,6 +44,13 @@ namespace MotionPlanner
             // Formulate and solve LCP to get the compensating velocities and compute joint displacement change.
             Eigen::VectorXd collisionDisplacementChange = getCollisionDisplacementChange(displacementChange);
 
+            // Determine if there was an LCP error.
+            if (m_exitCodeLCP)
+            {
+                m_isRunning = false;
+                m_exitCodePlanner = LocalPlannerExitCode::LCPError;
+            }
+
             // Add joint displacements and ensure they respect the linearization assumption.
             Eigen::VectorXd totalDisplacementChange = getTotalDisplacementChange(displacementChange, collisionDisplacementChange);
 
@@ -50,7 +59,7 @@ namespace MotionPlanner
             bool displacementsAreValid = m_pSpatialManipulator->setJointDisplacements(nextJointDisplacements);
             
             // Check for joint limit violation.
-            if (!displacementsAreValid)
+            if (!displacementsAreValid && m_isRunning)
             {
                 m_isRunning = false;
                 m_exitCodePlanner = LocalPlannerExitCode::JointLimitViolation;
@@ -62,33 +71,29 @@ namespace MotionPlanner
             Eigen::Vector<double, 7> correctedConcat = correctedDualQuat.toConcat();
 
             // Check if we are stuck at a local minimum.
-            if (isAtLocalMinimum(m_currentConcat, correctedConcat))
+            if (isAtLocalMinimum(m_currentConcat, correctedConcat) && m_isRunning)
             {
                 m_isRunning = false;
                 m_exitCodePlanner = LocalPlannerExitCode::StuckAtLocalMinimum;
             }
+
+            // Update travel of end-effector to linear displacement.
+            m_linearDisplacement += (correctedConcat.head(3) - m_currentConcat.head(3)).norm();
 
             // Store old variables and restart loop.
             m_currentDualQuat = correctedDualQuat;
             m_currentConcat = correctedConcat;
             m_currentTransform = correctedTransform;
 
-            // Determine if there was an LCP error.
-            if (m_exitCodeLCP)
-            {
-                m_isRunning = false;
-                m_exitCodePlanner = LocalPlannerExitCode::LCPError;
-            }
-
             // Check for maximum iterations.
-            if (iter == m_params.maxIterations - 1)
+            if (iter == m_params.maxIterations - 1 && m_isRunning)
             {
                 m_isRunning = false;
                 m_exitCodePlanner = LocalPlannerExitCode::MaxIterationsExceeded;
             }
 
             // Check for penetration.
-            if (isPenetrating())
+            if (isPenetrating() && m_isRunning)
             {
                 m_isRunning = false;
                 m_exitCodePlanner = LocalPlannerExitCode::Collision;
@@ -118,11 +123,13 @@ namespace MotionPlanner
 
             iter++;
         }
-      
+
+        m_timer.stop();
     }
 
     MotionPlanResults LocalPlanner::getPlanResults() const
     {
+        // Populate plan results.
         MotionPlanResults planResults;
         planResults.startPose = m_startTransform;
         planResults.startJointDisplacements = m_startDisplacements;
@@ -130,7 +137,10 @@ namespace MotionPlanner
         planResults.achievedPose = m_pSpatialManipulator->getEndFrameSpatialTransform();
         planResults.achievedJointDisplacements = m_pSpatialManipulator->getJointDisplacements();
         planResults.exitCode = static_cast<int>(m_exitCodePlanner);
+        planResults.computeTimeMilli = m_timer.getTimeMilli();
+        planResults.plannerIterations = m_plan.size();
         planResults.motionPlan = m_plan;
+        planResults.linearDisplacement = m_linearDisplacement;
         return planResults;
     }
 

@@ -5,11 +5,11 @@
 #include "PlannerExitCodes.h"
 #include "TaskSpaceSampler.h"
 #include "GlobalPlannerParams.h"
+#include "Timer.h"
 #include <Eigen/Dense>
 #include <vector>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>
-#include <boost/graph/graph_utility.hpp>
 #include <boost/graph/graph_traits.hpp>
 
 namespace MotionPlanner
@@ -26,7 +26,7 @@ namespace MotionPlanner
 	/// @brief Vertex descriptor for custom graph type.
 	typedef boost::graph_traits<Graph>::vertex_descriptor VertexDescriptor;
 
-	/// @brief Edge descriptor for custom graph type.
+	/// @brief Edge decriptor for custom graph type.
 	typedef boost::graph_traits<Graph>::edge_descriptor EdgeDescriptor;
 
 	/// @brief Global RRT framework for local LCP/SclERP planner.
@@ -41,14 +41,11 @@ namespace MotionPlanner
 		/// @brief Graph with nodes as robot configuration and edges as local plans.
 		Graph m_graph;
 
-		/// @brief Vertex descriptors of the nodes of the graph.
+		/// @brief Vertex descriptors of the graph, representing robot configurations.
 		std::vector<VertexDescriptor> m_vertexDescriptors;
 
-		/// @brief Edge descriptors for the graph.
+		/// @brief Edge descriptors of the graph, representing local motion plans between configurations.
 		std::vector<EdgeDescriptor> m_edgeDescriptors;
-
-		/// @brief Joint trajectory of the robot after planning.
-		std::vector<Eigen::VectorXd> m_jointTrajectory;
 
 		/// @brief Global planner exit code.
 		GlobalPlannerExitCode m_exitCode = GlobalPlannerExitCode::Undefined;
@@ -59,11 +56,26 @@ namespace MotionPlanner
 		/// @brief True when the intermediate goal pose is the goal itself.
 		bool m_attemptingGoal = false;
 
+		/// @brief Number of times the planner has attempt the goal without an intermediate pose.
+		int m_goalAttemptCount = 0;
+
 		/// @brief Draws samples from the task space.
 		TaskSpaceSampler m_sampler;
 
 		/// @brief Parameters for the global RRT planner.
 		GlobalPlannerParams m_params;
+
+		/// @brief Code timer.
+		Timer m_timer;
+
+		/// @brief Iterations of the global planner.
+		size_t m_plannerIterations = 0;
+
+		/// @brief Linear displacement of end-effector of the final path.
+		double m_linearDisplacement = 0;
+
+		/// @brief Shortest path motion plan.
+		std::vector<Eigen::VectorXd> m_plan;
 
 		/// @brief Add robot configuration node to the graph.
 		/// @param pose End-effector pose.
@@ -95,6 +107,9 @@ namespace MotionPlanner
 		/// @param iteration Iteration number used in sampling probability.
 		/// @return Pose sample.
 		Eigen::Matrix4d drawPoseSample(int iteration);
+
+		/// @brief Find the shortest path.
+		void findShortestPath();
 
 	public:
 		/// @brief Constructor.

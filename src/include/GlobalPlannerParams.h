@@ -9,10 +9,13 @@ namespace MotionPlanner
 		const int maxIterations = 2000;
 
 		/// @brief Connection distance between nodes in meters.
-		const double maxConnectionDistance = 0.05;
+		const double maxConnectionDistance = 0.1;
 
 		/// @brief Probability the goal pose will be sampled when an SE3 sample is requested.
 		const double sampleGoalProbability = 0.25;
+
+		/// @brief Probability that when the goal pose is sampled, the max connection distance is ignored.
+		const double straightToGoalProbability = 0.5;
 
 		/// @brief Determines if the sampled pose should use the previous orientation or a new one.
 		const bool sampleOrientation = false;
