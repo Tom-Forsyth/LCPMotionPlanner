@@ -13,7 +13,6 @@
 #include <boost/graph/dijkstra_shortest_paths.hpp>
 #include <boost/graph/graph_utility.hpp>
 #include <boost/graph/graph_traits.hpp>
-#include <iostream>
 
 namespace MotionPlanner
 {
@@ -236,37 +235,11 @@ namespace MotionPlanner
 
 	void GlobalPlanner::findShortestPath()
 	{
-		Timer timer;
-		timer.start();
-
 		// Find shortest path with Dijkstra's algorithm.
 		dijkstra_shortest_paths(m_graph, m_vertexDescriptors.front(),
 			predecessor_map(boost::get(&RobotConfiguration::pathPredecessor, m_graph))
 			.distance_map(boost::get(&RobotConfiguration::pathPredecessor, m_graph))
 			.weight_map(boost::get(&MotionPlanResults::weight, m_graph)));
-
-		// DEBUG
-		std::vector<RobotConfiguration> testVec;
-		for (const auto& elem : m_vertexDescriptors)
-		{
-			testVec.emplace_back(m_graph[elem]);
-		}
-
-		for (const auto& edgeDesc : boost::make_iterator_range(edges(m_graph)))
-		{
-			auto test = edgeDesc;
-			int a = 1;
-		}
-
-		for (const auto& vertexDesc : boost::make_iterator_range(vertices(m_graph)))
-		{
-			auto test = vertexDesc;
-		}
-
-		// Display graph.
-		std::cout << "\nGraph Display: \n";
-		boost::print_graph(m_graph);
-		std::cout << "\n";
 
 		// Extract the indices of the shortest path from goal to start.
 		std::vector<VertexDescriptor> shortestPath;
@@ -276,12 +249,12 @@ namespace MotionPlanner
 			shortestPath.push_back(currentVertex);
 			currentVertex = m_graph[currentVertex].pathPredecessor;
 		}
-
+		
 		// Reverse path into the shortest path from start to goal.
 		std::reverse(shortestPath.begin(), shortestPath.end());
 
 		// Extract the joint trajectories of the local plans of the shortest path.
-		size_t localPlanSize = 1000;
+		size_t localPlanSize = 500;
 		m_plan.reserve(shortestPath.size() * localPlanSize);
 		for (int nodeIndex : shortestPath)
 		{
@@ -292,8 +265,5 @@ namespace MotionPlanner
 				m_plan.emplace_back(displacements);
 			}
 		}
-
-		timer.stop();
-		std::cout << "Dijkstra Time (us): " << timer.getTimeMicro() << "\n";
 	}
 }
