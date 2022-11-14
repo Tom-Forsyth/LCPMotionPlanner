@@ -81,10 +81,14 @@ find_package(Boost REQUIRED)
 # Add source code subdirectory to create LCPMotionPlannerLib.
 add_subdirectory(src)
 
+# Add examples library.
+add_subdirectory(examples)
+
 # Create test executable.
-add_executable(LCPMotionPlannerTest src/main.cpp)
+add_executable(LCPMotionPlannerTest examples/main.cpp)
 target_link_libraries(LCPMotionPlannerTest 
     PUBLIC LCPMotionPlannerLib
+    PUBLIC LCPMotionPlannerExamples
 )
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT LCPMotionPlannerTest)
 
