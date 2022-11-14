@@ -96,9 +96,23 @@ namespace MotionPlanner
 		}
 	}
 
-	void PhysicsCore::connectPhysicsCore()
+	void PhysicsCore::connectPhysicsCore(physx::PxFoundation* foundation, physx::PxPhysics* physics)
 	{
-		// Not yet implemented.
+		if (!bIsInitialized)
+		{
+			bOwnPhysicsInstance = false;
+			m_foundation = foundation;
+			m_physics = physics;
+
+			// Extract other core PhysX information to populate class.
+			m_allocator = &foundation->getAllocatorCallback();
+			m_errorCallback = &foundation->getErrorCallback();
+
+			// Create dispatcher for simulation.
+			m_dispatcher = physx::PxDefaultCpuDispatcherCreate(m_numThreads == 0 ? 0 : m_numThreads - 1);
+
+			bIsInitialized = true;
+		}
 	}
 
 	PhysicsScene* PhysicsCore::createPhysicsScene(const std::string& sceneName)
