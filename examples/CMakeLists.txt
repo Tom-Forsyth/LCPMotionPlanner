@@ -1,17 +1,17 @@
 # Source files.
 set(SOURCES
-	SimulationBase.cpp
+	Example1.cpp
 )
 
 # Header files.
 set(HEADERS
-	include/SimulationBase.h
+	include/Example1.h
 )
 
 # Create library.
 add_library(LCPMotionPlannerExamples STATIC
     ${SOURCES}
-    ${INCLUDES}
+    ${HEADERS}
 )
 
 # Include directory.

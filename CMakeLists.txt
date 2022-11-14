@@ -87,7 +87,6 @@ add_subdirectory(examples)
 # Create test executable.
 add_executable(LCPMotionPlannerTest examples/main.cpp)
 target_link_libraries(LCPMotionPlannerTest 
-    PUBLIC LCPMotionPlannerLib
     PUBLIC LCPMotionPlannerExamples
 )
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT LCPMotionPlannerTest)
