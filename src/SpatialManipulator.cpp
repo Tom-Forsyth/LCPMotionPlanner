@@ -93,7 +93,8 @@ namespace MotionPlanner
 	{
 		for (const auto& body : getRigidBodyChain().getRigidBodies())
 		{
-			if (body.getContactPoint().m_distance <= 0)
+			const ContactPoint& contactPoint = body.getContactPoint();
+			if (contactPoint.m_distance <= 0 && contactPoint.m_isActive)
 			{
 				return true;
 			}
