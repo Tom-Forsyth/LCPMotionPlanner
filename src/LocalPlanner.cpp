@@ -21,6 +21,7 @@ namespace MotionPlanner
         m_startDisplacements(m_pSpatialManipulator->getJointDisplacements())
     {
         m_plan.reserve(m_params.maxIterations + 1);
+        padGoal();
     }
 
     void LocalPlanner::computePlan()
@@ -45,7 +46,7 @@ namespace MotionPlanner
             Eigen::VectorXd collisionDisplacementChange = getCollisionDisplacementChange(displacementChange);
 
             // Determine if there was an LCP error.
-            if (m_exitCodeLCP)
+            if (!(m_exitCodeLCP == 0 || m_exitCodeLCP == 1))
             {
                 m_isRunning = false;
                 m_exitCodePlanner = LocalPlannerExitCode::LCPError;
@@ -119,7 +120,7 @@ namespace MotionPlanner
             }
 
             // Check if we are near goal to tighten linearization for next iteration.
-            checkNearGoal(posError, quatError);
+            //checkNearGoal(posError, quatError);
 
             iter++;
         }
@@ -148,7 +149,7 @@ namespace MotionPlanner
     {
         // Get the joint displacement change from ScLERP.
         Eigen::MatrixXd B = Kinematics::BMatrix(m_spatialJacobian, m_currentTransform);
-        DualQuaternion nextDualQuat = m_currentDualQuat.ScLERP(m_goalTransform, m_params.tau);
+        DualQuaternion nextDualQuat = m_currentDualQuat.ScLERP(m_paddedDualQuat, m_params.tau);
         Eigen::Vector<double, 7> nextConcat = nextDualQuat.toConcat();
         Eigen::VectorXd displacementChange = B * (nextConcat - m_currentConcat);
 
@@ -278,15 +279,17 @@ namespace MotionPlanner
         if (!m_isNearGoal)
         {
             // Determine if near the goal.
-            double thresh = 0.03;
-            if ((posError < thresh) && (quatError < thresh))
+            double thresh = m_params.positionTolerance * 2;
+            if ((posError < thresh))
             {
                 // Enforce stricter linearization assumptions.
+                double maxDisplacement = m_params.maxScLERPDisplacementChange / 2;
+                m_params.maxScLERPDisplacementChange = maxDisplacement;
+                m_params.maxCollisionDisplacementChange = maxDisplacement;
+                m_params.maxTotalDisplacementChange = maxDisplacement;
                 m_isNearGoal = true;
-                double maxAngleChange = 0.001;
-                m_params.maxScLERPDisplacementChange = maxAngleChange;
-                m_params.maxCollisionDisplacementChange = maxAngleChange;
-                m_params.maxTotalDisplacementChange = maxAngleChange;
+                m_params.tau = 1;
+                m_params.tauIsMax = true;
             }
         }
     }
@@ -304,5 +307,10 @@ namespace MotionPlanner
             return true;
         }
         return false;
+    }
+
+    void LocalPlanner::padGoal()
+    {
+        m_paddedDualQuat = m_currentDualQuat.ScLERP(m_goalDualQuat, 1.25);
     }
 }

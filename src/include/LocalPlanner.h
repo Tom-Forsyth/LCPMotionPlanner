@@ -104,6 +104,12 @@ namespace MotionPlanner
 		/// @brief Check if the manipulator is stuck at a local minimum.
 		bool isAtLocalMinimum(const Eigen::VectorXd& previousConcat, const Eigen::VectorXd& newConcat) const;
 
+		/// @brief Pad the goal pose to avoid divergence.
+		void padGoal();
+
+		/// @brief Dual quaternion past the actual goal to be used for planning to avoid divergence near the goal.
+		DualQuaternion m_paddedDualQuat;
+
 	public:
 		/// @brief Constructor.
 		/// @param pSpatialManipulator Pointer to the spatial manipulator to generate the plan with.
