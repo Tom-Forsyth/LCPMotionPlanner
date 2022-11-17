@@ -1,11 +1,13 @@
 # Source files.
 set(SOURCES
 	Example1.cpp
+	Example2.cpp
 )
 
 # Header files.
 set(HEADERS
 	include/Example1.h
+	include/Example2.h
 )
 
 # Create library.

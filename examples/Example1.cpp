@@ -60,7 +60,6 @@ namespace MotionPlanner
 		Eigen::Vector<double, 7> startAngles(0, 0, 0, -EIGEN_PI / 2, 0, EIGEN_PI / 2, 0);
 		static_cast<void>(m_panda.setJointDisplacements(startAngles));
 
-
 		// Create target poses.
 		Eigen::Matrix4d startTransform = m_panda.getEndFrameSpatialTransform();
 		Eigen::Matrix4d goalTransform1(startTransform);
