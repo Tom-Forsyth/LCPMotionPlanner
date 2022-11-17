@@ -27,7 +27,7 @@ namespace MotionPlanner
 		const double quatTolerance = 0.01;
 
 		/// @brief ScLERP interpolation factor.
-		double tau = 0.005;
+		double tau = 0.01;
 
 		/// @brief Flag to determine if tau has been increased to 1 and we should stop trying to increase.
 		bool tauIsMax = false;

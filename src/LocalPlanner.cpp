@@ -159,9 +159,9 @@ namespace MotionPlanner
         displacementChange *= scaleFactor;
 
         // Determine if we can increase tau.
-        if (scaleFactor == 1 && !m_params.tauIsMax)
+        if (!m_params.tauIsMax)
         {
-            m_params.tau *= 1.1;
+            m_params.tau += 0.01;
             if (m_params.tau > 1)
             {
                 m_params.tau = 1;
@@ -311,6 +311,6 @@ namespace MotionPlanner
 
     void LocalPlanner::padGoal()
     {
-        m_paddedDualQuat = m_currentDualQuat.ScLERP(m_goalDualQuat, 1.25);
+        m_paddedDualQuat = m_currentDualQuat.ScLERP(m_goalDualQuat, 1);
     }
 }
