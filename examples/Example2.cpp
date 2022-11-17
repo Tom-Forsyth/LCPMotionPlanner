@@ -59,8 +59,9 @@ namespace MotionPlanner
 		m_physicsScene->addSpatialManipulator(m_panda);
 
 		// Set starting joint angles.
-		Eigen::Vector<double, 7> startAngles(0, 0, 0, -EIGEN_PI / 2, 0, EIGEN_PI / 2, 0);
+		Eigen::Vector<double, 7> startAngles(0, 0, 0, -EIGEN_PI / 2, -EIGEN_PI/2, EIGEN_PI / 2, EIGEN_PI/4);
 		static_cast<void>(m_panda.setJointDisplacements(startAngles));
+		auto test = m_panda.getEndFrameSpatialTransform();
 
 
 		// Create target poses.

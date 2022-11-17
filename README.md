@@ -9,7 +9,7 @@ Movement of the manipulator to avoid obstacles is projected onto the null space 
 The benefits of this approach over a traditional joint space RRT planner are computational efficiency, ease of end-effector constraint enforcement, and natural obstacle avoidance motions.
 
 <p align="center">
-  <img src="docs/MotionPlanExample.gif"
+  <img src="docs/media/UnrealSimDemo.gif"
   width = auto
   height = auto />
 </p>
