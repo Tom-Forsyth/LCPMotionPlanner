@@ -59,8 +59,7 @@ namespace MotionPlanner
 		void createPhysicsCore();
 
 		/// @brief Connect to Unreal Engine's PhysX instance.
-		/// @bug Not yet implemented.
-		void connectPhysicsCore();
+		void connectPhysicsCore(physx::PxFoundation* foundation, physx::PxPhysics* physics);
 
 		/// @brief Create a physics scene.
 		/// @param sceneName Name of physics scene.

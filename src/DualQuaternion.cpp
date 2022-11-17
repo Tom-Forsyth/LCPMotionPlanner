@@ -93,7 +93,7 @@ namespace MotionPlanner
         // Construct new dual quaternion.
         double const1 = exponent * angle / 2;
         double const2 = exponent * displacement / 2;
-        DualNumber dualNum1{ cos(const1), -const2 * sin(const1) };
+        DualNumber dualNum1{ -cos(const1), -const2 * sin(const1) }; // Is real negated or not?
         DualNumber dualNum2{ sin(const1), const2 * cos(const1) };
 
         std::vector<DualNumber> dualVec;

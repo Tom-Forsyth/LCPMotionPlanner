@@ -96,7 +96,7 @@ namespace MotionPlanner
 		std::pair<double, double> jointLimits4 = { -3.0718, -0.0698 };
 		Joint joint4(JointType::Revolute, spatialAxis4, transform4.block(0, 3, 3, 1), jointLimits4);
 		RigidBody link4(joint4, transform4, "panda_link4");
-		Capsule link4_capsule0(Eigen::Vector3d(-0.0825, 0.384 / 2, 0), Eigen::Vector3d(0, 0, pi / 2), (0.384 - .06 * 2) / 2, 0.06, "panda_link4_capsule0", ObjectType::RobotGeometry);
+		Capsule link4_capsule0(Eigen::Vector3d(-0.0825, 0.384 / 2, 0), Eigen::Vector3d(0, 0, pi / 2), (0.384 - .06 * 2) / 2, 0.095, "panda_link4_capsule0", ObjectType::RobotGeometry);
 		link4.addCollider(link4_capsule0);
 
 		// Link 5.
